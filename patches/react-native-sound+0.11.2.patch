@@ -1,0 +1,749 @@
+diff --git a/node_modules/react-native-sound/index.d.ts b/node_modules/react-native-sound/index.d.ts
+index 27a810d..0a474f1 100644
+--- a/node_modules/react-native-sound/index.d.ts
++++ b/node_modules/react-native-sound/index.d.ts
+@@ -3,200 +3,227 @@
+ // Definitions by: Kyle Roach <https://github.com/iRoachie>
+ // TypeScript Version: 2.3.2
+
+-type AVAudioSessionCategory = 'Ambient' | 'SoloAmbient' | 'Playback' | 'Record' | 'PlayAndRecord' | 'AudioProcessing' | 'MultiRoute' | 'Alarm'
+-
+-type AVAudioSessionMode = 'Default' | 'VoiceChat' | 'VideoChat' | 'GameChat' | 'VideoRecording' | 'Measurement' | 'MoviePlayback' | 'SpokenAudio'
+-
+-type FilenameType = string
+-
+-type FileType = any
+-
+-type BasePathType = string
+-
+-type CallbackType = (error: any) => void
+-
+-declare class Sound {
+-  static MAIN_BUNDLE: string
+-  static DOCUMENT: string
+-  static LIBRARY: string
+-  static CACHES: string
+-
+-  /**
+-   * Sets AVAudioSession as active, which is recommended on iOS to achieve seamless background playback.
+-   * Use this method to deactivate the AVAudioSession when playback is finished in order for other apps
+-   * to regain access to the audio stack.
+-   *
+-   * @param category AVAudioSession category
+-   * @param mixWithOthers Can be set to true to force mixing with other audio sessions.
+-   */
+-  static setActive(active: boolean): void
+-
+-  /**
+-   * Sets AVAudioSession category, which allows playing sound in background,
+-   * stop sound playback when phone is locked, etc.
+-   * Parameter options: "Ambient", "SoloAmbient", "Playback", "Record", "PlayAndRecord", "AudioProcessing", "MultiRoute".
+-   *
+-   * @param category AVAudioSession category
+-   * @param mixWithOthers Can be set to true to force mixing with other audio sessions.
+-   */
+-  static setCategory(category: AVAudioSessionCategory, mixWithOthers?: boolean): void
+-
+-  /**
+-   * Sets AVAudioSession mode, which works in conjunction with the category to determine audio mixing behavior.
+-   * Parameter options: "Default", "VoiceChat", "VideoChat", "GameChat", "VideoRecording", "Measurement", "MoviePlayback", "SpokenAudio".
+-   *
+-   * @param mode AVAudioSession mode
+-   * @param mixWithOthers Can be set to true to force mixing with other audio sessions.
+-   */
+-  static setMode(mode: AVAudioSessionMode): void
+-
+-  /**
+-   * @param filenameOrFile Either absolute or relative path to the sound file or the `require` call.
+-   * @param basePathOrCallback Optional base path of the file. Omit this or pass '' if filename is an absolute path; you may use one of the predefined directories: Sound.MAIN_BUNDLE, Sound.DOCUMENT, Sound.LIBRARY, Sound.CACHES. If you are using `require` to define filepath, then set the callback function as the second argument.
+-   * @param callback Optional callback function called when load ends in either success or error. In the event of success, error is undefined.
+-   */
+-  constructor(filenameOrFile: FilenameType | FileType, basePathOrCallback?: BasePathType | CallbackType, callback?: CallbackType)
+-
+-  /**
+-   * Return true if the sound has been loaded.
+-   */
+-  isLoaded(): boolean
+-
+-  /**
+-   * Plays the loaded file
+-   * @param onEnd - Optional callback function that gets called when the playback finishes successfully or an audio decoding error interrupts it
+-   */
+-  play(onEnd?: (success: boolean) => void): this
+-
+-  /**
+-   * Pause the sound
+-   * @param cb - Optional callback function that gets called when the sound has been paused.
+-   */
+-  pause(cb?: () => void): this
+-
+-  /**
+-   * Stop playback and set the seek position to 0.
+-   * @param cb - Optional callback function that gets called when the sound has been stopped.
+-   */
+-  stop(cb?: () => void): this
+-
+-  /**
+-   * Reset the audio player to its uninitialized state (android only)
+-   */
+-  reset(): this
+-
+-  /**
+-   * Release the audio player resource associated with the instance.
+-   */
+-  release(): this
+-
+-  /**
+-   * Return the number of channels
+-   * (1 for mono and 2 for stereo sound), or -1 before the sound gets loaded.
+-   */
+-  getNumberOfChannels(): number
+-
+-  /**
+-   * Return the time of audio (second)
+-   */
+-  getDuration(): number
+-
+-  /**
+-   * Return the volume of the audio player (not the system-wide volume),
+-   * Ranges from 0.0 (silence) through 1.0 (full volume, the default)
+-   */
+-  getVolume(): number
+-
+-  /**
+-   * Set the volume
+-   * @param value - ranging from 0.0 (silence) through 1.0 (full volume)
+-   */
+-  setVolume(value: number): this
+-
+-  /**
+-   * Return the stereo pan position of the audio player (not the system-wide pan)
+-   * Ranges from -1.0 (full left) through 1.0 (full right). The default value is 0.0 (center)
+-   */
+-  getPan(): number
+-
+-  /**
+-   * Set the pan value
+-   * @param value - ranging from -1.0 (full left) through 1.0 (full right).
+-   */
+-  setPan(value: number): this
+-
+-  /**
+-   * Return the loop count of the audio player.
+-   * The default is 0 which means to play the sound once.
+-   * A positive number specifies the number of times to return to the start and play again.
+-   * A negative number indicates an indefinite loop.
+-   */
+-  getNumberOfLoops(): number
+-
+-  /**
+-   * Set the loop count
+-   * @param value - 0 means to play the sound once. A positive number specifies the number of times to return to the start and play again (iOS only). A negative number indicates an indefinite loop (iOS and Android).
+-   */
+-  setNumberOfLoops(value: number): this
+-
+-  /**
+-   * Callback will receive the current playback position in seconds and whether the sound is being played.
+-   * @param cb
+-   */
+-  getCurrentTime(cb?: (seconds: number, isPlaying: boolean) => void): void
+-
+-  /**
+-   * Seek to a particular playback point in seconds.
+-   * @param value
+-   */
+-  setCurrentTime(value: number): this
+-
+-  /**
+-   * Return the speed of the audio player
+-   */
+-  getSpeed(): number
+-
+-  /**
+-   * Speed of the audio playback (iOS Only).
+-   * @param value
+-   */
+-  setSpeed(value: number): this
+-
+-  /**
+-   * Return the pitch of the audio player
+-   */
+-  getPitch(): number
+-
+-  /**
+-   * Pitch of the audio playback (Android Only).
+-   * @param value
+-   */
+-  setPitch(value: number): void
+-
+-  /**
+-   * Whether to enable playback in silence mode (iOS only)
+-   * @deprecated - Use the static method Sound.setCategory('Playback') instead which has the same effect.
+-   * @param enabled
+-   */
+-  enableInSilenceMode(enabled: boolean): void
+-
+-  /**
+-   * Sets AVAudioSession category
+-   * @deprecated
+-   * @param value
+-   */
+-  setCategory(value: AVAudioSessionCategory): void
+-
+-  /**
+-   * Turn speaker phone on (android only)
+-   * @param value
+-   */
+-  setSpeakerphoneOn(value: boolean): void
+-
+-  /**
+-   * Whether the player is playing or not.
+-   */
+-  isPlaying(): boolean
++type AVAudioSessionCategory =
++  | 'Ambient'
++  | 'SoloAmbient'
++  | 'Playback'
++  | 'Record'
++  | 'PlayAndRecord'
++  | 'AudioProcessing'
++  | 'MultiRoute'
++  | 'Alarm';
++
++type AVAudioSessionMode =
++  | 'Default'
++  | 'VoiceChat'
++  | 'VideoChat'
++  | 'GameChat'
++  | 'VideoRecording'
++  | 'Measurement'
++  | 'MoviePlayback'
++  | 'SpokenAudio';
++
++type FilenameType = string;
++
++type FileType = any;
++
++type BasePathType = string;
++
++type CallbackType = (error: any) => void;
++
++declare namespace SoundNamespace {
++  export class Sound {
++    static MAIN_BUNDLE: string;
++    static DOCUMENT: string;
++    static LIBRARY: string;
++    static CACHES: string;
++
++    /**
++     * Sets AVAudioSession as active, which is recommended on iOS to achieve seamless background playback.
++     * Use this method to deactivate the AVAudioSession when playback is finished in order for other apps
++     * to regain access to the audio stack.
++     *
++     * @param category AVAudioSession category
++     * @param mixWithOthers Can be set to true to force mixing with other audio sessions.
++     */
++    static setActive(active: boolean): void;
++
++    /**
++     * Sets AVAudioSession category, which allows playing sound in background,
++     * stop sound playback when phone is locked, etc.
++     * Parameter options: "Ambient", "SoloAmbient", "Playback", "Record", "PlayAndRecord", "AudioProcessing", "MultiRoute".
++     *
++     * @param category AVAudioSession category
++     * @param mixWithOthers Can be set to true to force mixing with other audio sessions.
++     */
++    static setCategory(
++      category: AVAudioSessionCategory,
++      mixWithOthers?: boolean,
++    ): void;
++
++    /**
++     * Sets AVAudioSession mode, which works in conjunction with the category to determine audio mixing behavior.
++     * Parameter options: "Default", "VoiceChat", "VideoChat", "GameChat", "VideoRecording", "Measurement", "MoviePlayback", "SpokenAudio".
++     *
++     * @param mode AVAudioSession mode
++     * @param mixWithOthers Can be set to true to force mixing with other audio sessions.
++     */
++    static setMode(mode: AVAudioSessionMode): void;
++
++    /**
++     * @param filenameOrFile Either absolute or relative path to the sound file or the `require` call.
++     * @param basePathOrCallback Optional base path of the file. Omit this or pass '' if filename is an absolute path; you may use one of the predefined directories: Sound.MAIN_BUNDLE, Sound.DOCUMENT, Sound.LIBRARY, Sound.CACHES. If you are using `require` to define filepath, then set the callback function as the second argument.
++     * @param callback Optional callback function called when load ends in either success or error. In the event of success, error is undefined.
++     */
++    constructor(
++      filenameOrFile: FilenameType | FileType,
++      basePathOrCallback?: BasePathType | CallbackType,
++      callback?: CallbackType,
++    );
++
++    /**
++     * Return true if the sound has been loaded.
++     */
++    isLoaded(): boolean;
++
++    /**
++     * Plays the loaded file
++     * @param onEnd - Optional callback function that gets called when the playback finishes successfully or an audio decoding error interrupts it
++     */
++    play(onEnd?: (success: boolean) => void): this;
++
++    /**
++     * Pause the sound
++     * @param cb - Optional callback function that gets called when the sound has been paused.
++     */
++    pause(cb?: () => void): this;
++
++    /**
++     * Stop playback and set the seek position to 0.
++     * @param cb - Optional callback function that gets called when the sound has been stopped.
++     */
++    stop(cb?: () => void): this;
++
++    /**
++     * Reset the audio player to its uninitialized state (android only)
++     */
++    reset(): this;
++
++    /**
++     * Release the audio player resource associated with the instance.
++     */
++    release(): this;
++
++    /**
++     * Return the number of channels
++     * (1 for mono and 2 for stereo sound), or -1 before the sound gets loaded.
++     */
++    getNumberOfChannels(): number;
++
++    /**
++     * Return the time of audio (second)
++     */
++    getDuration(): number;
++
++    /**
++     * Return the volume of the audio player (not the system-wide volume),
++     * Ranges from 0.0 (silence) through 1.0 (full volume, the default)
++     */
++    getVolume(): number;
++
++    /**
++     * Set the volume
++     * @param value - ranging from 0.0 (silence) through 1.0 (full volume)
++     */
++    setVolume(value: number): this;
++
++    /**
++     * Return the stereo pan position of the audio player (not the system-wide pan)
++     * Ranges from -1.0 (full left) through 1.0 (full right). The default value is 0.0 (center)
++     */
++    getPan(): number;
++
++    /**
++     * Set the pan value
++     * @param value - ranging from -1.0 (full left) through 1.0 (full right).
++     */
++    setPan(value: number): this;
++
++    /**
++     * Return the loop count of the audio player.
++     * The default is 0 which means to play the sound once.
++     * A positive number specifies the number of times to return to the start and play again.
++     * A negative number indicates an indefinite loop.
++     */
++    getNumberOfLoops(): number;
++
++    /**
++     * Set the loop count
++     * @param value - 0 means to play the sound once. A positive number specifies the number of times to return to the start and play again (iOS only). A negative number indicates an indefinite loop (iOS and Android).
++     */
++    setNumberOfLoops(value: number): this;
++
++    /**
++     * Callback will receive the current playback position in seconds and whether the sound is being played.
++     * @param cb
++     */
++    getCurrentTime(cb?: (seconds: number, isPlaying: boolean) => void): void;
++
++    /**
++     * Seek to a particular playback point in seconds.
++     * @param value
++     */
++    setCurrentTime(value: number): this;
++
++    /**
++     * Return the speed of the audio player
++     */
++    getSpeed(): number;
++
++    /**
++     * Speed of the audio playback (iOS Only).
++     * @param value
++     */
++    setSpeed(value: number): this;
++
++    /**
++     * Return the pitch of the audio player
++     */
++    getPitch(): number;
++
++    /**
++     * Pitch of the audio playback (Android Only).
++     * @param value
++     */
++    setPitch(value: number): void;
++
++    /**
++     * Whether to enable playback in silence mode (iOS only)
++     * @deprecated - Use the static method Sound.setCategory('Playback') instead which has the same effect.
++     * @param enabled
++     */
++    enableInSilenceMode(enabled: boolean): void;
++
++    /**
++     * Sets AVAudioSession category
++     * @deprecated
++     * @param value
++     */
++    setCategory(value: AVAudioSessionCategory): void;
++
++    /**
++     * Turn speaker phone on (android only)
++     * @param value
++     */
++    setSpeakerphoneOn(value: boolean): void;
++
++    /**
++     * Whether the player is playing or not.
++     */
++    isPlaying(): boolean;
++  }
++
++  export function resetAllSounds(): void;
+ }
+
+-export = Sound;
++export = SoundNamespace;
+diff --git a/node_modules/react-native-sound/sound.js b/node_modules/react-native-sound/sound.js
+index c9bcbaf..d1dfd18 100644
+--- a/node_modules/react-native-sound/sound.js
++++ b/node_modules/react-native-sound/sound.js
+@@ -4,7 +4,7 @@ var ReactNative = require('react-native');
+ var RNSound = ReactNative.NativeModules.RNSound;
+ var IsAndroid = RNSound.IsAndroid;
+ var IsWindows = RNSound.IsWindows;
+-var resolveAssetSource = require("react-native/Libraries/Image/resolveAssetSource");
++var resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
+ var eventEmitter = new ReactNative.NativeEventEmitter(RNSound);
+
+ var nextKey = 0;
+@@ -15,7 +15,7 @@ function isRelativePath(path) {
+
+ function calculateRelativeVolume(volume, pan) {
+   // calculates a lower volume relative to the pan value
+-  const relativeVolume = (volume * (1 - Math.abs(pan)));
++  const relativeVolume = volume * (1 - Math.abs(pan));
+   return Number(relativeVolume.toFixed(1));
+ }
+
+@@ -49,7 +49,7 @@ function Sound(filename, basePath, onError, options) {
+     }
+   }
+
+-  this.registerOnPlay = function() {
++  this.registerOnPlay = function () {
+     if (this.onPlaySubscription != null) {
+       console.warn('On Play change event listener is already registered');
+       return;
+@@ -58,20 +58,19 @@ function Sound(filename, basePath, onError, options) {
+     if (!IsWindows) {
+       this.onPlaySubscription = eventEmitter.addListener(
+         'onPlayChange',
+-        (param) => {
+-          const { isPlaying, playerKey } = param;
++        param => {
++          const {isPlaying, playerKey} = param;
+           if (playerKey === this._key) {
+             if (isPlaying) {
+               this._playing = true;
+-            }
+-            else {
++            } else {
+               this._playing = false;
+             }
+           }
+         },
+       );
+     }
+-  }
++  };
+
+   this._loaded = false;
+   this._key = nextKey++;
+@@ -100,20 +99,21 @@ function Sound(filename, basePath, onError, options) {
+   });
+ }
+
+-Sound.prototype.isLoaded = function() {
++Sound.prototype.isLoaded = function () {
+   return this._loaded;
+ };
+
+-Sound.prototype.play = function(onEnd) {
++Sound.prototype.play = function (onEnd) {
+   if (this._loaded) {
+-    RNSound.play(this._key, (successfully) => onEnd && onEnd(successfully));
++    RNSound.play(this._key, successfully => onEnd && onEnd(successfully));
++    currentSound.push(this);
+   } else {
+     onEnd && onEnd(false);
+   }
+   return this;
+ };
+
+-Sound.prototype.pause = function(callback) {
++Sound.prototype.pause = function (callback) {
+   if (this._loaded) {
+     RNSound.pause(this._key, () => {
+       this._playing = false;
+@@ -123,7 +123,7 @@ Sound.prototype.pause = function(callback) {
+   return this;
+ };
+
+-Sound.prototype.stop = function(callback) {
++Sound.prototype.stop = function (callback) {
+   if (this._loaded) {
+     RNSound.stop(this._key, () => {
+       this._playing = false;
+@@ -133,7 +133,7 @@ Sound.prototype.stop = function(callback) {
+   return this;
+ };
+
+-Sound.prototype.reset = function() {
++Sound.prototype.reset = function () {
+   if (this._loaded && IsAndroid) {
+     RNSound.reset(this._key);
+     this._playing = false;
+@@ -141,7 +141,7 @@ Sound.prototype.reset = function() {
+   return this;
+ };
+
+-Sound.prototype.release = function() {
++Sound.prototype.release = function () {
+   if (this._loaded) {
+     RNSound.release(this._key);
+     this._loaded = false;
+@@ -155,35 +155,35 @@ Sound.prototype.release = function() {
+   return this;
+ };
+
+-Sound.prototype.getFilename = function() {
++Sound.prototype.getFilename = function () {
+   return this._filename;
+ };
+
+-Sound.prototype.getDuration = function() {
++Sound.prototype.getDuration = function () {
+   return this._duration;
+ };
+
+-Sound.prototype.getNumberOfChannels = function() {
++Sound.prototype.getNumberOfChannels = function () {
+   return this._numberOfChannels;
+ };
+
+-Sound.prototype.getVolume = function() {
++Sound.prototype.getVolume = function () {
+   return this._volume;
+ };
+
+-Sound.prototype.getSpeed = function() {
++Sound.prototype.getSpeed = function () {
+   return this._speed;
+ };
+
+-Sound.prototype.getPitch = function() {
++Sound.prototype.getPitch = function () {
+   return this._pitch;
+ };
+
+-Sound.prototype.setVolume = function(value) {
++Sound.prototype.setVolume = function (value) {
+   this._volume = value;
+   if (this._loaded) {
+     if (IsAndroid) {
+-      setAndroidVolumes(this)
++      setAndroidVolumes(this);
+     } else {
+       RNSound.setVolume(this._key, value);
+     }
+@@ -191,13 +191,13 @@ Sound.prototype.setVolume = function(value) {
+   return this;
+ };
+
+-Sound.prototype.setPan = function(value) {
++Sound.prototype.setPan = function (value) {
+   this._pan = value;
+   if (this._loaded) {
+     if (IsWindows) {
+       throw new Error('#setPan not supported on windows');
+     } else if (IsAndroid) {
+-      setAndroidVolumes(this)
++      setAndroidVolumes(this);
+     } else {
+       RNSound.setPan(this._key, value);
+     }
+@@ -205,29 +205,29 @@ Sound.prototype.setPan = function(value) {
+   return this;
+ };
+
+-Sound.prototype.getSystemVolume = function(callback) {
+-  if(!IsWindows) {
++Sound.prototype.getSystemVolume = function (callback) {
++  if (!IsWindows) {
+     RNSound.getSystemVolume(callback);
+   }
+   return this;
+ };
+
+-Sound.prototype.setSystemVolume = function(value) {
++Sound.prototype.setSystemVolume = function (value) {
+   if (IsAndroid) {
+     RNSound.setSystemVolume(value);
+   }
+   return this;
+ };
+
+-Sound.prototype.getPan = function() {
++Sound.prototype.getPan = function () {
+   return this._pan;
+ };
+
+-Sound.prototype.getNumberOfLoops = function() {
++Sound.prototype.getNumberOfLoops = function () {
+   return this._numberOfLoops;
+ };
+
+-Sound.prototype.setNumberOfLoops = function(value) {
++Sound.prototype.setNumberOfLoops = function (value) {
+   this._numberOfLoops = value;
+   if (this._loaded) {
+     if (IsAndroid || IsWindows) {
+@@ -239,7 +239,7 @@ Sound.prototype.setNumberOfLoops = function(value) {
+   return this;
+ };
+
+-Sound.prototype.setSpeed = function(value) {
++Sound.prototype.setSpeed = function (value) {
+   this._speed = value;
+   if (this._loaded) {
+     if (!IsWindows) {
+@@ -249,7 +249,7 @@ Sound.prototype.setSpeed = function(value) {
+   return this;
+ };
+
+-Sound.prototype.setPitch = function(value) {
++Sound.prototype.setPitch = function (value) {
+   this._pitch = value;
+   if (this._loaded) {
+     if (IsAndroid) {
+@@ -259,13 +259,13 @@ Sound.prototype.setPitch = function(value) {
+   return this;
+ };
+
+-Sound.prototype.getCurrentTime = function(callback) {
++Sound.prototype.getCurrentTime = function (callback) {
+   if (this._loaded) {
+     RNSound.getCurrentTime(this._key, callback);
+   }
+ };
+
+-Sound.prototype.setCurrentTime = function(value) {
++Sound.prototype.setCurrentTime = function (value) {
+   if (this._loaded) {
+     RNSound.setCurrentTime(this._key, value);
+   }
+@@ -273,7 +273,7 @@ Sound.prototype.setCurrentTime = function(value) {
+ };
+
+ // android only
+-Sound.prototype.setSpeakerphoneOn = function(value) {
++Sound.prototype.setSpeakerphoneOn = function (value) {
+   if (IsAndroid) {
+     RNSound.setSpeakerphoneOn(this._key, value);
+   }
+@@ -283,51 +283,60 @@ Sound.prototype.setSpeakerphoneOn = function(value) {
+
+ // This is deprecated.  Call the static one instead.
+
+-Sound.prototype.setCategory = function(value) {
++Sound.prototype.setCategory = function (value) {
+   Sound.setCategory(value, false);
+-}
++};
+
+-Sound.prototype.isPlaying = function() {
++Sound.prototype.isPlaying = function () {
+   return this._playing;
+-}
++};
+
+-Sound.enable = function(enabled) {
++Sound.enable = function (enabled) {
+   RNSound.enable(enabled);
+ };
+
+-Sound.enableInSilenceMode = function(enabled) {
++Sound.enableInSilenceMode = function (enabled) {
+   if (!IsAndroid && !IsWindows) {
+     RNSound.enableInSilenceMode(enabled);
+   }
+ };
+
+-Sound.setActive = function(value) {
++Sound.setActive = function (value) {
+   if (!IsAndroid && !IsWindows) {
+     RNSound.setActive(value);
+   }
+ };
+
+-Sound.setCategory = function(value, mixWithOthers = false) {
++Sound.setCategory = function (value, mixWithOthers = false) {
+   if (!IsWindows) {
+     RNSound.setCategory(value, mixWithOthers);
+   }
+ };
+
+-Sound.setMode = function(value) {
++Sound.setMode = function (value) {
+   if (!IsAndroid && !IsWindows) {
+     RNSound.setMode(value);
+   }
+ };
+
+-Sound.setSpeakerPhone = function(value) {
++Sound.setSpeakerPhone = function (value) {
+   if (!IsAndroid && !IsWindows) {
+-    RNSound.setSpeakerPhone(value)
++    RNSound.setSpeakerPhone(value);
+   }
+-}
++};
+
+ Sound.MAIN_BUNDLE = RNSound.MainBundlePath;
+ Sound.DOCUMENT = RNSound.NSDocumentDirectory;
+ Sound.LIBRARY = RNSound.NSLibraryDirectory;
+ Sound.CACHES = RNSound.NSCachesDirectory;
+
+-module.exports = Sound;
++var currentSound = [];
++
++function resetAllSounds() {
++  currentSound.forEach(sound => {
++    sound.stop(() => null);
++    sound.release();
++  });
++}
++
++module.exports = {Sound, resetAllSounds};
