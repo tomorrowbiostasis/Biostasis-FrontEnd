@@ -1,445 +1,310 @@
-# Biostasis
+[![frontend-repo-header-2.png](https://i.postimg.cc/Jzwjf6Km/frontend-repo-header-2.png)](https://postimg.cc/ykPJ9Twr)
+
+[![license](https://img.shields.io/badge/license-GPLv3-blue)]()
+[![platform](https://img.shields.io/badge/platform-IOS%20%7C%20Android-lightgrey)]()
+[![react-native](https://img.shields.io/badge/react%20native-0.67.2-blue)]()
+
+## Table of content:
+ - [Before You Start](#before-you-start)
+ - [Introduction](#introduction)
+ - [installation](#installation)
+    - [Pre-preparation](#pre-preparation)
+    - [Let's Start](#lets-start)
+      - [Android](#android)
+      - [IOS](#ios)
+ - [Connect To Server](#connect-to-server)
+ - [Automated Emergency System](#automated-emergency-system)
+    - [Pulse-Based Trigger](#-pulse-based-trigger)
+    - [Time-Based Trigger](#-time-based-trigger)
+- [Software Overview](#software-overview)
+  - [Project Structure](#project-structure)
+  - [Services](#services)
+  - [State Management](#state-managment)
+- [Setup wearables](#setup-wearables)
+  - [IOS](#ios-1)
+  - [Android](#android-1)
+- [License](#license)
+
+## Before You Start:
+  - Read our [contribution](https://github.com/tomorrowbiostasis/tomorrowbiostasis/blob/main/CONTRIBUTING.md) guidance if you did not already to gain better understanding on how to be part of biostasis community.
+  - Please make sure to visit the [Biostasis-Cloud-infrastructure](https://github.com/tomorrowbiostasis/Biostasis-Cloud-infrastructure) and create your own cloud and external services. **Otherwise, you can't run the application properly (you need your own .env credentials).**
+  - if you want to participate into the automated pulse system development, you need to own a smart watch to be able to test your implementation or new feature. 
+
+## Introduction:
+This documentation is for the frontend(Mobile App) part of the Biostasis application. Here you will find all the information to build and install the application on your machine and run it on both development/production environments. A short summary of the main feature of our application and the services that we are using to implement and execute the app.
+
+## Tech Stack:
+
+<a href="https://reactnative.dev/" title="react native"><img height="50" src="https://user-images.githubusercontent.com/25181517/183897015-94a058a6-b86e-4e42-a37f-bf92061753e5.png" alt="React-native" title="React-native" /></a>
+<a href="https://firebase.google.com/" title="firebase"><img height="50" src="https://user-images.githubusercontent.com/25181517/189716855-2c69ca7a-5149-4647-936d-780610911353.png" alt="Firebase" title="Firebase" /></a>
+<a href="https://www.typescriptlang.org/" title="Typescript"><img height="50" src="https://user-images.githubusercontent.com/25181517/183890598-19a0ac2d-e88a-4005-a8df-1ee36782fde1.png" alt="TypeScript" title="TypeScript" /></a>
+<a href="https://aws.amazon.com/cognito/" title="aws"><img height="50" src="https://user-images.githubusercontent.com/25181517/183896132-54262f2e-6d98-41e3-8888-e40ab5a17326.png" alt="AWS" title="AWS" /></a>
+<a href="https://redux.js.org/" title="redux"><img height="50" src="https://user-images.githubusercontent.com/25181517/187896150-cc1dcb12-d490-445c-8e4d-1275cd2388d6.png" alt="Redux" title="Redux" /></a>
+<a href="https://developer.apple.com/swift/" title="swift"><img height="50" src="https://user-images.githubusercontent.com/25181517/121406389-6267a300-c95e-11eb-8d67-f1e22afe8aea.png" alt="Swift" title="Swift" /></a>
+<a href="https://nodejs.org/" title="node.js"><img height="50" src="https://user-images.githubusercontent.com/25181517/183568594-85e280a7-0d7e-4d1a-9028-c8c2209e073c.png" alt="Node.js" title="Node.js" /></a>
+
+The Biostasis mobile application is built using the following technologies:
+
+  - **React Native:** A framework for building mobile applications using JavaScript and React. React Native enables building native apps for iOS and Android platforms from a single codebase.
+  - **Firebase:** A cloud-based platform that provides a wide range of services, including authentication, real-time database, storage, and analytics. We use Firebase for cloud messaging and crashlytics.
+  - **TypeScript:** A superset of JavaScript that adds static type checking and other features to the language. TypeScript enables easier maintenance and scaling of the application.
+  - **AWS Cognito:** A service that provides user authentication and authorization. We use AWS Cognito for user authentication and management.
+  - **Redux:** A state management library that enables managing the state of the application in a predictable and scalable way. We use Redux for state management in the Biostasis mobile application.
+  - **Swift**: Swift is a powerful and intuitive programming language for iOS, iPadOS, macOS, tvOS, and watchOS. Used in our application to build the emergency system on IOS devices.
+
+In combination, these technologies provide a powerful and scalable frontend architecture for our application.
+
+## installation:
+
+### Pre-preparation:
+  There are multiple steps you should take before you start the installation stage:
+  1. If you want to participate in the development of our app on the Android platform, Make sure that you have [Android Studio](https://developer.android.com/studio) installed on your machine. Then, [Set up the Android 14 SDK](https://developer.android.com/about/versions/14/setup-sdk). 
+  2. If you have a Mac device and want to participate in the development of our app on the IOS platform, make sure to install [Xcode](https://developer.apple.com/xcode/).
+  3. Make sure that you have [node.js](https://nodejs.org/) installed.
+  4. we use [yarn](https://yarnpkg.com/) as package manager for node.js, so make sure to install yarn using this command:
+         
+          npm install --global yarn
+    
+ 5. You need to have a [Firebase](https://firebase.google.com/) account, if not, please create a new account. Then, create new project under the name `Biostasis`:
+     - First, pick the platform that you want to work on (Android - IOS).
+     - Then, add a new app for that platform.
+     - Make sure that the package name for your app is `app.biostasis` 
+      
+        **or else you need to change the local package name inside `build.gradle` file to match your input name.**
+     - - (Android) Download `google-services.json` file and move it inside `/android/app`.
+       - (IOS) Download `GoogleService-Info.plist` file and move it inside `ios/Biostasis`.
+     - Ensure to add **Firebase SDK** (instructions provided during the creation of the new app).
+     - - (Android) Ensure that **[Firebase Crashlytics](https://firebase.google.com/docs/crashlytics/get-started?platform=android)** added to your android project. 
+       - (IOS) Firebase packages are already installed when you install pods so no need to add packages through Xcode.
+     - And you are now ready to go 🎉    
+  
+    ***PS: you can create two apps for each platform, make sure to follow the instruction carefully.***
+
+### Let's Start:
+After you navigate to the project directory. Install all dependencies for the application.
+   
+    yarn
+  
+ 
+ ### Android:
+ ---
+  
+  1. Ensure that [Java](https://www.java.com/) installed on your machine.
+  2. Using android studio open the application's android folder `~/biostasis-frontend/android`. Android Studio will start building your application automatically.
+  3. Wait until android studio finishes building your application. Then, set up your Android device:
+     - **Android studio emulator**: follow this [**Link**](https://developer.android.com/studio/run/managing-avds) to learn how to create and manage virtual devices.
+     - **Physical andorid device**: follow this [**Link**](https://developer.android.com/studio/run/device) to learn how to run apps on hardware devices. There are a lot of methods and instructions for every operating system.
+  4. ##### Physical Devices:
+      Once you have your hardware device ready, make sure that the connection is forwarded to the right port (android device port:8081 -> computer port:8081 where metro bundler is running) Either using:
+      - **adb command:** 
+      
+            adb reverse tcp:8081 tcp:8081
+      - **chrome dev tool:** [visit this page](https://developer.chrome.com/docs/devtools/remote-debugging/) to learn how to debug Android devices remotly.
+        - Visit `chrome://inspect/#devices`
+        - Click on `Port forwarding`. Then, add a new port:
+          
+          <table>
+            <tr>
+              <td>Port</td>
+              <td>IP addresses and port</td>
+            </tr>
+            <tr>
+              <td>8081</td>
+              <td>localhost:8081</td>
+            </tr>
+          </table> 
+
+        - Make sure `Enable port forwarding` is checked.
+        - Keep the tab open during your development process.
+     
+  5. Run metro bundler:
+      
+          yarn start
+  6. Run the application `Run > Run'app'` it will install the application on your Android device and run it automatically. After that, it will take some time until metro bundler finish bundling all project files into one main file. 
+  
+  ======================================== **Alternatively** ======================================== 
+  
+  You can run the application outside android studio.
+  - Make sure that you have `local.properties` file in your `android` directory (usually this file will be created automatically by android studio). it should contian the path to your android sdk dir.
+      
+      - Mac: `sdk.dir = /Users/[username]/Library/Android/sdk`
+      - Windows: `sdk.dir=C\:\\Users\\[username]\\AppData\\Local\\Android\\Sdk`
+
+  - Add jdk path `org.gradle.java.home=<PATH_TO_JDK_OR_JBR_DIR>` (you can find the path where java is installed) to `gradle.properties` file
+  - Run:
+    
+        yarn android:dev
+        
+    ***PS: Don't forget to forward to the right port [(step 4)](#physical-devices).***
+ 
+   
+   ### IOS:
+   ---
+   1. Install [Cocoapods](https://cocoapods.org/) on your mac machine using:
+
+          sudo gem install cocoapods
+   
+   2. Navigate to the project's ios folder using terminal `cd ~/biostasis-frontend/ios`, you will see a ruby file called `Podfile`. Then, install pods into the project by typing in the terminal:
+       
+          pod install
+
+      or (For m1 chip)
+
+          arch -x86_64 pod install
+   
+   3. Once completed, there will be a message that says:
+
+      > Pod installation complete! There are X dependencies from the Podfile and X total pods installed.
+   
+   4. Using Xcode open the application's ios folder `~/biostasis-frontend/ios`. Xcode will start building your application automatically.
+   5. Then, after Xcode finishes building the project, you can run the application. [Visit this page](https://developer.apple.com/documentation/xcode/running-your-app-in-simulator-or-on-a-device) to learn more about how you can run the application on a simulator or physical device.
+  
+   ***PS: if you faced an error with the `Yoga` file just add `|` where the error is mentioned.***
+  
+  ## Connect To Server:
+  - If you want to connect the frontend biostasis application to server you need to build the [backend side of the application](https://github.com/tomorrowbiostasis/Biostasis-Backend) and then run the server.
+  - The `API_URL` in the `.env.(env-type)` file should match the host that your backend server is running on: 
+  
+    eg. `API_URL="http://localhost:<server-port>"`
+  - (Physical Devices) You need to forward device's to the server's port [**step4**](#physical-devices). 
+  
+  **PS: You need to replace the `localhost` with your mac's wifi IP Address if you are developing on IOS (`localhost` works on android)**
+  
+  ## Automated Emergency System:
+  This is the main feature for our application. we can implement it by turning the automated emergency **ON** in the Automated Emergency Settings screen inside the application.
+  
+  There are two types of triggering for the automated emargency system:
+  
+  ### 💗 Pulse-Based Trigger:
+  ---
+  This section provides an overview of the Pulse-Based Trigger feature implemented in this GitHub repository. The Pulse-Based Trigger enables the monitoring of user health by utilizing pulse data obtained from Google Fit.
+  
+  ### - Activation Process:
+  To activate the Pulse-Based Trigger, follow these steps:
+
+  1. Mark the additional checks, including the (Google Fit - HealthKit) check, which initiates an authentication modal.
+  2. Other checks, such as the companion app connection to Google Fit and background service enablement, rely on user trust and cannot be directly verified.
+  3. Once all the checks are marked, the pulse-based trigger is turned on in the backend.
+  
+  ### - Functionality:
+  Once the trigger is activated, the following processes occur:
+
+  1. A non-dismissible notification is displayed on the user's system, indicating that the app is actively monitoring their health.
+  2. A background service is launched to periodically check the user's pulse data from Google Fit at intervals shorter than the selected frequency.
+  
+  ### - Positive Pulse Data:
+  When positive pulse data is detected within the specified time period, the following actions take place:
+
+  1. A call is made to the backend with the time of the next scheduled emergency.
+  2. The backend waits for the next positive information to be sent, extending the emergency time if positive information is received.
+  3. If no positive information is received within the time period, the emergency is triggered.
+
+  ### - No Detected Pulse:
+  If no pulse is detected within the specified time period, the following steps occur:
+
+  1. No positive information is sent, leading to further escalation.
+  2. An "Are you okay?" notification is sent, prompting the user for a response.
+  3. If the user does not respond, a loud alarm is scheduled, and a notification is sent from the backend, followed by a text message.
+  
+  ### - Pause and Nighttime Considerations:
+  During pauses or nighttime periods, pulse checks and positive information can still be sent. However, the backend has the ability to omit processing the information while the pause time is set.
+  
+  ### - Emergency Triggered:
+  Once the emergency is triggered, the following actions occur:
+
+  1. Opening the app will display a modal informing the user about the emergency situation.
+  2. If the emergency time has not yet arrived, the user can inform the app that they are okay, resulting in a delay of the emergency.
+  3. If the information has already been sent to contacts, no further action is taken from the backend side, unless a positive status is sent again, which resets the system to its pre-emergency functioning.
+  4. On the app or device side, the background service continues to be triggered and send positive status if a pulse is detected.
+ 
+### ⏰ Time-Based Trigger:
+---
+This section provides an overview of the Time-Based Trigger feature implemented in this GitHub repository. The Time-Based Trigger does not activate the background service but relies on timed notifications.
+
+### - Functionality:
+The Time-Based Trigger operates as follows:
+
+1. The backend sends periodic notifications asking "Are you okay?" at specified time intervals to the user's device.
+2. The user has 20 minutes to confirm their well-being, which sends a positive status to the backend.
+3. Unlike the pulse-based trigger, the backend only waits for positive information between the "Are you okay?" notification and the actual emergency, instead of continuously.
+4. Scheduled pauses and nighttime periods are skipped.
+5. If the user does not respond, the emergency message is sent to contacts.
+6. No further action is taken from the backend or device once the emergency message is sent.
+
+## Software Overview:
+
+### Project Structure:
+This section outlines the structure and organization of the project repository, including its various directories and files.
+
+- **assets:** This directory contains icons, components, and static images used in the project.
+- **components:** The components directory contains shared components that can be reused throughout the application.
+- **constants:** The constants directory includes files that contain constant values used in the project.
+- **hooks:** The hooks directory contains custom hooks that encapsulate reusable logic and can be utilized across different components.
+- **i18n:** The i18n directory consists of localization files and configurations that enable internationalization and localization support in the application.
+- **models:** The models directory holds type definitions or interfaces that describe the structure and shape of the data used within the project.
+- **navigators:** The navigators directory contains stacks and navigator components responsible for handling navigation between different screens or sections of the application.
+- **providers:** The providers directory includes various providers used in the project, such as AuthListeners, NotificationListeners, and other providers like SafeArea, PersistGate, and Native Base UI provider. These providers offer context and services that can be accessed by components throughout the application.
+- **redux:** The redux directory encompasses the Redux implementation using Redux Toolkit. It includes the store configuration and related files for managing the application's state.
+- **screens:** The screens directory contains individual screen components along with their related components. These components represent the different screens or views within the application.
+- **services:** The services directory includes modules or classes that handle specific services required by the application, as mentioned in the Services section.
+- **theme:** The theme directory consists of files related to the theme configuration for the Native Base UI library. It includes style definitions, colors, typography, and other theme-related settings.
+- **utils:** The utils directory contains utility functions or helper modules that provide common functionalities used throughout the project. These utilities serve various purposes and are typically self-explanatory in nature.
+
+## Services:
+The services directory houses various services responsible for specific functionalities within the app. Each service performs a specific task and encapsulates the related logic and functionality. The services included in this directory are as follows:
+
+- `AsyncStorage.service`: A wrapper for the AsyncStorage library, primarily used for logging purposes and maintaining the current app state, such as the IsEmergencyEscalationStarted flag. It also handles proper app state retrieval on iOS when the app is killed or in the background.
+- `Date.service`: A tool for managing various time-related tasks within the application.
+- `TimeSlot.service`: A tool for managing time slots, which is a feature in Biostasis.
+- `Amazon.service`: Provides shortcuts for authentication with Amazon services.
+- `API.service`: Contains all the API endpoints and handles communication with the server.
+- `Background.service`: A service dedicated to handling background tasks. This service performs specific operations even when the app is not in the foreground.
+- `GoogleFit.service`: A service specifically designed for handling Google Fit data. This service is exclusive to the Android platform.
+- `Location.service`: A service responsible for managing location data within the app.
+- `Logger.service`: Provides a logging mechanism for the app, allowing logs to be stored in AsyncStorage. It also facilitates the sharing of logs between testers and developers.
+- `Notification.service`: Despite its name, this service is a shortcut for using the Toast component, providing convenient methods for displaying toast notifications.
+- `Push.service`: Handles the retrieval and storage of push tokens for push notifications.
+- `Time.service`: A helper service used for calculating whether the emergency service is currently in pause mode.
+- `Validation.service`: A service dedicated to validating input data within the application.
+- `Env.service`: A facade for accessing environment variables.
+- `Alert.service`: A facade for handling sound alerts, providing additional functionality such as stop, play, and reset options.
+
+Please note that this list may not be exhaustive, but it gives an overview of the services available in the src/services directory.
+
+## State Management:
+In this project, Redux Toolkit is utilized for managing the state of the application. The state is stored in the src/redux/store folder.
+
+### - Redux Store:
+The Redux store is the central hub for storing and managing the application state. It acts as a single source of truth, allowing components to access and modify the state. The store is configured using Redux Toolkit.
+
+### - State Persistence:
+To persist the state, certain slices of the state are stored using the react-native-encrypted-storage library, specifically the EncryptedStorage module. This library provides a secure storage solution for sensitive data, ensuring that the stored state remains encrypted and protected.
+
+By utilizing EncryptedStorage, the application can persist the specified slices of the state across app sessions, allowing for the restoration of state data when the app is relaunched.
+
+Please note that while the state persistence is achieved through react-native-encrypted-storage, other parts of the state that don't require encryption may be stored and managed using regular Redux functionality.
+## Setup wearables
+
+### IOS:
+- You need to have an apple watch or other type of smart watch, connect it to your iPhone device and then open [Health app](https://www.apple.com/ios/health/) to make sure that every thing work well.
+- You can connect other watches to your health app. However, you need to install the app related to your watch and then connect it to health app. [Mi Band Example](https://govida.io/faqs/how-do-i-connect-mi-band-to-apple-health/) 
+
+### Android:
+
+The process for the android system is alittle bit complicated. We need a device that has a companion app capable to connect to Google Fit and working in the background. Not every device has this capability. Example with Mi Band 5/6:
+  - Install the Zepp Life (formerly Mi Band) app on your Android device.
+  - Open the Zepp Life app and click on the **Connect** button.
+  - Set up the band connection in the default way.
+  - Connect the Zepp Life app to your Google Fit account.
+  - Enable background modes in the Zepp Life app.
+  - Open Zepp Life Settings and then enable **Show status in the notification bar**.
+  - Go back to Biostasis app.
+  - Enable Automated Emergency in the Biostasis app.
+  - Enable the pulse-based trigger (is selected by default).
+  - Enable the Google Fit switch and pair the BioStasis app with your Google Fit account, the same as you used in the step 4.
+  - Enable the other switches (**Background modes** from step 4 and **connect app to Google Fit** from step 4).
+  - You should see **System is ON** and a status in the notification bar.
+
+## License:
+Licensed under the [GNU General Public License v3.0]()
 
-## Table of content
-
-1.**Building / Running section**  
->1.1 [Before you begin](#before-you-begin)  
-  1.2 [Environments](#environments)  
-  1.3 [Build distribution](#build-distribution)  
-  1.4 [Android](#android)   
-  1.5 [iOS](#ios)  
-  1.6 [Run](#run)  
-2. **[Authorization](#authorization)**
-3. **[Main feature - Automated emergency](#main-feature-automated-emergency)**  
->3.1 [Automated Emergency Android](#automated-emergency-android)  
-  3.2 [Automated Emergency iOS](#automated-emergency-ios)  
-  3.3 [Examples](#examples)  
-  3.4 [Alarms](#alarms)  
-4. **Code**
->4.1 [Project structure](#project-structure)  
-  4.2 [Tooling / Providers](#tooling-providers)  
-  4.3 [Headless JS (Android only)](#headless-js-android-only)  
-  4.4 [Navigation and tools](#navigation-and-tools)  
-  4.5 [State management](#state-management)  
-  4.6 [Services](#services)  
-  4.7 [Background.service (Android only)](#backgroundservice-android-only)  
-  4.8 [Native Manager (iOS)](#native-manager-ios)  
-  4.9 [Setup wearables](#setup-wearables)  
-  4.10 [Current packages versions](#current-packages-versions)  
-
-## Setup and first run
-
-### Before you begin
-
-Ask the project administrator for configuration files that are not kept in the repository.
-
-- add `.env.{environment-name}` file to the root folder of project (currently we are using React Native config which is harvesting .env.development / .env.production nomenclature)
-- add `keystore.properties` file to `/android`
-- add `local.properties` file to `/android`
-- add `my-upload-key.keystore` file to `/android/app` (for production builds)
-
-#### Google services config files 
-
-- add proper configuration files for corresponding  build variants :
-- **android**  `android/app/src` appropriate `google-service.json` in `developmentDebug` `developmentRelease` `productionDebug` and `productionRelease` folders
-- **ios** `ios/Firebase/` add  `GoogleService-Info-debug.plist` , `GoogleService-Info-production.plist`
-
-### Environments
-
-- App has implemented support for environment variables.
-- Configuration based on https://www.bigbinary.com/blog/handling-environment-specific-configurations-in-react-native ( currently no staging included)
-- If you want to add new environment, follow the link above
-
-### Build distribution
-
-Production builds are provided via Testing tracks and TestFlight builds.
-No CI/CD
-
-#### Android
-
-Setup proper build variant in android studio -> build -> generate signed bundle / apk (you need proper keystore) .
-
-Upload appropriate generated bundle to Google Play Console.
-
-#### iOS
-
-iOS version is distributed manually.
-
-1. Archive the app from Xcode.
-2. Distribute as "Ad Hoc" and save locally.   
-   2.1. Distribute as 'Distribution'  
-3. Upload the archive to the Firebase service.  
-   3.1. Upload to test flight for prod testers
-
-Certificates are needed for Xcode to make the build. Please contact the project administrator to get the certificates.
-
-### Run
-
-All available environment versions have their scripts in `package.json`.
-
-1. `yarn` && `cd ios && pod install` like regular react native app. Keep in mind - there are some changes applied to 3rd packages , so patches folder should be created after running yarn more info: https://github.com/ds300/patch-package
-
-Basic commands example:
-
-1. `yarn start`
-2. `yarn android:dev`
-3. for iOS - please run through xcode application which is more  convenient or with `ios:dev`
-
-## Authorization
-
-Authorization process is handled by AWS Cognito, listeners are attached in `AuthListeners.tsx` component and authorize via `Amazon.service.ts`.
-
-## Main feature Automated emergency
-
-This is the main feature of the app. There are two types: pulse-based and time-based. Pulse-based emergency is triggered when the device does not detect the pulse of the user. Time-based makes regular checks by a notification.
-
-Turning the automated emergency ON in the Automated Emergency Settings screen in the app. To actually turn one of the automated emergency types ON we need to confirm the additional checks.
-
-### Automated Emergency Android
-
-On Android, we use React Native Background Fetch for running the pulse checks. Everything is done in JavaScript.
-
-1.  **Pulse-based trigger**  
-     To turn this type of trigger on, we need to mark the additional checks. The Google Fit check will trigger an authentication modal. Other checks (companion app connected to Google Fit and background service enabled) are trust-based as we cannot directly verify if user have done this. When all the checks are marked, the pulse-based trigger is turned on in the backend side. A non-dismissible notification is shown in the system saying that the app is watching user health. A background service is turned on, checking user pulse from Google Fit in short intervals (shorter than the selected frequency).  
-     In the pulse-based trigger the backend has always an emergency scheduled. This emergency is then delayed every time the device sends positive information / status (= pulse was detected in the last time period, time period = the time frequency chosen by the user). The positive information is sent either automatically by the background service. The notification is triggered by the backend.
-    1.  **User has positive pulse data in the last time period**  
-         If user has positive health data detected, then a call to the backend is made with time of next emergency. During this time the backend will be waiting for the next positive information sent. Otherwise, the emergency will be triggered. The app notification is now saying that a positive status was sent to the backend (won't be shown on production). Every positive info sent to backend delays the planned emergency.
-    2.  **Pulse wasn't detected in the last time period**  
-        If no pulse was detected during set time no positive info is sent -causing further escalation predeceased with Are you ok notification. If user does nothing, then a loud alarm is scheduled in delays. In the meantime a notification is sent from the backend and then a text message.  
-         Pulse can be checked during pauses or nighttime , positive info is sent , but can be omitted by backend while pause time is set.
-    3.  **Emergency triggered**  
-        After the emergency has been triggered, opening the app should lead to a modal informing about this fact. Triggered means not only that the information was already sent to contacts but also the last minutes before that. If the final emergency time has not yet come, it's still possible for the user to tell the ap they are ok and the emergency is delayed again. If the information to contacts was already sent, nothing more should happen from the backend side, unless a positive status is sent to the backend again (then, the system is reset and back to how it functioned before the emergency). On the app/device side, the background service will continue to be triggered and send positive status if pulse detected.
-2.  **Time-based trigger**  
-    This type of trigger does not turn the background service on. If enabled, backend will send notifications asking "are you ok" in specified time intervals to the device. Then the user has 20 minutes to confirm, which sends the positive status to the backend. The difference from the pulse-based trigger is that backend waits for the positive information only between the "are you ok" notification and the actual emergency, not all the time. The scheduled pauses and the night are also skipped. If no reaction from user, the emergency message is sent to contacts. Nothing more should happen from the backend or device at this point.
-
-### Automated Emergency iOS
-
-On iOS we use a custom native (Written in swift, not JavaScript) module, that's only turned on or off by the app logic.
-
-1.  **Pulse-based trigger**  
-     To turn this type of trigger on, we need to mark the additional checks. The HealthKit check will trigger an authentication modal. Due to Apple policy, we don't have possibility to verify if user has shared pulse information with our application, nor if user has Apple Watch paired. Therefore both of those checks are trust-based.
-     If user authenticates our application for pulse information gathering, application will get periodic pulse update from system.
-
-     When update happens, positive information is sent to the backend. In the pulse-based trigger the backend has always an emergency scheduled. This emergency is then delayed every time the device sends positive information / status (= pulse was detected in the last time period, time period = the time frequency chosen by the user).
-
-     Backend will response depending on the case:
-      1.  **User has positive pulse data in the last time period**  
-            If user has positive health data detected, then a call to the backend is made with time of next emergency. During this time the backend will be waiting for the next positive information sent. Otherwise, the emergency will be triggered. On debug environment, local notification shows, informing tester about positive information being sent to backend (won't be shown on production). Every positive info sent to backend delays the planned emergency.
-      2.  **Pulse wasn't detected in the last time period**  
-            If no pulse was detected during set time no positive aplication stays passive. Emergency trigger escalation on iOS is handled by backend side. Escalation starts with "Are you ok notification". If user does nothing, then a loud alarm is scheduled in delays. In the meantime a notification is sent from the backend and then a text message.
-      3.  **Emergency triggered**  
-            After the emergency has been triggered, opening the app should lead to a modal informing about this fact. Triggered means not only that the information was already sent to contacts but also the last minutes before that. If the final emergency time has not yet come, it's still possible for the user to tell the ap they are ok and the emergency is delayed again. If the information to contacts was already sent, nothing more should happen from the backend side, unless a positive status is sent to the backend again (then, the system is reset and back to how it functioned before the emergency). On the app/device side, the background service will continue to be triggered and send positive status if pulse detected.
-
-            Note that system update of pulse:
-            * Will happen no more often than once per hour
-            * Won't happen on locked phone (Will wait for user to unlock the phone)
-            * Will happen even after phone is restarted
-            * Will happen only if new data is available, therefore won't happen if user takes off iWatch.
-            * Won't happen or will be throttled if system is low on battery
-
-2.  **Time-based trigger**  
-    Works exactly like on Android.
-
-### Examples
-
-Let's look at a typical scenario. First, the pulse-based trigger (Android only):
-
-1. User turns on the Automated Emergency selecting the pulse-based trigger in the app. We then call the method `startBackgroundFetch` (described in more detail below). It sets the Background Fetch library to execute the regularly run `pulseCheck()` (also better described below) task in regular time intervals.
-2. The `pulseCheck()` task is executed. It checks the pulse and sends the positive status to the backend if the pulse is detected.
-3. If backend doesn't receive positive information during specific period , it triggers escalation flow , predeceased by 'Are you ok' notification.
-4. Pulse check method is sending signal to postpone escalation within specific time (set by user interval)
-
-Pulse based trigger (iOS):
-1. User turns on the Automated Emergency selecting the pulse-based trigger in the app. Native module `NativeManager` method `updateDataCollectionStatus()` is called. Internally it checks for user current settings and checks to determine if data collection should be started or stopped.
-2.  `HealthKitManager` class, part of native module requests system to update periodically with pulse data.
-3. When such update happens, `NetworkingManager` is used to send positive info to backend
-4. If backend doesn't receive positive information during specific period , it triggers escalation flow , predeceased by 'Are you ok' notification.
-5. Pulse check method is sending signal to postpone escalation within specific time (set by user interval)
-
-Let's look at the time-based trigger now:
-
-1. User turns on the Automated Emergency selecting the time-based trigger in the app. It's doing nothing on the device side. Instead, it tells the backend to send notifications asking "are you ok" in specified time intervals.
-2. The backend sends the "are you ok" notification to the device. After every notification, user has 20 minutes to react.
-3. From this point it works just like above: in 5 minutes user will receive a text message, then in 5 minutes an alarm will play.
-
-### Alarms
-
-Alarms are a part of the escalation ("Are you ok?" notification > Text message > **Alarm** > Send information to contacts). Alerts can be triggered by:
-
-1. (Android only) Remote notification (both pulse-based and time-based triggers). The registered headless tasks execute the function `HandleBackgroundNotification` (described in more detail below).
-2. Remote Notification received while app is in foreground. Handled by listeners from react-native-notifications https://github.com/wix/react-native-notifications.
-3. iOS notifications are sent with custom payload sound, with appropriate asset on iOS side. ``Note:`` As they are normal (not alert - this requires additional allowance by Apple) types of notifications, the sound might be silenced by user by disabling sound in iOS.
-
-...and one way to turn the alarm off:
-Sounds which use Alert.service can be dismissed by calling resetAllSounds method, iOS background notification is asset based , only by opening app from notification we can dismiss sound
-
-1. After selecting the "are you ok" notification, the user can turn off the alarm by selecting the "I'm OK" (actual caption may be different) button.
-
-## Project structure
-
-1. **assets** *icon components and static images*
-2. **components** *shared components*
-3. **constants** *self-explanatory*
-4. **hooks** *self-explanatory*"
-5. **i18n** *localization*
-6. **models** *types*
-7. **navigators** *stacks and navigator components*
-8. **providers** *AuthListeners / NotificationListeners / and other providers : SafeArea / PersistGate / Native Base UI provider*
-9. **redux** *redux toolkit store*
-10. **screens** *screens with related components*
-11. **services** *all services pointed out in [Services](#services) section*
-12. **theme** *theme for native-base*
-13. **utils** *self-explanatory*
-
-### Tooling / Providers
-
-3rd party services:
-- Firebase - Cloud messaging / Crashlytics https://rnfirebase.io/  
-- AWS/ Cognito - user auth service https://github.com/aws-amplify/amplify-js  
-
-### Headless JS (Android only)
-
-In the `index.js` file in the root folder there are a few entry points for Headless JS tasks:
-
-```typescript
-if (!isIOS) {
-  BackgroundFetch.registerHeadlessTask(mainScheduledEvent());
-  messaging().setBackgroundMessageHandler(HandleBackgroundNotification);
-}
-```
-
-1. `mainScheduledEvent` is a function that is called in the background. It's located in the Background.service (described in more detail in the Services section).
-2. `messaging` class registration for handling background notifications with appropriate actions (mainly for starting Alerts)
-
-### Navigation and tools
-
-Root navigation structure is based in `src/navigators/index.tsx` and looks like this (simplified version):
-
-```typescript jsx
-<NavigationContainer>
-  {isReady && (
-    <>
-      <NotificationListener />
-      <CancelEmergencyPopup />
-    </>
-  )}
-  <Stack.Navigator>
-    {isLogged ? (
-      <>
-      <Stack.Screen name="MainStack" />
-      <Stack.Screen name="HealthConditionError" />
-      </>
-    ) : (
-      <Stack.Screen name="AuthStack" />
-    )}
-    <Stack.Screen name="LostConnection" />
-  </Stack.Navigator>
-  <Toast />
-  {loadingInitData && <Loader />}
-</NavigationContainer>
-```
-
-1. On the top we are keeping the tools: NotificationListener and CancelEmergencyPopup. Those are special components that we use to handle different events while the app is running.
-2. The main part consists of two stacks: AuthStack and MainStack. AuthStack is used when the user is not logged in, MainStack is used when the user is logged in.
-3. Also, we are keeping two special screens here: LostConnection and HealthConditionError. Those are used to handle the app being offline and to display the "Are you ok?" popup. HealthConditionError is just for loggedIn user.
-4. At the bottom we are keeping the Toast component. It is used to display the toast messages.
-
-### State management
-
-We use Redux Toolkit to manage the state of the app. The state is stored in the `src/redux/store` folder.
-
-The state is persisted with some slices being kept in the secure `react-native-encrypted-storage` library EncryptedStorage.
-
-## Services
-
-The app uses a few special services to handle complicated tasks. The services are kept in the `src/services` folder.
-
-1. **AsyncStorage.service**  
-   A wrapper for the AsyncStorage library, mainly for logging purposes and keeping current app state ( IsEmergencyEscalationStarted flag ) and for iOS usage to get proper app state while app is killed / in background
-2. **Date.service**  
-   Tool for managing different time-related tasks.
-3. **TimeSlot.service**  
-   Tool for managing time slots, a feature in Biostasis.
-4. **Amazon.service**  
-   Shortcuts for authentication with Amazon.
-5. **API.service**  
-   All API endpoints are kept in this service.
-6. **Background.service**  
-   A service for handling the background tasks. Described below in more detail.
-7. **GoogleFit.service**  
-   A service for handling the Google Fit data (Android only).
-8. **Location.service**  
-   A service for handling the location data.
-9. **Logger.service**  
-   A logger mechanism for the app. Stores logs in AsyncStorage and lets testers share them with the developer.
-10. **Notification.service**  
-    Name may be misleading as this service is a shortcut for using the Toast component.
-11. **Push.service**  
-    For retrieving and saving the push token.
-12. **Time.service**  
-    Helper for calculating if the emergency service is in pause mode.
-13. **Validation.service**  
-    A service for validating the input data.
-14. **Env.service**
-    Facade for env variables
-15. **Alert.service**
-    Facade for sound alerts with additional stop , play , reset functionality
-
-#### Background.service (Android only)
-
-Let's look at the methods of the Background.service:
-
-_Related to the foreground service:_
-
-- **enableForegroundService()**  
-  Enables the foreground service on Android, the tool that sits in notifications in the OS and lets us display output to the user even when the app is not in the foreground. _Important note: when the app uses the foreground service, it can run background tasks more frequently._
-- **updateNotification()**  
-  Tool for updating the foreground service notification.
-
-_Related to React Native Background Fetch:_
-
-- **startBackgroundFetch()**  
-  Starts and configures the background fetch tool. We call this method from the `AutomatedEmergencySettingsScreen`. Then, we can run specific tasks in the background.
-- **stopBackgroundFetch()**  
-  Stops either background fetch or a specific task.
-  - **scheduleTask()**  
-    It's a generic tool for scheduling a task, not only retries. It's behaving like setTimeout, but for headless tasks.
-- **mainScheduledEvent()**  
-  This is the entry function for Background Fetch. It splits into specific tasks based on task ID. Here we also handle timeouts. It's invoked both in background and foreground. Please check Background Fetch documentation for more info on how the library works: https://github.com/transistorsoft/react-native-background-fetch.
-
-_Handlers for specific background tasks:_
-
-- **emergencyRetry()**  
-  Handles the retry of the emergency service. If success, it will stop the retry. If not, it will schedule another retry.
-- **pulseCheck()**  
-  This is the default task that runs in the background when user has the pulse-based trigger turned on. It checks if the pulse is ok. If it's ok, it will send the "positive info" to the server.
-- **soundNotification()**  
-  This task is responsible for playing the alarm, while using background task we need to schedule this with low delay.
-
-_Entry point for the headless task triggered by a remote notification:_
-
-- **HandleBackgroundNotification()**  
-  This is the entry point for the headless task triggered by a remote notification. It's scheduling the alarm for `EMERGENCY_ALERT` type push notification . With that payload type BackgroundEventsEnum.AlarmBeforeEmergence task  is scheduled. Also this handler can set proper flag for `IsEmergencyEscalationStarted` async storage value (this value is responsible for proper app state), for proper navigation while opening Biostasis not from push notification
-
-## Native Manager (iOS)
-Since react native currently doesn't support running in "Headless mode" (Without any part of application to be seen, background mode) on iOS, additional native manager has been proposed to handle part of tasks, that are done in background only.
-
-Native manager is responsible for data collection of user pulse and location and then updating backend with it.
-
-#### Singleton
-Native manager is singleton, this pattern fixes problem of react creating this class multiple times per app lifecycle.
-
-#### Properties
-Native manager contains multiple class properties, which are responsible for different functionalities. Manager is responsible for communication between sub-modules.
-
-1. **HealthKitManager**
-Responsible for communication with health kit framework. It's main purpose is to show request for healthKit authorization to user, and start/stop observer queues for Pulse data. It also Parses data received from system observer queue via `HealthKitDataHandler` class. If Data is positive (In our case, just exist) it delegates this information to `NativeManager`.
-2. **NotificationManager**
-Responsible for showing user local (Not sent by server) notifications. It's purpose depends on environment. In Debug environment, `NativeManager` uses it for debug notifications (Positive info sent, location updated etc). On Production environment, it is only used to show user notification about lack of internet connection, when updating positive information has failed due to it.
-3. **NetworkManager**
-Used by `NativeManager` to send pulse, location to backend. Also is used to refresh auth-token required by cognito for authorization purposes if this token has expired.
-4. **StorageManager**
-Used by `NativeManager` to read values of react storage. This allows `NativeManager` to determine if user has turned automatic emergency on, and also allows to read auth-token for cognito.
-5. **LocationManager**
-Responsible for communication with location framework. It's main purpose is to request for location authorization to user, and then start/stop observer for location updates. It delegates this information to `NativeManager`.
-
-#### Lifecycle
-1. Start with start of application
-2. use `determineAndSetDataCollectionStatus()` to determine if collection queues should be turned on or off.
-3. Stay in memory, wait for update from `HealthKitManager`, `LocationManager`, or function `updateDataCollectionStatus()` being called from react.
-
-  ##### update from `HealthKitManager`, `LocationManager`:
-  When such updates happen, `NativeManager` uses either `sendPositiveUpdateToServer` or `updateLocation` methods from `NetworkManager` to update server with this data.
-  ##### updateDataCollectionStatus() call from react:
-  When react uses this method, `NativeManager` first waits 2.5 seconds, for internal async storage to update it's values, then uses `determineAndSetDataCollectionStatus()` to set queues on or off depending on new values.
-
-### Setup wearables
-
-iOS and Apple Watch:
-
-1. Set up the Apple Watch.
-
-Android:
-
-We need a device that has a companion app capable to connect to Google Fit and working in the background. Not every device has this capability. Example with Mi Band 5/6:
-
-1. Install the Zepp Life (formerly Mi Band) app on your Android device.
-2. Open the Zepp Life app and click on the "Connect" button.
-3. Set up the band connection in the default way.
-4. Connect the Zepp Life app to your Google Fit account.
-5. Enable background modes in the Zepp Life app.
-6. Open Zepp Life Settings and then enable "Show status in the notification bar".
-7. Go back to Biostasis app.
-8. Enable Automated Emergency in the Biostasis app.
-9. Enable the pulse-based trigger (is selected by default).
-10. Enable the Google Fit switch and pair the BioStasis app with your Google Fit account, the same as you used in the step 4.
-11. Enable the other switches ("Background modes" from step 4 and "Connect app to Google Fit" from step 4).
-12. You should see "System is ON" and a status in the notification bar.
-
-### Current packages versions
-
-    "@react-native-async-storage/async-storage": "^1.15.5",
-    "@react-native-community/datetimepicker": "^3.5.2",
-    "@react-native-community/netinfo": "6.0.0",
-    "@react-native-firebase/app": "14.7.0",
-    "@react-native-firebase/crashlytics": "14.7.0",
-    "@react-native-firebase/messaging": "14.7.0",
-    "@react-native-picker/picker": "^1.16.3",
-    "@react-navigation/drawer": "^6.4.1",
-    "@react-navigation/native": "^6.0.10",
-    "@react-navigation/stack": "^6.2.1",
-    "@reduxjs/toolkit": "1.8.0",
-    "@types/uuid": "^8.3.1",
-    "@voximplant/react-native-foreground-service": "3.0.1",
-    "amazon-cognito-identity-js": "^5.0.4",
-    "aws-amplify": "4.3.24",
-    "axios": "^0.21.1",
-    "dayjs": "^1.10.6",
-    "formik": "^2.2.9",
-    "i18next": "^20.3.2",
-    "native-base": "3.0.3",
-    "patch-package": "^6.4.7",
-    "postinstall-postinstall": "^2.1.0",
-    "react": "17.0.2",
-    "react-i18next": "^11.11.1",
-    "react-native": "0.67.2",
-    "react-native-background-fetch": "^4.0.3",
-    "react-native-config": "^1.4.6",
-    "react-native-device-info": "^8.3.3",
-    "react-native-device-time-format": "^2.3.0",
-    "react-native-document-picker": "^6.0.4",
-    "react-native-encrypted-storage": "^4.0.2",
-    "react-native-fs": "^2.18.0",
-    "react-native-geolocation-service": "^5.3.0-beta.1",
-    "react-native-gesture-handler": "^1.10.3",
-    "react-native-get-random-values": "^1.7.0",
-    "react-native-google-fit": "^0.18.3",
-    "react-native-inappbrowser-reborn": "^3.6.3",
-    "react-native-linear-gradient": "^2.5.6",
-    "react-native-mask-text": "^0.2.2",
-    "react-native-modal-datetime-picker": "^10.2.0",
-    "react-native-notifications": "4.3.1",
-    "react-native-paper": "^4.9.2",
-    "react-native-permissions": "^3.0.5",
-    "react-native-phone-input": "^1.0.10",
-    "react-native-reanimated": "2.4.1",
-    "react-native-safe-area-context": "^3.3.0",
-    "react-native-screens": "3.5.0",
-    "react-native-share": "^7.2.0",
-    "react-native-sound": "^0.11.2",
-    "react-native-splash-screen": "^3.2.0",
-    "react-native-svg": "^12.1.1",
-    "react-native-svg-charts": "^5.4.0",
-    "react-native-swipe-list-view": "^3.2.9",
-    "react-native-swiper": "^1.6.0",
-    "react-native-toast-message": "^1.4.9",
-    "react-native-vector-icons": "^8.1.0",
-    "react-phone-number-input": "^3.1.26",
-    "react-redux": "^7.2.4",
-    "redux-persist": "^6.0.0",
-    "styled-components": "^5.3.0",
-    "styled-system": "^5.1.5",
-    "use-between": "^0.0.18",
-    "use-countdown-timer": "^1.3.1",
-    "uuid": "^8.3.2",
-    "yup": "^0.32.9"
