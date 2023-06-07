@@ -122,7 +122,7 @@ After you navigate to the project directory. Install all dependencies for the ap
           yarn start
   6. Run the application `Run > Run'app'` it will install the application on your Android device and run it automatically. After that, it will take some time until metro bundler finish bundling all project files into one main file. 
   
-  ======================================== **Alternatively** ======================================== 
+  =================================== **Alternatively** =================================== 
   
   You can run the application outside android studio.
   - Make sure that you have `local.properties` file in your `android` directory (usually this file will be created automatically by android studio). it should contian the path to your android sdk dir.
