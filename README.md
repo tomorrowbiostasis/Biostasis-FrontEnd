@@ -306,5 +306,5 @@ The process for the android system is alittle bit complicated. We need a device 
   - You should see **System is ON** and a status in the notification bar.
 
 ## License:
-Licensed under the [GNU General Public License v3.0]()
+Licensed under the [GNU General Public License v3.0](LICENSE)
 
