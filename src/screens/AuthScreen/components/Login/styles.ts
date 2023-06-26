@@ -17,10 +17,17 @@ const styles = StyleSheet.create({
 
   forgotPasswordText: {
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 30,
+    color: colors.blue[800],
+    textDecorationLine: 'underline'
+
   },
   loginButton: {
+    backgroundColor: colors.green[800],
     marginTop: 50,
+    borderWidth: 2,
+    borderColor: colors.white,
+    borderRadius: 20,
   },
   alertContainer: {
     paddingBottom: 10,
