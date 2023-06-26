@@ -9,7 +9,7 @@ import styles from './styles';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 
-const slideImage = require('~/assets/images/onboarding/OnboardingImage1.png');
+const slideImage = require('~/assets/images/onboarding/OnboardingImage3.png');
 
 const OnboardingSummarySlide: FC = () => {
   const {navigate} = useNavigation();
