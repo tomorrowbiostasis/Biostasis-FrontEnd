@@ -43,12 +43,12 @@ const AuthScreen = () => {
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-  const swiperRef = useRef<ScrollView>(null);
-
   const defaultTabIndex = useMemo(
     () => getTabIndexByParam(`${params?.action}`),
     [params],
   );
+
+  const swiperRef = useRef<ScrollView>(null);
 
   const changeTab = useCallback(
     (newIndex: number, animated: boolean = true) => {
@@ -63,7 +63,7 @@ const AuthScreen = () => {
   );
 
   useEffect(() => {
-    changeTab(defaultTabIndex, false);
+    changeTab(defaultTabIndex);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
