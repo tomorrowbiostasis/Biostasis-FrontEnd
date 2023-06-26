@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
   },
   header: {
     textTransform: 'uppercase',
+    textAlign: 'center',
   },
   slideImageContainer: {
     width: '100%',
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
   },
   margin40: {
     marginTop: 40,
+    textAlign: 'center'
   },
 });
 

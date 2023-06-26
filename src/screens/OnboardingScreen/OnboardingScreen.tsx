@@ -10,7 +10,6 @@ import colors from '~/theme/colors';
 import styles from './styles';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 
-const backgroundShape = require('~/assets/images/onboarding/OnboardingBackgroundShape.png');
 const slideImage1 = require('~/assets/images/onboarding/OnboardingImage1.png');
 const slideImage2 = require('~/assets/images/onboarding/OnboardingImage2.png');
 
@@ -25,22 +24,15 @@ const OnboardingScreen: FC = () => {
 
   return (
     <View style={styles.container}>
-      <Image
-        alt={' '}
-        source={backgroundShape}
-        style={styles.backgroundShapeImage}
-        resizeMode={'stretch'}
-      />
       <SafeAreaView style={styles.safeAreaContainer}>
         <Swiper
-          showsButtons={false}
+          showsButtons={true}
           loop={false}
           dotStyle={styles.paginationDot}
           activeDotStyle={styles.paginationDot}
           activeDotColor={colors.sea[400]}
           dotColor={colors.gray[350]}
           onIndexChanged={index => setActiveSlideIndex(index)}
-          scrollEnabled={isLastSlide()}
           showsPagination={isLastSlide()}>
           <OnboardingSlide
             key={'slide-1'}

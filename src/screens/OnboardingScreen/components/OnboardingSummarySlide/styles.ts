@@ -6,11 +6,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 30,
-    paddingBottom: 20,
+    paddingBottom: 50,
   },
   header: {
     textTransform: 'uppercase',
-    textAlign: 'right',
+    textAlign: 'center',
+    justifyContent: 'flex-start',
   },
   centerContentContainer: {
     flex: 1,
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   description: {
-    textAlign: 'right',
+    textAlign: 'center',
     marginTop: 20,
   },
   slideImageContainer: {

@@ -12,11 +12,6 @@ const styles = StyleSheet.create({
   safeAreaContainer: {
     flexGrow: 1,
   },
-  backgroundShapeImage: {
-    width: '100%',
-    height: 250,
-    position: 'absolute',
-  },
   slideImage: {
     width: screenWidth - 120,
     alignSelf: 'center',
