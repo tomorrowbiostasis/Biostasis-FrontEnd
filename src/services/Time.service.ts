@@ -1,6 +1,5 @@
-import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
-import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
-import {getUserPersistedSettings} from '~/services/AsyncStorage.service/helpers';
+import {ApiToLocal} from './TimeSlot.service';
+import API from './API.service';
 
 const pseudoTime = (time: number) => {
   const date = new Date(time);
@@ -10,26 +9,8 @@ const pseudoTime = (time: number) => {
 };
 
 export const getTimeSettings = async () => {
-  const {positiveInfoPeriod} = await getUserPersistedSettings();
-  //TODO refactor this parsing below as with getUserPersistedSettings
-  const settingsJsonOfJson = await AsyncStorageService.getItem(
-    AsyncStorageEnum.PersistedAutomatedEmergencySettings,
-  );
-  const settingsObjectOfJson = Object.entries(
-    JSON.parse(`${settingsJsonOfJson}`),
-  );
-  const settingsObject = settingsObjectOfJson.reduce(
-    (acc, curr) => ({
-      ...acc,
-      [curr[0]]: JSON.parse(`${curr[1]}`),
-    }),
-    {pausedDate: {}, specificPausedTimes: []},
-  );
-
-  return {
-    positiveInfoPeriod,
-    ...settingsObject,
-  };
+  const response = await API.getTimeSlot();
+  return ApiToLocal.mapApiToLocalData(response.data);
 };
 
 export const isPausedTime = (
@@ -40,11 +21,6 @@ export const isPausedTime = (
   const timestamp = +new Date(givenDate);
 
   if (timestamp < pausedDate?.timestamp) {
-    return true;
-  }
-
-  const hour = givenDate.getHours();
-  if (hour >= 22 || hour < 6) {
     return true;
   }
 
