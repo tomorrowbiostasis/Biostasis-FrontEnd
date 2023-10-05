@@ -22,6 +22,8 @@ import {MaskedDateInput} from '../DateOfBirthScreen/components/MaskedDateInput/M
 import {useDataValidState} from './hooks/UseDataValidState';
 
 import styles from './styles';
+import {Screens} from '~/models/Navigation.model';
+import ToastService from '~/services/Toast.service';
 
 export type ProfileEditFormFields = {
   firstName: string;
@@ -51,7 +53,7 @@ const ProfileEditScreen = () => {
   );
 
   const handleSave = useCallback(
-    ({firstName, lastName, email, address}: ProfileEditFormFields) => {
+    ({firstName, email, lastName, address}: ProfileEditFormFields) => {
       const userToUpdate: IUser = {
         name: firstName,
         surname: lastName,
@@ -63,13 +65,16 @@ const ProfileEditScreen = () => {
         countryCode: phoneNumberState.value?.countryCode,
       };
       setIsSubmitted(true);
+      // @ts-ignore
       dispatch(updateUser(userToUpdate)).then((response: {error: string}) => {
         setIsSubmitted(false);
         if (!response.error) {
-          navigate('ProfileDefault');
+          navigate(Screens.ProfileDefault as never);
+          ToastService.success(t('user.updatedSuccessfully'));
         }
       });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       phoneNumberState.value?.prefix,
       phoneNumberState.value?.phone,
@@ -83,29 +88,32 @@ const ProfileEditScreen = () => {
   return (
     <>
       <Container
+        title={t('profileEdit.title')}
         contentContainerStyle={styles.contentContainer}
-        type={'keyboardAvoidingScrollView'}>
-        <View style={styles.content}>
-          <Formik<ProfileEditFormFields>
-            initialValues={{
-              firstName: user.name || '',
-              lastName: user.surname || '',
-              email: user.email || '',
-              address: user.address || '',
-            }}
-            onSubmit={handleSave}
-            validationSchema={useEditProfileValidationSchema()}
-            validateOnChange={true}>
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              touched,
-              errors,
-              isValid,
-            }) => (
-              <>
+        type={'keyboardAvoidingScrollView'}
+        showBackIcon
+        showDrawerIcon>
+        <Formik<ProfileEditFormFields>
+          initialValues={{
+            firstName: user.name || '',
+            lastName: user.surname || '',
+            email: user.email || '',
+            address: user.address || '',
+          }}
+          onSubmit={handleSave}
+          validationSchema={useEditProfileValidationSchema()}
+          validateOnChange={true}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            touched,
+            errors,
+            isValid,
+          }) => (
+            <View style={styles.panel}>
+              <View style={styles.panelBody}>
                 <View style={styles.inputWrapper}>
                   <Input
                     type="firstName"
@@ -136,7 +144,7 @@ const ProfileEditScreen = () => {
                     }
                   />
                 </View>
-                <View style={styles.inputWrapper}>
+                {/* <View style={styles.inputWrapper}>
                   <Input
                     type="email"
                     label={t('profileEdit.email')}
@@ -148,7 +156,7 @@ const ProfileEditScreen = () => {
                       errors.email && touched.email ? errors.email : undefined
                     }
                   />
-                </View>
+                </View> */}
                 <View style={styles.inputWrapper}>
                   <PhoneNumberPicker
                     label={t('profileEdit.phoneNumber')}
@@ -182,25 +190,26 @@ const ProfileEditScreen = () => {
                     }
                   />
                 </View>
-
-                <Button
-                  variant={'solid'}
-                  disabled={
-                    !(
-                      isValid &&
-                      phoneNumberState.isValid &&
-                      dateOfBirthState.isValid &&
-                      !isSubmitted
-                    )
-                  }
-                  style={styles.editButtons}
-                  onPress={handleSubmit}>
-                  {t('common.save')}
-                </Button>
-              </>
-            )}
-          </Formik>
-        </View>
+                <View style={styles.panelFooter}>
+                  <Button
+                    variant={'solid'}
+                    disabled={
+                      !(
+                        isValid &&
+                        phoneNumberState.isValid &&
+                        dateOfBirthState.isValid &&
+                        !isSubmitted
+                      )
+                    }
+                    style={styles.saveButton}
+                    onPress={() => handleSubmit()}>
+                    {t('common.save')}
+                  </Button>
+                </View>
+              </View>
+            </View>
+          )}
+        </Formik>
       </Container>
     </>
   );
