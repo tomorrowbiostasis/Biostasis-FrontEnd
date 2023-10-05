@@ -13,6 +13,7 @@ import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {forgotPassword} from '~/redux/auth/thunks';
 import {getForgotPasswordParams} from '~/redux/auth/selectors';
 import Alert from '~/components/Alert';
+import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ForgotPasswordScreen = () => {
   const {t} = useAppTranslation();
@@ -28,54 +29,68 @@ const ForgotPasswordScreen = () => {
   );
 
   return (
-    <Container type={'keyboardAvoidingScrollView'}>
+    <Container
+      containerStyle={styles.container}
+      type={'keyboardAvoidingScrollView'}>
       {emailMessage && (
-        <View>
-          <Alert
-            label={t(emailMessage.messageKey)}
-            error={!emailMessage.success}
-          />
-        </View>
+        <Alert
+          label={t(emailMessage.messageKey)}
+          error={!emailMessage.success}
+        />
       )}
-      <View style={styles.container}>
-        <Text style={styles.description}>{t('forgotPassword.enterEmail')}</Text>
-        <Formik
-          initialValues={{email: ''}}
-          onSubmit={handleContinue}
-          validationSchema={emailValidationSchema}
-          validateOnChange={true}>
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            touched,
-            errors,
-            dirty,
-            isValid,
-          }) => (
-            <>
-              <AuthInput
-                type={'email'}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                errorMessage={
-                  errors.email && touched.email ? errors.email : undefined
-                }
-              />
-              <View style={styles.buttonContainer}>
-                <Button
-                  disabled={!(isValid && dirty) || pending}
-                  isLoading={pending}
-                  style={styles.button}
-                  onPress={handleSubmit}>
-                  {t('common.continue')}
-                </Button>
-              </View>
-            </>
-          )}
-        </Formik>
+      <View style={styles.panel}>
+        <View style={styles.panelHeader}>
+          <IconMaterialCommunityIcons
+            name={'email-open-multiple-outline'}
+            size={26}
+            style={styles.icon}
+          />
+          <Text fontSize={'md'} fontWeight={700}>
+            {t('forgotPassword.title')}
+          </Text>
+        </View>
+        <View style={styles.lineStyle} />
+        <View style={styles.panelBody}>
+          <Text style={styles.description}>
+            {t('forgotPassword.enterEmail')}
+          </Text>
+          <Formik
+            initialValues={{email: ''}}
+            onSubmit={handleContinue}
+            validationSchema={emailValidationSchema}
+            validateOnChange={true}>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              touched,
+              errors,
+              dirty,
+              isValid,
+            }) => (
+              <>
+                <AuthInput
+                  type={'email'}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  errorMessage={
+                    errors.email && touched.email ? errors.email : undefined
+                  }
+                />
+                <View style={styles.panelFooter}>
+                  <Button
+                    disabled={!(isValid && dirty) || pending}
+                    isLoading={pending}
+                    onPress={() => handleSubmit()}>
+                    {t('common.continue')}
+                  </Button>
+                </View>
+              </>
+            )}
+          </Formik>
+        </View>
       </View>
     </Container>
   );
