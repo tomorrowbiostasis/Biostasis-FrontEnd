@@ -25,15 +25,18 @@ const PauseDateInfoText: React.FC<{isSlotPause?: number}> = ({isSlotPause}) => {
       ? 'automatedEmergencyDisabledFor'
       : 'youStillHavePause';
 
-    return t(`emergencyContacts.automatedEmergencySettings.${translationKey}`, {
-      pauseTime: getPauseTime(),
-    });
+    return t(
+      `emergencyContactsSettings.automatedEmergencySettings.${translationKey}`,
+      {
+        pauseTime: getPauseTime(),
+      },
+    );
   }, [automatedEmergencyEnabled, t, getPauseTime]);
 
   return (
     <View>
       {(pausedDate || isSlotPause) && (
-        <Text fontSize={'sm'} style={styles.pausedDateText}>
+        <Text fontSize={12} style={styles.pausedDateText}>
           {getText()}
         </Text>
       )}
