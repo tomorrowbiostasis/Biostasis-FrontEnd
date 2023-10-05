@@ -4,14 +4,13 @@ import colors from '~/theme/colors';
 const styles = StyleSheet.create({
   wrapper: {
     minHeight: 100,
-    backgroundColor: colors.green['400'],
+    backgroundColor: colors.green['200'],
     alignItems: 'center',
     justifyContent: 'center',
-    borderTopRightRadius: 30,
-    borderBottomLeftRadius: 30,
+    borderRadius: 20,
   },
   error: {
-    backgroundColor: colors.red['100'],
+    backgroundColor: colors.red['600'],
   },
   label: {
     color: colors.white,
