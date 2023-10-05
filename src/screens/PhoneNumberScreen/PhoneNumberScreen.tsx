@@ -10,11 +10,13 @@ import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 
 import {useNavigation} from '@react-navigation/core';
 import {updateUser} from '~/redux/user/thunks';
-import {userSelector} from '~/redux/user/selectors';
+import {userLoading, userSelector} from '~/redux/user/selectors';
 import {
   IPhoneNumber,
   PhoneNumberPicker,
 } from '~/components/PhoneNumberPicker/PhoneNumberPicker';
+import {Screens} from '~/models/Navigation.model';
+import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const PhoneNumberScreen = () => {
   const {t} = useAppTranslation();
@@ -23,6 +25,7 @@ export const PhoneNumberScreen = () => {
   const {user} = useAppSelector(userSelector);
   const [phoneData, setPhoneData] = useState<IPhoneNumber>();
   const [isPhoneValid, setIsPhoneValid] = useState(false);
+  const pending = useAppSelector(userLoading);
 
   const handleContinuePress = useCallback(() => {
     dispatch(
@@ -31,9 +34,10 @@ export const PhoneNumberScreen = () => {
         prefix: phoneData?.prefix,
         countryCode: phoneData?.countryCode,
       }),
+      //@ts-ignore
     ).then((response: {error: string}) => {
       if (!response.error) {
-        navigate('UserDateOfBirth');
+        navigate(Screens.UserDateOfBirth as never);
       }
     });
   }, [
@@ -46,25 +50,38 @@ export const PhoneNumberScreen = () => {
 
   return (
     <Container
-      title={t('common.welcome', {username: user.name || 'user'})}
       containerStyle={styles.container}
-      contentContainerStyle={styles.contentContainer}
       type={'keyboardAvoidingScrollView'}>
-      <View style={styles.content}>
-        <View style={styles.text}>
-          <Text fontSize={'xl'}>{t('userPhone.title')}</Text>
+      <View style={styles.panel}>
+        <Text style={styles.userName}>
+          {t('common.welcome', {username: user.name || 'user'})}
+        </Text>
+        <View style={styles.panelHeader}>
+          <IconMaterialCommunityIcons
+            name={'phone'}
+            size={26}
+            style={styles.icon}
+          />
+          <Text fontSize={'md'} fontWeight={700}>
+            {t('userPhone.title')}
+          </Text>
         </View>
-        <PhoneNumberPicker
-          onCheckIfValid={setIsPhoneValid}
-          onChangePhoneNumber={setPhoneData}
-        />
-        <Button
-          variant={'solid'}
-          disabled={!isPhoneValid}
-          style={styles.submitButton}
-          onPress={handleContinuePress}>
-          {t('common.continue')}
-        </Button>
+        <View style={styles.lineStyle} />
+        <View style={styles.panelBody}>
+          <PhoneNumberPicker
+            onCheckIfValid={setIsPhoneValid}
+            onChangePhoneNumber={setPhoneData}
+            onSubmit={handleContinuePress}
+          />
+          <Button
+            variant={'solid'}
+            disabled={!isPhoneValid || pending}
+            isLoading={pending}
+            style={styles.submitButton}
+            onPress={handleContinuePress}>
+            {t('common.continue')}
+          </Button>
+        </View>
       </View>
     </Container>
   );
