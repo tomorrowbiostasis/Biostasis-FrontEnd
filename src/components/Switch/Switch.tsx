@@ -24,15 +24,15 @@ const Switch: FC<Switch> = ({
   const trackBar = useMemo(() => {
     return {
       width: smaller ? 32 : 46,
-      height: smaller ? 16 : 22,
+      height: smaller ? 16 : 25,
       borderRadius: 25,
     };
   }, [smaller]);
 
   const thumbButton = useMemo(
     () => ({
-      width: smaller ? 12 : 19,
-      height: smaller ? 12 : 19,
+      width: smaller ? 12 : 18,
+      height: smaller ? 12 : 18,
       borderRadius: smaller ? 6 : 9,
     }),
     [smaller],
