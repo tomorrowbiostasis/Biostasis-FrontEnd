@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 export enum AsyncStorageEnum {
   RetryGeoPosition = '@retryGeoPosition',
   GoogleFitAuthorized = '@googleFitAuthorized',
@@ -7,4 +8,12 @@ export enum AsyncStorageEnum {
   PersistedUserSettings = 'persist:user',
   LoggerData = '@loggerData',
   IsEmergencyEscalationStarted = '@isEmergencyEscalationStarted',
+  HealthTrigger = '@HealthTrigger',
+  TimeTrigger = '@TimeTrigger',
+  BioData = '@BioData',
+  StartingDate = '@StartingDate',
+  LastUpdatedDate = '@LastUpdatedDate',
+  LongestPeriod = '@LongestPeriod',
+  RecommendedPeriod = '@RecommendedPeriod',
+  Language = '@language',
 }

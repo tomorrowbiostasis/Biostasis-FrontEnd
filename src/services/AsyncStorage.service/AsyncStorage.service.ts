@@ -31,9 +31,11 @@ export const AsyncStorageService = {
       );
       return null;
     }),
-  getAllKeys: async (): Promise<string[]> => await AsyncStorage.getAllKeys(),
-  multiGet: async (keys: string[]): Promise<Array<Array<string | null>>> =>
-    await AsyncStorage.multiGet(keys),
+  getAllKeys: async (): Promise<readonly string[]> =>
+    await AsyncStorage.getAllKeys(),
+  multiGet: async (
+    keys: readonly string[],
+  ): Promise<readonly (string | null)[][]> => await AsyncStorage.multiGet(keys),
   multiRemove: async (keys: string[]): Promise<void> =>
     await AsyncStorage.multiRemove(keys),
 };
