@@ -9,7 +9,7 @@ export interface ILogoutIconProps extends Omit<IconProps, 'name'> {}
 const LogoutIcon = (props: ILogoutIconProps) => {
   return (
     <View>
-      <Icon name={'log-out'} size={20} color={colors.gray[800]} {...props} />
+      <Icon name={'log-out'} size={15} color={colors.gray[800]} {...props} />
     </View>
   );
 };
