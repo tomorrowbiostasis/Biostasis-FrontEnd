@@ -22,6 +22,9 @@ import CancelEmergencyPopup from '~/screens/CancelEmergencyPopup';
 import LostConnectionScreen from '~/screens/LostConnectionScreen';
 import HealthConditionErrorScreen from '~/screens/HealthConditionErrorScreen';
 import NotificationListener from '~/providers/NotificationListener';
+import LostConnection from './helper/LostConnection';
+import {userInitializedSelector} from '~/redux/user/selectors';
+import SignUpStack from './SignUpStack';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -32,7 +35,7 @@ const linkingOptions: LinkingOptions<{}> = {
       AuthStack: {
         screens: {
           Auth: 'auth/:email/:code',
-          ForgotPasswordNewPassword: 'forgot-password/:email/:code',
+          NewPassword: 'forgot-password/:email/:code',
         },
       },
       HealthConditionError: 'are-you-ok',
@@ -57,6 +60,7 @@ const Container = () => {
   const isLogged = useAppSelector(isAuthed);
   const {loadingInitData} = useAppSelector(configSelector);
   const [isReady, setIsReady] = useState(false);
+  const isInitialized = useAppSelector(userInitializedSelector);
 
   return (
     <NavigationContainer
@@ -73,20 +77,26 @@ const Container = () => {
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen name="LostConnection" component={LostConnectionScreen} />
         {isReady && isLogged ? (
-          <>
-            <Stack.Screen name="MainStack" component={Drawer} />
-            <Stack.Screen
-              options={{gestureEnabled: false}}
-              name="HealthConditionError"
-              component={HealthConditionErrorScreen}
-            />
-          </>
+          // Make sure if the user is signing up or logging in
+          isInitialized ? (
+            <>
+              <Stack.Screen name="MainStack" component={Drawer} />
+              <Stack.Screen
+                options={{gestureEnabled: false}}
+                name="HealthConditionError"
+                component={HealthConditionErrorScreen}
+              />
+            </>
+          ) : (
+            <Stack.Screen name="SignUpStack" component={SignUpStack} />
+          )
         ) : (
           <Stack.Screen name="AuthStack" component={AuthStack} />
         )}
-        <Stack.Screen name="LostConnection" component={LostConnectionScreen} />
       </Stack.Navigator>
+      <LostConnection />
       <Toast ref={ref => Toast.setRef(ref)} config={toastConfig} />
       {loadingInitData && <Loader absolute />}
     </NavigationContainer>
