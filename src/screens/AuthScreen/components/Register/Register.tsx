@@ -65,13 +65,12 @@ const Register: FC = () => {
     [],
   );
   return (
-    <View>
+    <View style={styles.container}>
       {message && (
         <View style={styles.alertContainer}>
           <Alert label={t(message.messageKey)} error={!message.success} />
         </View>
       )}
-
       <AppleButton
         text={t('signUp.apple')}
         disabled={pending}
@@ -83,7 +82,8 @@ const Register: FC = () => {
         onClick={googleSignIn}
         disabled={pending}
       />
-      <Text style={styles.orSeparator}>{t('common.or')}</Text>
+      <View style={styles.lineStyle} />
+      <Text fontWeight={'700'}>{t('LogIn.emailTitleSignUp')}</Text>
       <Formik<RegisterFormFields>
         innerRef={formRef}
         initialValues={{
@@ -136,7 +136,7 @@ const Register: FC = () => {
                 <Button
                   disabled={!(isValid && dirty) || pending}
                   isLoading={pending}
-                  onPress={handleSubmit}
+                  onPress={() => handleSubmit()}
                   style={styles.button}>
                   {t('signUp.signUp')}
                 </Button>

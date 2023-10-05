@@ -1,5 +1,5 @@
 import React, {FC, useCallback} from 'react';
-import {Text, Button, Pressable} from 'native-base';
+import {Text, Button} from 'native-base';
 import {View} from 'react-native';
 import {Formik} from 'formik';
 
@@ -17,6 +17,9 @@ import {signIn} from '~/redux/auth/thunks';
 import {getSignInParams} from '~/redux/auth/selectors';
 import {useNavigation} from '@react-navigation/native';
 import {appleSignIn, googleSignIn} from '~/services/Amazon.service';
+import {Screens} from '~/models/Navigation.model';
+import colors from '~/theme/colors';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 type LoginFormFields = {
   email: string;
@@ -31,7 +34,7 @@ const Login: FC = () => {
   const {navigate} = useNavigation();
 
   const onForgotPasswordPress = useCallback(() => {
-    navigate('ForgotPassword');
+    navigate(Screens.ForgotPassword as never);
   }, [navigate]);
 
   const onSignInPress = async ({email, password}: LoginFormFields) => {
@@ -41,24 +44,27 @@ const Login: FC = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       {message && (
         <View style={styles.alertContainer}>
           <Alert label={t(message.messageKey)} error={!message.success} />
         </View>
       )}
       <AppleButton
-        text={t('signIn.apple')}
-        disabled={pending}
+        text={t('LogIn.apple')}
         onClick={appleSignIn}
+        disabled={pending}
       />
       <GoogleButton
-        text={t('signIn.google')}
+        text={t('LogIn.google')}
         style={styles.buttonSpace}
         onClick={googleSignIn}
         disabled={pending}
       />
-      <Text style={styles.orSeparator}>{t('common.or')}</Text>
+      <View style={styles.lineStyle} />
+      <Text pb={3} fontWeight={'700'}>
+        {t('LogIn.emailTitleLogIn')}
+      </Text>
       <Formik<LoginFormFields>
         initialValues={{
           email: '',
@@ -73,6 +79,8 @@ const Login: FC = () => {
           handleSubmit,
           values,
           touched,
+          isValid,
+          dirty,
           errors,
         }) => (
           <>
@@ -97,19 +105,19 @@ const Login: FC = () => {
                   : undefined
               }
             />
-            <Pressable onPress={onForgotPasswordPress}>
-              <Text style={styles.forgotPasswordText}>
-                {t('forgotPassword.dontRememberPassword')}
-              </Text>
-            </Pressable>
             <Button
-              disabled={pending}
+              disabled={!(isValid && dirty) || pending}
               isLoading={pending}
-              variant={'outline'}
+              variant={'solid'}
               style={styles.loginButton}
-              onPress={handleSubmit}>
-              {t('signIn.signIn')}
+              onPress={() => handleSubmit()}>
+              <Text style={{color: colors.white}}>{t('LogIn.LogIn')}</Text>
             </Button>
+            <TouchableOpacity onPress={onForgotPasswordPress}>
+              <Text style={styles.forgotPasswordText}>
+                {t('forgotPassword.doNotRememberPassword')}
+              </Text>
+            </TouchableOpacity>
           </>
         )}
       </Formik>
