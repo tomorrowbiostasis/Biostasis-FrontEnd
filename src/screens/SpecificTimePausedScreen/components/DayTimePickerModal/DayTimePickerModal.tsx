@@ -1,4 +1,4 @@
-import {Button, Modal, ScrollView, Text, View} from 'native-base';
+import {Button, Modal, ScrollView, Text} from 'native-base';
 import React, {FC, useCallback, useMemo, useState} from 'react';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {DaysOfTheWeekEnum, getUniqueId} from '../../util';
@@ -9,6 +9,8 @@ import {useTimeFormat} from '../../hooks/UseTimeFormat.hook';
 import {TimeFormatService} from '../../services/TimeFormat.service';
 import {MaskedTimeView} from './components/MaskedTimeInput/MaskedTimeView';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import colors from '~/theme/colors';
+import {View} from 'react-native';
 
 const initialDaysSelected: DaysOfTheWeekEnum[] = [0, 1, 2, 3, 4, 5, 6];
 
@@ -109,17 +111,22 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
   return (
     <Modal isOpen={true} style={styles.container}>
       <SafeAreaView style={styles.safeAreaContainer}>
+        <Text style={styles.title}>
+          {t('specificTimesScreen.specificTimes.title')}
+        </Text>
         <ScrollView contentContainerStyle={styles.contentContainerStyle}>
           <View style={styles.panel}>
             <Text style={styles.label}>
-              {t('specificTimesScreen.startSection.pickDay')}
+              {t('specificTimesScreen.specificTimes.startSection.pickDay')}
             </Text>
             <DayOfTheWeekPicker
               days={dayTimeItem.startDay}
               onChangeDays={days => handleDayOfTheWeek(days, 'startDay')}
             />
             <MaskedTimeView
-              label={t('specificTimesScreen.startSection.pickTime')}
+              label={t(
+                'specificTimesScreen.specificTimes.startSection.pickTime',
+              )}
               initialValue={startTimeFormatted}
               name="startTime"
               onChangeValue={(time, name) =>
@@ -132,7 +139,7 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
           </View>
           <View style={styles.panel}>
             <Text style={styles.label}>
-              {t('specificTimesScreen.endSection.pickDay')}
+              {t('specificTimesScreen.specificTimes.endSection.pickDay')}
             </Text>
             <DayOfTheWeekPicker
               days={dayTimeItem.endDay}
@@ -140,7 +147,9 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
             />
 
             <MaskedTimeView
-              label={t('specificTimesScreen.startSection.pickTime')}
+              label={t(
+                'specificTimesScreen.specificTimes.startSection.pickTime',
+              )}
               initialValue={endTimeFormatted}
               name="endTime"
               onChangeValue={(time, name) =>
@@ -156,13 +165,14 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
             disabled={!isStartHourValid || !isEndHourValid}
             style={styles.saveButton}
             onPress={handleSave}>
-            {t('common.save')}
+            <Text color={colors.white} fontSize={'md'} fontWeight={700}>
+              {t('common.save')}
+            </Text>
           </Button>
-          <Button
-            variant={'outline'}
-            style={styles.cancelButton}
-            onPress={onClose}>
-            {t('common.cancel')}
+          <Button variant={'unstyled'} onPress={onClose}>
+            <Text color={colors.red[600]} fontSize={'md'} fontWeight={700}>
+              {t('common.cancel')}
+            </Text>
           </Button>
         </ScrollView>
       </SafeAreaView>

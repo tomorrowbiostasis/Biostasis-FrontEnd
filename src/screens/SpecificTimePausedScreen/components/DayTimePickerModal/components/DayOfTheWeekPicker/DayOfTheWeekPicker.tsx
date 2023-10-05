@@ -63,9 +63,9 @@ export const DayOfTheWeekPicker: FC<IDayOfTheWeekPickerProps> = ({
   const getLabel = useCallback(
     (day: DaysOfTheWeekEnum) => {
       return t(
-        `specificTimesScreen.daysShortName.${parseDaysOfTheWeekEnumToString([
-          day,
-        ]).toLocaleLowerCase()}`,
+        `specificTimesScreen.specificTimes.daysShortName.${parseDaysOfTheWeekEnumToString(
+          [day],
+        ).toLocaleLowerCase()}`,
       );
     },
     [t],

@@ -10,15 +10,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   item: {
-    backgroundColor: colors.gray[400],
+    backgroundColor: colors.gray[300],
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 100,
+    borderRadius: 10,
     width: 40,
     height: 40,
   },
   itemActive: {
-    backgroundColor: colors.magenta[200],
+    backgroundColor: colors.blue[600],
   },
   itemInactiveText: {
     color: 'black',
