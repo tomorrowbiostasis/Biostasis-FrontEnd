@@ -1,5 +1,5 @@
 import React, {FC, useCallback, useState} from 'react';
-import {Button, View} from 'native-base';
+import {Button, Text, View} from 'native-base';
 import {Formik} from 'formik';
 
 import {useAddNewEmergencyContactValidationSchema} from '~/services/Validation.service';
@@ -8,7 +8,7 @@ import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import Input from '~/components/Input';
 
 import styles from '../styles';
-import {AddEmergencyContactFormFields} from '../AddNewEmergencyContactScreen';
+import {AddNewEmergencyContactFormFields} from '../AddNewEmergencyContactScreen';
 import {
   IEmergencyContact,
   IEmergencyContactResponse,
@@ -17,28 +17,24 @@ import {
   IPhoneNumber,
   PhoneNumberPicker,
 } from '~/components/PhoneNumberPicker/PhoneNumberPicker';
+import colors from '~/theme/colors';
 
 interface IEditContactProps {
   contact: IEmergencyContactResponse;
   onSavePress: (contact: IEmergencyContact) => void;
-  onDeletePress: () => void;
 }
 
-export const EditContact: FC<IEditContactProps> = ({
-  contact,
-  onDeletePress,
-  onSavePress,
-}) => {
+export const EditContact: FC<IEditContactProps> = ({contact, onSavePress}) => {
   const {t} = useAppTranslation();
   const [phoneData, setPhoneData] = useState<IPhoneNumber>();
   const [isPhoneValid, setIsPhoneValid] = useState(false);
   const [isPhoneTouched, setIsPhoneTouched] = useState(false);
 
-  const addNewEmergencyContactValidationSchema =
+  const AddNewEmergencyContactValidationSchema =
     useAddNewEmergencyContactValidationSchema();
 
   const handleEditPress = useCallback(
-    ({firstName, lastName, email}: AddEmergencyContactFormFields) => {
+    ({firstName, lastName, email}: AddNewEmergencyContactFormFields) => {
       const {active} = contact;
       let emergencyContact: IEmergencyContact = {
         name: firstName,
@@ -71,14 +67,14 @@ export const EditContact: FC<IEditContactProps> = ({
 
   return (
     <View style={styles.content}>
-      <Formik<AddEmergencyContactFormFields>
+      <Formik<AddNewEmergencyContactFormFields>
         initialValues={{
           firstName: contact.name,
           lastName: contact.surname,
           email: contact.email,
         }}
         onSubmit={handleEditPress}
-        validationSchema={addNewEmergencyContactValidationSchema}
+        validationSchema={AddNewEmergencyContactValidationSchema}
         validateOnChange={true}>
         {({
           handleChange,
@@ -94,7 +90,7 @@ export const EditContact: FC<IEditContactProps> = ({
             <View style={styles.inputWrapper}>
               <Input
                 type="firstName"
-                label={t('emergencyContacts.addNewEdit.firstName', {
+                label={t('emergencyContactsSettings.addNewEdit.firstName', {
                   number: contact.id,
                 })}
                 onChangeText={handleChange('firstName')}
@@ -111,7 +107,7 @@ export const EditContact: FC<IEditContactProps> = ({
             <View style={styles.inputWrapper}>
               <Input
                 type="lastName"
-                label={t('emergencyContacts.addNewEdit.lastName', {
+                label={t('emergencyContactsSettings.addNewEdit.lastName', {
                   number: contact.id,
                 })}
                 onChangeText={handleChange('lastName')}
@@ -128,7 +124,7 @@ export const EditContact: FC<IEditContactProps> = ({
             <View style={styles.inputWrapper}>
               <Input
                 type="email"
-                label={t('emergencyContacts.addNewEdit.email', {
+                label={t('emergencyContactsSettings.addNewEdit.email', {
                   number: contact.id,
                 })}
                 onChangeText={handleChange('email')}
@@ -142,7 +138,7 @@ export const EditContact: FC<IEditContactProps> = ({
             </View>
             <View style={styles.inputWrapper}>
               <PhoneNumberPicker
-                label={t('emergencyContacts.addNewEdit.phoneNumber', {
+                label={t('emergencyContactsSettings.addNewEdit.phoneNumber', {
                   number: contact.id,
                 })}
                 initialPhone={contact.phone}
@@ -154,18 +150,13 @@ export const EditContact: FC<IEditContactProps> = ({
             </View>
 
             <Button
-              variant={'outline'}
-              style={styles.editButtons}
-              onPress={onDeletePress}>
-              {t('common.delete')}
-            </Button>
-
-            <Button
               variant={'solid'}
               disabled={!(isValid && isPhoneValid && (dirty || isPhoneTouched))}
-              style={styles.editButtons}
-              onPress={handleSubmit}>
-              {t('common.save')}
+              style={styles.saveButton}
+              onPress={() => handleSubmit()}>
+              <Text color={colors.white} fontSize={'md'} fontWeight={700}>
+                {t('common.save')}
+              </Text>
             </Button>
           </>
         )}

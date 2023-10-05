@@ -1,5 +1,5 @@
 import React, {FC, useCallback, useState} from 'react';
-import {Button, View} from 'native-base';
+import {Button, Text, View} from 'native-base';
 import {Formik} from 'formik';
 
 import {useAddNewEmergencyContactValidationSchema} from '~/services/Validation.service';
@@ -12,8 +12,9 @@ import {
 } from '~/components/PhoneNumberPicker/PhoneNumberPicker';
 
 import styles from '../styles';
-import {AddEmergencyContactFormFields} from '../AddNewEmergencyContactScreen';
+import {AddNewEmergencyContactFormFields} from '../AddNewEmergencyContactScreen';
 import {IEmergencyContact} from '~/redux/emergencyContacts/emergencyContacts.slice';
+import colors from '~/theme/colors';
 
 interface IAddNewContactProps {
   onSavePress: (contact: IEmergencyContact) => void;
@@ -24,11 +25,11 @@ export const AddNewContact: FC<IAddNewContactProps> = ({onSavePress}) => {
   const [phoneData, setPhoneData] = useState<IPhoneNumber>();
   const [isPhoneValid, setIsPhoneValid] = useState(false);
 
-  const addNewEmergencyContactValidationSchema =
+  const AddNewEmergencyContactValidationSchema =
     useAddNewEmergencyContactValidationSchema();
 
   const handleSavePress = useCallback(
-    ({firstName, lastName, email}: AddEmergencyContactFormFields) => {
+    ({firstName, lastName, email}: AddNewEmergencyContactFormFields) => {
       const emergencyContact: IEmergencyContact = {
         name: firstName,
         surname: lastName,
@@ -45,14 +46,14 @@ export const AddNewContact: FC<IAddNewContactProps> = ({onSavePress}) => {
 
   return (
     <View style={styles.content}>
-      <Formik<AddEmergencyContactFormFields>
+      <Formik<AddNewEmergencyContactFormFields>
         initialValues={{
           firstName: '',
           lastName: '',
           email: '',
         }}
         onSubmit={handleSavePress}
-        validationSchema={addNewEmergencyContactValidationSchema}
+        validationSchema={AddNewEmergencyContactValidationSchema}
         validateOnChange={true}>
         {({
           handleChange,
@@ -68,7 +69,7 @@ export const AddNewContact: FC<IAddNewContactProps> = ({onSavePress}) => {
             <View style={styles.inputWrapper}>
               <Input
                 type="firstName"
-                label={t('emergencyContacts.addNewEdit.firstName')}
+                label={t('emergencyContactsSettings.addNewEdit.firstName')}
                 onChangeText={handleChange('firstName')}
                 onBlur={handleBlur('firstName')}
                 value={values.firstName}
@@ -83,7 +84,7 @@ export const AddNewContact: FC<IAddNewContactProps> = ({onSavePress}) => {
             <View style={styles.inputWrapper}>
               <Input
                 type="lastName"
-                label={t('emergencyContacts.addNewEdit.lastName')}
+                label={t('emergencyContactsSettings.addNewEdit.lastName')}
                 onChangeText={handleChange('lastName')}
                 onBlur={handleBlur('lastName')}
                 value={values.lastName}
@@ -98,7 +99,7 @@ export const AddNewContact: FC<IAddNewContactProps> = ({onSavePress}) => {
             <View style={styles.inputWrapper}>
               <Input
                 type="email"
-                label={t('emergencyContacts.addNewEdit.email')}
+                label={t('emergencyContactsSettings.addNewEdit.email')}
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
                 value={values.email}
@@ -110,7 +111,7 @@ export const AddNewContact: FC<IAddNewContactProps> = ({onSavePress}) => {
             </View>
             <View style={styles.inputWrapper}>
               <PhoneNumberPicker
-                label={t('emergencyContacts.addNewEdit.phoneNumber')}
+                label={t('emergencyContactsSettings.addNewEdit.phoneNumber')}
                 onCheckIfValid={setIsPhoneValid}
                 onChangePhoneNumber={setPhoneData}
               />
@@ -119,9 +120,11 @@ export const AddNewContact: FC<IAddNewContactProps> = ({onSavePress}) => {
             <Button
               variant={'solid'}
               disabled={!isValid || !dirty || !isPhoneValid}
-              style={styles.submitButton}
-              onPress={handleSubmit}>
-              {t('common.save')}
+              style={styles.saveButton}
+              onPress={() => handleSubmit()}>
+              <Text color={colors.white} fontSize={'md'} fontWeight={700}>
+                {t('common.save')}
+              </Text>
             </Button>
           </>
         )}
