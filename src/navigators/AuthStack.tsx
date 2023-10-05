@@ -1,21 +1,25 @@
 import React, {useState, useEffect} from 'react';
 import {Center, Spinner} from 'native-base';
-import {createStackNavigator} from '@react-navigation/stack';
-import {AuthStackNavigatorParamList} from '~/models/Navigation.model';
+import {
+  StackNavigationOptions,
+  createStackNavigator,
+} from '@react-navigation/stack';
+import {AuthStackNavigatorParamList, Screens} from '~/models/Navigation.model';
 import AuthScreen from '~/screens/AuthScreen';
 import OnboardingScreen from '~/screens/OnboardingScreen';
-import {commonScreenOptions} from '~/theme/navigators';
+import {homeScreenOptions, headerStyle} from '~/theme/navigators';
 import ForgotPasswordScreen from '~/screens/ForgotPasswordScreen';
-import ForgotPasswordNewPasswordScreen from '~/screens/ForgotPasswordNewPasswordScreen';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
+import NewPasswordScreen from '~/screens/NewPasswordScreen';
+import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 
 const Stack = createStackNavigator<AuthStackNavigatorParamList>();
 
 export const AuthStack = () => {
   const [loading, setLoading] = useState(true);
   const [hasSeenOnboarding, setHasSeenOnboarding] = useState(false);
-
+  const {t} = useAppTranslation();
   const setup = async () => {
     try {
       const savedValue = await AsyncStorageService.getItem(
@@ -32,10 +36,15 @@ export const AuthStack = () => {
   };
 
   useEffect(() => {
+    const abortController = new AbortController();
     /*
      * Postponing setup , waiting for Async storage cleanup while login out scenario
      */
-    setTimeout(() => setup(), 0);
+    setup();
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   if (loading) {
@@ -47,23 +56,38 @@ export const AuthStack = () => {
   }
 
   return (
-    <Stack.Navigator screenOptions={commonScreenOptions}>
+    <Stack.Navigator screenOptions={homeScreenOptions}>
       {!hasSeenOnboarding && (
         <Stack.Screen
-          name="Onboarding"
+          name={Screens.onboarding as never}
           component={OnboardingScreen}
           options={{headerShown: false}}
         />
       )}
       <Stack.Screen
-        name="Auth"
+        name={Screens.Auth as never}
         component={AuthScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
       <Stack.Screen
-        name="ForgotPasswordNewPassword"
-        component={ForgotPasswordNewPasswordScreen}
+        name={Screens.ForgotPassword as never}
+        component={ForgotPasswordScreen}
+        options={
+          {
+            ...headerStyle,
+            headerTitle: t('forgotPassword.screenName'),
+          } as StackNavigationOptions
+        }
+      />
+      <Stack.Screen
+        name={Screens.NewPassword as never}
+        component={NewPasswordScreen}
+        options={
+          {
+            ...headerStyle,
+            headerTitle: t('forgotPassword.newPassword'),
+          } as StackNavigationOptions
+        }
       />
     </Stack.Navigator>
   );
