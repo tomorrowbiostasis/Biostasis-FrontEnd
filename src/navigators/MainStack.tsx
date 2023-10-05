@@ -1,133 +1,84 @@
 import React from 'react';
-
 import {
   createStackNavigator,
   StackNavigationOptions,
 } from '@react-navigation/stack';
-import {View} from 'react-native';
-import {MainStackNavigatorParamList} from '~/models/Navigation.model';
-import {configInitData} from '~/redux/config/config.slice';
-import {
-  homeScreenOptions,
-  logoutScreenOptions,
-  welcomeScreenOptions,
-} from '~/theme/navigators';
+import {MainStackNavigatorParamList, Screens} from '~/models/Navigation.model';
+import {homeScreenOptions} from '~/theme/navigators';
 
 import Dashboard from '~/screens/Dashboard/Dashboard';
-import EmergencyContactListScreen from '~/screens/EmergencyContactListScreen';
+
 import EmergencyContactExplanationsScreen from '~/screens/EmergencyContactExplanationsScreen';
 import AddNewEmergencyContactScreen from '~/screens/AddNewEmergencyContactScreen/AddNewEmergencyContactScreen';
 import AutomatedEmergencySettingsScreen from '~/screens/AutomatedEmergencySettingsScreen';
-import EmergencyContactsSettingsScreen from '~/screens/EmergencyContactsSettingsScreen';
-import {useAppSelector} from '~/redux/store/hooks';
-import UserNameScreen from '~/screens/UserNameScreen';
-import PhoneNumberScreen from '~/screens/PhoneNumberScreen';
-import DateOfBirthScreen from '~/screens/DateOfBirthScreen';
-import AddressScreen from '~/screens/AddressScreen/AddressScreen';
-import UserSelectActionScreen from '~/screens/UserSelectActionScreen';
-import {userInitializedSelector} from '~/redux/user/selectors';
 import SpecificTimePaused from '~/screens/SpecificTimePausedScreen/SpecificTimePausedScreen';
-import DocumentsScreen from '~/screens/DocumentsScreen';
 import ProfileDefaultScreen from '~/screens/ProfileDefaultScreen';
 import AccountSettingsScreen from '~/screens/AccountSettingsScreen';
 import ProfileEditScreen from '~/screens/ProfileEditScreen';
-import ProfileAddMedicalInfoScreen from '~/screens/ProfileAddMedicalInfoScreen';
-import GDPRScreen from '~/screens/GDPRScreen';
-import DeleteAccountScreen from '~/screens/DeleteAccountScreen';
+import ProfileAddMedicalInfoScreen from '~/screens/MedicalInfoScreen';
+import SignUpForCryopreservation from '~/screens/SignUpForCryopreservation';
+import EmergencyContactsSettingsScreen from '~/screens/EmergencyContactsSettingsScreen';
 
 const Stack = createStackNavigator<MainStackNavigatorParamList>();
 
 export const MainStack = () => {
-  const isInitialized = useAppSelector(userInitializedSelector);
-  const loading = useAppSelector(configInitData);
-
   return (
-    <Stack.Navigator
-      screenOptions={homeScreenOptions as StackNavigationOptions}>
-      {!isInitialized ? (
-        <>
-          {loading && (
-            /*
-             *This one is used to get rid of showing unnecessary
-             * Fill Profile screen while getting user
-             */
-            <Stack.Screen name={'Void'}>{() => <View />}</Stack.Screen>
-          )}
-          <Stack.Screen
-            name="UserName"
-            component={UserNameScreen}
-            options={logoutScreenOptions}
-          />
-          <Stack.Screen
-            name="UserPhone"
-            component={PhoneNumberScreen}
-            options={logoutScreenOptions}
-          />
-          <Stack.Screen
-            name="UserDateOfBirth"
-            component={DateOfBirthScreen}
-            options={logoutScreenOptions}
-          />
-          <Stack.Screen
-            name="UserAddress"
-            component={AddressScreen}
-            options={logoutScreenOptions}
-          />
-        </>
-      ) : (
-        <>
-          <Stack.Screen
-            name="Home"
-            component={Dashboard}
-            options={welcomeScreenOptions as StackNavigationOptions}
-          />
-          <Stack.Screen
-            name="UserSelectAction"
-            component={UserSelectActionScreen}
-            options={logoutScreenOptions}
-          />
-          <Stack.Screen
-            name="EmergencyContactList"
-            component={EmergencyContactListScreen}
-          />
-          <Stack.Screen
-            name="AddNewEmergencyContact"
-            component={AddNewEmergencyContactScreen}
-          />
-          <Stack.Screen
-            name="EmergencyContactExplanations"
-            component={EmergencyContactExplanationsScreen}
-          />
-          <Stack.Screen
-            name="EmergencyContactSettings"
-            component={EmergencyContactsSettingsScreen}
-          />
-          <Stack.Screen
-            name="AutomatedEmergencySettings"
-            component={AutomatedEmergencySettingsScreen}
-          />
-          <Stack.Screen
-            name="SpecificTimePaused"
-            component={SpecificTimePaused}
-          />
-          <Stack.Screen name="Documents" component={DocumentsScreen} />
-          <Stack.Screen
-            name="ProfileDefault"
-            component={ProfileDefaultScreen}
-          />
-          <Stack.Screen
-            name="AccountSettings"
-            component={AccountSettingsScreen}
-          />
-          <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} />
-          <Stack.Screen
-            name="ProfileMedicalInfo"
-            component={ProfileAddMedicalInfoScreen}
-          />
-          <Stack.Screen name="GDPR" component={GDPRScreen} />
-          <Stack.Screen name="DeleteAccount" component={DeleteAccountScreen} />
-        </>
-      )}
+    <Stack.Navigator>
+      <Stack.Screen
+        name={Screens.Home}
+        component={Dashboard}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.EmergencyContactSettings as never}
+        component={EmergencyContactsSettingsScreen}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.AddNewEmergencyContact as never}
+        component={AddNewEmergencyContactScreen}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.EmergencyContactExplanations as never}
+        component={EmergencyContactExplanationsScreen}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.AutomatedEmergencySettings as never}
+        component={AutomatedEmergencySettingsScreen}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.SpecificTimePaused as never}
+        component={SpecificTimePaused}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.ProfileDefault as never}
+        component={ProfileDefaultScreen}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.AccountSettings as never}
+        component={AccountSettingsScreen}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.SignUpForCryopreservation as never}
+        component={SignUpForCryopreservation}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.ProfileEdit as never}
+        component={ProfileEditScreen}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.ProfileMedicalInfo as never}
+        component={ProfileAddMedicalInfoScreen}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
     </Stack.Navigator>
   );
 };
