@@ -27,6 +27,7 @@ interface IPhoneNumberPickerProps {
   onChangePhoneNumber?: (obj: IPhoneNumber) => void;
   onCheckIfValid?: (isValid: boolean) => void;
   onTouched?: () => void;
+  onSubmit?: () => void;
 }
 
 export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
@@ -36,11 +37,11 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
   onChangePhoneNumber,
   onCheckIfValid,
   onTouched,
+  onSubmit,
 }) => {
   const {t} = useAppTranslation();
   const [isTouched, setIsTouched] = useState(false);
   const phoneNumberPickerRef = useRef<PhoneInput>(null);
-  console.log('-> initialPhone', initialPhone);
 
   const isNumberValid =
     phoneNumberPickerRef.current?.isValidNumber() as boolean;
@@ -116,6 +117,11 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
           textProps={{
             onBlur: handleInputBlur,
             keyboardType: 'number-pad',
+            onSubmitEditing: () => {
+              if (isNumberValid) {
+                onSubmit?.();
+              }
+            },
           }}
           textStyle={styles.inputContainerText}
         />
