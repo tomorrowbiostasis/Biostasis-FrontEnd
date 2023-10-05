@@ -1,6 +1,6 @@
 import messaging from '@react-native-firebase/messaging';
 import {useEffect, useState} from 'react';
-import {Platform} from 'react-native';
+import {Platform, Settings} from 'react-native';
 import {useAppDispatch} from '~/redux/store/hooks';
 import {getAwsUser} from '~/services/Amazon.service';
 import {Hub} from '@aws-amplify/core';
@@ -13,39 +13,24 @@ import {setLoadingInitData} from '~/redux/config/config.slice';
 import {useAppSelector} from '~/redux/store/hooks';
 import {userSelector} from '~/redux/user/selectors';
 import API from '~/services/API.service';
-import {
-  startBackgroundFetch,
-  stopBackgroundFetch,
-  updateNotification,
-} from '~/services/Background.service';
+import {stopBackgroundFetch} from '~/services/Background.service';
 import {BackgroundEventsEnum} from '~/services/Background.types';
-import {checkPushPermissionsIOS, invokeGetToken} from '~/services/Push.service';
 import {AwsUserInternalStatus} from '~/services/Amazon.types';
 import {useGoogleFitAuthStatus} from '~/hooks/UseGoogleFitAuthStatus.hook';
-import {isPausedTime} from '~/services/Time.service';
-import {
-  automatedEmergencyPausedDateSelector,
-  automatedEmergencyPausedTimesSelector,
-} from '~/redux/automatedEmergency/selectors';
 import {isAndroid} from '~/utils';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
+// import {getLocales} from 'react-native-localize';
+// import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 
 const AuthListener = () => {
   const dispatch = useAppDispatch();
-  // const {t} = useTranslation();
-
-  const pausedDate = useAppSelector(automatedEmergencyPausedDateSelector);
-  const specificPausedTimes = useAppSelector(
-    automatedEmergencyPausedTimesSelector,
-  );
   const {user: profile} = useAppSelector(userSelector);
   const [user, setUser] = useState({
     internalStatus: AwsUserInternalStatus.loading,
   });
-  const [isEmergencyStatus, setIsEmergencyStatus] = useState(false);
-
   const {authorizeGoogleFit} = useGoogleFitAuthStatus();
-
-  const isNowPaused = isPausedTime(new Date(), pausedDate, specificPausedTimes);
+  // const {setAppLanguage} = useAppTranslation();
 
   useEffect(() => {
     Hub.listen('auth', ({payload: {event, data}}) => {
@@ -83,6 +68,8 @@ const AuthListener = () => {
   }, [dispatch, user]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     const initData = async () => {
       try {
         if (isAndroid) {
@@ -108,42 +95,33 @@ const AuthListener = () => {
         ).then(() => console.log('stopped background fetch'));
       }
     }
+
+    return () => {
+      abortController.abort();
+    };
     // @ts-ignore-next-line
   }, [dispatch, user]);
 
-  useEffect(() => {
-    if (profile.id) {
-      if (profile.automatedEmergency && !profile.regularPushNotification) {
-        if (Platform.OS === 'android') {
-          startBackgroundFetch().then(status => {
-            console.log('background service enabled with status', status);
-            setIsEmergencyStatus(true);
-          });
-        } else {
-          checkPushPermissionsIOS().then(null);
-        }
-      }
-      // FIXME: ADD hook for get data from Async Storage and add conditional for check Google Fit Authenticated status
-    }
-  }, [
-    profile.automatedEmergency,
-    profile.regularPushNotification,
-    profile.id,
-    profile.pulseBasedTriggerGoogleFitAuthenticated,
-    authorizeGoogleFit,
-  ]);
-  useEffect(() => {
-    profile.id && invokeGetToken();
-  }, [profile.id]);
+  /* Detect the device language for both platforms did not apply it because we need to build a responsive design */
 
-  useEffect(() => {
-    if (isEmergencyStatus && !isNowPaused) {
-      updateNotification(
-        'Automated Health Check',
-        'The Biostasis Emergency App is checking your pulse data',
-      );
-    }
-  }, [isEmergencyStatus, isNowPaused]);
+  // useEffect(() => {
+  //   const abortController = new AbortController();
+  //   const handleLanguage = async () => {
+  //     let deviceLanguage = isAndroid
+  //       ? await AsyncStorage.getItem(AsyncStorageEnum.Language)
+  //       : Settings.get(AsyncStorageEnum.Language);
+  //     if (!deviceLanguage) {
+  //       deviceLanguage = getLocales()[0].languageCode;
+  //     }
+  //     setAppLanguage(deviceLanguage);
+  //   };
+
+  //   handleLanguage();
+
+  //   return () => {
+  //     abortController.abort();
+  //   };
+  // }, [setAppLanguage]);
 
   return null;
 };
