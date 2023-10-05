@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import {NavigatorScreenParams, RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -10,6 +11,7 @@ declare global {
 export type RootStackParamList = {
   AuthStack: NavigatorScreenParams<AuthStackNavigatorParamList>;
   MainStack: NavigatorScreenParams<MainStackNavigatorParamList>;
+  SignUpStack: NavigatorScreenParams<SignUpStackNavigatorParamList>;
   LostConnection: undefined;
   HealthConditionError: NavigatorScreenParams<{backendTriggered?: Boolean}>;
 };
@@ -19,15 +21,18 @@ export type AuthStackNavigatorParamList = {
   Auth: undefined;
   AuthSample: undefined;
   ForgotPassword: undefined;
-  ForgotPasswordNewPassword: undefined;
+  NewPassword: undefined;
 };
 
-export type MainStackNavigatorParamList = {
+export type SignUpStackNavigatorParamList = {
   UserName: undefined;
   UserPhone: undefined;
   UserDateOfBirth: undefined;
   UserAddress: undefined;
-  UserSelectAction: undefined;
+  Void: undefined;
+};
+
+export type MainStackNavigatorParamList = {
   Home: undefined;
   EmergencyContactList: undefined;
   EmergencyContactExplanations: undefined;
@@ -43,15 +48,17 @@ export type MainStackNavigatorParamList = {
   ProfileMedicalInfo: undefined;
   GDPR: undefined;
   DeleteAccount: undefined;
-  Void: undefined;
+  SignUpForCryopreservation: undefined;
 };
 
 export type NavigationRouteName =
   | keyof AuthStackNavigatorParamList
-  | keyof MainStackNavigatorParamList;
+  | keyof MainStackNavigatorParamList
+  | keyof SignUpStackNavigatorParamList;
 
 export type NavigationRouteParamList = AuthStackNavigatorParamList &
-  MainStackNavigatorParamList;
+  MainStackNavigatorParamList &
+  SignUpStackNavigatorParamList;
 
 /**
  * Generic type to get navigation params.
@@ -73,7 +80,7 @@ export type ScreensNavigationParamsList = {
     code?: string;
     email?: string;
   };
-  ForgotPasswordNewPassword: {
+  NewPassword: {
     code?: string;
     email?: string;
   };
@@ -84,18 +91,37 @@ export type ScreensNavigationParamsList = {
     showSuccessMessage: boolean;
   };
   HealthConditionError: {
-    regular: boolean;
-    backendTriggered: boolean;
+    regularCheck: boolean;
+    healthCheck: boolean;
   };
 };
-//TODO fill this and exchange in navigation handlers
+
 export enum Screens {
   LostConnection = 'LostConnection',
   HealthConditionError = 'HealthConditionError',
+  UserSelectAction = 'UserSelectAction',
+  UserDateOfBirth = 'UserDateOfBirth',
+  UserAddress = 'UserAddress',
+  UserPhone = 'UserPhone',
+  UserName = 'UserName',
   AccountSettings = 'AccountSettings',
   EditEmergencyContact = 'EditEmergencyContact',
-  AutomatedEmergencySettings = 'AutomatedEmergencySettings',
+  AutomatedEmergencySettings = 'Automated Emergency Settings',
+  SignUpForCryopreservation = 'Sign up for cryopreservation',
   Home = 'Home',
+  AddNewEmergencyContact = 'EmergencyContact',
+  EmergencyContactExplanations = 'EmergencyContactExplanations',
+  EmergencyContactSettings = 'EmergencyContactSettings',
+  SpecificTimePaused = 'SpecificTimePaused',
+  ProfileDefault = 'Profile&MedicalInformation',
+  ProfileEdit = 'EditProfile',
+  ProfileMedicalInfo = 'MedicalInformation',
+  GDPR = 'GDPR',
+  DeleteAccount = 'DeleteAccount',
+  ForgotPassword = 'ForgotPassword',
+  NewPassword = 'NewPassword',
+  onboarding = 'onboarding',
+  Auth = 'Auth',
 }
 
 export type Routes = keyof RootStackParamList;
