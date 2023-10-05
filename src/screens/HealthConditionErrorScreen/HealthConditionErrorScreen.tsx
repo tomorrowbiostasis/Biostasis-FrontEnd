@@ -1,11 +1,9 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {Button, Text, View, Spinner} from 'native-base';
 import React, {useCallback, useMemo, VFC} from 'react';
-import {Notifications} from 'react-native-notifications';
-import {SafeAreaView} from 'react-native-safe-area-context';
-
+// import {Notifications} from 'react-native-notifications';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-import {ScreensNavigationParamsList} from '~/models/Navigation.model';
+import {Screens, ScreensNavigationParamsList} from '~/models/Navigation.model';
 import {automatedEmergencyLoading} from '~/redux/automatedEmergency/selectors';
 import {
   pushPositiveResponse,
@@ -19,9 +17,17 @@ import {stopBackgroundFetch} from '~/services/Background.service';
 import {isAndroid, updateDataCollectionStatus} from '~/utils';
 import styles from './styles';
 import SoundService from '~/services/Alert.service';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
+import Container from '~/components/Container';
+import ToastService from '~/services/Toast.service';
+import {updateNotification} from '~/services/Notification.service';
+// import {
+//   isForegroundFetchRunning,
+//   stopForegroundFetch,
+// } from '~/services/Notification.service';
 
 const resetSoundAndNotificationsHandler = () => {
-  Notifications.removeAllDeliveredNotifications();
+  // Notifications.removeAllDeliveredNotifications();
   SoundService.resetAllSounds();
 };
 
@@ -30,8 +36,19 @@ const HealthConditionErrorScreen: VFC = () => {
   const {reset} = useNavigation();
   const loading = useAppSelector(automatedEmergencyLoading);
   const {params} =
-    useRoute<RouteProp<ScreensNavigationParamsList, 'HealthConditionError'>>();
+    useRoute<
+      RouteProp<ScreensNavigationParamsList, Screens.HealthConditionError>
+    >();
   const dispatch = useAppDispatch();
+
+  const resetPersistentTriggers = useCallback(async () => {
+    // const isForegroundActive = await isForegroundFetchRunning();
+    // if (isForegroundActive) {
+    // await stopForegroundFetch();
+    // }
+    await AsyncStorageService.setItem(AsyncStorageEnum.TimeTrigger, 'false');
+    await AsyncStorageService.setItem(AsyncStorageEnum.HealthTrigger, 'false');
+  }, []);
 
   const handleCloseAndRedirect = useCallback(() => {
     reset({
@@ -46,10 +63,20 @@ const HealthConditionErrorScreen: VFC = () => {
       AsyncStorageEnum.IsEmergencyEscalationStarted,
       'false',
     );
+
+    await resetPersistentTriggers();
     dispatch(pushPositiveResponse());
     // FIXME: handle catch and schedule retries
     handleCloseAndRedirect();
-  }, [handleCloseAndRedirect, dispatch]);
+    if (params.healthCheck) {
+      await updateNotification(
+        t('bioCheck.messages.automatedEmergency'),
+        t('bioCheck.messages.userSendSignal'),
+      );
+    }
+    ToastService.success(t('healthConditionError.success'));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, handleCloseAndRedirect]);
 
   const handleTriggerEmergency = useCallback(async () => {
     resetSoundAndNotificationsHandler();
@@ -58,55 +85,55 @@ const HealthConditionErrorScreen: VFC = () => {
         After setting emergency manually
         we are finishing services and turning off automated emergency
        */
+      await resetPersistentTriggers();
       await dispatch(updateUser({automatedEmergency: false}));
       isAndroid ? await stopBackgroundFetch() : updateDataCollectionStatus();
     });
     handleCloseAndRedirect();
-  }, [handleCloseAndRedirect, dispatch]);
+  }, [dispatch, handleCloseAndRedirect, resetPersistentTriggers]);
 
-  const firstLineOfText = useMemo(() => {
-    if (params?.backendTriggered) {
-      return (
-        <Text fontSize="2xl" textAlign="center">
-          {t('healthConditionError.text0')}
-        </Text>
-      );
+  const firstLineOfText: string = useMemo(() => {
+    if (params?.regularCheck) {
+      return t('healthConditionError.text1');
     }
-    if (!params?.regular) {
-      return (
-        <Text fontSize="2xl" textAlign="center">
-          {t('healthConditionError.text1')}
-        </Text>
-      );
-    }
-    return null;
-  }, [t, params]);
+    return t('healthConditionError.text0');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <SafeAreaView style={styles.contentContainerStyle}>
-      <View py={40} px={10} minHeight={50} width={'100%'}>
-        {firstLineOfText}
-        <Text fontSize="2xl" textAlign="center" mt={10}>
-          {t('healthConditionError.text2')}
-        </Text>
+    <Container
+      loading={loading}
+      type={'static'}
+      contentContainerStyle={styles.contentContainer}>
+      <View style={styles.panel}>
+        <View style={styles.panelHeader}>
+          <IconIonicons name={'pulse-outline'} size={26} style={styles.icon} />
+          <Text fontSize={'md'} fontWeight={700}>
+            {t('healthConditionError.title')}
+          </Text>
+        </View>
+        <View style={styles.lineStyle} />
+        <View style={styles.panelBody}>
+          <Text fontSize={'md'}>{firstLineOfText}</Text>
+          <Text fontSize={'2xl'} fontWeight={700} m={10}>
+            {t('healthConditionError.text3')}
+          </Text>
+          <View style={styles.panelFooter}>
+            <Button variant={'solid'} onPress={handleCancelEmergency}>
+              {t('common.yes')}
+            </Button>
+            <Button
+              spinner={<Spinner color={'white'} size={'small'} />}
+              isLoading={loading}
+              style={styles.emergencyButton}
+              variant={'solid'}
+              onPress={handleTriggerEmergency}>
+              {t('healthConditionError.startEmergency')}
+            </Button>
+          </View>
+        </View>
       </View>
-      <View py={5} width={'100%'} px={10}>
-        <Button
-          style={styles.button}
-          variant={'solid'}
-          onPress={handleCancelEmergency}>
-          {t('common.yes')}
-        </Button>
-        <Button
-          spinner={<Spinner color={'white'} size={'small'} />}
-          isLoading={loading}
-          style={[styles.button, styles.emergencyButton]}
-          variant={'solid'}
-          onPress={handleTriggerEmergency}>
-          {t('healthConditionError.startEmergency')}
-        </Button>
-      </View>
-    </SafeAreaView>
+    </Container>
   );
 };
 export default HealthConditionErrorScreen;
