@@ -25,8 +25,16 @@ const setAutomatedEmergencyPauseTimes = (
   state.specificPausedTimes = payload;
 };
 
+const setEmergencyCheckType = (
+  state: IAutomatedEmergencyState,
+  {payload}: PayloadAction<IAutomatedEmergencyState['emergencyCheckType']>,
+) => {
+  state.emergencyCheckType = payload;
+};
+
 export default {
   setAutomatedEmergencyPause,
   setSmartDevice,
   setAutomatedEmergencyPauseTimes,
+  setEmergencyCheckType,
 };

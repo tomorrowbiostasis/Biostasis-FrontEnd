@@ -6,10 +6,10 @@ import {setDocuments} from './documents.slice';
 import {
   DocumentIdType,
   GetDocumentsResponseType,
-  IAPISuccessfulResponse,
+  IApiSuccessfulResponse,
   IFileToUpload,
 } from '~/services/API.types';
-import NotificationService from '~/services/NotificationService';
+import ToastService from '~/services/Toast.service';
 
 const checkIfDocumentUploaded = (
   document: IFileToUpload,
@@ -41,8 +41,10 @@ export const uploadDocument = createAsyncThunk(
       const documents = await API.getDocuments()
         .then(data => data.data)
         .catch(error => {
-          NotificationService.error(
-            i18n.t('documents.messages.errors.fetching'),
+          ToastService.error(
+            i18n.t(
+              'emergencyContactsSettings.documents.messages.errors.fetching',
+            ),
           );
           return error;
         });
@@ -50,15 +52,21 @@ export const uploadDocument = createAsyncThunk(
       thunkApi.dispatch(setDocuments(documents));
       const isDocumentUploaded = checkIfDocumentUploaded(document, documents);
       isDocumentUploaded
-        ? NotificationService.success(
-            i18n.t('documents.messages.success.upload'),
+        ? ToastService.success(
+            i18n.t(
+              'emergencyContactsSettings.documents.messages.success.upload',
+            ),
           )
-        : NotificationService.error(
-            i18n.t('documents.messages.errors.fileWrongType'),
+        : ToastService.error(
+            i18n.t(
+              'emergencyContactsSettings.documents.messages.errors.fileWrongType',
+            ),
           );
     };
 
-    NotificationService.success(i18n.t('documents.messages.uploadStarted'));
+    ToastService.success(
+      i18n.t('emergencyContactsSettings.documents.messages.uploadStarted'),
+    );
     return await API.uploadDocument(document, refetchDocuments);
   },
 );
@@ -69,7 +77,11 @@ export const getDocuments = createAsyncThunk(
     return await API.getDocuments()
       .then(data => data.data)
       .catch(error => {
-        NotificationService.error(i18n.t('documents.messages.errors.fetching'));
+        ToastService.error(
+          i18n.t(
+            'emergencyContactsSettings.documents.messages.errors.fetching',
+          ),
+        );
         return error;
       });
   },
@@ -77,17 +89,19 @@ export const getDocuments = createAsyncThunk(
 
 export const deleteDocument = createAsyncThunk(
   'user/deleteDocument',
-  async (id: DocumentIdType, thunkApi): Promise<IAPISuccessfulResponse> => {
+  async (id: DocumentIdType, thunkApi): Promise<IApiSuccessfulResponse> => {
     return await API.deleteDocument(id)
       .then(data => {
         thunkApi.dispatch(getDocuments());
-        NotificationService.success(
-          i18n.t('documents.messages.success.remove'),
+        ToastService.success(
+          i18n.t('emergencyContactsSettings.documents.messages.success.remove'),
         );
         return data.data;
       })
       .catch(error => {
-        NotificationService.error(i18n.t('documents.messages.errors.remove'));
+        ToastService.error(
+          i18n.t('emergencyContactsSettings.documents.messages.errors.remove'),
+        );
         return error;
       });
   },

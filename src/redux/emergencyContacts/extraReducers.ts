@@ -5,14 +5,14 @@ import {
   SerializedError,
 } from '@reduxjs/toolkit';
 import i18n from '~/i18n/i18n';
-import NotificationService from '~/services/NotificationService';
+import ToastService from '~/services/Toast.service';
 
 import {
   IEmergencyContactResponse,
   IEmergencyContactsState,
 } from './emergencyContacts.slice';
 import {
-  addEmergencyContact,
+  AddNewEmergencyContact,
   deleteEmergencyContact,
   getEmergencyContacts,
   IUpdateEmergencyActiveStatus,
@@ -56,24 +56,24 @@ const rejectedGetEmergencyContacts = (
   {error}: {error: SerializedError},
 ) => {
   state.pending = false;
-  NotificationService.error(i18n.t('common.error'));
+  ToastService.error(i18n.t('common.error'));
   console.log(`error when fetching emergency contacts: ${error.message}`);
 };
 
-const pendingAddEmergencyContacts = (state: IEmergencyContactsState) => {
+const pendingAddNewEmergencyContacts = (state: IEmergencyContactsState) => {
   state.pending = true;
 };
 
-const fulfilledAddEmergencyContacts = (state: IEmergencyContactsState) => {
+const fulfilledAddNewEmergencyContacts = (state: IEmergencyContactsState) => {
   state.pending = false;
 };
 
-const rejectedAddEmergencyContacts = (
+const rejectedAddNewEmergencyContacts = (
   state: IEmergencyContactsState,
   {error}: {error: SerializedError},
 ) => {
   state.pending = false;
-  NotificationService.error(i18n.t('common.error'));
+  ToastService.error(i18n.t('common.error'));
   console.log(`error when adding emergency contact: ${error.message}`);
 };
 const pendingDeleteEmergencyContacts = (state: IEmergencyContactsState) => {
@@ -89,7 +89,7 @@ const rejectedDeleteEmergencyContacts = (
   {error}: {error: SerializedError},
 ) => {
   state.pending = false;
-  NotificationService.error(i18n.t('common.error'));
+  ToastService.error(i18n.t('common.error'));
   console.log(`error when deleting emergency contact: ${error.message}`);
 };
 
@@ -106,7 +106,7 @@ const rejectedUpdateEmergencyContacts = (
   {error}: {error: SerializedError},
 ) => {
   state.pending = false;
-  NotificationService.error(i18n.t('common.error'));
+  ToastService.error(i18n.t('common.error'));
   console.log(`error when updating emergency contact: ${error.message}`);
 };
 
@@ -169,9 +169,18 @@ export const extraReducersBuilder = (
     updateActiveEmergencyContactStatus.rejected,
     rejectedUpdateActiveEmergencyContactStatus,
   );
-  builder.addCase(addEmergencyContact.pending, pendingAddEmergencyContacts);
-  builder.addCase(addEmergencyContact.fulfilled, fulfilledAddEmergencyContacts);
-  builder.addCase(addEmergencyContact.rejected, rejectedAddEmergencyContacts);
+  builder.addCase(
+    AddNewEmergencyContact.pending,
+    pendingAddNewEmergencyContacts,
+  );
+  builder.addCase(
+    AddNewEmergencyContact.fulfilled,
+    fulfilledAddNewEmergencyContacts,
+  );
+  builder.addCase(
+    AddNewEmergencyContact.rejected,
+    rejectedAddNewEmergencyContacts,
+  );
   builder.addCase(
     updateEmergencyContact.pending,
     pendingUpdateEmergencyContacts,

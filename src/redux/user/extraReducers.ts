@@ -4,7 +4,7 @@ import {
   SerializedError,
 } from '@reduxjs/toolkit';
 import i18n from '~/i18n/i18n';
-import NotificationService from '~/services/NotificationService';
+import ToastService from '~/services/Toast.service';
 import {IUser, IUserState} from './user.slice';
 import {
   getUser,
@@ -35,7 +35,7 @@ const rejectedGetUser = (
 ) => {
   state.pending = false;
   state.isOffline = true;
-  NotificationService.error(i18n.t('common.error'));
+  ToastService.error(i18n.t('common.error'));
   console.log(`error when fetching user: ${error.message}`);
 };
 
@@ -58,7 +58,7 @@ const rejectedDeleteUser = (
   {error}: {error: SerializedError},
 ) => {
   state.pending = false;
-  NotificationService.error(i18n.t('common.error'));
+  ToastService.error(i18n.t('common.error'));
   console.log(`error when deleting user: ${error.message}`);
 };
 
@@ -88,8 +88,8 @@ const pendingSendTestMessage = (state: IUserState) => {
 
 const fulfilledSendTestMessage = (state: IUserState) => {
   state.testMessage.pending = false;
-  NotificationService.success(
-    i18n.t('emergencyContacts.settings.testMessageSent'),
+  ToastService.success(
+    i18n.t('emergencyContactsSettings.settings.testMessageSent'),
   );
 };
 
@@ -98,7 +98,7 @@ const rejectedSendTestMessage = (
   {error}: {error: SerializedError},
 ) => {
   state.testMessage.pending = false;
-  NotificationService.error(i18n.t('common.error'));
+  ToastService.error(i18n.t('common.error'));
   console.log(`error when sending test message: ${error.message}`);
 };
 

@@ -1,6 +1,6 @@
 import {ActionReducerMapBuilder, SerializedError} from '@reduxjs/toolkit';
 import i18n from '~/i18n/i18n';
-import NotificationService from '~/services/NotificationService';
+import ToastService from '~/services/Toast.service';
 import {IAuthState} from './auth.slice';
 import {
   confirmSignUp,
@@ -26,7 +26,7 @@ const rejectedSignIn = (
   state.signIn.pending = false;
   switch (error.code) {
     case 'NetworkError':
-      NotificationService.error(i18n.t('common.errorNetwork'));
+      ToastService.error(i18n.t('common.errorNetwork'));
       console.log('network error');
       break;
     case 'NotAuthorizedException':
@@ -63,7 +63,7 @@ const rejectedSignUp = (
   state.signUp.pending = false;
   switch (error.code) {
     case 'NetworkError':
-      NotificationService.error(i18n.t('pulseCheck.messages.networkError'));
+      ToastService.error(i18n.t('bioCheck.messages.networkError'));
       break;
     case 'UsernameExistsException':
       state.signUp.formFieldError = {
