@@ -1,5 +1,5 @@
+/* eslint-disable no-shadow */
 import {LayoutAnimationConfig} from 'react-native';
-import colors from '~/theme/colors';
 
 export const firstCountdownTime = 1000 * 9;
 export const secondCountdownTime = 1000 * 5;
@@ -11,6 +11,7 @@ export enum animationStatuses {
   ANIMATION_PRESS_2,
   ANIMATION_PRESS_1,
   ANIMATION_COUNTDOWN,
+  ANIMATION_PRESS_2_5,
 }
 
 export enum infoStatuses {
@@ -40,6 +41,11 @@ export const animationStyles = {
     marginTop: '80%',
     paddingBottom: '5%',
   },
+  [animationStatuses.ANIMATION_PRESS_2_5]: {
+    ...commonStyle,
+    marginTop: '15%',
+    paddingBottom: '20%',
+  },
   [animationStatuses.ANIMATION_PRESS_3]: {
     ...commonStyle,
     marginTop: '40%',
@@ -64,10 +70,10 @@ export const animationStyles = {
   },
 };
 
-export const infoComponentGradients: {[key: string]: [string, string]} = {
-  green: [colors.green['100'], colors.green['400']],
-  gray: [colors.gray['150'], colors.gray['642']],
-  magenta: [colors.magenta['800'], colors.magenta['200']],
+export const infoComponentGradients: {[key: string]: string} = {
+  green: 'rgba(0, 100, 0, 0.5)',
+  black: 'rgba(0, 0, 0, 0.5)',
+  red: 'rgba(210, 43, 43, 0.5)',
 };
 
 export const animationConfig: LayoutAnimationConfig = {
