@@ -1,16 +1,9 @@
-import {View} from 'native-base';
 import React, {VFC} from 'react';
-import {TouchableOpacity} from 'react-native';
-import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
-import TrashIcon from '~/assets/icons/TrashIcon';
-import colors from '~/theme/colors';
 import {
   ISpecificDateComponentItem,
   SpecificDateComponent,
   SpecificDateComponentItemIdType,
 } from './SpecificDateComponent';
-
-import styles from './styles';
 
 export interface ISpecificDateListProps {
   items: ISpecificDateComponentItem[];
@@ -21,31 +14,21 @@ export interface ISpecificDateListProps {
 
 export const SpecificDateList: VFC<ISpecificDateListProps> = ({
   items,
-  onDelete,
   onEdit,
   onSave,
+  onDelete,
 }) => {
   return (
-    <SwipeListView
-      data={items}
-      renderItem={data => (
-        <SwipeRow rightOpenValue={-50} disableRightSwipe>
-          <View style={styles.containerTrash}>
-            <TouchableOpacity
-              onPress={() => onDelete(data.item.id)}
-              style={styles.trash}>
-              <TrashIcon color={colors.white} />
-            </TouchableOpacity>
-          </View>
-
-          <SpecificDateComponent
-            key={data.item.id}
-            item={data.item}
-            onEdit={onEdit}
-            onSave={onSave}
-          />
-        </SwipeRow>
-      )}
-    />
+    <>
+      {items.map(item => (
+        <SpecificDateComponent
+          key={item.id}
+          item={item}
+          onEdit={onEdit}
+          onSave={onSave}
+          onDelete={onDelete}
+        />
+      ))}
+    </>
   );
 };
