@@ -27,7 +27,7 @@ export type UploadFileCategoryType = 'medicalDirective' | 'lastWill' | 'other';
 
 export type EmergencyMessageType = 'noConnectionToWatch' | 'heartRateInvalid';
 
-export interface IAPISuccessfulResponse {
+export interface IApiSuccessfulResponse {
   success: boolean;
 }
 
