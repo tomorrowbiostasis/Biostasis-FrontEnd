@@ -19,7 +19,7 @@ final class HealthKitManager {
   
   //Private
   private let healthKitStore: HKHealthStore = HKHealthStore()
-  private let identifiers: Set<HKSampleType> = Set<HKSampleType>([HKObjectType.quantityType(forIdentifier: .heartRate)].compactMap({$0}))
+  private let identifiers: Set<HKSampleType> = Set<HKSampleType>([HKObjectType.quantityType(forIdentifier: .heartRate), HKObjectType.quantityType(forIdentifier: .restingHeartRate), HKObjectType.quantityType(forIdentifier: .stepCount)].compactMap({$0}))
   private lazy var dataHandler: IHandleHealthKitData = {
     return HealthKitDataHandler(healthKitStore: healthKitStore, delegate: dataHandlerDelegate)
   }()
@@ -41,10 +41,11 @@ final class HealthKitManager {
 
 extension HealthKitManager: IManageHealthkit {
   func startObservers(completion: @escaping (Error?) -> ()) {
+    
     let dispatchGroup = DispatchGroup()
     var backgroundDeliveryError: Error?
-    observersEnabled = true
     
+    observersEnabled = true
     for type in identifiers {
       dispatchGroup.enter()
       
@@ -52,29 +53,27 @@ extension HealthKitManager: IManageHealthkit {
         healthKitStore.stop(query)
       }
       
-      //We are interested only in events that happened starting from creating observer
-      let datePredicate = HKQuery.predicateForSamples(withStart: Date(),
-                                                      end: nil,
-                                                      options: .strictStartDate)
-      
-      let observerQuery = HKObserverQuery(sampleType: type,
-                                          predicate: datePredicate)
-      { [weak self] query, completionHandler, _ in
+      let observerQuery = HKObserverQuery(sampleType: type, predicate: nil)
+      { [weak self] query, completionHandler, error in
         guard let self = self else {
           completionHandler()
           return
         }
         
-        guard self.observersEnabled else {
+        guard self.observersEnabled, error == nil else {
           self.healthKitStore.stop(query)
           completionHandler()
           return
         }
-        
-        self.dataHandler.handleNewData(for: type,
-                                       completionHandler: completionHandler)
+        // Collect the new data observed
+        dataHandler.collectNewData(for: type) { sample in
+          if let sample = sample {
+            // Process the collected new data
+            self.dataHandler.processNewData(for: type, with: sample)
+          }
+          completionHandler()
+        }
       }
-      
       queries[type] = observerQuery
       
       healthKitStore.enableBackgroundDelivery(for: type,
