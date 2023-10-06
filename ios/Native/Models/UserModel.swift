@@ -13,6 +13,8 @@ struct UserModel: Codable {
   // Set true to either regular or triggered emergency
   let automatedEmergency: Bool
   let regularPushNotification: Bool
+  let allowNotifications: Bool
+  let pulseBasedTriggerIOSAppleWatchPaired: Bool
 }
 
 struct UserModelContainer: Codable {
