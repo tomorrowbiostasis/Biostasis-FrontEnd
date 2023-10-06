@@ -1,10 +1,12 @@
 import Foundation
+import HealthKit
 
 enum NativeManagerError: Error {
   case deallocated
   case UserNotFound
 }
 
+@objc(NativeManagerSingleton)
 final class NativeManagerSingleton: NSObject {
   
   @objc
@@ -19,9 +21,9 @@ final class NativeManagerSingleton: NSObject {
   }()
   
   private lazy var networkingManager: IManageNetwork = {
-    guard let apiUrl = ReactNativeConfig.env(for: "API_URL"),
-          let awsUrl = ReactNativeConfig.env(for: "AWS_OAUTH_DOMAIN"),
-    let awsClientID = ReactNativeConfig.env(for: "AWS_POOL_WEB_CLIENT_ID") else {
+    guard let apiUrl = RNCConfig.env(for: "API_URL"),
+          let awsUrl = RNCConfig.env(for: "AWS_OAUTH_DOMAIN"),
+          let awsClientID = RNCConfig.env(for: "AWS_POOL_WEB_CLIENT_ID") else {
       fatalError("Cannot load env file")
     }
     return NetworkingManager(apiUrl: apiUrl,
@@ -37,6 +39,15 @@ final class NativeManagerSingleton: NSObject {
   private lazy var locationManager: LocationManager = {
     return LocationManager(delegate: self)
   }()
+  
+  private lazy var timeManager: TimeManager = {
+    return TimeManager()
+  }()
+  private lazy var recommendationService: RecommendationService = {
+    return RecommendationService()
+  }()
+  
+  private var debounceWorkItem: DispatchWorkItem?
   
   override init() {
     super.init()
@@ -55,12 +66,10 @@ extension NativeManagerSingleton: IManageNativeComponents {
       self.determineAndSetDataCollectionStatus()
     }
   }
-  
 }
 
 // MARK: private Methods
 extension NativeManagerSingleton {
-  
   private func determineAndSetDataCollectionStatus() {
     self.storageManager.getUser { [weak self] user in
       guard let user = user else {
@@ -71,32 +80,32 @@ extension NativeManagerSingleton {
       }
       print("🐤 User Settings: \(user)")
       if user.automatedEmergency {
-        if !user.regularPushNotification {
+        if !user.regularPushNotification && user.pulseBasedTriggerIOSAppleWatchPaired{
           self?.startHealthKitDataCollection()
+          self?.startRecommendationSystem()
         } else {
           self?.stopHealthKitDataCollection()
+          self?.stopRecommendationSystem()
         }
-        
-        if user.locationAccess {
-          self?.startLocationDataCollection()
-        } else {
-          self?.stopLocationDataCollection()
-        }
-        
       } else {
         self?.stopHealthKitDataCollection()
+        self?.stopRecommendationSystem()
+      }
+      if user.locationAccess {
+        self?.startLocationDataCollection()
+      } else {
         self?.stopLocationDataCollection()
       }
     }
   }
   
   private func startHealthKitDataCollection() {
-    print("🐤 Starting healt kit data collection")
+    print("🐤 Starting health kit data collection")
     healthKitManager.requestAuthorizationAndStartObservers(completion: { _ in })
   }
   
   private func stopHealthKitDataCollection() {
-    print("🐤 Stopping healt kit data collection")
+    print("🐤 Stopping health kit data collection")
     healthKitManager.disableObservers()
   }
   
@@ -108,6 +117,16 @@ extension NativeManagerSingleton {
   private func stopLocationDataCollection() {
     print("🐤 Stopping location data collection")
     locationManager.stopCollectingLocation()
+  }
+  
+  private func startRecommendationSystem() {
+    print("🐤 Start recommendation system")
+    recommendationService.startRecomendationSystem()
+  }
+  
+  private func stopRecommendationSystem() {
+    print("🐤 Stop recommendation system")
+    recommendationService.stopRecommendtionSystem()
   }
   
   private func sendPositiveUpdateToServer(completion: @escaping (Result<PositiveUpdatResponse,Error>) -> ()) {
@@ -128,8 +147,8 @@ extension NativeManagerSingleton {
   
   private func updateLocation(locationUrl: String,
                               completion: @escaping (Result<Void,Error>) -> ()) {
-      self.networkingManager.updateLocation(locationUrl: locationUrl,
-                                             completion: completion )
+    self.networkingManager.updateLocation(locationUrl: locationUrl,
+                                          completion: completion )
   }
   
   private func minutesToNext(completion: @escaping (Result<Int,Error>) -> ()) {
@@ -157,41 +176,89 @@ extension NativeManagerSingleton {
     }
   }
   
-  private func debugNotification(title: String, subtitle: String) {
-    #if DEBUG
+  private func handleHealthNotification(title: String, subtitle: String, data: HealthMetrics) {
+     let df = DateFormatter()
+     df.dateFormat = "HH:mm:ss"
+     df.timeZone = .current
+     df.calendar = .current
+     
+     let heartRateString = "💓 Heart Rate: \(data.heartRate != nil ? "\(data.heartRate ?? 0) bpm" : "no data") - 🕑 \(df.string(for: data.heartRateEndDate) ?? "no data")"
+     let restingHeartRateString = "🫀 Resting Heart Rate: \(data.restingHeartRate != nil ? "\(data.restingHeartRate ?? 0) bpm" : "no data") - 🕑 \(df.string(for: data.restingHeartRateEndDate) ?? "no data")"
+     let movementString = "👟 Movement: \(data.steps != nil ? "\(data.steps ?? 0) steps" : "no data") - 🕑 \(df.string(for: data.stepsEndDate) ?? "no data")"
+     
+ #if DEBUG
+     notificationManager.scheduleSingle(
+       notification: .Custom(title: "[Debug] \(title) \(df.string(from: Date()))",
+                             subtitle: "\(subtitle) \n\(heartRateString)\n\(restingHeartRateString)\n\(movementString)"),
+       date: Date(timeIntervalSinceNow: 1))
+ #else
+     
+     notificationManager.scheduleSingle(
+       notification: .Custom(title: "\(title) \(df.string(from: Date()))",
+                             subtitle: "\(subtitle) \n\(heartRateString)\n\(restingHeartRateString)\n\(movementString)"),
+       date: Date(timeIntervalSinceNow: 1))
+     
+ #endif
+   }  
+  private func handleLocationNotification(title: String, subtitle: String) {
+#if DEBUG
     let df = DateFormatter()
     df.dateFormat = "HH:mm"
     df.timeZone = .current
     df.calendar = .current
-    notificationManager.scheduleSingle(notification: .Custom(title: "[Debug] \(df.string(from: Date())) \(title)",
+    
+    notificationManager.scheduleSingle(notification: .Custom(title: "[Debug] \(title) \(df.string(from: Date()))",
                                                              subtitle: subtitle),
                                        date: Date(timeIntervalSinceNow: 1))
-    #endif
+#endif
   }
-  
 }
 
-extension NativeManagerSingleton: IDelegateHealthKitDataHandler {
-  internal func aquiredCorrectDataset(of type: String, completionHandler: @escaping (() -> Void)) {
-    sendPositiveUpdateToServer() { [weak self] result in
-      switch result {
-      case .success(let response):
-        if !response.success {
-          self?.stopHealthKitDataCollection()
-          self?.stopLocationDataCollection()
-          self?.debugNotification(title: "Sent last positive value.",
-                                  subtitle: type)
-        } else {
-          self?.debugNotification(title: "Sent positive value.",
-                                  subtitle: type)
+extension NativeManagerSingleton: IDelegateHealthKitDataHandler {  
+  internal func aquiredCorrectDataset(data: HealthMetrics) {
+    debounceWorkItem?.cancel()
+    let workItem = DispatchWorkItem { [weak self] in
+      guard let self = self else { return }
+      
+      self.storageManager.getUser { [weak self] user in
+        guard let user = user else { return }
+        
+        self?.storageManager.getEmergencySettings { [weak self] settings in
+          guard let emergencySettings = settings else { return }
+          let isPaused = self?.timeManager.isPausedTime(pausedDate: emergencySettings.pausedDate, specificPausedTimes: emergencySettings.specificPausedTimes ?? [])
+          if(isPaused ?? true) { return }
+          self?.sendPositiveUpdateToServer() { result in
+            switch result {
+            case .success(let response):
+              if !response.success {
+                self?.stopHealthKitDataCollection()
+                self?.stopLocationDataCollection()
+                if user.allowNotifications {
+                  self?.handleHealthNotification(title: "Sent last positive value.",
+                                                 subtitle: "Positive health info sent",
+                                                 data: data)
+                }
+              } else {
+                self?.recommendationService.recommendationSystem(data: data)
+                if user.allowNotifications {
+                  self?.handleHealthNotification(title: "Automated Bio Check",
+                                                 subtitle: "Positive health info sent",
+                                                 data: data)
+                }
+              }
+            case .failure(let error):
+              self?.handleNetworkingError(error)
+            }
+          }
         }
-      case .failure(let error):
-        self?.handleNetworkingError(error)
       }
-      completionHandler()
     }
+    debounceWorkItem = workItem
+    // wait 3 second to make sure all the health data have been updated
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: workItem)
   }
 }
+
 
 extension NativeManagerSingleton: IDelegateLocationDataHandler {
   func aquiredNewLocation(locationUrl: String) {
@@ -204,10 +271,10 @@ extension NativeManagerSingleton: IDelegateLocationDataHandler {
       }
     }
     
-    debugNotification(title: "New Location!", subtitle: locationUrl)
+    handleLocationNotification(title: "New Location!", subtitle: locationUrl)
   }
   func locationError(error: String) {
     
-    debugNotification(title: "location error!", subtitle: error)
+    handleLocationNotification(title: "location error!", subtitle: error)
   }
 }
