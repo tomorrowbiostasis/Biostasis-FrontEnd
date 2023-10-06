@@ -37,7 +37,6 @@ extension LocationManager: IManageLocation {
       self.locationManager?.stopMonitoringSignificantLocationChanges()
     }
   }
-  
 }
 
 extension LocationManager: CLLocationManagerDelegate {
