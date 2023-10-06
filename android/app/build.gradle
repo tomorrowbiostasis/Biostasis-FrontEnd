@@ -1,6 +1,15 @@
-apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
+plugins {
+    id 'com.android.application'
+
+    // Make sure that you have the Google services Gradle plugin
+    id 'com.google.gms.google-services'
+
+    // Add the Crashlytics Gradle plugin
+    id 'com.google.firebase.crashlytics'
+    id 'maven-publish'
+}
+
+def REACT_NATIVE_VERSION = new File(['node', '--print',"JSON.parse(require('fs').readFileSync(require.resolve('react-native/package.json'), 'utf-8')).version"].execute(null, rootDir).text.trim())
 
 project.ext.envConfigFiles = [
     development: ".env.development",
@@ -96,7 +105,9 @@ project.ext.react = [
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
-
+project.ext.vectoricons = [
+    iconFontNames: [ 'MaterialIcons.ttf', 'FontAwesome.ttf', 'MaterialCommunityIcons.ttf', 'Ionicons.ttf'] 
+]
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -133,7 +144,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
 
-def enableHermes = project.ext.react.get("enableHermes", true);
+def enableHermes = project.ext.react.get("enableHermes", true)
 
 /**
  * Architectures to build native code for in debug.
@@ -175,7 +186,7 @@ android {
     }
     signingConfigs {
         debug {
-            if ( keystorePropertiesFile.exists() ) {
+            if (keystorePropertiesFile.exists()) {
                 storeFile file(keystoreProperties['storeFile'])
                 storePassword keystoreProperties['storePassword']
                 keyAlias keystoreProperties['keyAlias']
@@ -183,7 +194,7 @@ android {
             }
         }
         release {
-            if ( keystorePropertiesFile.exists() ) {
+            if (keystorePropertiesFile.exists()) {
                 storeFile file(keystoreProperties['storeFile'])
                 storePassword keystoreProperties['storePassword']
                 keyAlias keystoreProperties['keyAlias']
@@ -245,8 +256,13 @@ android {
 
     configurations.all {
         resolutionStrategy {
+            force "com.facebook.react:react-native:" + REACT_NATIVE_VERSION
             force 'androidx.browser:browser:1.2.0'
         }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
     }
 }
 
@@ -262,8 +278,9 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
+    implementation 'com.android.support:multidex:2.0.1'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
@@ -279,17 +296,18 @@ dependencies {
     }
 
     if (enableHermes) {
-        def hermesPath = "../../node_modules/hermes-engine/android/";
+        def hermesPath = "../../node_modules/hermes-engine/android/"
         debugImplementation files(hermesPath + "hermes-debug.aar")
         releaseImplementation files(hermesPath + "hermes-release.aar")
     } else {
         implementation jscFlavor
     }
 
-    implementation project(':react-native-notifications')
-    implementation 'com.google.firebase:firebase-core:16.0.0'
+    // implementation project(':react-native-notifications')
 
-    implementation platform('com.google.firebase:firebase-bom:28.2.1')
+    implementation platform('com.google.firebase:firebase-bom:32.0.0')
+
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     implementation 'com.google.firebase:firebase-messaging'
 }
