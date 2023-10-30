@@ -5,10 +5,10 @@ import Geolocation, {
 } from 'react-native-geolocation-service';
 import i18n from '~/i18n/i18n';
 
-import {check, PERMISSIONS} from 'react-native-permissions';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import {openSettings} from '~/utils';
 
-class PermissionAlwaysDeniedError extends Error {
+export class PermissionAlwaysDeniedError extends Error {
   code: number = 1; // compatible with ErrorCallback from react-native-geolocation-service
   constructor(message: string = 'Location always not granted') {
     super(message);
@@ -18,11 +18,13 @@ class PermissionAlwaysDeniedError extends Error {
 }
 
 const requestPermissionIOS = async (shouldPrompt = true) => {
-  const status = await Geolocation.requestAuthorization('always');
+  const status = await request(PERMISSIONS.IOS.LOCATION_ALWAYS);
 
-  if (status === 'granted') {
-    const checkedAlwaysStatus = await check(PERMISSIONS.IOS.LOCATION_ALWAYS);
-    if (checkedAlwaysStatus === 'granted') {
+  if (status === RESULTS.GRANTED) {
+    const locationStatus =
+      (await check(PERMISSIONS.IOS.LOCATION_ALWAYS)) ||
+      (await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE));
+    if (locationStatus === 'granted') {
       return true;
     }
 
@@ -33,7 +35,7 @@ const requestPermissionIOS = async (shouldPrompt = true) => {
     return false;
   }
 
-  if (status === 'disabled' || status === 'denied') {
+  if (status === RESULTS.DENIED || status === RESULTS.BLOCKED) {
     shouldPrompt &&
       Alert.alert(i18n.t('location.turnOnLocationFromSettings'), '', [
         {text: i18n.t('location.goToSettings'), onPress: openSettings},
@@ -44,29 +46,45 @@ const requestPermissionIOS = async (shouldPrompt = true) => {
 };
 
 const requestPermissionAndroid = async () => {
-  if (Platform.Version < 23) {
+  if (+Platform.Version < 23) {
     return true;
   }
 
-  const requestPermission = await PermissionsAndroid.check(
-    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  );
+  const requestPermission =
+    (await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+    )) ||
+    (await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    ));
 
   if (requestPermission) {
     return true;
   }
 
-  const status = await PermissionsAndroid.request(
+  const status = await PermissionsAndroid.requestMultiple([
+    PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  );
+  ]);
 
-  if (status === PermissionsAndroid.RESULTS.GRANTED) {
+  if (
+    status[PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION] ===
+      PermissionsAndroid.RESULTS.GRANTED ||
+    status[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] ===
+      PermissionsAndroid.RESULTS.GRANTED
+  ) {
     return true;
   }
 
   if (
-    status === PermissionsAndroid.RESULTS.DENIED ||
-    status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN
+    status[PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION] ===
+      PermissionsAndroid.RESULTS.DENIED ||
+    status[PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION] ===
+      PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN ||
+    status[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] ===
+      PermissionsAndroid.RESULTS.DENIED ||
+    status[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] ===
+      PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN
   ) {
     Alert.alert(
       i18n.t('location.locationPermissionDenied'),
@@ -109,7 +127,6 @@ export const getLocation = async (
       },
       enableHighAccuracy: true,
       timeout,
-      maximumAge: 10000,
       distanceFilter: 0,
       forceRequestLocation: true,
       showLocationDialog: true,

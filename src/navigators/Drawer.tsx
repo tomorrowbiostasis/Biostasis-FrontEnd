@@ -1,8 +1,4 @@
-import {useNetInfo} from '@react-native-community/netinfo';
-import {useNavigation} from '@react-navigation/native';
-import React, {ReactNode, useEffect} from 'react';
-import {Screens} from '~/models/Navigation.model';
-import {listenForPushTokenAndUpdate} from '~/services/Push.service';
+import React, {ReactNode} from 'react';
 import MainStack from './MainStack';
 import {
   createDrawerNavigator,
@@ -10,26 +6,17 @@ import {
 } from '@react-navigation/drawer';
 import DrawerContent from '~/components/DrawerContent';
 
+// import {listenForPushTokenAndUpdate} from '~/services/Push.service';
+
 const DrawerNavigation = createDrawerNavigator();
 
 const Drawer = () => {
-  const {type, isConnected} = useNetInfo();
-  const navigation = useNavigation();
-  useEffect(() => {
-    listenForPushTokenAndUpdate();
-  }, []);
-
-  useEffect(() => {
-    if (type !== 'unknown') {
-      !isConnected && navigation.navigate(Screens.LostConnection as never);
-    }
-  }, [navigation, type, isConnected]);
   return (
     <DrawerNavigation.Navigator
       screenOptions={{
         headerShown: false,
         drawerPosition: 'right',
-        drawerType: 'front',
+        drawerType: 'slide',
       }}
       drawerContent={
         DrawerContent as (props: DrawerContentComponentProps) => ReactNode

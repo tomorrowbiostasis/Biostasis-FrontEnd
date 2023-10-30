@@ -32,6 +32,7 @@ export interface IAutomatedEmergencyState {
   lastSucceededEmergencyInternalId: string | null;
   lastFailedEmergencyInternalId: string | null;
   patchLoading: boolean;
+  emergencyCheckType: string;
 }
 
 export const initialState: IAutomatedEmergencyState = {
@@ -43,6 +44,7 @@ export const initialState: IAutomatedEmergencyState = {
   lastSucceededEmergencyInternalId: null,
   lastFailedEmergencyInternalId: null,
   patchLoading: false,
+  emergencyCheckType: 'bio',
 };
 
 export const automatedEmergencySlice = createSlice({
@@ -56,6 +58,7 @@ export const {
   setAutomatedEmergencyPause,
   setAutomatedEmergencyPauseTimes,
   setSmartDevice,
+  setEmergencyCheckType,
 } = automatedEmergencySlice.actions;
 
 export default automatedEmergencySlice.reducer;

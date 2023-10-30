@@ -8,6 +8,8 @@ import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import styles from './styles';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
+import {Screens} from '~/models/Navigation.model';
+import colors from '~/theme/colors';
 
 const slideImage = require('~/assets/images/onboarding/OnboardingImage3.png');
 
@@ -30,13 +32,15 @@ const OnboardingSummarySlide: FC = () => {
 
   const handleLogin = useCallback(async () => {
     await saveOnboardingState(() => {
-      navigate('Auth', {action: 'SIGN_IN'});
+      //@ts-ignore
+      navigate(Screens.Auth, {action: 'SIGN_IN'});
     });
   }, [saveOnboardingState, navigate]);
 
   const handleSignup = useCallback(async () => {
     await saveOnboardingState(() => {
-      navigate('Auth', {action: 'SIGN_UP'});
+      //@ts-ignore
+      navigate(Screens.Auth, {action: 'SIGN_UP'});
     });
   }, [saveOnboardingState, navigate]);
 
@@ -50,20 +54,28 @@ const OnboardingSummarySlide: FC = () => {
           resizeMode={'contain'}
         />
       </View>
-      <View style={styles.bottomContentContainer}>
-        <View style={styles.centerContentContainer}>
-          <Heading size="xl" style={styles.header}>
-            {t('onboarding.title')}
-          </Heading>
-          <Text fontSize={'lg'} style={styles.description}>
-            {t('onboarding.slogan')}
+      <Heading size={'md'} style={styles.margin20}>
+        {t('onboarding.title')}
+      </Heading>
+      <Text fontSize={'sm'} style={styles.margin20}>
+        {t('onboarding.slogan')}
+      </Text>
+      <View style={styles.buttonsBox}>
+        <Button
+          variant={'ghost'}
+          style={styles.buttonSignUp}
+          onPress={handleSignup}>
+          <Text color={colors.white} fontWeight={'bold'} fontSize={15}>
+            {t('signUp.createAccount')}
           </Text>
-        </View>
-        <Button style={styles.button} onPress={handleSignup}>
-          {t('signUp.signUp')}
         </Button>
-        <Button variant="outline" style={styles.button} onPress={handleLogin}>
-          {t('signIn.signIn')}
+        <Button
+          variant={'ghost'}
+          style={styles.buttonLogin}
+          onPress={handleLogin}>
+          <Text color={colors.white} fontWeight={'700'} fontSize={15}>
+            {t('LogIn.LogIn')}
+          </Text>
         </Button>
       </View>
     </View>

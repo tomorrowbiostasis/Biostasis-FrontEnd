@@ -78,7 +78,9 @@ export const MaskedTimeView: VFC<IMaskedTimeView> = ({
           initialValue={initialValue}
           onChangeValue={handleValueChange}
           isValid={isValid}
-          errorMessage={t('emergencyContacts.dayTimePicker.invalidDate')}
+          errorMessage={t(
+            'emergencyContactsSettings.dayTimePicker.invalidDate',
+          )}
         />
       )}
       {is24TimeFormat !== null && !is24TimeFormat && (

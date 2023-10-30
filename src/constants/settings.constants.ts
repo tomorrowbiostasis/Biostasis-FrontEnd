@@ -1,62 +1,95 @@
-import {isIOS} from '~/utils';
-
 export const intervalsConfig = [
+  {
+    time: 2,
+    value: '2',
+    unit: 'minutes',
+    debug: true,
+    warning: false,
+  },
   {
     time: 6,
     value: '6',
     unit: 'minutes',
     debug: true,
+    warning: false,
   },
   {
     time: 20,
     value: '20',
-    debug: true,
     unit: 'minutes',
+    debug: true,
+    warning: false,
   },
   {
     time: 120,
     value: '120',
     unit: 'minutes',
-    debug: false,
+    debug: true,
+    warning: false,
   },
   {
     time: 240,
     value: '240',
     unit: 'minutes',
+    debug: true,
+    warning: false,
+  },
+  {
+    time: 3,
+    value: '180',
+    unit: 'hours',
     debug: false,
+    warning: true,
   },
   {
     time: 6,
     value: '360',
     unit: 'hours',
     debug: false,
+    warning: true,
   },
   {
-    time: 8,
-    value: '480',
+    time: 9,
+    value: '540',
     unit: 'hours',
     debug: false,
+    warning: true,
   },
   {
     time: 12,
     value: '720',
     unit: 'hours',
     debug: false,
+    warning: false,
+  },
+  {
+    time: 18,
+    value: '1080',
+    unit: 'hours',
+    debug: false,
+    warning: false,
   },
   {
     time: 24,
     value: '1440',
     unit: 'hours',
     debug: false,
+    warning: false,
+  },
+  {
+    time: 36,
+    value: '2160',
+    unit: 'hours',
+    debug: false,
+    warning: false,
   },
   {
     time: 48,
     value: '2880',
     unit: 'hours',
     debug: false,
+    warning: false,
   },
 ] as const;
 
-export const excludedIntervalsForPulse = isIOS
-  ? ['240', '360', '480']
-  : ['240', '480'];
+export const excludedIntervals = ['180', '240', '360', '540'];

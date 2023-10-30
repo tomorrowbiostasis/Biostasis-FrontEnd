@@ -7,6 +7,7 @@ import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import styles from './styles';
 import {clearDataAndSignOut} from '~/redux/store/utils';
 import {ClearDataTypes} from '~/services/ClearData.types';
+import colors from '~/theme/colors';
 
 const LogoutTrigger: VFC = () => {
   const {t} = useAppTranslation();
@@ -17,8 +18,10 @@ const LogoutTrigger: VFC = () => {
       onPress={() => clearDataAndSignOut(ClearDataTypes.LOGOUT)}
       style={styles.container}>
       <Row style={styles.row}>
-        <Text style={styles.title}>{t('common.logOut')}</Text>
         <LogoutIcon style={styles.icon} />
+        <Text fontSize={14} color={colors.red[400]}>
+          {t('common.logOut')}
+        </Text>
       </Row>
     </TouchableOpacity>
   );

@@ -4,13 +4,22 @@ import UIKit
 
 ///Informs about proper / unproper values received from healthkit.
 ///Call completion handler when all background tasks will end.
+
 protocol IDelegateHealthKitDataHandler: AnyObject
 {
-  func aquiredCorrectDataset(of type: String, completionHandler: @escaping (()->Void))
+  func aquiredCorrectDataset(data: HealthMetrics)
 }
 
 protocol IHandleHealthKitData {
-  func handleNewData(for type: HKSampleType, completionHandler: @escaping (()->Void))
+  func collectNewData(for type: HKSampleType, completionHandler: @escaping (HKQuantitySample?) -> Void)
+  func processNewData(for type:HKSampleType,with sample: HKQuantitySample)
+}
+
+protocol IHandleHealthMetrics {
+  func updateHealthMetrics(for type: HKSampleType, with sample: HKQuantitySample)
+  func saveHealthMetricsToStorage(_ healthMetrics: HealthMetrics)
+  func loadHealthMetricsFromStorage() -> HealthMetrics
+//  func clearOldHealthMetricsData() -> Void
 }
 
 final class HealthKitDataHandler {
@@ -18,80 +27,96 @@ final class HealthKitDataHandler {
   //Private
   private unowned let healthKitStore: HKHealthStore
   private unowned var delegate: IDelegateHealthKitDataHandler
+  private lazy var storageManager: IManagePersistentStorage = {
+    return PersistentStorageManager()
+  }()
   
   init(healthKitStore: HKHealthStore, delegate: IDelegateHealthKitDataHandler) {
     self.healthKitStore = healthKitStore
     self.delegate = delegate
   }
-  
-  private func getData(of type: HKSampleType,
-                       completionHandler: @escaping (_ results: [HKSample])->Void) {
-    let oldAnchor = anchor(for: type)
-    let predicate = oldAnchor == nil ? HKAnchoredObjectQuery.predicateForSamples(withStart: Date(),
-                                                                              end: nil,
-                                                                              options: .strictStartDate) : nil
-    
-    let query = HKAnchoredObjectQuery(type: type,
-                                      predicate: predicate,
-                                      anchor: oldAnchor,
-                                      limit: HKObjectQueryNoLimit)
-    { [weak self] (query: HKAnchoredObjectQuery,
-                   results: [HKSample]?,
-                   _,
-                   anchor: HKQueryAnchor?,
-                   error: Error?) in
-      self?.save(anchor: anchor, for: type)
-      completionHandler(results ?? [])
-    }
-    healthKitStore.execute(query)
-  }
-  
-  private func anchor(for type: HKSampleType) -> HKQueryAnchor? {
-    guard let anchorData = UserDefaults.standard.object(forKey: type.identifier) as? Data else {
-      return nil
-    }
-    return try? NSKeyedUnarchiver.unarchivedObject(ofClass: HKQueryAnchor.self, from: anchorData)
-  }
-  
-  private func save(anchor: HKQueryAnchor?, for type: HKSampleType) {
-    guard let newAnchor = anchor else { return }
-    UserDefaults.standard.setValue(try? NSKeyedArchiver.archivedData(withRootObject: newAnchor, requiringSecureCoding: false), forKey: type.identifier)
-  }
-  
-  private func handleData(of type: HKSampleType,
-                          data: [HKSample],
-                          completionHandler: @escaping ()->Void) {
-    guard !data.isEmpty else {
-      completionHandler()
-      return
-    }
-    let typeName = type.identifier
-    switch type {
-    case HKObjectType.quantityType(forIdentifier: .heartRate):
-      delegate.aquiredCorrectDataset(of: typeName, completionHandler: completionHandler)
-    default:
-      completionHandler()
-    }
-  }
 }
 
 extension HealthKitDataHandler: IHandleHealthKitData {
-  func handleNewData(for type: HKSampleType, completionHandler: @escaping (() -> Void)) {
-    let dispatchGroup = DispatchGroup()
-    dispatchGroup.enter()
-    
-    getData(of: type) {[weak self] results in
-      guard let self = self else {
-        dispatchGroup.leave()
+  func collectNewData(for type: HKSampleType, completionHandler: @escaping (HKQuantitySample?) -> Void) {
+    storageManager.getUser { [self] user in
+      guard let user = user,
+            let positiveInfoPeriod = user.positiveInfoPeriod else {
+        completionHandler(nil)
         return
       }
-      self.handleData(of: type, data: results) {
-        dispatchGroup.leave()
+      
+      let endDate = Date()
+      let startDate = Calendar.current.date(byAdding: .minute, value: -positiveInfoPeriod, to: endDate)
+      
+      let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictEndDate)
+      
+      let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
+      let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: 10, sortDescriptors: [sortDescriptor])
+      { query, samples, error in
+        guard let sample = samples?.first as? HKQuantitySample, error == nil else {
+          completionHandler(nil)
+          return
+        }
+        
+        completionHandler(sample)
+      }
+      
+      healthKitStore.execute(query)
+    }
+  }
+  
+  func processNewData(for type:HKSampleType,with sample: HKQuantitySample) {
+    updateHealthMetrics(for: type, with: sample)
+    self.delegate.aquiredCorrectDataset(data: loadHealthMetricsFromStorage())
+  }
+}
+
+extension HealthKitDataHandler: IHandleHealthMetrics {
+  func updateHealthMetrics(for type: HKSampleType, with sample: HKQuantitySample) {
+    var healthMetrics: HealthMetrics = loadHealthMetricsFromStorage()
+    
+    switch type {
+    case HKQuantityType.quantityType(forIdentifier: .heartRate):
+      let heartRateUnit = HKUnit.count().unitDivided(by: .minute())
+      healthMetrics.heartRate = Int(sample.quantity.doubleValue(for: heartRateUnit))
+      healthMetrics.heartRateEndDate = sample.endDate
+    case HKQuantityType.quantityType(forIdentifier: .restingHeartRate):
+      let restingHeartRateUnit = HKUnit.count().unitDivided(by: .minute())
+      healthMetrics.restingHeartRate = Int(sample.quantity.doubleValue(for: restingHeartRateUnit))
+      healthMetrics.restingHeartRateEndDate = sample.endDate
+    case HKQuantityType.quantityType(forIdentifier: .stepCount):
+      let stepsUnit = HKUnit.count()
+      healthMetrics.steps = Int(sample.quantity.doubleValue(for: stepsUnit))
+      healthMetrics.stepsEndDate = sample.endDate
+    default:
+      break
+    }
+    saveHealthMetricsToStorage(healthMetrics)
+  }
+  
+  func saveHealthMetricsToStorage(_ healthMetrics: HealthMetrics) {
+    do {
+      let encoder = JSONEncoder()
+      let encodedData = try encoder.encode(healthMetrics)
+      let defaults = UserDefaults.standard
+      defaults.set(encodedData, forKey: "HealthMetrics")
+    } catch {
+      print("Error encoding healthMetrics: \(error)")
+    }
+  }
+  
+  func loadHealthMetricsFromStorage() -> HealthMetrics {
+    let defaults = UserDefaults.standard
+    if let encodedData = defaults.data(forKey: "HealthMetrics") {
+      do {
+        let decoder = JSONDecoder()
+        let healthMetrics = try decoder.decode(HealthMetrics.self, from: encodedData)
+        return healthMetrics
+      } catch {
+        print("Error decoding healthMetrics: \(error)")
       }
     }
-    
-    dispatchGroup.notify(queue: DispatchQueue.main) {
-      completionHandler()
-    }
+    return HealthMetrics()
   }
 }

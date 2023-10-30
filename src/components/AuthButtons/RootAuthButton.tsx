@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import {Button} from 'native-base';
 import React from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
@@ -41,13 +42,12 @@ export const RootAuthButton = ({
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 5,
-    justifyContent: 'flex-start',
+    borderRadius: 10,
     borderWidth: 1,
   },
   text: {
-    fontSize: 18,
-    paddingLeft: '5%',
+    fontSize: 15,
+    paddingLeft: 1,
   },
   pressed: {
     borderRadius: 0,

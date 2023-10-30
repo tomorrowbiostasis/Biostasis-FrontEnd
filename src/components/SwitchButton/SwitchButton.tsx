@@ -2,7 +2,7 @@ import {Row, Text} from 'native-base';
 import React from 'react';
 import {StyleProp, ViewStyle, TouchableOpacity} from 'react-native';
 import Switch from '~/components/Switch';
-import QuestionIcon from '~/components/assets/Icons/QuestionIcon';
+import QuestionIcon from '~/assets/icons/QuestionIcon';
 
 import styles from './styles';
 
@@ -40,7 +40,7 @@ const SwitchButton = ({
       />
       {!!title && (
         <Text
-          fontSize={smaller ? 'md' : 'lg'}
+          fontSize={smaller ? 'sm' : 'md'}
           style={styles.text}
           noOfLines={1}>
           {title}

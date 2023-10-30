@@ -5,12 +5,24 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingHorizontal: 0,
   },
-  container: {
-    paddingTop: 0,
+  panel: {
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
+    justifyContent: 'space-evenly',
   },
-  content: {
-    paddingHorizontal: '10%',
-    flex: 1,
+  panelHeader: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  panelBody: {
+    marginVertical: 10,
+  },
+  panelFooter: {
+    width: '100%',
   },
   bottomContent: {
     width: '100%',
@@ -19,8 +31,24 @@ const styles = StyleSheet.create({
     color: colors.red[200],
     paddingBottom: 2,
   },
-  scrollView: {
-    flexGrow: 1,
+  scrollContent: {
+    flex: 1,
+    width: '100%',
+  },
+  scrollContentContainer: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  lineStyle: {
+    flex: 1,
+    width: '100%',
+    borderBottomColor: colors.gray[300],
+    borderBottomWidth: 2,
+    height: 2,
+    paddingTop: 10,
+  },
+  icon: {
+    marginRight: 10,
   },
 });
 

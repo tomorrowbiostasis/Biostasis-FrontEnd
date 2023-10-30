@@ -16,13 +16,29 @@ const styles = StyleSheet.create({
     width: screenWidth - 120,
     alignSelf: 'center',
   },
-  slide1Image: {
-    marginTop: 30,
-  },
   paginationDot: {
     width: 10,
     height: 10,
-    borderRadius: 10,
+    backgroundColor: colors.blue[700],
+    opacity: 0.5,
+  },
+  activePaginationDot: {
+    width: 12,
+    height: 12,
+    backgroundColor: colors.blue[700],
+  },
+  alreadyUserBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 20,
+  },
+  logInBox: {
+    margin: 10,
+  },
+  logInText: {
+    color: colors.blue[800],
+    fontWeight: '600',
   },
 });
 

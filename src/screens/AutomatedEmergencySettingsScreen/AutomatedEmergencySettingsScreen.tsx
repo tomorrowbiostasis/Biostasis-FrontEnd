@@ -1,37 +1,23 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 import {
   Linking,
   TouchableOpacity,
   View,
   LayoutAnimation,
   ScrollView,
-  Alert,
+  SafeAreaView,
 } from 'react-native';
 import {Text} from 'native-base';
 import Container from '~/components/Container';
-import IntervalSelect from '~/components/IntervalSelect';
 import {useTimeSlotPauseStatus} from '~/hooks/UseTimeSlotPauseStatus.hook';
-import {isAndroid, isIOS, updateDataCollectionStatus} from '~/utils';
 import styles from './styles';
 import SwitchButton from '~/components/SwitchButton';
-import BottomButton from '~/components/BottomButton';
-import PlusIcon from '~/assets/icons/PlusIcon';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-import {Radio, Box} from 'native-base';
 
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
-import {
-  automatedEmergencyPausedDateSelector,
-  automatedEmergencyPausedTimesSelector,
-} from '~/redux/automatedEmergency/selectors';
+import {automatedEmergencyPausedDateSelector} from '~/redux/automatedEmergency/selectors';
 import {setAutomatedEmergencyPause} from '~/redux/automatedEmergency/automatedEmergency.slice';
-import PauseEmergencyButton from './components/PauseEmergencyButton';
 import {
   automatedEmergencySettingsSelector,
   AutomatedEmergencySettings,
@@ -40,34 +26,20 @@ import {
 } from '~/redux/user/selectors';
 import {getUser, updateUser} from '~/redux/user/thunks';
 import {useNavigation} from '@react-navigation/native';
-import PauseDateInfoText from './components/PauseDateInfoText';
+import PauseDateInfoText from './components/SetUpPauseTimes/components/PauseDateInfoText';
 import {deleteTimeSlot} from '~/redux/automatedEmergency/thunks';
-import ForwardArrowIcon from '~/assets/icons/ForwardArrowIcon';
-import {
-  startBackgroundFetch,
-  stopBackgroundFetch,
-  updateNotification,
-} from '~/services/Background.service';
-import {IUser} from '~/redux/user/user.slice';
-import {useGoogleFitAuthStatus} from '~/hooks/UseGoogleFitAuthStatus.hook';
-import {BackgroundEventsEnum} from '~/services/Background.types';
-import {checkPushPermissionsIOS, invokeGetToken} from '~/services/Push.service';
-import {useDidUpdateEffect} from '~/hooks/UseDidUpdateEffect';
-import {isPausedTime} from '~/services/Time.service';
 
-type EmergencyTriggerType = 'pulse' | 'time';
-
-type PulseBasedTriggerSwitchStepsType = Pick<
-  IUser,
-  | 'pulseBasedTriggerIOSHealthPermissions'
-  | 'pulseBasedTriggerIOSAppleWatchPaired'
-  | 'pulseBasedTriggerConnectedToGoogleFit'
-  | 'pulseBasedTriggerBackgroundModesEnabled'
-  | 'pulseBasedTriggerGoogleFitAuthenticated'
->;
-
-const defaultFrequencyOfRegularNotification = 120;
-const defaultPositiveInfoPeriod = isIOS ? 720 : 360;
+import ToastService from '~/services/Toast.service';
+import isBatteryOptimizationOn from '~/services/Battery.service';
+import {Screens} from '~/models/Navigation.model';
+import colors from '~/theme/colors';
+import IconFeather from 'react-native-vector-icons/Feather';
+import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AutomatedEmergency from './components/AutomatedEmergency';
+import {isAndroid} from '~/utils';
+import {resetRecommendationSystem} from '~/services/Recommendation.service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AutomatedEmergencySettingsScreen = () => {
   const {t} = useAppTranslation();
@@ -75,37 +47,14 @@ const AutomatedEmergencySettingsScreen = () => {
   const {navigate} = useNavigation();
   const pausedDate = useAppSelector(automatedEmergencyPausedDateSelector);
   const {isSlotPause} = useTimeSlotPauseStatus();
-  const specificPausedTimes = useAppSelector(
-    automatedEmergencyPausedTimesSelector,
-  );
-
-  const activeSpecificPausedTimes = specificPausedTimes.filter(
-    value => value.isActive,
-  ).length;
-
-  const {authorizeGoogleFit, isGoogleFitAuthorized, resetGoogleFit} =
-    useGoogleFitAuthStatus();
-
   const {user} = useAppSelector(userSelector);
-  const {
-    automatedEmergency,
-    readManual,
-    regularPushNotification,
-    positiveInfoPeriod,
-    frequencyOfRegularNotification,
-  } = useAppSelector(automatedEmergencySettingsSelector);
+  const {automatedEmergency, readManual} = useAppSelector(
+    automatedEmergencySettingsSelector,
+  );
+
   const loading = useAppSelector(userLoading);
+  const [isDisclaimerShown, setIsDisclaimerShown] = useState(false);
 
-  const [isDisclaimerShown, setIsDisclaimerShown] = useState(true);
-  const isPulseEmergencyEnabled = useMemo(
-    () => automatedEmergency && !regularPushNotification,
-    [automatedEmergency, regularPushNotification],
-  );
-
-  const isPulseBased = useMemo(
-    () => !regularPushNotification,
-    [regularPushNotification],
-  );
   useLayoutEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
@@ -119,31 +68,20 @@ const AutomatedEmergencySettingsScreen = () => {
     [dispatch],
   );
 
-  const handleManualEmergencySwitch = (value: boolean) => {
+  const handleManualEmergencySwitch = async (value: boolean) => {
     const updateData: AutomatedEmergencySettings = {
       automatedEmergency: value,
     };
     handleUpdateUser(updateData, true);
-  };
-  const stopAutomatedEmergency = useCallback(() => {
-    if (isIOS) {
-      updateDataCollectionStatus();
-    } else {
-      stopBackgroundFetch(BackgroundEventsEnum.ReactNativeBackgroundFetch)
-        .then(response =>
-          console.log('Settings > stopAutomatedEmergency', response),
-        )
-        .catch(e =>
-          console.log('Settings > stopAutomatedEmergency > error', e),
-        );
+    if (!value) {
+      await resetRecommendationSystem(AsyncStorage);
+      ToastService.success(
+        t(
+          'emergencyContactsSettings.automatedEmergencySettings.systemOffMessage',
+        ),
+      );
     }
-  }, []);
-
-  useEffect(() => {
-    !automatedEmergency && stopAutomatedEmergency();
-  }, [automatedEmergency, stopAutomatedEmergency]);
-
-  const isNowPaused = isPausedTime(new Date(), pausedDate, specificPausedTimes);
+  };
 
   useEffect(() => {
     if (pausedDate && pausedDate.timestamp < Date.now()) {
@@ -152,469 +90,176 @@ const AutomatedEmergencySettingsScreen = () => {
     }
   }, [dispatch, pausedDate]);
 
-  useDidUpdateEffect(() => {
-    if (isAndroid && isPulseEmergencyEnabled && !isNowPaused) {
-      updateNotification(
-        'Automated Health Check',
-        'The Biostasis Emergency App is checking your pulse data',
-      );
+  const handleReadManualSwitchPress = (value: boolean) => {
+    const updateData: AutomatedEmergencySettings = {
+      readManual: value,
+    };
+    if (!value) {
+      updateData.automatedEmergency = false;
     }
-  }, [isPulseEmergencyEnabled]);
-
-  const handleReadManualSwitchPress = useCallback(
-    (value: boolean) => {
-      const updateData: AutomatedEmergencySettings = {
-        readManual: value,
-      };
-      if (!value) {
-        updateData.automatedEmergency = false;
-      }
-      handleUpdateUser(updateData, true);
-    },
-    [handleUpdateUser],
-  );
-
-  const startAutomatedEmergency = useCallback(() => {
-    if (isIOS) {
-      updateDataCollectionStatus();
-    } else {
-      startBackgroundFetch()
-        .then(status => {
-          console.log('Settings > startAutomatedEmergency', status);
-        })
-        .catch(e =>
-          console.log('Settings > startAutomatedEmergency > error', e),
-        );
-    }
-    invokeGetToken();
-  }, []);
-
-  const handleChangeAutomatedEmergencyState = useCallback(
-    (isPulseChosen = false) => {
-      console.log('Automated Emergency: changing state to', isPulseChosen);
-      const updateData: IUser = {
-        automatedEmergency: isPulseChosen,
-      };
-      if (isPulseChosen) {
-        updateData.regularPushNotification = false;
-        handleUpdateUser(updateData);
-        return startAutomatedEmergency();
-      }
-      return stopAutomatedEmergency();
-    },
-    [handleUpdateUser, startAutomatedEmergency, stopAutomatedEmergency],
-  );
+    setIsDisclaimerShown(value);
+    handleUpdateUser(updateData, true);
+  };
 
   useEffect(() => {
-    automatedEmergency && checkPushPermissionsIOS();
-  }, [automatedEmergency]);
-
-  useEffect(() => {
-    const validatePlatformConditions = isIOS
-      ? user.pulseBasedTriggerIOSAppleWatchPaired
-      : isGoogleFitAuthorized &&
-        user.pulseBasedTriggerConnectedToGoogleFit &&
-        user.pulseBasedTriggerBackgroundModesEnabled;
-    // TODO inv some problematic behaviour with stopping background fetch while focusing on this screen
-    handleChangeAutomatedEmergencyState(
-      !regularPushNotification && validatePlatformConditions,
-    );
-  }, [
-    handleChangeAutomatedEmergencyState,
-    isGoogleFitAuthorized,
-    user.pulseBasedTriggerConnectedToGoogleFit,
-    user.pulseBasedTriggerBackgroundModesEnabled,
-    user.pulseBasedTriggerIOSAppleWatchPaired,
-    regularPushNotification,
-    user.pulseBasedTriggerGoogleFitAuthenticated,
-  ]);
-
-  const handleAuthorizeGoogleFit = useCallback(
-    async value => {
-      if (value) {
-        Alert.alert('Are you sure?', 'Confirm this action?', [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {
-            text: 'OK',
-            onPress: async () => {
-              await authorizeGoogleFit();
-              handleUpdateUser(
-                {pulseBasedTriggerGoogleFitAuthenticated: value},
-                true,
-              );
-            },
-          },
-        ]);
-      } else {
-        await resetGoogleFit();
-        handleUpdateUser(
-          {pulseBasedTriggerGoogleFitAuthenticated: false},
-          true,
-        );
-      }
-    },
-    [authorizeGoogleFit, handleUpdateUser, resetGoogleFit],
-  );
+    isAndroid &&
+      automatedEmergency &&
+      user.pulseBasedTriggerBackgroundModesEnabled &&
+      isBatteryOptimizationOn();
+  }, [automatedEmergency, user.pulseBasedTriggerBackgroundModesEnabled]);
 
   const redirectToManual = useCallback(() => {
-    Linking.openURL('https://tomorrowbiostasis.com/');
+    Linking.openURL('https://www.tomorrow.bio/app-manual');
   }, []);
 
   const handleSpecificTimesNavigation = useCallback(() => {
-    navigate('SpecificTimePaused');
+    navigate(Screens.SpecificTimePaused as never);
   }, [navigate]);
-
-  const pauseEmergencyButtonProps = useMemo(
-    () => ({
-      disabled: !automatedEmergency,
-    }),
-    [automatedEmergency],
-  );
-
-  const updateUserDataOnRadioChange = useCallback(
-    (type: EmergencyTriggerType) => {
-      const updateData: IUser = {
-        regularPushNotification: type === 'time',
-      };
-      if (type === 'time') {
-        updateData.frequencyOfRegularNotification =
-          frequencyOfRegularNotification ||
-          defaultFrequencyOfRegularNotification;
-      } else {
-        updateData.positiveInfoPeriod =
-          positiveInfoPeriod || defaultPositiveInfoPeriod;
-      }
-      handleUpdateUser(updateData, true);
-    },
-    [handleUpdateUser, frequencyOfRegularNotification, positiveInfoPeriod],
-  );
-
-  const handleFrequency = useCallback(
-    (frequency: number, type: EmergencyTriggerType) => {
-      const updateData: IUser = {};
-      if (type === 'time') {
-        updateData.frequencyOfRegularNotification = frequency;
-      } else {
-        updateData.positiveInfoPeriod = frequency;
-      }
-      handleUpdateUser(updateData, true);
-    },
-    [handleUpdateUser],
-  );
-
-  const handleSwitchChange = useCallback(
-    (field: keyof PulseBasedTriggerSwitchStepsType, value: boolean) => {
-      if (value) {
-        Alert.alert(t('confirmAlert.title'), t('confirmAlert.text'), [
-          {
-            text: 'Cancel',
-            onPress: () => {
-              handleUpdateUser({
-                [field]: false,
-              });
-            },
-            style: 'cancel',
-          },
-          {
-            text: 'OK',
-            onPress: () => {
-              handleUpdateUser(
-                {
-                  [field]: value,
-                },
-                true,
-              );
-            },
-          },
-        ]);
-      } else {
-        handleUpdateUser(
-          {
-            [field]: value,
-          },
-          true,
-        );
-      }
-    },
-    [handleUpdateUser, t],
-  );
 
   return (
     <Container
       loading={loading}
-      type="static"
-      title={t('emergencyContacts.automatedEmergencySettings.title')}
-      contentContainerStyle={styles.container}>
-      <ScrollView>
-        <View style={styles.topContentContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              LayoutAnimation.easeInEaseOut();
-              setIsDisclaimerShown(value => !value);
-            }}
-            style={styles.expandableSectionWrapper}>
-            <Text fontSize={'sm'} style={styles.warningText} pb={2} flex={3}>
-              {t(
-                'emergencyContacts.automatedEmergencySettings.pleaseReadManual',
-              )}
-            </Text>
-            <View style={styles.expandIconWrapper}>
-              <View
-                style={{
-                  transform: [
-                    {translateX: -5},
-                    {rotate: isDisclaimerShown ? '-90deg' : '90deg'},
-                  ],
-                }}>
-                <ForwardArrowIcon />
-              </View>
-            </View>
-          </TouchableOpacity>
-          {isDisclaimerShown && (
-            <>
-              <Text fontSize={'sm'} style={styles.descriptionText}>
+      title={t('emergencyContactsSettings.automatedEmergencySettings.title')}
+      type={'static'}
+      containerStyle={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      disableWrapper
+      showBackIcon
+      showDrawerIcon>
+      <View style={styles.curveElement} />
+      {/* Solve problem with scrollView IOS */}
+      <SafeAreaView style={{flex: 1}}>
+        <ScrollView
+          bounces={false}
+          style={styles.scrollContent}
+          contentContainerStyle={styles.scrollContentContainer}>
+          <View style={styles.panel}>
+            <View style={styles.panelHeader}>
+              <IconFeather name={'settings'} size={26} style={styles.icon} />
+              <Text fontSize={'md'} fontWeight={700}>
                 {t(
-                  'emergencyContacts.automatedEmergencySettings.systemDescription',
+                  'emergencyContactsSettings.automatedEmergencySettings.enableSystemTitle',
                 )}
               </Text>
-              <TouchableOpacity onPress={redirectToManual}>
-                <Text underline fontSize={'sm'} py={2}>
-                  {t(
-                    'emergencyContacts.automatedEmergencySettings.manualDescription',
+            </View>
+            <View style={styles.lineStyle} />
+
+            <View style={styles.panelBody}>
+              <SwitchButton
+                value={readManual}
+                title={t(
+                  'emergencyContactsSettings.automatedEmergencySettings.confirmReadManual',
+                )}
+                containerStyle={styles.switchButton}
+                onSwitchPress={handleReadManualSwitchPress}
+              />
+              <SwitchButton
+                value={automatedEmergency}
+                disabled={!readManual}
+                title={t(
+                  'emergencyContactsSettings.automatedEmergencySettings.enableAutomatedEmergency',
+                )}
+                containerStyle={styles.switchButton}
+                onSwitchPress={handleManualEmergencySwitch}
+                paused={!!pausedDate || !!isSlotPause}
+              />
+            </View>
+            <View style={styles.panelFooter}>
+              <TouchableOpacity
+                onPress={() => {
+                  LayoutAnimation.easeInEaseOut();
+                  setIsDisclaimerShown(value => !value);
+                }}
+                style={styles.expandableSectionWrapper}>
+                <View style={styles.expandIconWrapper}>
+                  <View style={styles.instructionBox}>
+                    <Text fontSize={'md'}>
+                      {t(
+                        'emergencyContactsSettings.automatedEmergencySettings.instructions',
+                      )}
+                    </Text>
+                    <View
+                      style={{
+                        transform: [
+                          {translateX: -5},
+                          {rotate: isDisclaimerShown ? '-180deg' : '0deg'},
+                        ],
+                      }}>
+                      <IconMaterialIcons
+                        name={'arrow-drop-down'}
+                        size={24}
+                        color={colors.gray[700]}
+                      />
+                    </View>
+                  </View>
+
+                  {isDisclaimerShown && (
+                    <View style={styles.instructionBody}>
+                      <Text fontSize={'sm'} style={styles.descriptionText}>
+                        {t(
+                          'emergencyContactsSettings.automatedEmergencySettings.systemDescription',
+                        )}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={redirectToManual}
+                        style={styles.manualLinkBox}>
+                        <Text underline pb={2} style={styles.manualLink}>
+                          {t(
+                            'emergencyContactsSettings.automatedEmergencySettings.manualDescription',
+                          )}
+                        </Text>
+                        <IconFeather
+                          name="external-link"
+                          size={18}
+                          color={colors.blue[800]}
+                        />
+                      </TouchableOpacity>
+                      <Text fontSize={10} style={styles.warningText}>
+                        {t(
+                          'emergencyContactsSettings.automatedEmergencySettings.pleaseReadManual',
+                        )}
+                      </Text>
+                    </View>
                   )}
-                </Text>
+                </View>
               </TouchableOpacity>
-            </>
-          )}
-          <SwitchButton
-            value={readManual}
-            title={t(
-              'emergencyContacts.automatedEmergencySettings.confirmReadManual',
-            )}
-            containerStyle={styles.switchButton}
-            onSwitchPress={handleReadManualSwitchPress}
-          />
-          <SwitchButton
-            value={automatedEmergency}
-            disabled={!readManual}
-            title={t(
-              'emergencyContacts.automatedEmergencySettings.enableAutomatedEmergency',
-            )}
-            containerStyle={styles.switchButton}
-            onSwitchPress={handleManualEmergencySwitch}
-            paused={!!pausedDate || !!isSlotPause}
-          />
-          <PauseDateInfoText isSlotPause={isSlotPause} />
+            </View>
+          </View>
+
           {automatedEmergency && (
-            <Radio.Group
-              name="whichTrigger"
-              value={isPulseBased ? 'pulse' : 'time'}
-              onChange={nextValue => {
-                LayoutAnimation.easeInEaseOut();
-                updateUserDataOnRadioChange(nextValue as EmergencyTriggerType);
-              }}>
-              <Box flexDirection="row" mt={6}>
-                <Radio value="pulse" />
-                <Text fontSize={'lg'} noOfLines={1} ml={2}>
-                  {t(
-                    'emergencyContacts.automatedEmergencySettings.pulseTrigger.title',
-                  )}
-                </Text>
-              </Box>
-              {isPulseBased && (
-                <View style={styles.indented}>
-                  {isIOS ? (
-                    <>
-                      <Text fontSize={'xs'} style={styles.infoText}>
-                        {t(
-                          'emergencyContacts.automatedEmergencySettings.pulseTrigger.description',
-                        )}
-                      </Text>
-                      <Text
-                        fontSize={'xs'}
-                        style={[styles.infoText, styles.underline]}>
-                        {`System is ${
-                          user.pulseBasedTriggerIOSAppleWatchPaired
-                            ? 'ON'
-                            : 'OFF'
-                        }`}
-                      </Text>
-                      <SwitchButton
-                        smaller
-                        value={user.pulseBasedTriggerIOSAppleWatchPaired}
-                        title={t(
-                          'emergencyContacts.automatedEmergencySettings.pulseTrigger.appleWatch.title',
-                        )}
-                        containerStyle={styles.switchButton}
-                        onSwitchPress={value =>
-                          handleSwitchChange(
-                            'pulseBasedTriggerIOSAppleWatchPaired',
-                            value,
-                          )
-                        }
-                        showQuestionIcon
-                        onQuestionPress={() =>
-                          Alert.alert(
-                            t(
-                              'emergencyContacts.automatedEmergencySettings.pulseTrigger.appleWatch.alertTitle',
-                            ),
-                            t(
-                              'emergencyContacts.automatedEmergencySettings.pulseTrigger.appleWatch.alertDescription',
-                            ),
-                          )
-                        }
-                      />
-                      <IntervalSelect
-                        type="pulse"
-                        onValueChange={itemValue =>
-                          handleFrequency(+itemValue, 'pulse')
-                        }
-                        selectedValue={`${positiveInfoPeriod}`}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <Text fontSize={'xs'} style={styles.infoText}>
-                        {t(
-                          'emergencyContacts.automatedEmergencySettings.pulseTrigger.googleFit.description',
-                        )}
-                      </Text>
-                      <Text
-                        fontSize={'xs'}
-                        style={[styles.infoText, styles.underline]}>
-                        {`System is ${
-                          isGoogleFitAuthorized &&
-                          user.pulseBasedTriggerConnectedToGoogleFit &&
-                          user.pulseBasedTriggerBackgroundModesEnabled
-                            ? 'ON'
-                            : 'OFF'
-                        }`}
-                      </Text>
-                      <SwitchButton
-                        smaller
-                        value={isGoogleFitAuthorized}
-                        title={t(
-                          'emergencyContacts.automatedEmergencySettings.pulseTrigger.googleFit.title',
-                        )}
-                        containerStyle={styles.switchButton}
-                        onSwitchPress={handleAuthorizeGoogleFit}
-                        showQuestionIcon
-                        onQuestionPress={() =>
-                          Alert.alert(
-                            'Authenticate',
-                            "Please authenticate Google Fit to let Biostasis access your recorder pulse data. If you don't have the Google Fit app installed, please install it from Google Play first.",
-                          )
-                        }
-                      />
-                      <SwitchButton
-                        smaller
-                        value={user.pulseBasedTriggerConnectedToGoogleFit}
-                        title={t(
-                          'emergencyContacts.automatedEmergencySettings.pulseTrigger.googleFit.connect',
-                        )}
-                        containerStyle={styles.switchButton}
-                        onSwitchPress={value =>
-                          handleSwitchChange(
-                            'pulseBasedTriggerConnectedToGoogleFit',
-                            value,
-                          )
-                        }
-                        showQuestionIcon
-                        onQuestionPress={() =>
-                          Alert.alert(
-                            t(
-                              'emergencyContacts.automatedEmergencySettings.pulseTrigger.googleFit.alertTitle',
-                            ),
-                            t(
-                              'emergencyContacts.automatedEmergencySettings.pulseTrigger.googleFit.alertDescription',
-                            ),
-                          )
-                        }
-                      />
-                      <SwitchButton
-                        smaller
-                        value={user.pulseBasedTriggerBackgroundModesEnabled}
-                        title={t(
-                          'emergencyContacts.automatedEmergencySettings.pulseTrigger.backgroundModes.title',
-                        )}
-                        containerStyle={styles.switchButton}
-                        onSwitchPress={value =>
-                          handleSwitchChange(
-                            'pulseBasedTriggerBackgroundModesEnabled',
-                            value,
-                          )
-                        }
-                        showQuestionIcon
-                        onQuestionPress={() =>
-                          Alert.alert(
-                            t(
-                              'emergencyContacts.automatedEmergencySettings.pulseTrigger.backgroundModes.alertTitle',
-                            ),
-                            t(
-                              'emergencyContacts.automatedEmergencySettings.pulseTrigger.backgroundModes.alertDescription',
-                            ),
-                          )
-                        }
-                      />
-                      <IntervalSelect
-                        type="pulse"
-                        onValueChange={itemValue =>
-                          handleFrequency(+itemValue, 'pulse')
-                        }
-                        selectedValue={`${positiveInfoPeriod}`}
-                      />
-                    </>
-                  )}
-                </View>
-              )}
-              <Box flexDirection="row" mt={6}>
-                <Radio value="time" />
-                <Text fontSize={'lg'} noOfLines={1} ml={2}>
-                  {t(
-                    'emergencyContacts.automatedEmergencySettings.timeTrigger.title',
-                  )}
-                </Text>
-              </Box>
-              {!isPulseBased && (
-                <View style={styles.indented}>
-                  <Text fontSize={'xs'} style={styles.infoText}>
-                    {t(
-                      'emergencyContacts.automatedEmergencySettings.timeTrigger.description',
-                    )}
-                  </Text>
-                  <IntervalSelect
-                    selectedValue={`${frequencyOfRegularNotification}`}
-                    type={'time'}
-                    onValueChange={itemValue =>
-                      handleFrequency(+itemValue, 'time')
-                    }
-                  />
-                </View>
-              )}
-            </Radio.Group>
+            <View
+              style={isSlotPause || pausedDate ? styles.opacity : null}
+              pointerEvents={isSlotPause || pausedDate ? 'none' : 'auto'}>
+              <AutomatedEmergency />
+            </View>
           )}
-        </View>
-      </ScrollView>
-      <PauseEmergencyButton bottomButtonProps={pauseEmergencyButtonProps} />
-      <BottomButton
-        leftIcon={<PlusIcon />}
-        title={t(
-          'emergencyContacts.automatedEmergencySettings.setUpSpecificTimes',
-          {
-            specificTimes:
-              activeSpecificPausedTimes > 0
-                ? `(${activeSpecificPausedTimes})`
-                : '',
-          },
-        )}
-        onPress={handleSpecificTimesNavigation}
-        withBottomBorder
-        disabled={!automatedEmergency}
-      />
+
+          <TouchableOpacity
+            onPress={handleSpecificTimesNavigation}
+            style={styles.panel}>
+            <View style={styles.panelHeader}>
+              <View style={[styles.circle, styles.icon]}>
+                <IconMaterialCommunityIcons name="play-pause" size={20} />
+              </View>
+              <Text fontSize={'md'} fontWeight={700}>
+                {t(
+                  'emergencyContactsSettings.automatedEmergencySettings.pauseTime.title',
+                )}
+              </Text>
+            </View>
+            <View style={styles.lineStyle} />
+
+            <View style={styles.panelBody}>
+              <Text fontSize={'sm'}>
+                {t(
+                  'emergencyContactsSettings.automatedEmergencySettings.pauseTime.description',
+                )}
+              </Text>
+              <PauseDateInfoText isSlotPause={isSlotPause} />
+            </View>
+          </TouchableOpacity>
+        </ScrollView>
+      </SafeAreaView>
     </Container>
   );
 };

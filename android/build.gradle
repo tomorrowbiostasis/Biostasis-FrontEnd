@@ -1,25 +1,26 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+def REACT_NATIVE_VERSION = new File(['node', '--print',"JSON.parse(require('fs').readFileSync(require.resolve('react-native/package.json'), 'utf-8')).version"].execute(null, rootDir).text.trim())
 
 buildscript {
     ext {
-        buildToolsVersion = "29.0.3"
+        buildToolsVersion = "31.0.0"
         minSdkVersion = 21
-        compileSdkVersion = 30
-        targetSdkVersion = 30
+        compileSdkVersion = 33
+        targetSdkVersion = 33
         ndkVersion = "20.1.5948944"
-        kotlinVersion = "1.4.0"
+        kotlinVersion = '1.6.21'
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.1.0")
+        classpath('com.android.tools.build:gradle:4.2.1')
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath 'com.google.gms:google-services:4.3.8'
+        classpath 'com.google.gms:google-services:4.3.14'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
     }
 }
 
@@ -48,6 +49,12 @@ allprojects {
         maven {
             // react-native-background-fetch
             url("${project(':react-native-background-fetch').projectDir}/libs")
+        }
+    }
+    configurations.all {
+        resolutionStrategy {
+            // Remove this override in 0.65+, as a proper fix is included in react-native itself.
+            force "com.facebook.react:react-native:" + REACT_NATIVE_VERSION
         }
     }
 }

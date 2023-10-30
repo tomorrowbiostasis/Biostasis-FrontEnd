@@ -3,15 +3,14 @@ import colors from '~/theme/colors';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.white,
+    flexGrow: 1,
+    backgroundColor: colors.gray[50],
     width: '100%',
+    justifyContent: 'center',
   },
   contentContainerStyle: {
-    flex: 1,
-    flexGrow: 1,
+    paddingHorizontal: 30,
     width: '100%',
-    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   button: {

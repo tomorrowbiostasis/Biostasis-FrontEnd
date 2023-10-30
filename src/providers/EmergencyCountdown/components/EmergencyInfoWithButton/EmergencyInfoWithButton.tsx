@@ -32,12 +32,7 @@ const EmergencyInfoWithButton: FC<IEmergencyInfoWithButton> = ({
       <Text textAlign="center" fontSize="xl" style={styles.subtitle}>
         {subtitle}
       </Text>
-      <Text
-        mt={10}
-        mb={32}
-        textAlign="center"
-        fontSize="6xl"
-        style={styles.counter}>
+      <Text textAlign="center" fontSize="6xl" style={styles.counter}>
         {count}
       </Text>
       <Button

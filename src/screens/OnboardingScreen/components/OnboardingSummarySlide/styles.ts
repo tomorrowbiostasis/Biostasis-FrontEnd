@@ -1,30 +1,16 @@
 import {Dimensions, StyleSheet} from 'react-native';
+import colors from '~/theme/colors';
 
 const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 30,
-    paddingBottom: 50,
+    padding: 40,
   },
-  header: {
-    textTransform: 'uppercase',
-    textAlign: 'center',
-    justifyContent: 'flex-start',
-  },
-  centerContentContainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  bottomContentContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: 'transparent',
-  },
-  description: {
-    textAlign: 'center',
+  margin20: {
     marginTop: 20,
+    textAlign: 'center',
   },
   slideImageContainer: {
     width: '100%',
@@ -32,15 +18,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   slideImage: {
-    width: screenWidth - 120,
+    width: screenWidth - 100,
     flex: 1,
     alignSelf: 'center',
   },
   margin40: {
     marginTop: 40,
   },
-  button: {
+  buttonsBox: {
+    alignItems: 'center',
+    marginVertical: 40,
+  },
+  buttonSignUp: {
     marginTop: 20,
+    backgroundColor: colors.blue[700],
+  },
+  buttonLogin: {
+    marginTop: 10,
+    backgroundColor: colors.sea[600],
   },
 });
 

@@ -5,6 +5,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  TextStyle,
 } from 'react-native';
 import {Heading} from 'native-base';
 import {Edge, SafeAreaView} from 'react-native-safe-area-context';
@@ -13,6 +14,8 @@ import Loader from '~/components/Loader';
 
 import styles from './styles';
 import {useCallback} from 'react';
+import DrawerTrigger from '../DrawerTrigger';
+import BackButtonTrigger from '../BackButtonTrigger';
 
 type ContainerType = 'static' | 'scroll' | 'keyboardAvoidingScrollView';
 interface ContainerProps {
@@ -23,6 +26,9 @@ interface ContainerProps {
   type?: ContainerType;
   disableWrapper?: boolean;
   loading?: boolean;
+  titleText?: StyleProp<TextStyle>;
+  showDrawerIcon?: boolean;
+  showBackIcon?: boolean;
 }
 
 const Container: FC<ContainerProps> = ({
@@ -34,6 +40,9 @@ const Container: FC<ContainerProps> = ({
   type = 'scroll',
   disableWrapper,
   loading,
+  titleText = {...styles.titleText},
+  showDrawerIcon = false,
+  showBackIcon = false,
 }) => {
   const safeAreaEdges = useMemo<readonly Edge[]>(() => {
     const result: Edge[] = ['right', 'left'];
@@ -86,9 +95,13 @@ const Container: FC<ContainerProps> = ({
 
   return (
     <>
+      <View style={styles.header}>
+        {showBackIcon && <BackButtonTrigger />}
+        {title && <Heading style={titleText}>{title}</Heading>}
+        {showDrawerIcon && <DrawerTrigger />}
+      </View>
       <Wrapper edges={safeAreaEdges} style={styles.container}>
         <ContentContainer>
-          {title && <Heading style={styles.header}>{title}</Heading>}
           <Wrapper
             edges={['bottom']}
             style={[

@@ -4,4 +4,4 @@
 
 #import "RNCAsyncStorage.h"
 #import <React/RCTBridgeModule.h>
-#import "ReactNativeConfig.h"
+#import "RNCConfig.h"

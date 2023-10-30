@@ -1,67 +1,112 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ProgressCircle} from 'react-native-svg-charts';
-import {Text, View} from 'native-base';
+import {ScrollView, Text, View} from 'native-base';
 import {useNavigation} from '@react-navigation/core';
-
-import {useAppSelector} from '~/redux/store/hooks';
-import {userSelector} from '~/redux/user/selectors';
-
 import Container from '~/components/Container';
-import BottomButton from '~/components/BottomButton';
-
-import PencilIcon from '~/assets/icons/PencilIcon';
-import colors from '~/theme/colors';
 import styles from './styles';
+import {Screens} from '~/models/Navigation.model';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const ProfileDefaultScreen = () => {
   const {t} = useTranslation();
   const {navigate} = useNavigation();
-  const {user} = useAppSelector(userSelector);
 
   const handleEditProfile = useCallback(() => {
-    navigate('ProfileEdit');
+    navigate(Screens.ProfileEdit as never);
   }, [navigate]);
 
   const handleAddEditMedicalInfo = useCallback(() => {
-    navigate('ProfileMedicalInfo');
+    navigate(Screens.ProfileMedicalInfo as never);
   }, [navigate]);
 
-  const progress = useMemo(
-    () => (user.fillLevel !== undefined ? user.fillLevel / 100 : 0),
-    [user.fillLevel],
-  );
+  const handleAccountSettings = useCallback(() => {
+    navigate(Screens.AccountSettings as never);
+  }, [navigate]);
 
   return (
     <Container
-      type={'static'}
       title={t('profileDefault.title')}
-      contentContainerStyle={styles.contentContainer}>
-      <View style={styles.topContainer}>
-        <View style={styles.infoContainer}>
-          <Text fontSize="3xl">{user.fillLevel}%</Text>
-          <Text fontSize="xl">{t('profileDefault.medicalInfo')}</Text>
-        </View>
-        <ProgressCircle
-          style={styles.progressCircle}
-          progress={progress}
-          progressColor={colors.green[600]}
-          startAngle={-90}
-          strokeWidth={15}
-        />
-      </View>
-      <BottomButton
-        leftIcon={<PencilIcon />}
-        title={t('profileDefault.editProfile')}
-        onPress={handleEditProfile}
-      />
+      containerStyle={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      disableWrapper
+      showBackIcon
+      showDrawerIcon>
+      <ScrollView
+        bounces={false}
+        style={styles.scrollContent}
+        contentContainerStyle={styles.scrollContentContainer}>
+        <TouchableOpacity style={styles.panel} onPress={handleEditProfile}>
+          <View style={styles.panelHeader}>
+            <IconAntDesign name={'profile'} size={26} style={styles.icon} />
+            <Text fontSize={'md'} fontWeight={700}>
+              {t('profileDefault.editProfile.title')}
+            </Text>
+          </View>
+          <View style={styles.lineStyle} />
+          <View style={styles.panelBody}>
+            <Text fontSize={'sm'}>
+              {t('profileDefault.editProfile.description')}
+            </Text>
+          </View>
+          <View style={styles.panelFooter}>
+            <Text style={styles.footerText}>
+              {t('profileDefault.editProfile.footer')}
+            </Text>
+          </View>
+        </TouchableOpacity>
 
-      <BottomButton
-        leftIcon={<PencilIcon />}
-        title={t('profileDefault.EditAddMedicalInfo')}
-        onPress={handleAddEditMedicalInfo}
-        withBottomBorder
-      />
+        <TouchableOpacity style={styles.panel} onPress={handleAccountSettings}>
+          <View style={styles.panelHeader}>
+            <IconMaterialCommunityIcons
+              name={'account-settings-outline'}
+              size={26}
+              style={styles.icon}
+            />
+            <Text fontSize={'md'} fontWeight={700}>
+              {t('profileDefault.accountSettings.title')}
+            </Text>
+          </View>
+          <View style={styles.lineStyle} />
+          <View style={styles.panelBody}>
+            <Text fontSize={'sm'}>
+              {t('profileDefault.accountSettings.description')}
+            </Text>
+          </View>
+          <View style={styles.panelFooter}>
+            <Text style={styles.footerText}>
+              {t('profileDefault.accountSettings.footer')}
+            </Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.panel}
+          onPress={handleAddEditMedicalInfo}>
+          <View style={styles.panelHeader}>
+            <IconMaterialCommunityIcons
+              name={'medical-bag'}
+              size={26}
+              style={styles.icon}
+            />
+            <Text fontSize={'md'} fontWeight={700}>
+              {t('profileDefault.medicalInfo.title')}
+            </Text>
+          </View>
+          <View style={styles.lineStyle} />
+          <View style={styles.panelBody}>
+            <Text fontSize={'sm'}>
+              {t('profileDefault.medicalInfo.description')}
+            </Text>
+          </View>
+          <View style={styles.panelFooter}>
+            <Text style={styles.footerText}>
+              {t('profileDefault.medicalInfo.footer')}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </ScrollView>
     </Container>
   );
 };

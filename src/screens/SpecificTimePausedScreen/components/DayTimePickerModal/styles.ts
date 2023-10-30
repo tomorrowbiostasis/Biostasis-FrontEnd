@@ -12,6 +12,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.white,
   },
+  contentContainer: {
+    paddingHorizontal: 0,
+  },
+  title: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 30,
+    fontWeight: '700',
+  },
   contentContainerStyle: {
     flex: isSmall ? undefined : 1,
     justifyContent: 'center',
@@ -23,13 +32,15 @@ const styles = StyleSheet.create({
   panel: {
     paddingVertical: '6%',
     marginVertical: '2%',
-    borderColor: colors.blue[200],
     borderWidth: 2,
     paddingHorizontal: '5%',
-    borderRadius: 10,
-    backgroundColor: addOpacity(colors.blue[200], 20),
+    borderRadius: 20,
+    borderColor: colors.gray[300],
+    backgroundColor: addOpacity(colors.blue[300], 20),
   },
   saveButton: {
+    backgroundColor: colors.blue[600],
+    borderColor: colors.gray[200],
     marginTop: buttonsMargin,
   },
   cancelButton: {
@@ -37,9 +48,8 @@ const styles = StyleSheet.create({
     marginBottom: buttonsMargin,
   },
   label: {
-    color: colors.gray[800],
-    opacity: 0.8,
-    fontSize: 14,
+    fontSize: 15,
+    fontWeight: '700',
   },
 });
 

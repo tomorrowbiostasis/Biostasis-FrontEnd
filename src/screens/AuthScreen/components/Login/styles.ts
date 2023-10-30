@@ -2,35 +2,38 @@ import {StyleSheet} from 'react-native';
 import colors from '~/theme/colors';
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    paddingHorizontal: '5%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
   inputMargin: {
     marginTop: 20,
   },
   buttonSpace: {
-    marginTop: 15,
-  },
-  orSeparator: {
-    textAlign: 'center',
     marginTop: 20,
-    marginBottom: 20,
-    color: colors.gray[650],
   },
-
   forgotPasswordText: {
     textAlign: 'center',
-    marginTop: 30,
+    marginTop: 20,
     color: colors.blue[800],
-    textDecorationLine: 'underline'
-
+    textDecorationLine: 'underline',
   },
   loginButton: {
-    backgroundColor: colors.green[800],
-    marginTop: 50,
+    marginTop: 20,
     borderWidth: 2,
     borderColor: colors.white,
-    borderRadius: 20,
   },
   alertContainer: {
     paddingBottom: 10,
+  },
+  lineStyle: {
+    width: '100%',
+    borderBottomColor: colors.gray[600],
+    borderBottomWidth: 2,
+    height: 1,
+    marginVertical: 20,
   },
 });
 

@@ -4,13 +4,15 @@ import {useNavigation} from '@react-navigation/native';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
-import {userSelector} from '~/redux/user/selectors';
+import {userLoading, userSelector} from '~/redux/user/selectors';
 import {updateUser} from '~/redux/user/thunks';
 
 import Container from '~/components/Container';
 
 import styles from './styles';
 import {MaskedDateInput} from './components/MaskedDateInput/MaskedDateInput';
+import {Screens} from '~/models/Navigation.model';
+import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export const DateOfBirthScreen = () => {
   const {t} = useAppTranslation();
@@ -19,6 +21,7 @@ export const DateOfBirthScreen = () => {
   const {navigate} = useNavigation();
   const [dateOfBirth, setDateOfBirth] = useState<string>('');
   const [isDateValid, setIsDateValid] = useState(false);
+  const pending = useAppSelector(userLoading);
 
   const handleContinuePress = useCallback(() => {
     dispatch(
@@ -26,31 +29,44 @@ export const DateOfBirthScreen = () => {
         dateOfBirth,
       }),
     );
-    navigate('UserAddress');
+    navigate(Screens.UserAddress as never);
   }, [dateOfBirth, dispatch, navigate]);
 
   return (
     <Container
-      title={t('common.welcome', {username: user.name})}
       containerStyle={styles.container}
-      contentContainerStyle={styles.contentContainer}
       type={'keyboardAvoidingScrollView'}>
-      <View style={styles.content}>
-        <View style={styles.text}>
-          <Text fontSize={'xl'}>{t('userDateOfBirth.title')}</Text>
+      <View style={styles.panel}>
+        <Text style={styles.userName}>
+          {t('common.welcome', {username: user.name || 'user'})}
+        </Text>
+        <View style={styles.panelHeader}>
+          <IconFontAwesome
+            name={'birthday-cake'}
+            size={26}
+            style={styles.icon}
+          />
+          <Text fontSize={'md'} fontWeight={700}>
+            {t('userDateOfBirth.title')}
+          </Text>
         </View>
-        <MaskedDateInput
-          onChangeValue={setDateOfBirth}
-          onChangeValidation={setIsDateValid}
-          type="birth"
-        />
-        <Button
-          variant={'solid'}
-          disabled={!isDateValid}
-          style={styles.submitButton}
-          onPress={handleContinuePress}>
-          {t('common.continue')}
-        </Button>
+        <View style={styles.lineStyle} />
+        <View style={styles.panelBody}>
+          <MaskedDateInput
+            onChangeValue={setDateOfBirth}
+            onChangeValidation={setIsDateValid}
+            onSubmit={handleContinuePress}
+            type="birth"
+          />
+          <Button
+            variant={'solid'}
+            disabled={!isDateValid || pending}
+            isLoading={pending}
+            style={styles.submitButton}
+            onPress={handleContinuePress}>
+            {t('common.continue')}
+          </Button>
+        </View>
       </View>
     </Container>
   );

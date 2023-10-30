@@ -1,6 +1,6 @@
 import React from 'react';
 import {FC} from 'react';
-import {GoogleIcon} from '../assets/Icons/GoogleIcon';
+import GoogleIcon from '~/assets/icons/GoogleIcon';
 import {RootAuthButton, IRootAuthButtonProps} from './RootAuthButton';
 
 interface IGoogleButtonProps

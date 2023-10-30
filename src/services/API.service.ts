@@ -5,7 +5,7 @@ import RNFS from 'react-native-fs';
 import {getToken} from '~/services/Amazon.service';
 import EnvConfig from '~/services/Env.service';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
-import NotificationService from './NotificationService';
+import ToastService from './Toast.service';
 
 import i18n from '~/i18n/i18n';
 import {IUser} from '~/redux/user/user.slice';
@@ -20,7 +20,7 @@ import {
   GetDocumentsResponseType,
   IApiPatchTimeSlot,
   IApiPostTimeSlot,
-  IAPISuccessfulResponse,
+  IApiSuccessfulResponse,
   IApiTimeSlot,
   IFileToUpload,
 } from './API.types';
@@ -80,14 +80,14 @@ const API = {
       timezone: timestampToISOWithOffset().slice(-6),
     }),
   updateUserToken: (token: string) =>
-    callApi.patch<IAPISuccessfulResponse>(getUrl(API_URI.USER_TOKEN), {
+    callApi.patch<IApiSuccessfulResponse>(getUrl(API_URI.USER_TOKEN), {
       deviceId: token,
     }),
   getEmergencyContacts: () =>
     callApi.get<IEmergencyContactResponse[]>(
       getUrl(API_URI.EMERGENCY_CONTACTS),
     ),
-  addEmergencyContact: (data: IEmergencyContact) =>
+  AddNewEmergencyContact: (data: IEmergencyContact) =>
     callApi.post<IEmergencyContact>(
       getUrl(API_URI_V2.EMERGENCY_CONTACTS),
       data,
@@ -98,16 +98,16 @@ const API = {
       data,
     ),
   deleteEmergencyContact: (id: string) =>
-    callApi.delete<IAPISuccessfulResponse>(
+    callApi.delete<IApiSuccessfulResponse>(
       getUrl(API_URI.EMERGENCY_CONTACTS, `/${id}`),
     ),
   sendTestMessage: () =>
-    callApi.post<IAPISuccessfulResponse>(getUrl(API_URI.TEST_MESSAGE)),
+    callApi.post<IApiSuccessfulResponse>(getUrl(API_URI.TEST_MESSAGE)),
   startEmergency: (data: {
     delayed?: boolean;
     messageType?: EmergencyMessageType;
   }) =>
-    callApi.post<IAPISuccessfulResponse>(
+    callApi.post<IApiSuccessfulResponse>(
       getUrl(API_URI.EMERGENCY_START),
       data,
       {
@@ -117,7 +117,7 @@ const API = {
   cancelEmergency: () =>
     callApi.delete<{success: boolean}>(getUrl(API_URI.CANCEL_EMERGENCY)),
   positiveInfo: (minutesToNext: number) =>
-    callApi.post<IAPISuccessfulResponse>(
+    callApi.post<IApiSuccessfulResponse>(
       getUrl(API_URI.POSITIVE_INFO),
       {
         minutesToNext,
@@ -129,17 +129,17 @@ const API = {
 
   getTimeSlot: () => callApi.get<IApiTimeSlot[]>(getUrl(API_URI.TIME_SLOT)),
   addTimeSlot: (data: IApiPostTimeSlot) =>
-    callApi.post<IAPISuccessfulResponse>(getUrl(API_URI.TIME_SLOT), data),
+    callApi.post<IApiSuccessfulResponse>(getUrl(API_URI.TIME_SLOT), data),
   updateTimeSlot: (id: IApiTimeSlot['id'], data: IApiPatchTimeSlot) =>
     callApi.patch<IApiTimeSlot>(getUrl(API_URI.TIME_SLOT, `/${id}`), data),
   deleteTimeSlot: (id: IApiTimeSlot['id']) =>
-    callApi.delete<IAPISuccessfulResponse>(getUrl(API_URI.TIME_SLOT, `/${id}`)),
+    callApi.delete<IApiSuccessfulResponse>(getUrl(API_URI.TIME_SLOT, `/${id}`)),
   sendGDPR: (email: string) =>
-    callApi.post<IAPISuccessfulResponse>(getUrl(API_URI.GDPR), {email}),
+    callApi.post<IApiSuccessfulResponse>(getUrl(API_URI.GDPR), {email}),
   getDocuments: () =>
     callApi.get<GetDocumentsResponseType>(getUrl(API_URI.FILES)),
   deleteDocument: (id: DocumentIdType) =>
-    callApi.delete<IAPISuccessfulResponse>(getUrl(API_URI.FILES, `/${id}`)),
+    callApi.delete<IApiSuccessfulResponse>(getUrl(API_URI.FILES, `/${id}`)),
   uploadDocument: async (
     {file, category}: IFileToUpload,
     refetchDocuments: () => void,
@@ -163,7 +163,7 @@ const API = {
       progress: () => {},
     })
       .promise.catch(e => {
-        NotificationService.error(
+        ToastService.error(
           i18n.t('documents.messages.errors.upload', {error: e}),
         );
       })

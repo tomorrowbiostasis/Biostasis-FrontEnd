@@ -41,7 +41,11 @@ const useCommonValidators = () => {
       )
       .min(2, t('validation.userName.minLength'))
       .max(50, t('validation.userName.maxLength')),
-    address: Yup.string().required(t('validation.fieldRequired')),
+    address: Yup.string().required('address is required'),
+    street: Yup.string().required('Street is required'),
+    city: Yup.string().required('City is required'),
+    country: Yup.string().required('Country is required'),
+    zipCode: Yup.string().required('Zip/Postal Code is required'),
     diagnosis: Yup.string().required(t('validation.fieldRequired')),
     emergencyMessage: Yup.string()
       .required(t('validation.emergencySettings.minMaxLength'))
@@ -99,10 +103,13 @@ export const useUserNameValidationSchema = () => {
 };
 
 export const useUserAddressValidationSchema = () => {
-  const {address} = useCommonValidators();
+  const {street, country, city, zipCode} = useCommonValidators();
 
   return Yup.object().shape({
-    address,
+    street,
+    country,
+    city,
+    zipCode,
   });
 };
 

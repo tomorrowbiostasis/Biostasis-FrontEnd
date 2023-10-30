@@ -6,6 +6,7 @@ import Container from '~/components/Container';
 import styles from './styles';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {CommonActions, useNavigation} from '@react-navigation/native';
+import {Screens} from '~/models/Navigation.model';
 
 const EmergencyContactExplanationsScreen = () => {
   const {t} = useAppTranslation();
@@ -15,7 +16,10 @@ const EmergencyContactExplanationsScreen = () => {
     dispatch((state: any) => {
       state.routes.pop();
 
-      const newRoutes = [...state.routes, {name: 'AddNewEmergencyContact'}];
+      const newRoutes = [
+        ...state.routes,
+        {name: Screens.AddNewEmergencyContact},
+      ];
       return CommonActions.reset({
         ...state,
         routes: newRoutes,
@@ -26,14 +30,16 @@ const EmergencyContactExplanationsScreen = () => {
 
   return (
     <Container
-      title={t('emergencyContacts.emergencyAndSettings')}
-      contentContainerStyle={styles.container}>
+      title={t('emergencyContactsSettings.title')}
+      contentContainerStyle={styles.container}
+      showBackIcon
+      showDrawerIcon>
       <View>
         <Text style={styles.text}>
-          {t('emergencyContacts.explanations.description1')}
+          {t('emergencyContactsSettings.explanations.description1')}
         </Text>
         <Text style={styles.text}>
-          {t('emergencyContacts.explanations.description2')}
+          {t('emergencyContactsSettings.explanations.description2')}
         </Text>
       </View>
       <Button onPress={handleSetUpPress}>{t('common.setUp')}</Button>

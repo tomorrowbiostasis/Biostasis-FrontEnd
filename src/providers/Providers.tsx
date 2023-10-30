@@ -9,6 +9,7 @@ import EmergencyButton from './EmergencyCountdown';
 
 import {store, persistor} from '~/redux/store';
 import {customAppTheme} from '~/theme';
+import AutomatedSystemListener from './AutomatedSystemListener';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -18,6 +19,7 @@ const Providers: FC<ProvidersProps> = ({children}) => (
   <Provider store={store}>
     {/* Listeners should be above PersistGate to avoid unmounting */}
     <AuthListener />
+    <AutomatedSystemListener />
     <PersistGate loading={null} persistor={persistor}>
       <SafeAreaProvider>
         <NativeBaseProvider

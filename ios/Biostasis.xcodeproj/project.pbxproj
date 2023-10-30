@@ -8,21 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* BiostasisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BiostasisTests.m */; };
+		0570FF3E1F6D4A2C95B33583 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20258489A57B46A78E8A1884 /* Poppins-Regular.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1F983D67C3EE4845A6E00F5C /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F51AFD36FFB4E63A65977E4 /* Roboto-MediumItalic.ttf */; };
 		2AA9E4AFBB7749DE828B502F /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CC89AA1518B4007A8877B0B /* Roboto-Bold.ttf */; };
 		2D4BF4AEF2B84A4480606CBC /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0D8D47E1D184EBFA5C3C195 /* Roboto-ThinItalic.ttf */; };
+		2D53D5F74A9D451D897E9F01 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A67B051936864048B031BB89 /* Poppins-MediumItalic.ttf */; };
+		35607A78DEA54039A2397BB6 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA411FAB01E45F8B3C527E2 /* Poppins-Italic.ttf */; };
 		399B34F2DEE44D55A49E4320 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFAC562F4A5B458689627887 /* Roboto-Regular.ttf */; };
+		3B6283367626401DB4D29B53 /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C2323A8EEA1846A7B73F1046 /* Poppins-ExtraBoldItalic.ttf */; };
 		4A1A5CA6F73B4C34A3596565 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41399FEC40594D26A458E2AB /* Roboto-Italic.ttf */; };
+		4AA4CC367B62411FAB03C877 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD21C99A09D04F9FBD30524B /* Poppins-ExtraLight.ttf */; };
+		4AE91CD2943C43C2B44A72B5 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2231B4FED6BB46DAA2440097 /* Poppins-Thin.ttf */; };
+		4FA8F5E8626C4E0EBDFC439F /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5BBCC490671240E682D120BD /* Poppins-LightItalic.ttf */; };
 		50D8EEDD912E46D2901F5480 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E5BC30E6DC483CB1AFC8CA /* Roboto-Medium.ttf */; };
 		587D4E3B4C174C939A8B62DF /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46B1EBB209CF481A90A7DC7A /* Roboto-BoldItalic.ttf */; };
 		5BF94DA5DBA643CE9326A367 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B314B8A62E004443A6E7ED73 /* Roboto-LightItalic.ttf */; };
+		67CBB74FC701493D83CC1A08 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E20F990DA03E451B8195A023 /* Poppins-Medium.ttf */; };
+		68297F91669D825A527BA593 /* libPods-Biostasis-BiostasisTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F47E103D890D95385D6B73 /* libPods-Biostasis-BiostasisTests.a */; };
+		72D7DBAAB27A427D9E98155A /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 084B624A51274D81BFE7B5E3 /* Poppins-SemiBold.ttf */; };
+		7703FFCF6B7F4889AC9524F0 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EEB0E2F58B424E1B8E9D19AA /* Poppins-Bold.ttf */; };
+		7751210FFB5543B8BE9D1BE1 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 593FD130EEEB42F49822A0CA /* Poppins-Light.ttf */; };
 		7B19C3632859ECAB00A010BA /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7B19C3622859ECAB00A010BA /* alarm.mp3 */; };
-		81236090DDE45FBE1764D73D /* libPods-Biostasis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCA4F2C67D0360973726D31D /* libPods-Biostasis.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		83BE241DB58D680109433061 /* libPods-Biostasis-BiostasisTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5134DD5640AF4BF9D351BF09 /* libPods-Biostasis-BiostasisTests.a */; };
+		85DCACA800344358973AF6B6 /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF1521A5D1F748C1A6CFC789 /* Poppins-SemiBoldItalic.ttf */; };
 		906626C426933B690059D71E /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41399FEC40594D26A458E2AB /* Roboto-Italic.ttf */; };
 		906626C526933B690059D71E /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFAC562F4A5B458689627887 /* Roboto-Regular.ttf */; };
 		906626C626933B690059D71E /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 707F0A9435984709B8E6A086 /* Roboto-Black.ttf */; };
@@ -35,9 +46,20 @@
 		906626CD26933B690059D71E /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F51AFD36FFB4E63A65977E4 /* Roboto-MediumItalic.ttf */; };
 		906626CE26933B690059D71E /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECE29D24D55242C9954FD05D /* Roboto-Thin.ttf */; };
 		906626CF26933B690059D71E /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0D8D47E1D184EBFA5C3C195 /* Roboto-ThinItalic.ttf */; };
+		A0A52306FCBB45A0B8003AE1 /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7E45728F11A470EAFD68169 /* Poppins-ThinItalic.ttf */; };
+		A2CA1F32B8EC4408930697DB /* Poppins-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E9384B776D543A7BA99E07F /* Poppins-ExtraLightItalic.ttf */; };
 		A4E7E50E24FC44F5B3F25D7E /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 707F0A9435984709B8E6A086 /* Roboto-Black.ttf */; };
 		C1B958C277574F0285C3B0A9 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A89B183B7204B9D98B18225 /* Roboto-Light.ttf */; };
 		C8664E7E5F324D608BBE78A9 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F64BF4B9E6E84221942CD427 /* Roboto-BlackItalic.ttf */; };
+		CCAE2F0B22C549708CDF199D /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5479EAA30CE347F58CA85802 /* Poppins-BoldItalic.ttf */; };
+		D0C4FA5E897242BF9023B302 /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 786780C57981411282BF2C78 /* Poppins-BlackItalic.ttf */; };
+		D98176A124AD472EA4F9ED9E /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DBD984E5F6D54C98B420FBC9 /* Poppins-ExtraBold.ttf */; };
+		DD1AD32E2AC1D7A7003EB0AE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD1AD3302AC1D7A7003EB0AE /* Localizable.strings */; };
+		DD2C62442A669B5900178501 /* GoogleService-Info-debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD2C62422A669B5900178501 /* GoogleService-Info-debug.plist */; };
+		DD2C62452A669B5900178501 /* GoogleService-Info-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD2C62432A669B5900178501 /* GoogleService-Info-prod.plist */; };
+		DD33C2872A619D0400A91D4E /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD33C2862A619D0400A91D4E /* TimeManager.swift */; };
+		DD45CC6D2A404527003A0EB5 /* HealthDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD45CC6C2A404527003A0EB5 /* HealthDataModel.swift */; };
+		DD5280FD2AA9C077001A6EE9 /* RecommendationSystemManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5280FC2AA9C077001A6EE9 /* RecommendationSystemManage.swift */; };
 		DE44816D282D4FC90009C1E3 /* RefreshTokenRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE44816C282D4FC90009C1E3 /* RefreshTokenRO.swift */; };
 		DE483C4D271D56E5000D338D /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE483C4C271D56E5000D338D /* NetworkingManager.swift */; };
 		DE483C4F271D9C22000D338D /* NativeManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = DE483C4E271D9C22000D338D /* NativeManagerBridge.m */; };
@@ -52,6 +74,8 @@
 		DEB710EC2716F21B00A52A20 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB710EB2716F21B00A52A20 /* HealthKit.framework */; };
 		DECC4E6627282B2C00F030AA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECC4E6527282B2C00F030AA /* LocationManager.swift */; };
 		DED0F24A282A9358007EACBF /* NativeManagerSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED0F249282A9358007EACBF /* NativeManagerSingleton.swift */; };
+		E19656C984684C2DB8996427 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3FCD6E14A04483296F63C86 /* Poppins-Black.ttf */; };
+		E5967767BACAD761DA7038E1 /* libPods-Biostasis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AC4EB595EAB4CEA2D2A9A0 /* libPods-Biostasis.a */; };
 		F5BA2FD9B8A24782ACFE8567 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECE29D24D55242C9954FD05D /* Roboto-Thin.ttf */; };
 /* End PBXBuildFile section */
 
@@ -65,10 +89,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		DD5280FB2A9F2E93001A6EE9 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* BiostasisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BiostasisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* BiostasisTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BiostasisTests.m; sourceTree = "<group>"; };
+		084B624A51274D81BFE7B5E3 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBold.ttf"; path = "../assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Biostasis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biostasis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Biostasis/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Biostasis/AppDelegate.m; sourceTree = "<group>"; };
@@ -76,12 +114,20 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Biostasis/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Biostasis/main.m; sourceTree = "<group>"; };
 		14E5BC30E6DC483CB1AFC8CA /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		20258489A57B46A78E8A1884 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		2231B4FED6BB46DAA2440097 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Thin.ttf"; path = "../assets/fonts/Poppins-Thin.ttf"; sourceTree = "<group>"; };
+		26A69A2277E960A1A350274F /* Pods-Biostasis-BiostasisTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis-BiostasisTests.release.xcconfig"; path = "Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests.release.xcconfig"; sourceTree = "<group>"; };
+		29A66A7BFE74170BA22AE611 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis-BiostasisTests.debug.xcconfig"; path = "Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3F51AFD36FFB4E63A65977E4 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../assets/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		41399FEC40594D26A458E2AB /* Roboto-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Italic.ttf"; path = "../assets/fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; };
 		46B1EBB209CF481A90A7DC7A /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BoldItalic.ttf"; path = "../assets/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
 		4CC89AA1518B4007A8877B0B /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
-		5134DD5640AF4BF9D351BF09 /* libPods-Biostasis-BiostasisTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Biostasis-BiostasisTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5479EAA30CE347F58CA85802 /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-BoldItalic.ttf"; path = "../assets/fonts/Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
+		56627B69016081C7B2123146 /* Pods-NotifeeNotificationService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotifeeNotificationService.release.xcconfig"; path = "Target Support Files/Pods-NotifeeNotificationService/Pods-NotifeeNotificationService.release.xcconfig"; sourceTree = "<group>"; };
+		593FD130EEEB42F49822A0CA /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
 		5A89B183B7204B9D98B18225 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
+		5AEB02D816B2B8A48A927A98 /* Pods-NotifeeNotificationService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotifeeNotificationService.debug.xcconfig"; path = "Target Support Files/Pods-NotifeeNotificationService/Pods-NotifeeNotificationService.debug.xcconfig"; sourceTree = "<group>"; };
+		5BBCC490671240E682D120BD /* Poppins-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-LightItalic.ttf"; path = "../assets/fonts/Poppins-LightItalic.ttf"; sourceTree = "<group>"; };
 		6091FD612695879200CF10E5 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		6091FD622695879200CF10E5 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		6091FD632695879200CF10E5 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -98,18 +144,35 @@
 		6091FD6E2695879200CF10E5 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		6091FD6F2695879300CF10E5 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		6091FD702695879300CF10E5 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		615040CB7BF3540EB2B94762 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis-BiostasisTests.debug.xcconfig"; path = "Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests.debug.xcconfig"; sourceTree = "<group>"; };
 		707F0A9435984709B8E6A086 /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
+		786780C57981411282BF2C78 /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-BlackItalic.ttf"; path = "../assets/fonts/Poppins-BlackItalic.ttf"; sourceTree = "<group>"; };
 		7B19C3622859ECAB00A010BA /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Biostasis/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8E9384B776D543A7BA99E07F /* Poppins-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLightItalic.ttf"; path = "../assets/fonts/Poppins-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		906626C1269324C30059D71E /* Biostasis-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Biostasis-Bridging-Header.h"; sourceTree = "<group>"; };
-		9113C1BEE12055AD4855AB83 /* Pods-Biostasis-BiostasisTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis-BiostasisTests.release.xcconfig"; path = "Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests.release.xcconfig"; sourceTree = "<group>"; };
-		96563C88AAAB178990F8B804 /* Pods-Biostasis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis.release.xcconfig"; path = "Target Support Files/Pods-Biostasis/Pods-Biostasis.release.xcconfig"; sourceTree = "<group>"; };
+		A2F86A0FBBFAB7CAB1929084 /* Pods-Biostasis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis.debug.xcconfig"; path = "Target Support Files/Pods-Biostasis/Pods-Biostasis.debug.xcconfig"; sourceTree = "<group>"; };
+		A3FCD6E14A04483296F63C86 /* Poppins-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Black.ttf"; path = "../assets/fonts/Poppins-Black.ttf"; sourceTree = "<group>"; };
+		A4AC4EB595EAB4CEA2D2A9A0 /* libPods-Biostasis.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Biostasis.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A67B051936864048B031BB89 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-MediumItalic.ttf"; path = "../assets/fonts/Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
 		AFAC562F4A5B458689627887 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		B0D8D47E1D184EBFA5C3C195 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		B314B8A62E004443A6E7ED73 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
-		CD341BC547E9A19DE6C09E34 /* Pods-Biostasis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis.debug.xcconfig"; path = "Target Support Files/Pods-Biostasis/Pods-Biostasis.debug.xcconfig"; sourceTree = "<group>"; };
-		DCA4F2C67D0360973726D31D /* libPods-Biostasis.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Biostasis.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B750FA7B5F4D7FAA944791B2 /* libPods-NotifeeNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NotifeeNotificationService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2323A8EEA1846A7B73F1046 /* Poppins-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraBoldItalic.ttf"; path = "../assets/fonts/Poppins-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		CD21C99A09D04F9FBD30524B /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLight.ttf"; path = "../assets/fonts/Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
+		CD55FE3697E894BB47C11ED9 /* Pods-Biostasis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis.release.xcconfig"; path = "Target Support Files/Pods-Biostasis/Pods-Biostasis.release.xcconfig"; sourceTree = "<group>"; };
+		CF1521A5D1F748C1A6CFC789 /* Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBoldItalic.ttf"; path = "../assets/fonts/Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		DBD984E5F6D54C98B420FBC9 /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraBold.ttf"; path = "../assets/fonts/Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
+		DD1AD32F2AC1D7A7003EB0AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DD1AD3312AC1D7A9003EB0AE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DD1AD3322AC1D7AA003EB0AE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DD1AD3332AC1D7AC003EB0AE /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DD1AD3342AC1D7AD003EB0AE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DD2C62422A669B5900178501 /* GoogleService-Info-debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-debug.plist"; sourceTree = "<group>"; };
+		DD2C62432A669B5900178501 /* GoogleService-Info-prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-prod.plist"; sourceTree = "<group>"; };
+		DD33C2862A619D0400A91D4E /* TimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
+		DD45CC6C2A404527003A0EB5 /* HealthDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataModel.swift; sourceTree = "<group>"; };
+		DD5280FC2AA9C077001A6EE9 /* RecommendationSystemManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationSystemManage.swift; sourceTree = "<group>"; };
 		DE44816C282D4FC90009C1E3 /* RefreshTokenRO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenRO.swift; sourceTree = "<group>"; };
 		DE483C4C271D56E5000D338D /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
 		DE483C4E271D9C22000D338D /* NativeManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativeManagerBridge.m; sourceTree = "<group>"; };
@@ -118,8 +181,6 @@
 		DE4EBAF52715D83A0004DB17 /* HealthKitDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitDataHandler.swift; sourceTree = "<group>"; };
 		DE4EBAF72715DF9A0004DB17 /* NativeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeManager.swift; sourceTree = "<group>"; };
 		DE570156271ECF5600802391 /* apiModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apiModels.swift; sourceTree = "<group>"; };
-		DE7DA3D32859F2C400F6AD78 /* GoogleService-Info-debug.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-debug.plist"; sourceTree = "<group>"; };
-		DE7DA3D42859F2C400F6AD78 /* GoogleService-Info-prod.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-prod.plist"; sourceTree = "<group>"; };
 		DE7F88F2272710B900CFB5DC /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		DEA22CFB271982070076E78B /* PersistentStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentStorageManager.swift; sourceTree = "<group>"; };
 		DEA22CFD2719CD4B0076E78B /* EmergencySettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencySettingsModel.swift; sourceTree = "<group>"; };
@@ -128,9 +189,14 @@
 		DECC4E6527282B2C00F030AA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		DED0F249282A9358007EACBF /* NativeManagerSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeManagerSingleton.swift; sourceTree = "<group>"; };
 		DEF976C3285234570091E4BB /* BiostasisRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = BiostasisRelease.entitlements; path = Biostasis/BiostasisRelease.entitlements; sourceTree = "<group>"; };
+		E20F990DA03E451B8195A023 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Medium.ttf"; path = "../assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		E6F47E103D890D95385D6B73 /* libPods-Biostasis-BiostasisTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Biostasis-BiostasisTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7E45728F11A470EAFD68169 /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ThinItalic.ttf"; path = "../assets/fonts/Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
 		ECE29D24D55242C9954FD05D /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EEB0E2F58B424E1B8E9D19AA /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		F64BF4B9E6E84221942CD427 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../assets/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
+		FBA411FAB01E45F8B3C527E2 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Italic.ttf"; path = "../assets/fonts/Poppins-Italic.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,7 +204,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83BE241DB58D680109433061 /* libPods-Biostasis-BiostasisTests.a in Frameworks */,
+				68297F91669D825A527BA593 /* libPods-Biostasis-BiostasisTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,7 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEB710EC2716F21B00A52A20 /* HealthKit.framework in Frameworks */,
-				81236090DDE45FBE1764D73D /* libPods-Biostasis.a in Frameworks */,
+				E5967767BACAD761DA7038E1 /* libPods-Biostasis.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,10 +223,12 @@
 		00340143C2C4CE4861EC7A73 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				CD341BC547E9A19DE6C09E34 /* Pods-Biostasis.debug.xcconfig */,
-				96563C88AAAB178990F8B804 /* Pods-Biostasis.release.xcconfig */,
-				615040CB7BF3540EB2B94762 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */,
-				9113C1BEE12055AD4855AB83 /* Pods-Biostasis-BiostasisTests.release.xcconfig */,
+				A2F86A0FBBFAB7CAB1929084 /* Pods-Biostasis.debug.xcconfig */,
+				CD55FE3697E894BB47C11ED9 /* Pods-Biostasis.release.xcconfig */,
+				29A66A7BFE74170BA22AE611 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */,
+				26A69A2277E960A1A350274F /* Pods-Biostasis-BiostasisTests.release.xcconfig */,
+				5AEB02D816B2B8A48A927A98 /* Pods-NotifeeNotificationService.debug.xcconfig */,
+				56627B69016081C7B2123146 /* Pods-NotifeeNotificationService.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -204,8 +272,9 @@
 			children = (
 				DEB710EB2716F21B00A52A20 /* HealthKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				DCA4F2C67D0360973726D31D /* libPods-Biostasis.a */,
-				5134DD5640AF4BF9D351BF09 /* libPods-Biostasis-BiostasisTests.a */,
+				A4AC4EB595EAB4CEA2D2A9A0 /* libPods-Biostasis.a */,
+				E6F47E103D890D95385D6B73 /* libPods-Biostasis-BiostasisTests.a */,
+				B750FA7B5F4D7FAA944791B2 /* libPods-NotifeeNotificationService.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -276,6 +345,25 @@
 				3F51AFD36FFB4E63A65977E4 /* Roboto-MediumItalic.ttf */,
 				ECE29D24D55242C9954FD05D /* Roboto-Thin.ttf */,
 				B0D8D47E1D184EBFA5C3C195 /* Roboto-ThinItalic.ttf */,
+				A3FCD6E14A04483296F63C86 /* Poppins-Black.ttf */,
+				786780C57981411282BF2C78 /* Poppins-BlackItalic.ttf */,
+				EEB0E2F58B424E1B8E9D19AA /* Poppins-Bold.ttf */,
+				5479EAA30CE347F58CA85802 /* Poppins-BoldItalic.ttf */,
+				DBD984E5F6D54C98B420FBC9 /* Poppins-ExtraBold.ttf */,
+				C2323A8EEA1846A7B73F1046 /* Poppins-ExtraBoldItalic.ttf */,
+				CD21C99A09D04F9FBD30524B /* Poppins-ExtraLight.ttf */,
+				8E9384B776D543A7BA99E07F /* Poppins-ExtraLightItalic.ttf */,
+				FBA411FAB01E45F8B3C527E2 /* Poppins-Italic.ttf */,
+				593FD130EEEB42F49822A0CA /* Poppins-Light.ttf */,
+				5BBCC490671240E682D120BD /* Poppins-LightItalic.ttf */,
+				E20F990DA03E451B8195A023 /* Poppins-Medium.ttf */,
+				A67B051936864048B031BB89 /* Poppins-MediumItalic.ttf */,
+				20258489A57B46A78E8A1884 /* Poppins-Regular.ttf */,
+				084B624A51274D81BFE7B5E3 /* Poppins-SemiBold.ttf */,
+				CF1521A5D1F748C1A6CFC789 /* Poppins-SemiBoldItalic.ttf */,
+				2231B4FED6BB46DAA2440097 /* Poppins-Thin.ttf */,
+				E7E45728F11A470EAFD68169 /* Poppins-ThinItalic.ttf */,
+				DD1AD3302AC1D7A7003EB0AE /* Localizable.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -293,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				DE4EBAF72715DF9A0004DB17 /* NativeManager.swift */,
+				DD5280FC2AA9C077001A6EE9 /* RecommendationSystemManage.swift */,
 				DED0F249282A9358007EACBF /* NativeManagerSingleton.swift */,
 				DE4EBAF32715D05B0004DB17 /* HealthKitManager.swift */,
 				DE4EBAF52715D83A0004DB17 /* HealthKitDataHandler.swift */,
@@ -300,6 +389,7 @@
 				DEA22CFB271982070076E78B /* PersistentStorageManager.swift */,
 				DE4EBAF12715B8EA0004DB17 /* LocalNotificationManager.swift */,
 				DECC4E6527282B2C00F030AA /* LocationManager.swift */,
+				DD33C2862A619D0400A91D4E /* TimeManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -311,6 +401,7 @@
 				DE570156271ECF5600802391 /* apiModels.swift */,
 				DE7F88F2272710B900CFB5DC /* UserModel.swift */,
 				DE44816C282D4FC90009C1E3 /* RefreshTokenRO.swift */,
+				DD45CC6C2A404527003A0EB5 /* HealthDataModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -318,8 +409,8 @@
 		DE7DA3D22859F2C400F6AD78 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				DE7DA3D32859F2C400F6AD78 /* GoogleService-Info-debug.plist */,
-				DE7DA3D42859F2C400F6AD78 /* GoogleService-Info-prod.plist */,
+				DD2C62422A669B5900178501 /* GoogleService-Info-debug.plist */,
+				DD2C62432A669B5900178501 /* GoogleService-Info-prod.plist */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -331,12 +422,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "BiostasisTests" */;
 			buildPhases = (
-				EC0A8BA8D007F1ABA457A601 /* [CP] Check Pods Manifest.lock */,
+				D04C303EDBF058050C293CE2 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				5849328BF7C61C14A9443DA7 /* [CP] Embed Pods Frameworks */,
-				F93B23AB74B87D4952392A61 /* [CP] Copy Pods Resources */,
+				9F8A0D4E4490965F8FDAB4C2 /* [CP] Embed Pods Frameworks */,
+				2EEFD5C2A26ECFF8DC50DE7C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -352,17 +443,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Biostasis" */;
 			buildPhases = (
-				4FF3D69E1E42EB668112C603 /* [CP] Check Pods Manifest.lock */,
+				70D26D669B9BFB10035A7B05 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				DE7DA3D12859ED4E00F6AD78 /* Setup Firebase */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				72590B712FAEC4A7D5B64952 /* [CP] Embed Pods Frameworks */,
-				AFFF81CF9EF4FD8B6315D6C5 /* [CP] Copy Pods Resources */,
-				E064D2B46689E71B703A71F5 /* [CP-User] [RNFB] Core Configuration */,
-				0183F9EDD3709DA1E2594010 /* [CP-User] [RNFB] Crashlytics Configuration */,
+				9AAEC6012B1208D84EEEA883 /* [CP] Embed Pods Frameworks */,
+				BC4D71C00B6731E3FB0E35BD /* [CP] Copy Pods Resources */,
+				19E3C0C1DFADB637B9C1EAB0 /* [CP-User] [RNFB] Core Configuration */,
+				482F181830EA838602176307 /* [CP-User] [RNFB] Crashlytics Configuration */,
+				DD5280FB2A9F2E93001A6EE9 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -379,6 +471,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -396,6 +489,10 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				fr,
+				de,
+				it,
+				es,
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
@@ -436,6 +533,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				4A1A5CA6F73B4C34A3596565 /* Roboto-Italic.ttf in Resources */,
+				DD2C62442A669B5900178501 /* GoogleService-Info-debug.plist in Resources */,
 				7B19C3632859ECAB00A010BA /* alarm.mp3 in Resources */,
 				399B34F2DEE44D55A49E4320 /* Roboto-Regular.ttf in Resources */,
 				A4E7E50E24FC44F5B3F25D7E /* Roboto-Black.ttf in Resources */,
@@ -444,10 +542,30 @@
 				587D4E3B4C174C939A8B62DF /* Roboto-BoldItalic.ttf in Resources */,
 				C1B958C277574F0285C3B0A9 /* Roboto-Light.ttf in Resources */,
 				5BF94DA5DBA643CE9326A367 /* Roboto-LightItalic.ttf in Resources */,
+				DD2C62452A669B5900178501 /* GoogleService-Info-prod.plist in Resources */,
+				DD1AD32E2AC1D7A7003EB0AE /* Localizable.strings in Resources */,
 				50D8EEDD912E46D2901F5480 /* Roboto-Medium.ttf in Resources */,
 				1F983D67C3EE4845A6E00F5C /* Roboto-MediumItalic.ttf in Resources */,
 				F5BA2FD9B8A24782ACFE8567 /* Roboto-Thin.ttf in Resources */,
 				2D4BF4AEF2B84A4480606CBC /* Roboto-ThinItalic.ttf in Resources */,
+				E19656C984684C2DB8996427 /* Poppins-Black.ttf in Resources */,
+				D0C4FA5E897242BF9023B302 /* Poppins-BlackItalic.ttf in Resources */,
+				7703FFCF6B7F4889AC9524F0 /* Poppins-Bold.ttf in Resources */,
+				CCAE2F0B22C549708CDF199D /* Poppins-BoldItalic.ttf in Resources */,
+				D98176A124AD472EA4F9ED9E /* Poppins-ExtraBold.ttf in Resources */,
+				3B6283367626401DB4D29B53 /* Poppins-ExtraBoldItalic.ttf in Resources */,
+				4AA4CC367B62411FAB03C877 /* Poppins-ExtraLight.ttf in Resources */,
+				A2CA1F32B8EC4408930697DB /* Poppins-ExtraLightItalic.ttf in Resources */,
+				35607A78DEA54039A2397BB6 /* Poppins-Italic.ttf in Resources */,
+				7751210FFB5543B8BE9D1BE1 /* Poppins-Light.ttf in Resources */,
+				4FA8F5E8626C4E0EBDFC439F /* Poppins-LightItalic.ttf in Resources */,
+				67CBB74FC701493D83CC1A08 /* Poppins-Medium.ttf in Resources */,
+				2D53D5F74A9D451D897E9F01 /* Poppins-MediumItalic.ttf in Resources */,
+				0570FF3E1F6D4A2C95B33583 /* Poppins-Regular.ttf in Resources */,
+				72D7DBAAB27A427D9E98155A /* Poppins-SemiBold.ttf in Resources */,
+				85DCACA800344358973AF6B6 /* Poppins-SemiBoldItalic.ttf in Resources */,
+				4AE91CD2943C43C2B44A72B5 /* Poppins-Thin.ttf in Resources */,
+				A0A52306FCBB45A0B8003AE1 /* Poppins-ThinItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,7 +574,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -468,7 +586,37 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		0183F9EDD3709DA1E2594010 /* [CP-User] [RNFB] Crashlytics Configuration */ = {
+		19E3C0C1DFADB637B9C1EAB0 /* [CP-User] [RNFB] Core Configuration */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[CP-User] [RNFB] Core Configuration";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | /usr/bin/head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    _JSON_OUTPUT_BASE64=$(python -c 'import json,sys,base64;print(base64.b64encode(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"').read())['${_JSON_ROOT}'])))' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.google_analytics_automatic_screen_reporting_enabled\n  _ANALYTICS_AUTO_SCREEN_REPORTING=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"google_analytics_automatic_screen_reporting_enabled\")\n  if [[ $_ANALYTICS_AUTO_SCREEN_REPORTING ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAutomaticScreenReportingEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_SCREEN_REPORTING\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
+		};
+		2EEFD5C2A26ECFF8DC50DE7C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		482F181830EA838602176307 /* [CP-User] [RNFB] Crashlytics Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -482,7 +630,7 @@
 			shellPath = /bin/sh;
 			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\nif [[ ${PODS_ROOT} ]]; then\n  echo \"info: Exec FirebaseCrashlytics Run from Pods\"\n  \"${PODS_ROOT}/FirebaseCrashlytics/run\"\nelse\n  echo \"info: Exec FirebaseCrashlytics Run from framework\"\n  \"${PROJECT_DIR}/FirebaseCrashlytics.framework/run\"\nfi\n";
 		};
-		4FF3D69E1E42EB668112C603 /* [CP] Check Pods Manifest.lock */ = {
+		70D26D669B9BFB10035A7B05 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -504,24 +652,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5849328BF7C61C14A9443DA7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		72590B712FAEC4A7D5B64952 /* [CP] Embed Pods Frameworks */ = {
+		9AAEC6012B1208D84EEEA883 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -538,7 +669,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AFFF81CF9EF4FD8B6315D6C5 /* [CP] Copy Pods Resources */ = {
+		9F8A0D4E4490965F8FDAB4C2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BC4D71C00B6731E3FB0E35BD /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -555,38 +703,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DE7DA3D12859ED4E00F6AD78 /* Setup Firebase */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Setup Firebase";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Firebase\"\n\necho \"Firebase configuration for ${CONFIGURATION}\"\ncase \"${CONFIGURATION}\" in\n\n   \"Debug\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-debug.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"Release\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n    *)\n    echo \"error: The Firebase setup is not configured for this scheme\" >&2\n    exit 1 ;;\nesac\n";
-		};
-		E064D2B46689E71B703A71F5 /* [CP-User] [RNFB] Core Configuration */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "[CP-User] [RNFB] Core Configuration";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | /usr/bin/head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    _JSON_OUTPUT_BASE64=$(python -c 'import json,sys,base64;print(base64.b64encode(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"').read())['${_JSON_ROOT}'])))' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.google_analytics_automatic_screen_reporting_enabled\n  _ANALYTICS_AUTO_SCREEN_REPORTING=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"google_analytics_automatic_screen_reporting_enabled\")\n  if [[ $_ANALYTICS_AUTO_SCREEN_REPORTING ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAutomaticScreenReportingEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_SCREEN_REPORTING\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
-		};
-		EC0A8BA8D007F1ABA457A601 /* [CP] Check Pods Manifest.lock */ = {
+		D04C303EDBF058050C293CE2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -608,26 +725,27 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F93B23AB74B87D4952392A61 /* [CP] Copy Pods Resources */ = {
+		DE7DA3D12859ED4E00F6AD78 /* Setup Firebase */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			inputPaths = (
+			);
+			name = "Setup Firebase";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Firebase\"\n\necho \"Firebase configuration for ${CONFIGURATION}\"\ncase \"${CONFIGURATION}\" in\n\n   \"Debug\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-debug.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"Release\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n    *)\n    echo \"error: The Firebase setup is not configured for this scheme\" >&2\n    exit 1 ;;\nesac\n";
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -660,13 +778,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				DD45CC6D2A404527003A0EB5 /* HealthDataModel.swift in Sources */,
 				DECC4E6627282B2C00F030AA /* LocationManager.swift in Sources */,
+				DD33C2872A619D0400A91D4E /* TimeManager.swift in Sources */,
 				DE4EBAF22715B8EA0004DB17 /* LocalNotificationManager.swift in Sources */,
 				DE4EBAF62715D83A0004DB17 /* HealthKitDataHandler.swift in Sources */,
 				DE4EBAF42715D05B0004DB17 /* HealthKitManager.swift in Sources */,
 				DE570157271ECF5600802391 /* apiModels.swift in Sources */,
 				DEA22CFE2719CD4B0076E78B /* EmergencySettingsModel.swift in Sources */,
 				DEA22CFC271982070076E78B /* PersistentStorageManager.swift in Sources */,
+				DD5280FD2AA9C077001A6EE9 /* RecommendationSystemManage.swift in Sources */,
 				DE44816D282D4FC90009C1E3 /* RefreshTokenRO.swift in Sources */,
 				DE483C4F271D9C22000D338D /* NativeManagerBridge.m in Sources */,
 				DE483C4D271D56E5000D338D /* NetworkingManager.swift in Sources */,
@@ -687,10 +808,25 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		DD1AD3302AC1D7A7003EB0AE /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DD1AD32F2AC1D7A7003EB0AE /* en */,
+				DD1AD3312AC1D7A9003EB0AE /* fr */,
+				DD1AD3322AC1D7AA003EB0AE /* de */,
+				DD1AD3332AC1D7AC003EB0AE /* it */,
+				DD1AD3342AC1D7AD003EB0AE /* es */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 615040CB7BF3540EB2B94762 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */;
+			baseConfigurationReference = 29A66A7BFE74170BA22AE611 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -699,7 +835,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = BiostasisTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -718,13 +854,13 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9113C1BEE12055AD4855AB83 /* Pods-Biostasis-BiostasisTests.release.xcconfig */;
+			baseConfigurationReference = 26A69A2277E960A1A350274F /* Pods-Biostasis-BiostasisTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = BiostasisTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -743,9 +879,10 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD341BC547E9A19DE6C09E34 /* Pods-Biostasis.debug.xcconfig */;
+			baseConfigurationReference = A2F86A0FBBFAB7CAB1929084 /* Pods-Biostasis.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Biostasis/Biostasis.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -756,12 +893,14 @@
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Biostasis/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				INFOPLIST_KEY_CFBundleDisplayName = Biostasis;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -780,9 +919,10 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 96563C88AAAB178990F8B804 /* Pods-Biostasis.release.xcconfig */;
+			baseConfigurationReference = CD55FE3697E894BB47C11ED9 /* Pods-Biostasis.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Biostasis/BiostasisRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -792,12 +932,14 @@
 				EXCLUDED_ARCHS = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Biostasis/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				INFOPLIST_KEY_CFBundleDisplayName = Biostasis;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -861,7 +1003,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -919,7 +1061,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -945,7 +1087,7 @@
 				00E356F71AD99517003FC87E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Biostasis" */ = {
 			isa = XCConfigurationList;
@@ -954,7 +1096,7 @@
 				13B07F951A680F5B00A75B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Biostasis" */ = {
 			isa = XCConfigurationList;
@@ -963,7 +1105,7 @@
 				83CBBA211A601CBA00E9B192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

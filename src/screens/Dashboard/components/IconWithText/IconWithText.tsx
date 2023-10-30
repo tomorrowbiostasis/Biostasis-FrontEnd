@@ -1,6 +1,7 @@
 import React, {FC, ReactNode} from 'react';
-import {Text, View, Box, IBoxProps} from 'native-base';
+import {Text, Box, IBoxProps} from 'native-base';
 import styles from './styles';
+import colors from '~/theme/colors';
 
 interface IIconWithText {
   icon: ReactNode;
@@ -16,16 +17,14 @@ export const IconWithText: FC<IIconWithText & IBoxProps> = ({
 }) => {
   return (
     <Box {...props}>
-      <Box flexDirection="row">
-        {icon}
-        <View ml={4} style={styles.container}>
-          <Text fontSize="lg" style={styles.linkTitle}>
-            {title}
-          </Text>
-          <Text fontSize="sm" mt={1} style={styles.linkDescription}>
+      <Box style={styles.container}>
+        <Box style={styles.icon}>{icon}</Box>
+        <Box style={styles.textContainer}>
+          <Text style={styles.linkTitle}>{title}</Text>
+          <Text fontSize={'sm'} color={colors.gray[600]}>
             {description}
           </Text>
-        </View>
+        </Box>
       </Box>
     </Box>
   );

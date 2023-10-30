@@ -1,16 +1,14 @@
 import React, {FC, useCallback, useMemo} from 'react';
 import {Text, View} from 'native-base';
-
 import SwitchButton from '~/components/SwitchButton';
-
-import PencilIcon from '~/assets/icons/PencilIcon';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {DaysOfTheWeekEnum, parseDaysOfTheWeekEnumToString} from '../../util';
-
 import styles from './styles';
 import {TouchableOpacity} from 'react-native';
 import {useTimeFormat} from '../../hooks/UseTimeFormat.hook';
 import {TimeFormatService} from '../../services/TimeFormat.service';
+import IconEntypo from 'react-native-vector-icons/Entypo';
+import colors from '~/theme/colors';
 
 export type SpecificDateComponentItemIdType = number;
 
@@ -26,12 +24,14 @@ interface ISpecificDateComponentProps {
   item: ISpecificDateComponentItem;
   onEdit: (id: SpecificDateComponentItemIdType) => void;
   onSave: (id: ISpecificDateComponentItem) => void;
+  onDelete: (id: SpecificDateComponentItemIdType) => void;
 }
 
 export const SpecificDateComponent: FC<ISpecificDateComponentProps> = ({
   item: {id, startDay, startTime, endDay, endTime, isActive},
   onEdit,
   onSave,
+  onDelete,
 }) => {
   const {t} = useAppTranslation();
   const {is24TimeFormat} = useTimeFormat();
@@ -49,7 +49,7 @@ export const SpecificDateComponent: FC<ISpecificDateComponentProps> = ({
   const getLabel = useCallback(
     (days: DaysOfTheWeekEnum[]) => {
       const trans = t(
-        `specificTimesScreen.daysShortName.${parseDaysOfTheWeekEnumToString(
+        `specificTimesScreen.specificTimes.daysShortName.${parseDaysOfTheWeekEnumToString(
           days,
         ).toLocaleLowerCase()}`,
       );
@@ -86,31 +86,42 @@ export const SpecificDateComponent: FC<ISpecificDateComponentProps> = ({
     onSave({id, startDay, startTime, endDay, endTime, isActive: !isActive});
   }, [endDay, endTime, id, isActive, onSave, startDay, startTime]);
 
+  const handleDelete = useCallback(() => {
+    onDelete(id);
+  }, [id, onDelete]);
+
   return (
     <View style={styles.container}>
       <View style={[styles.containerItem, styles.containerSwitch]}>
-        <SwitchButton value={isActive} title={''} onSwitchPress={handleSave} />
+        <SwitchButton value={isActive} onSwitchPress={handleSave} />
       </View>
       <View style={[styles.containerItem, styles.containerDays]}>
         <View style={styles.flexRow}>
-          <Text style={styles.textOpacity}>
-            {t('specificTimesScreen.start')}
+          <Text fontSize={'sm'} style={styles.textOpacity}>
+            {t('specificTimesScreen.specificTimes.start')}
           </Text>
           <Text style={styles.text}>{startDayName}</Text>
         </View>
         <View style={styles.flexRow}>
-          <Text style={styles.textOpacity}>{t('specificTimesScreen.end')}</Text>
-          <Text style={styles.text}>{endDayName}</Text>
+          <Text fontSize={'sm'} style={styles.textOpacity}>
+            {t('specificTimesScreen.specificTimes.end')}
+          </Text>
+          <Text fontSize={'sm'} style={styles.text}>
+            {endDayName}
+          </Text>
         </View>
       </View>
       <View style={[styles.containerItem, styles.containerTime]}>
-        <Text>{startTimeFormatted}</Text>
-        <Text>{endTimeFormatted}</Text>
+        <Text fontSize={'sm'}>{startTimeFormatted}</Text>
+        <Text fontSize={'sm'}>{endTimeFormatted}</Text>
       </View>
       <TouchableOpacity
         style={[styles.containerItem, styles.containerEdit]}
         onPress={handleEdit}>
-        <PencilIcon />
+        <IconEntypo name="edit" size={26} color={colors.blue[600]} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={handleDelete} style={styles.containerItem}>
+        <IconEntypo name="trash" size={26} color={colors.red[600]} />
       </TouchableOpacity>
     </View>
   );

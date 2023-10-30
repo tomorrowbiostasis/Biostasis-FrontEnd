@@ -1,9 +1,7 @@
 import React, {FC} from 'react';
 import {View, Text, Image, Heading} from 'native-base';
 import {ImageRequireSource, ImageStyle, StyleProp} from 'react-native';
-
 import styles from './styles';
-import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 
 type OnboardingSlideProps = {
   image: ImageRequireSource;
@@ -18,13 +16,8 @@ const OnboardingSlide: FC<OnboardingSlideProps> = ({
   text,
   imageStyle,
 }) => {
-  const {t} = useAppTranslation();
-
   return (
     <View style={styles.container}>
-      <Heading size="xl" style={styles.header}>
-        {t('appName')}
-      </Heading>
       <View style={styles.slideImageContainer}>
         <Image
           alt={'onboaring'}
@@ -33,10 +26,10 @@ const OnboardingSlide: FC<OnboardingSlideProps> = ({
           resizeMode={'contain'}
         />
       </View>
-      <Heading size={'xl'} style={styles.margin40}>
+      <Heading size={'md'} style={styles.margin20}>
         {label}
       </Heading>
-      <Text fontSize={'lg'} style={styles.margin40}>
+      <Text fontSize={'sm'} style={styles.margin20}>
         {text}
       </Text>
     </View>

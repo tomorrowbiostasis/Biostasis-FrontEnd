@@ -9,13 +9,13 @@ import Foundation
 
 struct PausedDate: Codable {
   var id: Int
-  var timestamp: Int
+  var timestamp: TimeInterval
 }
 
 struct SpecificPausedTime: Codable {
   var id: Int
-  var startTime: Int
-  var endTime: Int
+  var startTime: TimeInterval
+  var endTime: TimeInterval
   var isActive: Bool
   var startDay: [Int]
   var endDay: [Int]

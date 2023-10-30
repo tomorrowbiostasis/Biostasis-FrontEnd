@@ -1,8 +1,8 @@
-import {CheckIcon, Select} from 'native-base';
+import {Select} from 'native-base';
 import React, {FC, useMemo} from 'react';
 
 import {
-  excludedIntervalsForPulse,
+  excludedIntervals,
   intervalsConfig,
 } from '~/constants/settings.constants';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
@@ -10,7 +10,7 @@ import EnvConfig from '~/services/Env.service';
 import colors from '~/theme/colors';
 
 interface IntervalSelect {
-  type: 'pulse' | 'time';
+  type: 'bio' | 'time';
   onValueChange: (itemValue: string) => void;
   selectedValue?: string;
 }
@@ -20,6 +20,7 @@ type Interval = {
   value: string;
   unit: string;
   debug: boolean;
+  warning: boolean;
 };
 
 const IntervalSelect: FC<IntervalSelect> = ({
@@ -31,13 +32,13 @@ const IntervalSelect: FC<IntervalSelect> = ({
 
   const intervals = useMemo(
     () =>
-      type === 'time'
+      type === 'bio'
         ? intervalsConfig
         : intervalsConfig
             .map(interval =>
               interval.time === 120 ? {...interval, debug: true} : interval,
             )
-            .filter(({value}) => !excludedIntervalsForPulse.includes(value)),
+            .filter(({value}) => !excludedIntervals.includes(value)),
     [type],
   );
   return (
@@ -45,27 +46,37 @@ const IntervalSelect: FC<IntervalSelect> = ({
       selectedValue={selectedValue}
       minWidth="200px"
       accessibilityLabel={t(
-        'emergencyContacts.automatedEmergencySettings.interval.title',
+        'emergencyContactsSettings.automatedEmergencySettings.interval.title',
       )}
       placeholder={t(
-        'emergencyContacts.automatedEmergencySettings.interval.title',
+        'emergencyContactsSettings.automatedEmergencySettings.interval.title',
       )}
       _selectedItem={{
-        bg: colors.magenta['400'],
-        endIcon: <CheckIcon size="5" />,
+        bg: colors.blue[300],
       }}
-      mt={4}
+      mt={2}
       onValueChange={onValueChange}>
       {(intervals as Interval[])
-        .map(({time, value, unit, debug}) => {
+        .map(({time, value, unit, debug, warning}) => {
           if (debug && EnvConfig.PROD) {
-            return undefined;
+            return null;
+          } else if (warning) {
+            return (
+              <Select.Item
+                key={value}
+                label={`${t(
+                  `emergencyContactsSettings.automatedEmergencySettings.time.${unit}`,
+                  {count: time},
+                )} ${debug ? '(DEV)' : ''} ❗`}
+                value={value}
+              />
+            );
           }
           return (
             <Select.Item
               key={value}
               label={`${t(
-                `emergencyContacts.automatedEmergencySettings.time.${unit}`,
+                `emergencyContactsSettings.automatedEmergencySettings.time.${unit}`,
                 {count: time},
               )} ${debug ? '(DEV)' : ''}`}
               value={value}

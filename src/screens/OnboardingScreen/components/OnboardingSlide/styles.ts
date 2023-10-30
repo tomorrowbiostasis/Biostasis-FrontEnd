@@ -5,16 +5,11 @@ const screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 30,
-    paddingBottom: 60,
-  },
-  header: {
-    textTransform: 'uppercase',
-    textAlign: 'center',
+    padding: 40,
   },
   slideImageContainer: {
     width: '100%',
-    maxHeight: '50%',
+    maxHeight: '60%',
     flex: 1,
   },
   slideImage: {
@@ -22,9 +17,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'center',
   },
-  margin40: {
-    marginTop: 40,
-    textAlign: 'center'
+  margin20: {
+    marginTop: 20,
+    textAlign: 'center',
   },
 });
 

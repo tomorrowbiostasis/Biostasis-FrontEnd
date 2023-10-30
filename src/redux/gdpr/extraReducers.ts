@@ -1,7 +1,7 @@
 import {ActionReducerMapBuilder, SerializedError} from '@reduxjs/toolkit';
 import Toast from 'react-native-toast-message';
 import i18n from '~/i18n/i18n';
-import NotificationService from '~/services/NotificationService';
+import ToastService from '~/services/Toast.service';
 import {IGDPRState} from './gdpr.slice';
 import {sendGDPR} from './thunks';
 
@@ -12,7 +12,7 @@ const pendingSendGDPR = (state: IGDPRState) => {
 const fulfilledSendGDPR = (state: IGDPRState) => {
   state.gdprStatus = 'success';
   Toast.show({
-    text1: i18n.t('gdpr.notification'),
+    text1: i18n.t('accountSettings.GDPR.notification'),
     type: 'biostasis_success',
   });
 };
@@ -23,10 +23,10 @@ const rejectedSendGDPR = (
 ) => {
   state.gdprStatus = 'error';
   Toast.show({
-    text1: i18n.t('gdpr.error'),
+    text1: i18n.t('accountSettings.GDPR.error'),
     type: 'biostasis_error',
   });
-  NotificationService.error('common.error');
+  ToastService.error('common.error');
   console.log(`error when sending gdpr: ${error.message}`);
 };
 

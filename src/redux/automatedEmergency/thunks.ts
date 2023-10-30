@@ -1,16 +1,13 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {Notifications} from 'react-native-notifications';
+// import {Notifications} from 'react-native-notifications';
 import {RootState} from '~/redux/store';
 import API from '~/services/API.service';
 import i18n from '~/i18n/i18n';
 import {IApiTimeSlot} from '~/services/API.types';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
-import {
-  stopBackgroundFetch,
-  updateNotification,
-} from '~/services/Background.service';
-import NotificationService from '~/services/NotificationService';
+import {stopBackgroundFetch} from '~/services/Background.service';
+import ToastService from '~/services/Toast.service';
 import {ApiToLocal, LocalToApi} from '~/services/TimeSlot.service';
 import {isIOS} from '~/utils';
 import {getUser, updateUser} from '../user/thunks';
@@ -19,6 +16,7 @@ import {
   ISpecificPausedTime,
   setAutomatedEmergencyPause,
 } from './automatedEmergency.slice';
+// import {updateNotification} from '~/services/Notification.service';
 
 export const startEmergency = createAsyncThunk(
   'automatedEmergency/startEmergency',
@@ -36,7 +34,7 @@ export const startEmergency = createAsyncThunk(
         data: response.data,
       };
     } catch (e) {
-      NotificationService.error(i18n.t('dashboard.emergency.error'));
+      ToastService.error(i18n.t('dashboard.emergency.error'));
     }
   },
 );
@@ -115,16 +113,16 @@ export const pushPositiveResponse = createAsyncThunk<
       'false',
     );
     // Clearing not opened notifications while triggering from Sticky local
-    Notifications.removeAllDeliveredNotifications();
-    const isPulse = !thunkApi.getState().user.user.regularPushNotification;
-    isPulse &&
-      updateNotification(
-        'Emergency canceled',
-        'Emergency was canceled by user',
-      );
-  } catch (error) {
+    // Notifications.removeAllDeliveredNotifications();
+    // const isPulse = !thunkApi.getState().user.user.regularPushNotification;
+    // isPulse &&
+    //   (await updateNotification(
+    //     i18n.t('bioCheck.messages.automatedEmergency'),
+    //     i18n.t('bioCheck.messages.userSendSignal'),
+    //   ));
+  } catch (error: any) {
     console.log(error.message);
-    NotificationService.error(
+    ToastService.error(
       'There was a problem with emergency cancellation. Please reload the app.',
     );
   }

@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import API from '~/services/API.service';
 import {IUser} from './user.slice';
-import NotificationService from '~/services/NotificationService';
+import NotificationService from '~/services/Toast.service';
 import i18n from '~/i18n/i18n';
 
 export const getUser = createAsyncThunk('user/getUser', async () => {
@@ -26,9 +26,8 @@ export const updateUser = createAsyncThunk(
   async (user: IUser) => {
     try {
       const response = await API.updateUser(user);
-
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       const {code} = error.response.data.error;
       const {details} = error.response.data.message;
       const isPhone = details.some((item: any) => item.context.key === 'phone');

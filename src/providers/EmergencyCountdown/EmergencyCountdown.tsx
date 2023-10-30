@@ -29,6 +29,7 @@ import {
 } from '~/constants/emergency.constants';
 import {GeoPosition} from 'react-native-geolocation-service';
 import {
+  emergencyRetry,
   scheduleEvent,
   startBackgroundFetch,
 } from '~/services/Background.service';
@@ -39,6 +40,7 @@ import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import Loader from '~/components/Loader';
 import colors from '~/theme/colors';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 export const EmergencyCountdown = () => {
   const {t} = useAppTranslation();
@@ -64,6 +66,8 @@ export const EmergencyCountdown = () => {
   const [animationStatus, setAnimationStatus] = useState(
     animationStatuses.ANIMATION_OFF,
   );
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentStyles, setCurrentStyles] = useState(
     animationStyles[animationStatuses.ANIMATION_OFF],
   );
@@ -126,10 +130,18 @@ export const EmergencyCountdown = () => {
   useEffect(() => {
     if (lastFailedEmergency) {
       setInfoComponent(infoStatuses.INFO_FAILED);
-      setTimeout(() => {
-        dispatchEmergency();
-      }, 30 * 1000);
+      emergencyRetry();
+      // if (emergencyContacts.length) {
+      //   setTimeout(() => {
+      //     dispatchEmergency();
+      //   }, 30 * 1000);
+      // } else {
+      //   ToastService.warning(t('dashboard.emergency.noContacts'), {
+      //     visibilityTime: 5000,
+      //   });
+      // }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatchEmergency, currentGeoPosition, lastFailedEmergency]);
 
   /**
@@ -241,7 +253,8 @@ export const EmergencyCountdown = () => {
       default:
         return t('dashboard.emergency.countdownRetrying');
     }
-  }, [infoComponent, t]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [infoComponent]);
 
   const infoSubtitleForStatus = useMemo(() => {
     switch (infoComponent) {
@@ -250,7 +263,8 @@ export const EmergencyCountdown = () => {
       default:
         return t('dashboard.emergency.countdownSubtitleRetrying');
     }
-  }, [infoComponent, t]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [infoComponent]);
 
   if (
     [
@@ -260,29 +274,17 @@ export const EmergencyCountdown = () => {
     ].includes(infoComponent)
   ) {
     return (
-      <EmergencyInfoWrapper
-        colors={infoComponentGradients.green}
-        marginTop={
-          animationStyles[animationStatuses.ANIMATION_COUNTDOWN].marginTop
-        }
-        marginHorizontal={
-          animationStyles[animationStatuses.ANIMATION_COUNTDOWN]
-            .marginHorizontal
-        }
-        roundedTopCorners={
-          animationStyles[animationStatuses.ANIMATION_COUNTDOWN]
-            .roundedTopCorners
-        }
-        roundedBottomCorners={
-          animationStyles[animationStatuses.ANIMATION_COUNTDOWN]
-            .roundedBottomCorners
-        }
-        paddingBottom={
-          animationStyles[animationStatuses.ANIMATION_COUNTDOWN].paddingBottom
-        }>
+      <EmergencyInfoWrapper color={infoComponentGradients.green}>
         {infoComponent === infoStatuses.INFO_PENDING && (
           <Loader color={colors.white} absolute={true} />
         )}
+        <Icon
+          name="checkcircleo"
+          size={100}
+          color={colors.blue[200]}
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{textAlign: 'center', margin: 10}}
+        />
         <EmergencyInfoWithButton
           title={infoTitleForStatus}
           subtitle={infoSubtitleForStatus}
@@ -298,26 +300,14 @@ export const EmergencyCountdown = () => {
 
   if (infoComponent === infoStatuses.INFO_CANCELED) {
     return (
-      <EmergencyInfoWrapper
-        colors={infoComponentGradients.gray}
-        marginTop={
-          animationStyles[animationStatuses.ANIMATION_COUNTDOWN].marginTop
-        }
-        marginHorizontal={
-          animationStyles[animationStatuses.ANIMATION_COUNTDOWN]
-            .marginHorizontal
-        }
-        roundedTopCorners={
-          animationStyles[animationStatuses.ANIMATION_COUNTDOWN]
-            .roundedTopCorners
-        }
-        roundedBottomCorners={
-          animationStyles[animationStatuses.ANIMATION_COUNTDOWN]
-            .roundedBottomCorners
-        }
-        paddingBottom={
-          animationStyles[animationStatuses.ANIMATION_COUNTDOWN].paddingBottom
-        }>
+      <EmergencyInfoWrapper color={infoComponentGradients.black}>
+        <Icon
+          name="warning"
+          size={100}
+          color={colors.yellow[600]}
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{textAlign: 'center', margin: 10}}
+        />
         <EmergencyInfoWithButton
           title={t('dashboard.emergency.countdownCanceled')}
           subtitle=" "
@@ -335,13 +325,7 @@ export const EmergencyCountdown = () => {
   }
 
   return (
-    <EmergencyInfoWrapper
-      colors={infoComponentGradients.magenta}
-      marginTop={currentStyles.marginTop}
-      marginHorizontal={currentStyles.marginHorizontal}
-      roundedTopCorners={currentStyles.roundedTopCorners}
-      roundedBottomCorners={currentStyles.roundedBottomCorners}
-      paddingBottom={currentStyles.paddingBottom}>
+    <EmergencyInfoWrapper color={infoComponentGradients.red}>
       {[
         animationStatuses.ANIMATION_PRESSED,
         animationStatuses.ANIMATION_PRESS_3,
@@ -369,7 +353,7 @@ export const EmergencyCountdown = () => {
           subtitle={t('dashboard.emergency.countdownSubtitleBeing')}
           count={countdownValue}
           buttonCaption={t('dashboard.emergency.cancel')}
-          buttonVariant="outline"
+          buttonVariant="solid"
           onPressButton={cancelEmergency}
         />
       )}

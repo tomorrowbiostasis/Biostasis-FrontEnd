@@ -4,7 +4,7 @@ import UIKit
 protocol IManageLocalNotification {
   func requestAuthorization(completion: ((_ authorized: Bool, _ error: Error?)->())?)
   func scheduleSingle(notification: LocalNotification, date: Date)
-  func clearAllPendingNotifications()
+  func clearAllAppNotifications()
 }
 
 public enum LocalNotification {
@@ -40,16 +40,19 @@ extension LocalNotificationManager: IManageLocalNotification {
   func requestAuthorization(completion: ((Bool, Error?) -> ())?) {
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert,
                                                                       .sound]) { authorized, error in
-      completion?(authorized, error)
-    }
+                                                                        completion?(authorized, error)
+                                                                      }
   }
   
   func scheduleSingle(notification: LocalNotification, date: Date) {
+    // clear all notification
+    clearAllAppNotifications()
+    
     let content = UNMutableNotificationContent()
     switch notification {
     case .EmergencyOffline:
       content.title = "You are offline"
-      content.subtitle = "Please connect to send emergency!"
+      content.subtitle = "Please connect again to make sure you are OK"
     case .Custom(let title, let subtitle):
       content.title = title
       content.subtitle = subtitle
@@ -67,7 +70,8 @@ extension LocalNotificationManager: IManageLocalNotification {
     UNUserNotificationCenter.current().add(request)
   }
   
-  func clearAllPendingNotifications() {
-    UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-  }
+  func clearAllAppNotifications() {
+       UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+       UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+   }
 }

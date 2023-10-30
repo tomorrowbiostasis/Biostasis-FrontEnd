@@ -69,3 +69,7 @@ keystore.properties
 .env.development
 /android/private_key.pepk
 .env.production
+
+#Vscode
+.vscode
+.swp

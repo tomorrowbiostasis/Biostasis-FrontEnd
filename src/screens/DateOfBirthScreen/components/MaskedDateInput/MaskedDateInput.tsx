@@ -18,6 +18,7 @@ interface IMaskedDateInput {
   onChangeValidation: (isValid: boolean) => void;
   onChangeValue: (dateOfBirth: string) => void;
   type: 'birth' | 'maxToday';
+  onSubmit?: () => void;
 }
 
 export const MaskedDateInput: FC<IMaskedDateInput> = ({
@@ -26,6 +27,7 @@ export const MaskedDateInput: FC<IMaskedDateInput> = ({
   type,
   onChangeValidation,
   onChangeValue,
+  onSubmit,
 }) => {
   const {t} = useAppTranslation();
 
@@ -154,6 +156,11 @@ export const MaskedDateInput: FC<IMaskedDateInput> = ({
           placeholder={dateFormat}
           value={dateOfBirth}
           defaultValue={initialValue}
+          onSubmitEditing={() => {
+            if (isValid) {
+              onSubmit?.();
+            }
+          }}
         />
         {isTouched && isValid && <CheckMarkIcon />}
       </View>
