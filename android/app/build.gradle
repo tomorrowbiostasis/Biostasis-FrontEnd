@@ -173,7 +173,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         flavorDimensions "default" // add this line
         resValue "string", "build_config_package", "com.biostasis"
-        versionName "1.0.4"
+        versionName "2.1.5"
         versionCode 10
     }
     splits {
