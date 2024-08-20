@@ -138,7 +138,7 @@ const Dashboard = () => {
         isGranted && handleLocationChange();
         updateDataCollectionStatus();
       })
-      .catch(e => console.log('Could not get location', e));
+      .catch(() => console.log('Could not get location'));
   }, [dispatch, handleLocationChange]);
 
   useEffect(() => {

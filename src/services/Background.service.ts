@@ -46,8 +46,8 @@ export const startBackgroundFetch = async () => {
 export const stopBackgroundFetch = async (taskId?: string) => {
   taskId
     ? await BackgroundFetch.stop(taskId)
-    : await BackgroundFetch.stop().catch(error => {
-        console.log(error);
+    : await BackgroundFetch.stop().catch(() => {
+        console.log('Background service error');
       });
   await stopForegroundFetch();
 };
@@ -66,8 +66,8 @@ export const scheduleEvent = async (
       periodic: false,
     });
     console.log(`task ${taskId} scheduled to run in ${delay}ms`);
-  } catch (e) {
-    console.warn(`BackgroundFetch.scheduleTask(${taskId}, ${delay}) fail`, e);
+  } catch {
+    console.warn(`BackgroundFetch.scheduleTask(${taskId}, ${delay}) fail`);
   }
 };
 
@@ -88,18 +88,18 @@ export const mainScheduledEvent = async (event: {
   }
   switch (event.taskId) {
     case BackgroundEventsEnum.EmergencyRetryMechanism:
-      emergencyRetry().catch(e =>
-        console.log(`error from background task ${event.taskId}`, e),
+      emergencyRetry().catch(() =>
+        console.log(`error from background task ${event.taskId}`),
       );
       break;
     case BackgroundEventsEnum.ReactNativeBackgroundFetch:
-      startBioCheck().catch(e =>
-        console.log(`error from background task ${event.taskId}`, e),
+      startBioCheck().catch(() =>
+        console.log(`error from background task ${event.taskId}`),
       );
       break;
     case BackgroundEventsEnum.AlarmBeforeEmergency:
-      soundNotification().catch(e =>
-        console.log(`error from background task ${event.taskId}`, e),
+      soundNotification().catch(() =>
+        console.log(`error from background task ${event.taskId}`),
       );
       break;
     default:
@@ -131,8 +131,8 @@ export const updateLocation = async () => {
       console.log('LOCATION WILL BE UPDATED');
     }
     await API.updateUser(payload);
-  } catch (e) {
-    console.log('could not get location', e);
+  } catch {
+    console.log('could not get location');
   }
 };
 
@@ -152,8 +152,8 @@ export const emergencyRetry = async () => {
         60 * 1000,
       ).then(() => console.log('retry scheduled...'));
     }
-  } catch (e) {
-    console.log('api error', e);
+  } catch {
+    console.log('api error');
     scheduleEvent(BackgroundEventsEnum.EmergencyRetryMechanism, 60 * 1000).then(
       () => console.log('retry scheduled...'),
     );

@@ -92,8 +92,8 @@ export const EmergencyCountdown = () => {
       );
       scheduleEvent(BackgroundEventsEnum.EmergencyRetryMechanism, 0)
         .then(() => console.log('first retry task set'))
-        .catch(e => {
-          console.log('task not scheduled', e);
+        .catch(() => {
+          console.log('task not scheduled');
           dispatchEmergency();
         });
     },

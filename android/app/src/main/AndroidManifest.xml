@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:node="remove" tools:ignore="QueryAllPackagesPermission" />
 
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
@@ -45,9 +46,8 @@
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="biostasis" />
         </intent-filter>
-      </activity>
-      <service android:name="com.voximplant.foregroundservice.VIForegroundService" />
-        <meta-data
+      </activity>  
+            <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_stat_notification" />
         <meta-data
@@ -55,5 +55,7 @@
             android:resource="@color/primary_dark"
             tools:replace="android:resource"
             />
+            <meta-data android:name="com.google.android.gms.version"
+     android:value="@integer/google_play_services_version"/>
     </application>
 </manifest>

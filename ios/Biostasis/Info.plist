@@ -66,7 +66,7 @@
 	<string>${PRODUCT_NAME} sending your location to the emergency contact when you trigger an emergency</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Roboto-Italic.ttf</string>
+	<string>Roboto-Italic.ttf</string>
 		<string>Roboto-Regular.ttf</string>
 		<string>Roboto-Black.ttf</string>
 		<string>Roboto-BlackItalic.ttf</string>

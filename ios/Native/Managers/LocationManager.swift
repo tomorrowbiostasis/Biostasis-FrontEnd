@@ -23,13 +23,25 @@ final class LocationManager: NSObject {
 
 extension LocationManager: IManageLocation {
   func startCollectingLocation() {
-    DispatchQueue.main.async {
-      let locationManager = CLLocationManager()
-      locationManager.delegate = self
-      locationManager.requestAlwaysAuthorization()
-      locationManager.startMonitoringSignificantLocationChanges()
-      self.locationManager = locationManager
-    }
+      DispatchQueue.global().async  {
+          let locationManager = CLLocationManager()
+          locationManager.delegate = self
+          
+          // Check the authorization status on a background thread
+          let authorizationStatus = CLLocationManager.authorizationStatus()
+          
+          DispatchQueue.main.async {
+              if authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse {
+                  // If authorization is already granted, start monitoring
+                  locationManager.startMonitoringSignificantLocationChanges()
+              } else {
+                  // If not authorized, request authorization on the main thread
+                  locationManager.requestAlwaysAuthorization()
+              }
+          }
+          
+          self.locationManager = locationManager
+      }
   }
   
   func stopCollectingLocation() {

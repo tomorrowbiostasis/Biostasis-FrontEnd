@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.facebook.react.bridge.JSIModulePackage; // <- add
 import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
+import android.util.Log;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -62,26 +63,22 @@ public class MainApplication extends Application implements ReactApplication {
    * @param reactInstanceManager
    */
   private static void initializeFlipper(
-      Context context, ReactInstanceManager reactInstanceManager) {
+    Context context, ReactInstanceManager reactInstanceManager) {
     if (BuildConfig.DEBUG) {
-      try {
-        /*
-         We use reflection here to pick up the class that initializes Flipper,
-        since Flipper library is not available in release mode
-        */
-        Class<?> aClass = Class.forName("com.biostasis.ReactNativeFlipper");
-        aClass
-            .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
-            .invoke(null, context, reactInstanceManager);
-      } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-      } catch (NoSuchMethodException e) {
-        e.printStackTrace();
-      } catch (IllegalAccessException e) {
-        e.printStackTrace();
-      } catch (InvocationTargetException e) {
-        e.printStackTrace();
-      }
+        try {
+            Class<?> aClass = Class.forName("com.biostasis.ReactNativeFlipper");
+            aClass
+                .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
+                .invoke(null, context, reactInstanceManager);
+        } catch (ClassNotFoundException e) {
+            Log.e("Flipper Initialization", "Class not found: ");
+        } catch (NoSuchMethodException e) {
+            Log.e("Flipper Initialization", "Method not found: ");
+        } catch (IllegalAccessException e) {
+            Log.e("Flipper Initialization", "Illegal access: ");
+        } catch (InvocationTargetException e) {
+            Log.e("Flipper Initialization", "Invocation target exception: ");
+        }
     }
   }
 }

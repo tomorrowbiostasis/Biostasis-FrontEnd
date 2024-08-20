@@ -44,7 +44,7 @@ export const createNotificationChannels = async () => {
     .then(() => {
       console.log('notification channel created');
     })
-    .catch((e: any) => console.log('Error: Notification channel creation', e));
+    .catch(() => console.log('Error: Notification channel creation'));
 };
 
 export const updateNotification = async (
@@ -71,7 +71,7 @@ export const updateNotification = async (
     .then(() => {
       console.log('notification updated successfully');
     })
-    .catch((e: any) => console.log('update notification error', e));
+    .catch(() => console.log('update notification error'));
 };
 
 export const handleNotificationEvents = async ({type, detail}: any) => {
@@ -100,8 +100,8 @@ export const stopForegroundFetch = async () => {
         });
     });
     console.log('Foreground fetch stopped');
-  } catch (error: any) {
-    console.log('Error: Stopping foreground fetch ', error.message);
+  } catch {
+    console.log('Error: Stopping foreground fetch ');
   }
 };
 

@@ -1,8 +1,11 @@
-import {useCallback, useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useCallback} from 'react';
 import {TFunction, useTranslation} from 'react-i18next';
-import {NativeModules, Platform} from 'react-native';
+import {Settings} from 'react-native';
 import {configSelector, setLanguage} from '~/redux/config/config.slice';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
+import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
+import {isAndroid} from '~/utils';
 
 interface IUseAppTranslationReturn {
   t: TFunction<'translation'>;
@@ -14,9 +17,13 @@ export const useAppTranslation = (): IUseAppTranslationReturn => {
   const dispatch = useAppDispatch();
   const currentLanguage = useAppSelector(configSelector).language;
 
+  //TODO: Create a bridge to use AsyncStorage with native code (swift)
   const setI18nLanguage = useCallback(
-    (language: string) => {
+    async (language: string) => {
       i18n.changeLanguage(language);
+      isAndroid
+        ? await AsyncStorage.setItem(AsyncStorageEnum.Language, language)
+        : Settings.set({'@language': language});
     },
     [i18n],
   );
@@ -30,16 +37,6 @@ export const useAppTranslation = (): IUseAppTranslationReturn => {
     },
     [currentLanguage, dispatch, setI18nLanguage],
   );
-
-  useEffect(() => {
-    const deviceLanguage =
-      Platform.OS === 'ios'
-        ? NativeModules.SettingsManager.settings.AppleLocale ||
-          NativeModules.SettingsManager.settings.AppleLanguages[0]
-        : NativeModules.I18nManager.localeIdentifier;
-
-    setI18nLanguage(deviceLanguage);
-  }, [setI18nLanguage]);
 
   return {
     t: t,

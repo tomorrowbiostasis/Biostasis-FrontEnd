@@ -64,6 +64,7 @@
     "react-native-localize": "^3.0.2",
     "react-native-mask-text": "^0.2.2",
     "react-native-modal-datetime-picker": "^10.2.0",
+    "react-native-notifications": "4.3.1",
     "react-native-paper": "^4.9.2",
     "react-native-permissions": "^3.0.5",
     "react-native-phone-input": "^1.0.10",

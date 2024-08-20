@@ -15,19 +15,17 @@ export const AsyncStorageService = {
           );
         }
       })
-      .catch(e => {
+      .catch(() => {
         if (!disableLog) {
           console.log(
             `AsyncStorageService: Problem during save key: ${key}, value: ${value}`,
-            e,
           );
         }
       }),
   getItem: async (key: AsyncStorageEnum): Promise<string | null> =>
-    await AsyncStorage.getItem(key).catch(e => {
+    await AsyncStorage.getItem(key).catch(() => {
       console.log(
         `AsyncStorageService: Problem during getting item key: ${key}`,
-        e,
       );
       return null;
     }),

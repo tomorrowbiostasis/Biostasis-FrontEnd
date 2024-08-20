@@ -85,9 +85,7 @@ const AutomatedSystemListener = () => {
         .then(status => {
           console.log('Settings > startAutomatedEmergency', status);
         })
-        .catch(e =>
-          console.log('Settings > startAutomatedEmergency > error', e),
-        );
+        .catch(() => console.log('Settings > startAutomatedEmergency > error'));
     }
     await listenForPushTokenAndUpdate();
     await invokeGetToken();
@@ -101,9 +99,7 @@ const AutomatedSystemListener = () => {
         .then(response =>
           console.log('Settings > stopAutomatedEmergency', response),
         )
-        .catch(e =>
-          console.log('Settings > stopAutomatedEmergency > error', e),
-        );
+        .catch(() => console.log('Settings > stopAutomatedEmergency > error'));
     }
   }, []);
 

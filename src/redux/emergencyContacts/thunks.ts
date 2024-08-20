@@ -106,11 +106,10 @@ export const updateEmergencyContact = createAsyncThunk(
         onSuccess();
         return response.data;
       })
-      .catch(error => {
+      .catch(() => {
         ToastService.error(
           i18n.t('emergencyContactsSettings.addNewEdit.errorDuringUpdate'),
         );
-        console.log(error);
         return null;
       });
   },

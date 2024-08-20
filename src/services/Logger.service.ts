@@ -68,5 +68,5 @@ export const shareLog = async () => {
       await AsyncStorageService.multiRemove(loggerKeys);
       console.log('Logger: logger data shared successfully', status);
     })
-    .catch(e => console.log('Logger: data not shared', e));
+    .catch(() => console.log('Logger: data not shared'));
 };
