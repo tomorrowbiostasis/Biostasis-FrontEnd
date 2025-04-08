@@ -49,7 +49,6 @@ export function navigate(
   route: NavigationRouteName | keyof RootStackParamList,
   params?: any,
 ) {
-  console.log('navigating from handler');
   if (navigationRef.isReady()) {
     // @ts-ignore
     navigationRef.navigate(route as keyof Routes, params);
@@ -97,7 +96,7 @@ const Container = () => {
         )}
       </Stack.Navigator>
       <LostConnection />
-      <Toast ref={ref => Toast.setRef(ref)} config={toastConfig} />
+      <Toast config={toastConfig} />
       {loadingInitData && <Loader absolute />}
     </NavigationContainer>
   );

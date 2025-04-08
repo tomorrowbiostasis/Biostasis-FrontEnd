@@ -29,6 +29,7 @@ interface ContainerProps {
   titleText?: StyleProp<TextStyle>;
   showDrawerIcon?: boolean;
   showBackIcon?: boolean;
+  children:React.ReactNode | null
 }
 
 const Container: FC<ContainerProps> = ({
@@ -95,7 +96,7 @@ const Container: FC<ContainerProps> = ({
 
   return (
     <>
-      <View style={styles.header}>
+    <View style={styles.header}>
         {showBackIcon && <BackButtonTrigger />}
         {title && <Heading style={titleText}>{title}</Heading>}
         {showDrawerIcon && <DrawerTrigger />}

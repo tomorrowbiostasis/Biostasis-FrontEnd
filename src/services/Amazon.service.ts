@@ -15,7 +15,7 @@ const urlOpener = async (url: string, redirectUrl: string) => {
       enableDefaultShare: false,
       ephemeralWebSession: true, // iOS-only
     });
-
+    
     if (type === 'success') {
       await Linking.openURL(newUrl);
     }

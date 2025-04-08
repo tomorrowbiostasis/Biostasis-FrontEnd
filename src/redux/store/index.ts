@@ -10,6 +10,8 @@ import automatedEmergencyReducer, {
 } from '~/redux/automatedEmergency/automatedEmergency.slice';
 import gdprReducer from '~/redux/gdpr/gdpr.slice';
 import documentsReducer from '~/redux/documents/documents.slice';
+import EnvConfig from '~/services/Env.service';
+import logger from 'redux-logger';
 
 import {
   persistStore,
@@ -27,13 +29,13 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {clearEncryptedStorage, clearStorage} from './utils';
 
-let reduxMiddleware: any;
-if (__DEV__) {
-  const createDebugger = require('redux-flipper').default;
-  reduxMiddleware = createDebugger();
-} else {
-  reduxMiddleware = [];
-}
+// let reduxMiddleware: any = [];
+// if (__DEV__) {
+//   // const createDebugger = require('redux-flipper').default;
+//   // reduxMiddleware.push(createDebugger());
+// } else {
+//   reduxMiddleware = [];
+// }
 
 const authPersistConfig: PersistConfig<IAuthState> = {
   key: 'auth',
@@ -89,14 +91,22 @@ export const store = configureStore({
     documents: documentsReducer,
   },
   middleware: getDefaultMiddleware =>
+    EnvConfig.DEV ?
     getDefaultMiddleware({
       immutableCheck: false,
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         warnAfter: 128,
       },
-    }).concat(reduxMiddleware),
-});
+    }).concat(logger) :
+    getDefaultMiddleware({
+      immutableCheck: false,
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        warnAfter: 128,
+      },
+    }),
+  });
 
 export const persistor = persistStore(store);
 

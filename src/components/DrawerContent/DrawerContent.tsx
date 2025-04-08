@@ -70,7 +70,7 @@ const DrawerContent: FC<
 
   const handleMenuItemPress = useCallback(
     (screen: Screens) => {
-      navigation.navigate(screen);
+      navigation.navigate('Drawer', {screen});
     },
     [navigation],
   );
