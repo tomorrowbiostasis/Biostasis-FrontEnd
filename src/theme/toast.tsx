@@ -13,7 +13,7 @@ export const toastConfig = {
         backgroundColor: colors.green[200],
       }}
       contentContainerStyle={styles.container}
-      onTrailingIconPress={() => Toast.hide()}
+      onPress={() => Toast.hide()}
       text1Style={styles.text1}
       text1NumberOfLines={4}
       text2NumberOfLines={0}
@@ -28,7 +28,7 @@ export const toastConfig = {
         backgroundColor: colors.red[200],
       }}
       contentContainerStyle={styles.container}
-      onTrailingIconPress={() => Toast.hide()}
+      onPress={() => Toast.hide()}
       text1Style={styles.text1}
       text1NumberOfLines={4}
       text2NumberOfLines={0}
@@ -44,7 +44,7 @@ export const toastConfig = {
         backgroundColor: colors.yellow[600],
       }}
       contentContainerStyle={styles.container}
-      onTrailingIconPress={() => Toast.hide()}
+      onPress={() => Toast.hide()}
       text2Style={styles.text1}
       text1Style={styles.text2}
       text1NumberOfLines={1}
@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
   main: {
     height: undefined,
     padding: 5,
+    marginTop:30,
   },
   container: {
     alignItems: 'center',

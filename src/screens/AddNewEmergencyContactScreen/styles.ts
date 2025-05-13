@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   saveButton: {
-    backgroundColor: colors.blue[600],
+    backgroundColor: colors.blue[700],
     borderColor: colors.gray[200],
   },
   panel: {

@@ -1,5 +1,5 @@
-import React, {FC, useMemo} from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
+import React, {FC, useMemo, useRef} from 'react';
+import {StyleProp, ViewStyle, TextInput, TouchableWithoutFeedback} from 'react-native';
 import {Input as NBInput, IInputProps, FormControl, Stack} from 'native-base';
 import CheckMarkIcon from '~/assets/icons/CheckMarkIcon';
 
@@ -24,24 +24,32 @@ const Input: FC<InputProps> = props => {
       : // Used <></> here because without this, input component is rerendered and loses focus
         {InputRightElement: <></>};
   }, [props.isValid]);
-
+  const inputRef = useRef<TextInput>(null);
+  const focusInput = () => {
+    if(inputRef.current){
+      return inputRef.current.focus();
+    }
+  };
   return (
-    <FormControl style={props.containerStyle} isInvalid={!!props.errorMessage}>
-      <Stack>
-        <FormControl.Label>{props.label}</FormControl.Label>
-        <NBInput
-          size="lg"
-          variant="underlined"
-          {...props}
-          {...validProps}
-          style={[props.style, validProps.style]}
-          isInvalid={!!(props.isInvalid || props.errorMessage)}
-        />
-        <FormControl.ErrorMessage>
-          {props.errorMessage}
-        </FormControl.ErrorMessage>
-      </Stack>
-    </FormControl>
+    <TouchableWithoutFeedback onPress={focusInput}>
+      <FormControl style={props.containerStyle} isInvalid={!!props.errorMessage}>
+        <Stack>
+          <FormControl.Label>{props.label}</FormControl.Label>
+          <NBInput
+            ref={inputRef}
+            size="lg"
+            variant="underlined"
+            {...props}
+            {...validProps}
+            style={[props.style, validProps.style]}
+            isInvalid={!!(props.isInvalid || props.errorMessage)}
+          />
+          <FormControl.ErrorMessage>
+            {props.errorMessage}
+          </FormControl.ErrorMessage>
+        </Stack>
+      </FormControl>
+    </TouchableWithoutFeedback>
   );
 };
 

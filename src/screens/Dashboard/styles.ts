@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 20,
     minHeight: 80,
-    width: '80%',
+    width: '90%',
     backgroundColor: colors.pink[600],
   },
   activeButton: {

@@ -65,7 +65,7 @@ const translations: ITranslation = {
   },
   signUpForTomorrow: {
     title: "S'inscrire avec Tomorrow Bio",
-    signUpUrl: 'https://tomorrowbiostasis.com/fr/signup/',
+    signUpUrl: 'https://member.tomorrow.bio/fr/signup/start',
     internetError: {
       title: 'Pas de connexion internet',
       description: 'Cette page nécessite une connexion internet',

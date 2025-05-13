@@ -8,6 +8,7 @@ import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import CheckMarkIcon from '~/assets/icons/CheckMarkIcon';
 
 import styles from './styles';
+import colors from '~/theme/colors';
 
 const minAge = 18;
 const dateFormat = 'DD/MM/YYYY';
@@ -152,6 +153,7 @@ export const MaskedDateInput: FC<IMaskedDateInput> = ({
             setDate(text);
           }}
           style={styles.input}
+          placeholderTextColor={colors.gray[600]}
           keyboardType="numeric"
           placeholder={dateFormat}
           value={dateOfBirth}

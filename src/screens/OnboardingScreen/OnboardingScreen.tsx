@@ -52,17 +52,19 @@ const OnboardingScreen: FC = () => {
           />
           <OnboardingSummarySlide key={'slide-summary'} />
         </Swiper>
-        {isNotLastSlide && (
-          <View style={styles.alreadyUserBox}>
+        <View style={styles.alreadyUserBox}>
+          {
+            isNotLastSlide && <>
             <Text fontSize={'md'}>{t('onboarding.alreadyUser')}</Text>
             <TouchableOpacity onPress={handleLogin} style={styles.logInBox}>
               <Text style={styles.logInText} underline>
                 {t('LogIn.LogIn')}
               </Text>
             </TouchableOpacity>
+            </>
+          }
           </View>
-        )}
-      </SafeAreaView>
+        </SafeAreaView>
     </View>
   );
 };

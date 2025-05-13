@@ -212,6 +212,7 @@ const ProfileAddMedicalInfoScreen = () => {
                 <Button
                   variant={'solid'}
                   disabled={checkIfDisabled(values, errors, dirty)}
+                  _disabled={{opacity: 1}}
                   style={styles.saveButton}
                   onPress={() => handleSave(values)}
                 >

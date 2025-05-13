@@ -29,7 +29,7 @@ const EmergencyContact: VFC<IEmergencyContactProps> = ({
       </Text>
       <View style={styles.icons}>
         <TouchableOpacity onPress={() => onEditPress(contact)}>
-          <IconEntypo name="edit" size={24} color={colors.blue[600]} />
+          <IconEntypo name="edit" size={24} color={colors.blue[700]} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => onDeletePress(contact)}>
           <IconEntypo name="trash" size={24} color={colors.red[600]} />

@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 import {
   Image,
-  Linking,
   ScrollView,
   Settings,
   TouchableOpacity,
@@ -44,7 +43,7 @@ import {
   updateUser,
 } from '~/redux/user/thunks';
 import {isIOS, updateDataCollectionStatus} from '~/utils';
-import IconFeather from 'react-native-vector-icons/Feather';
+// import IconFeather from 'react-native-vector-icons/Feather';
 import {IUser} from '~/redux/user/user.slice';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
 
@@ -166,17 +165,17 @@ const Dashboard = () => {
     [navigate],
   );
 
-  const openAlcorWebsite = () => {
-    Linking.openURL(t('cryopreservationCompaniesUrls.alcor'));
-  };
+  // const openAlcorWebsite = () => {
+  //   Linking.openURL(t('cryopreservationCompaniesUrls.alcor'));
+  // };
 
-  const openCryonicsInstituteWebsite = () => {
-    Linking.openURL(t('cryopreservationCompaniesUrls.cryonicsInstitute'));
-  };
+  // const openCryonicsInstituteWebsite = () => {
+  //   Linking.openURL(t('cryopreservationCompaniesUrls.cryonicsInstitute'));
+  // };
 
-  const openSouthernCryonicsWebsite = () => {
-    Linking.openURL(t('cryopreservationCompaniesUrls.southernCryonics'));
-  };
+  // const openSouthernCryonicsWebsite = () => {
+  //   Linking.openURL(t('cryopreservationCompaniesUrls.southernCryonics'));
+  // };
 
   const handleEmergencyStart = useCallback(() => {
     if (hasContacts && areContactsEnabled) {
@@ -405,7 +404,7 @@ const Dashboard = () => {
                 </Box>
               </Box>
             </TouchableOpacity>
-            <TouchableOpacity onPress={openAlcorWebsite} style={styles.panel}>
+            {/* <TouchableOpacity onPress={openAlcorWebsite} style={styles.panel}>
               <IconWithText
                 icon={
                   <Image
@@ -493,7 +492,7 @@ const Dashboard = () => {
                   />
                 </Box>
               </Box>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </Box>
         </ScrollView>
       </Container>

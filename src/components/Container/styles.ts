@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     backgroundColor: colors.gray[50],
-    paddingTop: 40,
+    paddingTop: 60,
   },
   scrollContainer: {
     flexGrow: 1,

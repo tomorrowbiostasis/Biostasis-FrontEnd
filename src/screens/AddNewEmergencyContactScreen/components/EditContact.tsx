@@ -151,6 +151,7 @@ export const EditContact: FC<IEditContactProps> = ({contact, onSavePress}) => {
 
             <Button
               variant={'solid'}
+              _disabled={{opacity: 1}}
               disabled={!(isValid && isPhoneValid && (dirty || isPhoneTouched))}
               style={styles.saveButton}
               onPress={() => handleSubmit()}>

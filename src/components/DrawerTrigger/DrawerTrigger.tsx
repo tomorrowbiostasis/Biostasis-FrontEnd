@@ -10,7 +10,6 @@ const hitSlop = 15;
 
 const DrawerTrigger: FC = () => {
   const navigation = useNavigation<DrawerNavigationProp<{}>>();
-
   const openDrawer = useCallback(() => {
     navigation.openDrawer();
   }, [navigation]);

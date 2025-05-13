@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     borderRadius: 15,
-    backgroundColor: colors.blue[400],
+    backgroundColor: colors.blue[700],
     ...boxShadow,
   },
   isActive: {
