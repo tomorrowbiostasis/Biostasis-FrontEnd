@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: colors.white,
     borderRadius: 10,
-    marginVertical: 10,
     padding: 20,
     alignItems: 'flex-start',
     justifyContent: 'space-around',

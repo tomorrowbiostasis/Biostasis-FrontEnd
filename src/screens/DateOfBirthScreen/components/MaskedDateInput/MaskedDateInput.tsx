@@ -1,4 +1,5 @@
-import React, {FC, useCallback, useMemo, useState} from 'react';
+import React, {FC, useCallback, useMemo, useState, useRef} from 'react';
+import {TextInput, TouchableWithoutFeedback} from 'react-native';
 import {View} from 'native-base';
 import {Text} from 'react-native';
 import dayjs from 'dayjs';
@@ -38,6 +39,7 @@ export const MaskedDateInput: FC<IMaskedDateInput> = ({
   const [errorMessageKey, setErrorMessageKey] = useState(
     'userDateOfBirth.invalidDate',
   );
+  const inputRef = useRef<TextInput>(null);
 
   const setValidation = useCallback(
     (value: boolean) => {
@@ -143,34 +145,43 @@ export const MaskedDateInput: FC<IMaskedDateInput> = ({
     return null;
   }, [isTouched, isValid]);
 
+  const focusInput = () => {
+    if(inputRef.current){
+      return inputRef.current.focus();
+    }
+  };
+
   return (
-    <View>
-      <Text style={styles.label}>{label || dateFormat}</Text>
-      <View style={[styles.inputContainer, inputStyles]}>
-        <MaskedTextInput
-          mask="99/99/9999"
-          onChangeText={text => {
-            setDate(text);
-          }}
-          style={styles.input}
-          placeholderTextColor={colors.gray[600]}
-          keyboardType="numeric"
-          placeholder={dateFormat}
-          value={dateOfBirth}
-          defaultValue={initialValue}
-          onSubmitEditing={() => {
-            if (isValid) {
-              onSubmit?.();
-            }
-          }}
-        />
-        {isTouched && isValid && <CheckMarkIcon />}
+    <TouchableWithoutFeedback onPress={focusInput}>
+      <View>
+        <Text style={styles.label}>{label || dateFormat}</Text>
+        <View style={[styles.inputContainer, inputStyles]}>
+          <MaskedTextInput
+            ref={inputRef}
+            mask="99/99/9999"
+            onChangeText={text => {
+              setDate(text);
+            }}
+            style={styles.input}
+            placeholderTextColor={colors.gray[600]}
+            keyboardType="numeric"
+            placeholder={dateFormat}
+            value={dateOfBirth}
+            defaultValue={initialValue}
+            onSubmitEditing={() => {
+              if (isValid) {
+                onSubmit?.();
+              }
+            }}
+          />
+          {isTouched && isValid && <CheckMarkIcon />}
+        </View>
+        <View style={styles.errorMessageContainer}>
+          {!isValid && isTouched && (
+            <Text style={styles.errorMessage}>{t(errorMessageKey)}</Text>
+          )}
+        </View>
       </View>
-      <View style={styles.errorMessageContainer}>
-        {!isValid && isTouched && (
-          <Text style={styles.errorMessage}>{t(errorMessageKey)}</Text>
-        )}
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
