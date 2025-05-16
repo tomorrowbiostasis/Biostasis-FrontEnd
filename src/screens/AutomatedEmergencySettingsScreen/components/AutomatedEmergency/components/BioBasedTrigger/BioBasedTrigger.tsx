@@ -496,7 +496,7 @@ const BioBasedTrigger = () => {
                         )}
                       </Text>
                     ) : (
-                      <Text fontSize={12} color={colors.red[600]}>
+                      <Text fontSize={'sm'} color={colors.red[600]}>
                         {t(
                           'dashboard.automatedEmergency.recommendationDaysLeft',
                           {daysLeft},

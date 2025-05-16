@@ -115,13 +115,13 @@ const SpecificTimesPanel = () => {
           name="calendar-clock"
           size={26}
         />
-        <Text fontSize={'md'} fontWeight={700}>
+        <Text style={styles.panelTitle} fontWeight={700}>
           {t('specificTimesScreen.specificTimes.title')}
         </Text>
       </View>
       <View style={styles.lineStyle} />
       <View style={styles.panelBody}>
-        <Text fontSize={'sm'} p={1}>
+        <Text style={styles.panelTitle} p={1}>
           {t('specificTimesScreen.specificTimes.description')}
         </Text>
 

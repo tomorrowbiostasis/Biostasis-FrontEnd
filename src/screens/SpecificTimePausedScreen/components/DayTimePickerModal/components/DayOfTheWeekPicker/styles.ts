@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   itemActive: {
-    backgroundColor: colors.blue[600],
+    backgroundColor: colors.blue[700],
   },
   itemInactiveText: {
     color: 'black',

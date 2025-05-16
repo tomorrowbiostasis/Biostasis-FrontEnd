@@ -71,13 +71,13 @@ const PauseEmergencyPanel = () => {
       <View style={styles.panel}>
         <View style={styles.panelHeader}>
           <IconFeather name="pause-circle" size={26} style={styles.icon} />
-          <Text fontSize={'md'} fontWeight={700}>
+          <Text style={styles.panelTitle} fontWeight={700}>
             {t('specificTimesScreen.pauseNow.title')}
           </Text>
         </View>
         <View style={styles.lineStyle} />
         <View style={styles.panelBody}>
-          <Text fontSize={'sm'}>
+          <Text style={styles.panelInfoText}>
             {t('specificTimesScreen.pauseNow.description')}
           </Text>
         </View>

@@ -126,7 +126,7 @@ const AutomatedEmergencySettingsScreen = () => {
       disableWrapper
       showBackIcon
       showDrawerIcon>
-      {/* <View style={styles.curveElement} /> */}
+      <View style={styles.curveElement} />
       {/* Solve problem with scrollView IOS */}
       <SafeAreaView style={{flex: 1}}>
         <ScrollView
@@ -136,7 +136,7 @@ const AutomatedEmergencySettingsScreen = () => {
           <View style={styles.panel}>
             <View style={styles.panelHeader}>
               <IconFeather name={'settings'} size={26} style={styles.icon} />
-              <Text fontSize={'md'} fontWeight={700}>
+              <Text style={styles.panelTitle} fontWeight={700}>
                 {t(
                   'emergencyContactsSettings.automatedEmergencySettings.enableSystemTitle',
                 )}
@@ -203,7 +203,7 @@ const AutomatedEmergencySettingsScreen = () => {
                       <TouchableOpacity
                         onPress={redirectToManual}
                         style={styles.manualLinkBox}>
-                        <Text underline pb={2} style={styles.manualLink}>
+                        <Text underline pb={2} style={styles.manualLink} fontSize={'sm'}>
                           {t(
                             'emergencyContactsSettings.automatedEmergencySettings.manualDescription',
                           )}
@@ -214,7 +214,7 @@ const AutomatedEmergencySettingsScreen = () => {
                           color={colors.blue[800]}
                         />
                       </TouchableOpacity>
-                      <Text fontSize={10} style={styles.warningText}>
+                      <Text fontSize={'sm'} style={styles.warningText}>
                         {t(
                           'emergencyContactsSettings.automatedEmergencySettings.pleaseReadManual',
                         )}
@@ -241,7 +241,7 @@ const AutomatedEmergencySettingsScreen = () => {
               <View style={[styles.circle, styles.icon]}>
                 <IconMaterialCommunityIcons name="play-pause" size={20} />
               </View>
-              <Text fontSize={'md'} fontWeight={700}>
+              <Text style={styles.panelTitle} fontWeight={700}>
                 {t(
                   'emergencyContactsSettings.automatedEmergencySettings.pauseTime.title',
                 )}
@@ -250,7 +250,7 @@ const AutomatedEmergencySettingsScreen = () => {
             <View style={styles.lineStyle} />
 
             <View style={styles.panelBody}>
-              <Text fontSize={'sm'}>
+              <Text style={styles.panelInfoText}>
                 {t(
                   'emergencyContactsSettings.automatedEmergencySettings.pauseTime.description',
                 )}

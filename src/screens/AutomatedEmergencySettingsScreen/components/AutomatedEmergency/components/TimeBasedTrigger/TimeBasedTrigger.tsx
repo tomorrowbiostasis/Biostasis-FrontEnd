@@ -212,7 +212,7 @@ const TimeBasedTrigger = () => {
         )}
       </View>
       <View style={styles.panelBody}>
-        {renderDescription()}
+        <Text fontSize={'sm'}>{renderDescription()}</Text>
         <SwitchButton
           value={regularPushNotification}
           title={t(
@@ -227,7 +227,7 @@ const TimeBasedTrigger = () => {
           }}
         />
         {!regularPushNotification && (
-          <Text fontSize={12} py={2} color={colors.red[600]}>
+          <Text fontSize={'sm'} py={2} color={colors.red[600]}>
             {t(
               'emergencyContactsSettings.automatedEmergencySettings.timeTrigger.warning',
             )}

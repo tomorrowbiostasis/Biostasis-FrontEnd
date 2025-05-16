@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import boxShadow from '~/theme/boxShadow';
 import colors from '~/theme/colors';
+import { globalTextStyles } from '~/theme/globalTextStyles';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,14 +15,14 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   scrollContentContainer: {
-    paddingVertical: 20,
+    paddingVertical: 10,
     paddingHorizontal: 20,
   },
   curveElement: {
-    position: 'absolute',
+    // position: 'absolute',
     zIndex: 1,
-    top: 50,
-    height: 50,
+    top: 0,
+    height: 20,
     backgroundColor: colors.gray[50],
     width: '100%',
     borderBottomLeftRadius: 100,
@@ -48,8 +49,8 @@ const styles = StyleSheet.create({
   infoText: {
     color: colors.gray[700],
     marginBottom: 8,
-    lineHeight: 20,
-    fontSize: 12,
+    lineHeight: 22,
+    fontSize: 14,
   },
   expandableSectionWrapper: {
     flexDirection: 'row',
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
   },
   manualLink: {
     color: colors.blue[800],
-    fontSize: 12,
+    // fontSize: 12,
   },
   panel: {
     flex: 1,
@@ -94,6 +95,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+  },
+  panelTitle: {
+    ...globalTextStyles.titleMedium,
+  },
+  panelInfoText: {
+    ...globalTextStyles.textMedium
   },
   panelBody: {
     flex: 1,

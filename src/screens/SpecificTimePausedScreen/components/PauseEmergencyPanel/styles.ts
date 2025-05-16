@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import boxShadow from '~/theme/boxShadow';
 import colors from '~/theme/colors';
+import { globalTextStyles } from '~/theme/globalTextStyles';
 
 export const styles = StyleSheet.create({
   panel: {
@@ -25,6 +26,12 @@ export const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     marginTop: 10,
+  },
+  panelTitle :{
+    ...globalTextStyles.titleMedium,
+  },
+  panelInfoText :{
+    ...globalTextStyles.textMedium,
   },
   lineStyle: {
     flex: 1,

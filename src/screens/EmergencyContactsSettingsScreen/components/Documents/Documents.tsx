@@ -118,13 +118,13 @@ const Documents = () => {
           size={26}
           style={styles.icon}
         />
-        <Text fontSize={'md'} fontWeight={700}>
+        <Text style={styles.panelTitle} fontWeight={700}>
           {t('emergencyContactsSettings.documents.title')}
         </Text>
       </View>
       <View style={styles.lineStyle} />
       <View style={styles.panelBody}>
-        <Text fontSize={'sm'} mb={4}>
+        <Text style={styles.panelInfoText} mb={4}>
           {t('emergencyContactsSettings.documents.topInfo')}
         </Text>
         <View flex={1}>

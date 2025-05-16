@@ -29,7 +29,7 @@ const OnboardingSlide: FC<OnboardingSlideProps> = ({
       <Heading size={'md'} style={styles.margin20}>
         {label}
       </Heading>
-      <Text fontSize={'sm'} style={styles.margin20}>
+      <Text style={[styles.margin20, styles.infoText]}>
         {text}
       </Text>
     </View>

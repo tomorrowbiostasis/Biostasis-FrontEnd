@@ -2,6 +2,7 @@ import React, {FC, ReactNode} from 'react';
 import {Text, Box, IBoxProps} from 'native-base';
 import styles from './styles';
 import colors from '~/theme/colors';
+import { globalTextStyles } from '~/theme/globalTextStyles';
 
 interface IIconWithText {
   icon: ReactNode;
@@ -21,7 +22,7 @@ export const IconWithText: FC<IIconWithText & IBoxProps> = ({
         <Box style={styles.icon}>{icon}</Box>
         <Box style={styles.textContainer}>
           <Text style={styles.linkTitle}>{title}</Text>
-          <Text fontSize={'sm'} color={colors.gray[600]}>
+          <Text color={colors.gray[600]} style={styles.linkText}>
             {description}
           </Text>
         </Box>

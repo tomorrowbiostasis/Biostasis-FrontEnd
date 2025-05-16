@@ -118,7 +118,7 @@ export const SpecificDateComponent: FC<ISpecificDateComponentProps> = ({
       <TouchableOpacity
         style={[styles.containerItem, styles.containerEdit]}
         onPress={handleEdit}>
-        <IconEntypo name="edit" size={26} color={colors.blue[600]} />
+        <IconEntypo name="edit" size={26} color={colors.blue[700]} />
       </TouchableOpacity>
       <TouchableOpacity onPress={handleDelete} style={styles.containerItem}>
         <IconEntypo name="trash" size={26} color={colors.red[600]} />

@@ -114,7 +114,7 @@ export const AddressScreen = () => {
         </Text>
         <View style={styles.panelHeader}>
           <IconEntypo name={'location'} size={26} style={styles.icon} />
-          <Text fontSize={'md'} textAlign={'center'} fontWeight={700}>
+          <Text style={styles.panelTitle} textAlign={'center'} fontWeight={700}>
             {t('userAddress.title')}
           </Text>
         </View>
