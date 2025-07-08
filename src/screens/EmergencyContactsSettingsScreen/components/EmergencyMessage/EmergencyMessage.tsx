@@ -126,7 +126,7 @@ const EmergencyMessage = () => {
   );
 
   return (
-    <View style={mainStyles.panel}>
+  <View style={mainStyles.panel}>
       <View style={mainStyles.panelHeader}>
         <IconMaterialCommunityIcons
           name={'message-cog-outline'}

@@ -13,17 +13,19 @@ const styles = StyleSheet.create({
   scrollContent: {
     flex: 1,
     width: '100%',
+    paddingTop: 20,
   },
   scrollContentContainer: {
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
   curveElement: {
-    // position: 'absolute',
+    position: 'absolute',
     zIndex: 1,
-    top: 0,
-    height: 20,
+    top: 50,
+    height: 50,
     backgroundColor: colors.gray[50],
+    // backgroundColor: 'red',
     width: '100%',
     borderBottomLeftRadius: 100,
     borderBottomRightRadius: 100,

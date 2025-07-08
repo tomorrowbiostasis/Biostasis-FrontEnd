@@ -126,7 +126,7 @@ const AutomatedEmergencySettingsScreen = () => {
       disableWrapper
       showBackIcon
       showDrawerIcon>
-      <View style={styles.curveElement} />
+      {/* <View style={styles.curveElement} /> */}
       {/* Solve problem with scrollView IOS */}
       <SafeAreaView style={{flex: 1}}>
         <ScrollView

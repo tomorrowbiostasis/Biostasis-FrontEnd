@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useState, useRef} from 'react';
 import {
   Image,
   ScrollView,
@@ -63,7 +63,7 @@ const Dashboard = () => {
   const [recommendedPeriod, setRecommendedPeriod] = useState<string | null>(
     null,
   );
-
+  const pressTimeOutRef = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
     const abortController = new AbortController();
 
@@ -178,13 +178,15 @@ const Dashboard = () => {
   // };
 
   const handleEmergencyStart = useCallback(() => {
-    if (hasContacts && areContactsEnabled) {
-      Vibration.vibrate();
-      startEmergency();
-    } else {
-      navigate(AddNewEmergencyContactScreenName as never);
-    }
-  }, [
+    pressTimeOutRef.current = setTimeout(()=>{
+      if (hasContacts && areContactsEnabled) {
+        Vibration.vibrate();
+        startEmergency();
+      } else {
+        navigate(AddNewEmergencyContactScreenName as never);
+      }
+    },500);
+    }, [
     AddNewEmergencyContactScreenName,
     areContactsEnabled,
     hasContacts,
@@ -195,6 +197,9 @@ const Dashboard = () => {
   const handleEmergencyStop = useCallback(() => {
     if (hasContacts && areContactsEnabled) {
       stopEmergency();
+    }
+    if(pressTimeOutRef.current){
+      clearTimeout(pressTimeOutRef.current);
     }
   }, [areContactsEnabled, hasContacts, stopEmergency]);
 

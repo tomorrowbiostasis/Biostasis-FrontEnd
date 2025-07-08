@@ -136,6 +136,8 @@
 		54565D902D5B3E5800C85B44 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		54A896042D5C0A2F00591E43 /* BiostasisRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = BiostasisRelease.entitlements; path = Biostasis/BiostasisRelease.entitlements; sourceTree = "<group>"; };
 		54BCFCBBF4CB9B55154ACBCD /* Pods-Biostasis-BiostasisTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis-BiostasisTests.release.xcconfig"; path = "Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests.release.xcconfig"; sourceTree = "<group>"; };
+		54CB30262E12FA4600E8E404 /* Biostasis-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Biostasis-Bridging-Header.h"; sourceTree = "<group>"; };
+		54CB302A2E12FACA00E8E404 /* Biostasis-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Biostasis-Bridging-Header.h"; sourceTree = "<group>"; };
 		70382BD455664E029C134889 /* Pods-Biostasis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis.release.xcconfig"; path = "Target Support Files/Pods-Biostasis/Pods-Biostasis.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Biostasis/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EBEC42CE51E82B3FADE9E2B6 /* Pods_Biostasis_BiostasisTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Biostasis_BiostasisTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,6 +207,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		54CB304A2E146F3900E8E404 /* New Group 2 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group 2";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,6 +224,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				54CB304A2E146F3900E8E404 /* New Group 2 */,
+				54CB30262E12FA4600E8E404 /* Biostasis-Bridging-Header.h */,
 				54565D7D2D5B3E5800C85B44 /* Poppins-Black.ttf */,
 				54565D7E2D5B3E5800C85B44 /* Poppins-BlackItalic.ttf */,
 				54565D8E2D5B3E5800C85B44 /* Poppins-Bold.ttf */,
@@ -252,6 +263,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				54CB302A2E12FACA00E8E404 /* Biostasis-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -338,7 +350,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1620;
 					};
 				};
 			};
@@ -689,7 +701,7 @@
 				CODE_SIGN_ENTITLEMENTS = Biostasis/BiostasisDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 379N8TSZND;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Biostasis/Info.plist;
@@ -707,6 +719,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.biostasis;
 				PRODUCT_NAME = Biostasis;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Biostasis-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -720,8 +733,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Biostasis/BiostasisRelease.entitlements;
-				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = XZB84WPKJR;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = 379N8TSZND;
 				INFOPLIST_FILE = Biostasis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -736,6 +749,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.biostasis;
 				PRODUCT_NAME = Biostasis;
+				SWIFT_OBJC_BRIDGING_HEADER = "Biostasis-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -821,10 +835,14 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Biostasis-Bridging-Header.h";
 				USE_HERMES = true;
 			};
 			name = Debug;
@@ -901,9 +919,13 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Biostasis-Bridging-Header.h";
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};

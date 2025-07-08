@@ -61,8 +61,4 @@
 {
   return [RCTLinkingManager application:application openURL:url options:options];
 }
-
-
-  ///
-
 @end
