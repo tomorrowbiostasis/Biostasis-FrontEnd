@@ -158,6 +158,7 @@ extension NativeManagerSingleton {
         completion(.failure(NativeManagerError.UserNotFound))
         return
       }
+      print("⏰ Frequency from storage: \(positiveInfoPeriod) minutes")
       completion(.success(positiveInfoPeriod))
     })
   }

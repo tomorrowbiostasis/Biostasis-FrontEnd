@@ -35,6 +35,9 @@ const DrawerContent: FC<
     Screens.EmergencyContactSettings,
     Screens.SignUpForCryopreservation,
     Screens.SpecificTimePaused,
+    Screens.DevLogs,
+    Screens.DevHistoryLogs,
+    Screens.DevPushLogs,
   ];
 
   useFocusEffect(() => {
@@ -172,6 +175,30 @@ const DrawerContent: FC<
             onPress={navigateToPrivacyStatements}>
             <Icon name="link" size={20} color={colors.white} />
             <Text style={styles.menuText}>{t('drawer.privacyLabel')}</Text>
+          </TouchableOpacity>
+          <Divider my={3} style={styles.spacer} />
+          
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => handleMenuItemPress(Screens.DevLogs)}>
+            <Icon name="code" size={20} color={colors.white} />
+            <Text style={styles.menuText}>{t('drawer.devLogs')}</Text>
+          </TouchableOpacity>
+          <Divider my={3} style={styles.spacer} />
+
+          <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => handleMenuItemPress(Screens.DevHistoryLogs)}>
+          <Icon name="code" size={20} color={colors.white} />
+          <Text style={styles.menuText}>{t('drawer.devHistoryLogs')}</Text>
+          </TouchableOpacity>
+          <Divider my={3} style={styles.spacer} />
+
+           <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => handleMenuItemPress(Screens.DevPushLogs)}>
+          <Icon name="code" size={20} color={colors.white} />
+          <Text style={styles.menuText}>{t('drawer.devPushLogs')}</Text>
           </TouchableOpacity>
           <Divider my={3} style={styles.spacer} />
 

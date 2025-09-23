@@ -12,6 +12,7 @@ import gdprReducer from '~/redux/gdpr/gdpr.slice';
 import documentsReducer from '~/redux/documents/documents.slice';
 import EnvConfig from '~/services/Env.service';
 import logger from 'redux-logger';
+import healthReducer from '~/redux/health/health.slice';
 
 import {
   persistStore,
@@ -89,6 +90,7 @@ export const store = configureStore({
     automatedEmergency: automatedEmergencyPersistedReducer,
     gdpr: gdprReducer,
     documents: documentsReducer,
+    health: healthReducer,
   },
   middleware: getDefaultMiddleware =>
     EnvConfig.DEV ?

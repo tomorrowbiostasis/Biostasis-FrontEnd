@@ -46,6 +46,8 @@ import {isIOS, updateDataCollectionStatus} from '~/utils';
 // import IconFeather from 'react-native-vector-icons/Feather';
 import {IUser} from '~/redux/user/user.slice';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
+import {getHealthDataEmitter} from '~/utils';
+import {setHealthData, setAllHealthData} from '~/redux/health/health.slice';
 
 const Dashboard = () => {
   const {t} = useAppTranslation();
@@ -86,6 +88,75 @@ const Dashboard = () => {
       abortController.abort();
     };
   }, []);
+
+
+
+useEffect(() => {
+  const subscription = getHealthDataEmitter()?.addListener('HealthDataEvent', (data) => {
+    let cumulativeSteps = 0;
+
+    // Keep track of previous entry's key to filter duplicates
+    let lastEntryKey: string | null = null;
+    let lastStepsEndDate: string | null = null;
+
+    if (Array.isArray(data.allHealthData)) {
+      const normalizedArray = [...data.allHealthData]
+        .filter((entry: any) => {
+          const heartRateEndDate = entry.heartRateEndDate || null;
+          const restingHeartRateEndDate = entry.restingHeartRateEndDate || null;
+          const stepsEndDate = entry.stepsEndDate || null;
+
+          const currentKey = `${heartRateEndDate}|${restingHeartRateEndDate}|${stepsEndDate}`;
+
+          if (currentKey === lastEntryKey) {
+            // Duplicate of previous — filter out
+            return false;
+          }
+
+          lastEntryKey = currentKey;
+          return true;
+        })
+        .map((entry: any) => {
+          const stepsEndDate = entry.stepsEndDate || null;
+          const steps = typeof entry.steps === 'number' ? entry.steps : 0;
+
+          if (stepsEndDate !== lastStepsEndDate) {
+            cumulativeSteps += steps;
+            lastStepsEndDate = stepsEndDate;
+          }
+
+          return {
+            ...entry,
+            heartRateEndDate: entry.heartRateEndDate || null,
+            restingHeartRateEndDate: entry.restingHeartRateEndDate || null,
+            stepsEndDate,
+            totalSteps: cumulativeSteps,
+          };
+        });
+
+      dispatch(setAllHealthData(normalizedArray));
+    } else {
+      const normalizedData = {
+        ...data,
+        heartRateEndDate: data.heartRateEndDate || null,
+        restingHeartRateEndDate: data.restingHeartRateEndDate || null,
+        stepsEndDate: data.stepsEndDate || null,
+      };
+
+      dispatch(setHealthData(normalizedData));
+      console.log("📥 Received current health data:", normalizedData);
+    }
+  });
+
+  return () => {
+    subscription?.remove();
+  };
+}, []);
+
+
+
+
+
 
   useLayoutEffect(() => {
     dispatch(getUser());

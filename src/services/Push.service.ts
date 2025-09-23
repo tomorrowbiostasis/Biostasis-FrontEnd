@@ -10,6 +10,7 @@ import {NotificationTypesEnum} from '~/constants/notification.constants';
 import {AppState, Vibration} from 'react-native';
 import {navigationRef} from '~/navigators';
 import {Screens} from '~/models/Navigation.model';
+import { logPushEvent } from './PushLogger.service';
 let initialized = false;
 
 export const listenForPushTokenAndUpdate = async () => {
@@ -73,13 +74,77 @@ const handleForegroundState = (isRegularCheck: boolean) => {
   }
 };
 
+// export const handleRemoteMessages = async (message: {
+//   data: any;
+//   notification: any;
+// }) => {
+//   const {data, notification} = message;
+//   const {type} = data;
+//   const {title, body} = notification;
+
+//   if (
+//     [
+//       NotificationTypesEnum.EmergencyRegularCheck,
+//       NotificationTypesEnum.EmergencyHealthCheck,
+//       NotificationTypesEnum.EmergencyAlert,
+//     ].includes(type)
+//   ) {
+//     const user = await AsyncStorageService.getItem(
+//       AsyncStorageEnum.PersistedUserSettings,
+//     );
+//     const userParsed = user && (await JSON.parse(user));
+//     userParsed.regularPushNotifications &&
+//       (await updateNotification(
+//         'Emergency triggered remotely',
+//         'Click to cancel it',
+//       ));
+//     await AsyncStorageService.setItem(
+//       AsyncStorageEnum.IsEmergencyEscalationStarted,
+//       'true',
+//     );
+//   }
+//   switch (type) {
+//     case NotificationTypesEnum.EmergencyAlert:
+//       await AsyncStorageService.setItem(AsyncStorageEnum.HealthTrigger, 'true');
+//       handleForegroundState(false);
+//       await soundNotification();
+//       if (isIOS) {
+//         Vibration.vibrate([1300, 2000], true);
+//       }
+//       await updateLocation();
+//       // android to show the healthConditionScreen for the app from the lock screen of the mobile
+//       updateNotification(title, body, type);
+//       break;
+//     case NotificationTypesEnum.EmergencyHealthCheck:
+//       //@ts-ignore
+//       await AsyncStorageService.setItem(AsyncStorageEnum.HealthTrigger, 'true');
+//       handleForegroundState(false);
+//       break;
+//     case NotificationTypesEnum.EmergencyRegularCheck:
+//       //@ts-ignore
+//       await AsyncStorageService.setItem(AsyncStorageEnum.TimeTrigger, 'true');
+//       handleForegroundState(true);
+//       break;
+//     case NotificationTypesEnum.TimeSlotNotification:
+//       // ToastService.success(`${title}\n${body}`, {
+//       //   visibilityTime: 5000,
+//       // });
+//       break;
+//     default:
+//       console.log('Notification Listener: unhandled notification');
+//   }
+// };
+
 export const handleRemoteMessages = async (message: {
   data: any;
-  notification: any;
+  notification?: any; // optional
 }) => {
-  const {data, notification} = message;
-  const {type} = data;
-  const {title, body} = notification;
+  console.log('📩 Remote message received:', message);
+  await logPushEvent({ source: 'background', ...message })
+  const { data, notification } = message;
+  const { type } = data || {};
+  const title = notification?.title;
+  const body = notification?.body;
 
   if (
     [
@@ -91,17 +156,21 @@ export const handleRemoteMessages = async (message: {
     const user = await AsyncStorageService.getItem(
       AsyncStorageEnum.PersistedUserSettings,
     );
-    const userParsed = user && (await JSON.parse(user));
-    userParsed.regularPushNotifications &&
-      (await updateNotification(
+    const userParsed = user && JSON.parse(user);
+
+    if (userParsed?.regularPushNotifications) {
+      await updateNotification(
         'Emergency triggered remotely',
         'Click to cancel it',
-      ));
+      );
+    }
+
     await AsyncStorageService.setItem(
       AsyncStorageEnum.IsEmergencyEscalationStarted,
       'true',
     );
   }
+
   switch (type) {
     case NotificationTypesEnum.EmergencyAlert:
       await AsyncStorageService.setItem(AsyncStorageEnum.HealthTrigger, 'true');
@@ -111,25 +180,24 @@ export const handleRemoteMessages = async (message: {
         Vibration.vibrate([1300, 2000], true);
       }
       await updateLocation();
-      // android to show the healthConditionScreen for the app from the lock screen of the mobile
       updateNotification(title, body, type);
       break;
+
     case NotificationTypesEnum.EmergencyHealthCheck:
-      //@ts-ignore
       await AsyncStorageService.setItem(AsyncStorageEnum.HealthTrigger, 'true');
       handleForegroundState(false);
       break;
+
     case NotificationTypesEnum.EmergencyRegularCheck:
-      //@ts-ignore
       await AsyncStorageService.setItem(AsyncStorageEnum.TimeTrigger, 'true');
       handleForegroundState(true);
       break;
+
     case NotificationTypesEnum.TimeSlotNotification:
-      // ToastService.success(`${title}\n${body}`, {
-      //   visibilityTime: 5000,
-      // });
+      // ToastService.success(`${title}\n${body}`, { visibilityTime: 5000 });
       break;
+
     default:
-      console.log('Notification Listener: unhandled notification');
+      console.log('📩 Notification Listener: unhandled notification type', type);
   }
 };

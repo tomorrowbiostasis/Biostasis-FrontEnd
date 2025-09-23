@@ -63,6 +63,9 @@ const translations: ITranslation = {
     emergencyContactSettings: 'Configuración de contactos de emergencia',
     pauseTimes: 'Pausa Sistema de Emergencia',
     signUpForCryopreservation: 'Inscríbete con Tomorrow Bio',
+    devLogs: 'Registro de salud actual',
+    devHistoryLogs: 'Registro de salud anterior',
+    devPushLogs: 'Registro de push actual'
   },
   signUpForTomorrow: {
     title: 'Regístrate con Tomorrow Bio',
@@ -329,12 +332,12 @@ const translations: ITranslation = {
         warning:
           '¡Activar la base biológica desactivará el activador basado en el tiempo!',
         appleWatch: {
-          title: 'El Apple Watch está emparejado',
+          title: 'Dispositivo portátil conectado',
           description:
-            'Utilizamos tu Apple Watch (gracias a la integración con HealthKit) para recuperar tus datos de salud. Si no usas uno, elige en su lugar el sistema de activación por tiempo',
-          alertTitle: 'Emparejar Apple Watch',
+            "Usamos tu dispositivo portátil (gracias a la integración con HealthKit) para recuperar tus datos de salud. Si no usas uno, por favor elige el sistema de activación basado en tiempo.",
+          alertTitle: 'Emparejar dispositivo portátil',
           alertDescription:
-            'Tu Apple Watch debe estar emparejado con tu iPhone para poder sincronizar tus datos de salud. Por favor, asegúrate de que está correctamente emparejado. Si no es así, sigue las instrucciones de la app Watch iOS',
+            "Tu dispositivo portátil debe estar emparejado con tu iPhone para sincronizar tus datos de salud. Asegúrate de que esté correctamente emparejado. Si no lo está, sigue las instrucciones en la aplicación complementaria del dispositivo.",
         },
         googleFit: {
           title: 'Autenticar Google Fit',
@@ -715,6 +718,31 @@ const translations: ITranslation = {
     french: 'Francés',
     italian: 'Italiano',
   },
+  devLogs: {
+  title: 'Registro de salud actual',
+  description: 'Esta pantalla es para que los desarrolladores registren y rastreen problemas. No está destinada a los usuarios finales.',
+  logs: 'Registros',
+  noLogs: 'No hay registros disponibles',
+  error: 'Error al cargar los registros',
+  retry: 'Reintentar cargar los registros',
+},
+devHistoryLogs: {
+  title: 'Historial de registros de desarrollo',
+  description: 'Esta pantalla es para que los desarrolladores registren y rastreen problemas. No está destinada a los usuarios finales.',
+  logs: 'Registros',
+  noLogs: 'No hay registros disponibles',
+  error: 'Error al cargar los registros',
+  retry: 'Reintentar cargar los registros',
+},
+devPushLogs: {
+  title: 'Registro de push actual',
+  description: 'Esta pantalla es para que los desarrolladores registren y rastreen problemas con las notificaciones push. No está destinada a los usuarios finales.',
+  logs: 'Registros',
+  noLogs: 'No hay registros disponibles',
+  error: 'Error al cargar los registros',
+  retry: 'Reintentar cargar los registros',
+}
+
 };
 
 export default translations;

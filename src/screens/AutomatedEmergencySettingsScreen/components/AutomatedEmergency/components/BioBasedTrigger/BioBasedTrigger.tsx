@@ -110,6 +110,7 @@ const BioBasedTrigger = () => {
   const handleUpdateUser = useCallback(
     (updateData: AutomatedEmergencySettings, touched?: boolean) => {
       if (touched) {
+        console.log('BioBasedTrigger: handleUpdateUser', updateData);
         dispatch(updateUser(updateData));
       }
     },
@@ -185,6 +186,7 @@ const BioBasedTrigger = () => {
   const handleFrequency = useCallback(
     (frequency: number) => {
       const updateData: IUser = {};
+      console.log('Frequency selected:', frequency);
       updateData.positiveInfoPeriod = frequency;
 
       // user chose 6 or 9 hours

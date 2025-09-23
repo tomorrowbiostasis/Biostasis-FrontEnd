@@ -6,7 +6,6 @@
 	<string>development</string>
 	<key>com.apple.developer.healthkit</key>
 	<true/>
-	<key>com.apple.developer.healthkit.access</key>
 	<key>com.apple.developer.healthkit.background-delivery</key>
 	<true/>
 </dict>

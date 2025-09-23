@@ -43,6 +43,7 @@ class RecommendationService: IManageRecommendationSystem {
     UserDefaults.standard.removeObject(forKey: "@BioData")
     UserDefaults.standard.removeObject(forKey: "@LastUpdatedDate")
     UserDefaults.standard.removeObject(forKey: "@LongestPeriod")
+    // UserDefaults.standard.removeObject(forKey: "@AllBioData")
   }
 }
 
@@ -81,9 +82,19 @@ extension RecommendationService : IManageRecommendationServices {
   func recommendationSystem(data: HealthMetrics) {
     do {
       let storedData = getStoredData()
+      // let arrayStoredData = getAllStoredData()
       let startingDate = getStartDate()
       let lastUpdatedDate = getLastUpdatedDate()
       var longestPeriod = getLongestPeriod()
+
+      // for (index, metric) in arrayStoredData.enumerated() {
+      //     print("""
+      //     Entry \(index + 1):
+      //       Heart Rate: \(metric.heartRate)
+      //       Resting Heart Rate: \(metric.restingHeartRate)
+      //       ...
+      //     """)
+      // }
 
       if !isSameData(preData: storedData, newData: data) {
         let timeDifferenceMinutes = (getTimeDifference(date: lastUpdatedDate)) / 60
@@ -94,6 +105,8 @@ extension RecommendationService : IManageRecommendationServices {
         }
         setLastUpdatedDate()
         setStoredData(data: data)
+        print("📊 New health data: \(data)")
+        
         
         print("New Bio Data found")
       }
@@ -140,6 +153,23 @@ extension RecommendationService: IManageUserDefaults {
   func setStoredData(data: HealthMetrics) {
     UserDefaults.standard.set("\(healthMetricsToJSONString(healthMetrics: data) ?? "")", forKey: "@BioData")
   }
+//   func setStoredData(data: HealthMetrics) {
+//     UserDefaults.standard.set(healthMetricsToJSONString(healthMetrics: data) ?? "", forKey: "@BioData")
+
+//     var allData = getAllStoredData()
+//     allData.append(data)
+
+//     let encoder = JSONEncoder()
+//     encoder.dateEncodingStrategy = .iso8601
+//     do {
+//         let jsonData = try encoder.encode(allData)
+//         let jsonString = String(data: jsonData, encoding: .utf8)
+//         UserDefaults.standard.set(jsonString, forKey: "@AllBioData")
+//     } catch {
+//         print("Error saving all HealthMetrics: \(error)")
+//     }
+// }
+
   
   func getStoredData() -> HealthMetrics? {
     if let storedDataString = UserDefaults.standard.string(forKey: "@BioData") {
@@ -148,6 +178,21 @@ extension RecommendationService: IManageUserDefaults {
       return nil
     }
   }
+
+  func getAllStoredData() -> [HealthMetrics] {
+    if let jsonString = UserDefaults.standard.string(forKey: "@AllBioData"),
+       let jsonData = jsonString.data(using: .utf8) {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        do {
+            let allMetrics = try decoder.decode([HealthMetrics].self, from: jsonData)
+            return allMetrics
+        } catch {
+            print("Error decoding all HealthMetrics: \(error)")
+        }
+    }
+    return []
+}
   
   func setLastUpdatedDate() {
     let now = Date()

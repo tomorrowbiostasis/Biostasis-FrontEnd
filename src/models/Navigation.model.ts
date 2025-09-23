@@ -122,6 +122,9 @@ export enum Screens {
   NewPassword = 'NewPassword',
   onboarding = 'onboarding',
   Auth = 'Auth',
+  DevLogs = 'DevLogs',
+  DevHistoryLogs = 'DevHistoryLogs',
+  DevPushLogs = 'DevPushLogs',
 }
 
 export type Routes = keyof RootStackParamList;

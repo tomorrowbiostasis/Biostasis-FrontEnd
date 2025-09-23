@@ -217,13 +217,14 @@ extension NetworkingManager: IManageNetwork {
   
   func sendPositiveUpdateToServer(nextCheckInMinutes: Int,
                                   completion: @escaping (Result<PositiveUpdatResponse, Error>) -> ()) {
+
+                                    print("<<<>>><<<>>>>SEND POSITIVE UPDATE TO SERVER >>><<<>>>><<>")
     storageManager.getAccessToken { [weak self] token in
       guard let accessToken = token else {
         completion(.failure(NetworkManagerError.Auth))
         return
       }
       let params = try? JSONEncoder().encode(PositiveUpdateApiParams(minutesToNext: nextCheckInMinutes))
-      
       self?.sendApiRequest(endpoint: .sendPositiveInfo,
                            token: accessToken,
                            bodyData: params,
@@ -233,6 +234,7 @@ extension NetworkingManager: IManageNetwork {
         case .success(let data):
           do {
             let responseObject: PositiveUpdatResponse = try self.parseResponseData(data: data)
+            print("<<<<>>>>>Parsed response object: \(responseObject)")
             completion(.success(responseObject))
           } catch {
             completion(.failure(error))

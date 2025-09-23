@@ -16,6 +16,7 @@ import styles from './styles';
 import {useCallback} from 'react';
 import DrawerTrigger from '../DrawerTrigger';
 import BackButtonTrigger from '../BackButtonTrigger';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type ContainerType = 'static' | 'scroll' | 'keyboardAvoidingScrollView';
 interface ContainerProps {
@@ -67,17 +68,27 @@ const Container: FC<ContainerProps> = ({
           );
         case 'keyboardAvoidingScrollView':
           return (
-            <KeyboardAvoidingView
-              behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-              style={styles.keyboardAvoidingContainer}
-              enabled>
-              <ScrollView
-                bounces={false}
-                contentContainerStyle={[styles.scrollContainer, containerStyle]}
-                showsHorizontalScrollIndicator={false}
-                {...props}
-              />
-            </KeyboardAvoidingView>
+            // <KeyboardAvoidingView
+            //   behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            //   style={styles.keyboardAvoidingContainer}
+            //   keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
+            //   extraScrollHeight={2}
+            //   enabled>
+            //   <ScrollView
+            //     bounces={false}
+            //     contentContainerStyle={[styles.scrollContainer, containerStyle]}
+            //     showsHorizontalScrollIndicator={false}
+            //     {...props}
+            //   />
+            // </KeyboardAvoidingView>
+            <KeyboardAwareScrollView
+      enableOnAndroid
+      extraScrollHeight={2} // fixes the 2px overlap
+      keyboardOpeningTime={0} // smoother animation
+      contentContainerStyle={[styles.scrollContainer, containerStyle]}
+      showsVerticalScrollIndicator={false}
+      {...props}
+    />
           );
         case 'scroll':
         default:
