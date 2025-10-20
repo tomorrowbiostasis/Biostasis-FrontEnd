@@ -46,6 +46,14 @@ final class NativeManagerSingleton: NSObject {
   private lazy var recommendationService: RecommendationService = {
     return RecommendationService()
   }()
+  private lazy var backgroundHealthChecker: IHandleBackgroundHealthCheck = {
+    return BackgroundHealthChecker(
+      healthKitStore: HKHealthStore(),
+      storageManager: storageManager,
+      timeManager: timeManager,
+      networkingManager: networkingManager
+    )
+  }()
   
   private var debounceWorkItem: DispatchWorkItem?
   
@@ -65,6 +73,11 @@ extension NativeManagerSingleton: IManageNativeComponents {
     DispatchQueue.main.asyncAfter(deadline: .now()+2.5) {
       self.determineAndSetDataCollectionStatus()
     }
+  }
+  /// Handle silent push notification for background health checking
+  @objc(handleSilentPushNotificationWithCompletion:)
+  func handleSilentPushNotification(completion: @escaping (Bool) -> Void) {
+    backgroundHealthChecker.handleSilentPushNotification(completion: completion)
   }
 }
 

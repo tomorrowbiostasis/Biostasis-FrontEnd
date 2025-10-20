@@ -7,6 +7,9 @@
 
 #import <React/RCTLinkingManager.h>
 
+// @class NativeManagerSingleton;
+#import "NativeManagerSingleton.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -42,17 +45,106 @@
 #endif
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   [RNNotifications didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
   [RNNotifications didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
-  [RNNotifications didReceiveBackgroundNotification:userInfo withCompletionHandler:completionHandler];
+// - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
+//   [RNNotifications didReceiveBackgroundNotification:userInfo withCompletionHandler:completionHandler];
+// }
+// - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
+  
+//   // Check if this is a silent push notification
+//   NSNumber *contentAvailable = userInfo[@"content-available"];
+//   if (contentAvailable && [contentAvailable boolValue]) {
+//     // This is a silent push notification
+//     NSLog(@"🔔 Silent push notification received");
+    
+//     // Call the background health checker
+//     [[NativeManagerSingleton shared] handleSilentPushNotificationWithCompletion:^(BOOL success) {
+//       if (success) {
+//         completionHandler(UIBackgroundFetchResultNewData);
+//       } else {
+//         completionHandler(UIBackgroundFetchResultNoData);
+//       }
+//     }];
+//   } else {
+//     // Regular push notification - handle with existing logic
+//     [RNNotifications didReceiveBackgroundNotification:userInfo withCompletionHandler:completionHandler];
+//   }
+// }
+
+// - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
+  
+//   // Check if this is a silent push notification
+//   NSNumber *contentAvailable = userInfo[@"content-available"];
+//   if (contentAvailable && [contentAvailable boolValue]) {
+//     // This is a silent push notification
+//     NSLog(@"🔔 Silent push notification received");
+    
+//     // Call the background health checker
+//     [[NativeManagerSingleton shared] handleSilentPushNotificationWithCompletion:^(BOOL success) {
+//       if (success) {
+//         completionHandler(UIBackgroundFetchResultNewData);
+//       } else {
+//         completionHandler(UIBackgroundFetchResultNoData);
+//       }
+//     }];
+//   } else {
+//     // Regular push notification - handle with existing logic
+//     [RNNotifications didReceiveBackgroundNotification:userInfo withCompletionHandler:completionHandler];
+//   }
+// }
+
+// - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
+//   // Check if this is a silent push notification
+//   NSNumber *contentAvailable = userInfo[@"content-available"];
+//   if (contentAvailable && [contentAvailable boolValue]) {
+//     // This is a silent push notification
+//     NSLog(@"🔔 Silent push notification received");
+    
+//     // Call the background health checker using the correct Swift method name
+//     [NativeManagerSingleton.shared handleSilentPushNotificationWithCompletion:^(BOOL success) {
+//       if (success) {
+//         completionHandler(UIBackgroundFetchResultNewData);
+//       } else {
+//         completionHandler(UIBackgroundFetchResultNoData);
+//       }
+//     }];
+//   } else {
+//     // Regular push notification - handle with existing logic
+//     [RNNotifications didReceiveBackgroundNotification:userInfo withCompletionHandler:completionHandler];
+//   }
+// }
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
+  
+  // Check if this is a silent push notification (prefer aps["content-available"]) 
+  NSDictionary *aps = userInfo[@"aps"];
+  NSNumber *contentAvailable = aps[@"content-available"] ?: userInfo[@"content-available"];
+  if (contentAvailable && [contentAvailable boolValue]) {
+    NSLog(@"[AppDelegate] aps.content-available == 1");
+    // This is a silent push notification
+    NSLog(@"🔔 Silent push notification received");
+    
+    // Call the background health checker
+    [NativeManagerSingleton.shared handleSilentPushNotificationWithCompletion:^(BOOL success) {
+      if (success) {
+        completionHandler(UIBackgroundFetchResultNewData);
+      } else {
+        completionHandler(UIBackgroundFetchResultNoData);
+      }
+    }];
+  } else {
+    // Regular push notification - handle with existing logic
+    [RNNotifications didReceiveBackgroundNotification:userInfo withCompletionHandler:completionHandler];
+  }
 }
+
 
   /// linking
 - (BOOL)application:(UIApplication *)application

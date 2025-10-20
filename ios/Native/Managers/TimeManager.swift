@@ -11,9 +11,9 @@ final class TimeManager {
     let calendar = Calendar.current
     let hour = calendar.component(.hour, from: currentTime)
     
-    if hour >= 22 || hour < 6 {
-      return true
-    }
+    // if hour >= 22 || hour < 6 {
+    //   return true
+    // }
     for pausedTime in specificPausedTimes {
       let isActive = pausedTime.isActive
       let startTime = pausedTime.startTime

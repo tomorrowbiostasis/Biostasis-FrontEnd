@@ -3,10 +3,15 @@ import messaging from '@react-native-firebase/messaging';
 import {handleNotificationEvents} from '~/services/Notification.service';
 import notifee from '@notifee/react-native';
 import {handleRemoteMessages} from '~/services/Push.service';
+import { NativeModules } from 'react-native';
 /*  Remote Notification  */
 
 const NotificationListener = () => {
   const handlePushMessages = useCallback(async message => {
+    // console.log("IT GOES HERE", NativeModules.NativeManager);
+    // console.log("IT GOES HERE SECOND TIME", NativeModules.NativeManager.handleSilentPushNotificationWithCompletion);
+    // console.log("IT GOES HERE THIRD TIME", NativeModules.NativeManager.handleSilentPushNotificationWithCompletion);
+    // console.log("IT GOES HERE FORTH TIME", NativeModules.NativeManager.handleSilentPushNotificationWithCompletion);
     await handleRemoteMessages(message);
   }, []);
 
