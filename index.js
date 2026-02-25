@@ -14,10 +14,6 @@ import {name as appName} from './app.json';
 enableScreens(true);
 startLogger();
 
-// if (!isIOS) {
-//   BackgroundFetch.registerHeadlessTask(mainScheduledEvent);
-//   messaging().setBackgroundMessageHandler(handleRemoteMessages);
-// }
 if (!isIOS) {
   BackgroundFetch.registerHeadlessTask(mainScheduledEvent);
 }

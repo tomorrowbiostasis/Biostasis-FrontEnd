@@ -68,19 +68,6 @@ const Container: FC<ContainerProps> = ({
           );
         case 'keyboardAvoidingScrollView':
           return (
-            // <KeyboardAvoidingView
-            //   behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            //   style={styles.keyboardAvoidingContainer}
-            //   keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
-            //   extraScrollHeight={2}
-            //   enabled>
-            //   <ScrollView
-            //     bounces={false}
-            //     contentContainerStyle={[styles.scrollContainer, containerStyle]}
-            //     showsHorizontalScrollIndicator={false}
-            //     {...props}
-            //   />
-            // </KeyboardAvoidingView>
             <KeyboardAwareScrollView
       enableOnAndroid
       extraScrollHeight={2} // fixes the 2px overlap

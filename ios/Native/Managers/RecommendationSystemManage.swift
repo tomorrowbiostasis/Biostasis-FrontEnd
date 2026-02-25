@@ -82,19 +82,9 @@ extension RecommendationService : IManageRecommendationServices {
   func recommendationSystem(data: HealthMetrics) {
     do {
       let storedData = getStoredData()
-      // let arrayStoredData = getAllStoredData()
       let startingDate = getStartDate()
       let lastUpdatedDate = getLastUpdatedDate()
       var longestPeriod = getLongestPeriod()
-
-      // for (index, metric) in arrayStoredData.enumerated() {
-      //     print("""
-      //     Entry \(index + 1):
-      //       Heart Rate: \(metric.heartRate)
-      //       Resting Heart Rate: \(metric.restingHeartRate)
-      //       ...
-      //     """)
-      // }
 
       if !isSameData(preData: storedData, newData: data) {
         let timeDifferenceMinutes = (getTimeDifference(date: lastUpdatedDate)) / 60
@@ -153,23 +143,6 @@ extension RecommendationService: IManageUserDefaults {
   func setStoredData(data: HealthMetrics) {
     UserDefaults.standard.set("\(healthMetricsToJSONString(healthMetrics: data) ?? "")", forKey: "@BioData")
   }
-//   func setStoredData(data: HealthMetrics) {
-//     UserDefaults.standard.set(healthMetricsToJSONString(healthMetrics: data) ?? "", forKey: "@BioData")
-
-//     var allData = getAllStoredData()
-//     allData.append(data)
-
-//     let encoder = JSONEncoder()
-//     encoder.dateEncodingStrategy = .iso8601
-//     do {
-//         let jsonData = try encoder.encode(allData)
-//         let jsonString = String(data: jsonData, encoding: .utf8)
-//         UserDefaults.standard.set(jsonString, forKey: "@AllBioData")
-//     } catch {
-//         print("Error saving all HealthMetrics: \(error)")
-//     }
-// }
-
   
   func getStoredData() -> HealthMetrics? {
     if let storedDataString = UserDefaults.standard.string(forKey: "@BioData") {

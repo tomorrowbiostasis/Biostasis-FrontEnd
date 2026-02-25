@@ -8,10 +8,6 @@ import { NativeModules } from 'react-native';
 
 const NotificationListener = () => {
   const handlePushMessages = useCallback(async message => {
-    // console.log("IT GOES HERE", NativeModules.NativeManager);
-    // console.log("IT GOES HERE SECOND TIME", NativeModules.NativeManager.handleSilentPushNotificationWithCompletion);
-    // console.log("IT GOES HERE THIRD TIME", NativeModules.NativeManager.handleSilentPushNotificationWithCompletion);
-    // console.log("IT GOES HERE FORTH TIME", NativeModules.NativeManager.handleSilentPushNotificationWithCompletion);
     await handleRemoteMessages(message);
   }, []);
 

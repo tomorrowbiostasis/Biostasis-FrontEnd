@@ -74,67 +74,6 @@ const handleForegroundState = (isRegularCheck: boolean) => {
   }
 };
 
-// export const handleRemoteMessages = async (message: {
-//   data: any;
-//   notification: any;
-// }) => {
-//   const {data, notification} = message;
-//   const {type} = data;
-//   const {title, body} = notification;
-
-//   if (
-//     [
-//       NotificationTypesEnum.EmergencyRegularCheck,
-//       NotificationTypesEnum.EmergencyHealthCheck,
-//       NotificationTypesEnum.EmergencyAlert,
-//     ].includes(type)
-//   ) {
-//     const user = await AsyncStorageService.getItem(
-//       AsyncStorageEnum.PersistedUserSettings,
-//     );
-//     const userParsed = user && (await JSON.parse(user));
-//     userParsed.regularPushNotifications &&
-//       (await updateNotification(
-//         'Emergency triggered remotely',
-//         'Click to cancel it',
-//       ));
-//     await AsyncStorageService.setItem(
-//       AsyncStorageEnum.IsEmergencyEscalationStarted,
-//       'true',
-//     );
-//   }
-//   switch (type) {
-//     case NotificationTypesEnum.EmergencyAlert:
-//       await AsyncStorageService.setItem(AsyncStorageEnum.HealthTrigger, 'true');
-//       handleForegroundState(false);
-//       await soundNotification();
-//       if (isIOS) {
-//         Vibration.vibrate([1300, 2000], true);
-//       }
-//       await updateLocation();
-//       // android to show the healthConditionScreen for the app from the lock screen of the mobile
-//       updateNotification(title, body, type);
-//       break;
-//     case NotificationTypesEnum.EmergencyHealthCheck:
-//       //@ts-ignore
-//       await AsyncStorageService.setItem(AsyncStorageEnum.HealthTrigger, 'true');
-//       handleForegroundState(false);
-//       break;
-//     case NotificationTypesEnum.EmergencyRegularCheck:
-//       //@ts-ignore
-//       await AsyncStorageService.setItem(AsyncStorageEnum.TimeTrigger, 'true');
-//       handleForegroundState(true);
-//       break;
-//     case NotificationTypesEnum.TimeSlotNotification:
-//       // ToastService.success(`${title}\n${body}`, {
-//       //   visibilityTime: 5000,
-//       // });
-//       break;
-//     default:
-//       console.log('Notification Listener: unhandled notification');
-//   }
-// };
-
 export const handleRemoteMessages = async (message: {
   data: any;
   notification?: any; // optional
