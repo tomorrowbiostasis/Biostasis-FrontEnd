@@ -476,7 +476,7 @@ const BioBasedTrigger = () => {
                     )
                   }
                 />
-                <View mt={5}>
+                {/* <View mt={5}>
                   <Text fontSize={16}>
                     {t(
                       'emergencyContactsSettings.automatedEmergencySettings.bioTrigger.frequency',
@@ -487,7 +487,7 @@ const BioBasedTrigger = () => {
                     onValueChange={itemValue => handleFrequency(+itemValue)}
                     selectedValue={`${positiveInfoPeriod}`}
                   />
-                </View>
+                </View> */}
                 <View style={styles.message}>
                   {isPlatformConditionsValid &&
                     (recommendedPeriod ? (

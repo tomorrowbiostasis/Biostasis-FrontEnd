@@ -5,6 +5,10 @@ import UIKit
 ///Informs about proper / unproper values received from healthkit.
 ///Call completion handler when all background tasks will end.
 
+private enum HealthKitDefaultsKey {
+  static let lastHealthKitUpdate = "LastHealthKitUpdateTimestamp"
+}
+
 protocol IDelegateHealthKitDataHandler: AnyObject
 {
   func aquiredCorrectDataset(data: HealthMetrics)
@@ -44,9 +48,6 @@ extension HealthKitDataHandler: IHandleHealthKitData {
         completionHandler(nil)
         return
       }
-      print("⏰ collectNewData called. Using positiveInfoPeriod: \(positiveInfoPeriod) minutes")
-
-      
       let endDate = Date()
       let startDate = Calendar.current.date(byAdding: .minute, value: -positiveInfoPeriod, to: endDate)
       
@@ -68,6 +69,20 @@ extension HealthKitDataHandler: IHandleHealthKitData {
   }
   
   func processNewData(for type:HKSampleType,with sample: HKQuantitySample) {
+    // let timestamp = sample.endDate.timeIntervalSince1970
+    // now
+    let timestamp = Date().timeIntervalSince1970
+    UserDefaults.standard.set(timestamp, forKey: HealthKitDefaultsKey.lastHealthKitUpdate)
+    print("Saved HealthKit timestamp:", timestamp)
+
+    let savedTimestamp = UserDefaults.standard.double(forKey: HealthKitDefaultsKey.lastHealthKitUpdate)
+    if savedTimestamp > 0 {
+        let date = Date(timeIntervalSince1970: savedTimestamp)
+        print("Last HealthKit update:", date)
+    } else {
+        print("No HealthKit update timestamp found")
+    }
+
     updateHealthMetrics(for: type, with: sample)
     self.delegate.aquiredCorrectDataset(data: loadHealthMetricsFromStorage())
   }
@@ -93,37 +108,18 @@ extension HealthKitDataHandler: IHandleHealthMetrics {
     default:
       break
     }
-    print("📤 healthMetrics:", healthMetrics)
     saveHealthMetricsToStorage(healthMetrics)
    DispatchQueue.main.async {
         let currentData = self.healthMetricsToDict(healthMetrics)
         NativeManagerEmitter.shared?.sendHealthDataToJS(data: currentData)
-        print("📤 Sent current health data to JS:", currentData)
 
 
         let allMetrics = self.loadAllHealthMetrics()
     let allDataArray = allMetrics.map { self.healthMetricsToDict($0) }
     NativeManagerEmitter.shared?.sendHealthDataToJS(data: ["allHealthData": allDataArray])
-    print("📤 Sent all health data array to JS:", allDataArray)
-
-        // let allMetrics = self.loadAllHealthMetrics()
-        // let allDataArray = allMetrics.map { self.healthMetricsToDict($0) }
-        // NativeManagerEmitter.shared?.sendHealthDataToJS(data: ["allHealthData": allDataArray])
-        // print("📤 Sent all health data array to JS:", allDataArray)
     }
    
   }
-  
-  // func saveHealthMetricsToStorage(_ healthMetrics: HealthMetrics) {
-  //   do {
-  //     let encoder = JSONEncoder()
-  //     let encodedData = try encoder.encode(healthMetrics)
-  //     let defaults = UserDefaults.standard
-  //     defaults.set(encodedData, forKey: "HealthMetrics")
-  //   } catch {
-  //     print("Error encoding healthMetrics: \(error)")
-  //   }
-  // }
 
   
   func loadHealthMetricsFromStorage() -> HealthMetrics {
@@ -185,7 +181,7 @@ extension HealthKitDataHandler: IHandleHealthMetrics {
         do {
             allRecords = try JSONDecoder().decode([HealthMetrics].self, from: existingData)
         } catch {
-            print("❌ Failed to decode existing array:", error)
+            print("Failed to decode existing array:", error)
         }
     }
 
@@ -194,40 +190,8 @@ extension HealthKitDataHandler: IHandleHealthMetrics {
     do {
         let encodedArray = try encoder.encode(allRecords)
         defaults.set(encodedArray, forKey: allDataKey)
-        print("✅ Appended to @AllBioData. Total count:", allRecords.count)
     } catch {
-        print("❌ Error saving array:", error)
+        print("Error saving array:", error)
     }
 }
-
-// extension HealthKitDataHandler: IDelegateLocationDataHandler {
-//   func aquiredNewLocation(locationUrl: String) {
-//     // Parse locationUrl to CLLocationCoordinate2D and update currentLocation
-//     if let coordinate = parseCoordinates(from: locationUrl) {
-//       currentLocation = coordinate
-//     }
-//   }
-
-//   func locationError(error: String) {
-//     print("Location error: \(error)")
-//   }
-
-//   private func parseCoordinates(from url: String) -> CLLocationCoordinate2D? {
-//     // Same parsing logic as before
-//     guard
-//       let queryPart = url.components(separatedBy: "query=").last,
-//       let latLonPart = queryPart.components(separatedBy: "&").first
-//     else { return nil }
-
-//     let parts = latLonPart.components(separatedBy: "%2C")
-//     if parts.count == 2,
-//        let lat = Double(parts[0]),
-//        let lon = Double(parts[1]) {
-//       return CLLocationCoordinate2D(latitude: lat, longitude: lon)
-//     }
-//     return nil
-//   }
-// }
-
-
 }

@@ -33,25 +33,19 @@ final class BackgroundHealthChecker {
 extension BackgroundHealthChecker: IHandleBackgroundHealthCheck {
     
     func handleSilentPushNotification(completion: @escaping (Bool) -> Void) {
-        print("🔔 Silent push received - checking for missed positive updates")
-        
         // Get user settings
         storageManager.getUser { [weak self] user in
             guard let self = self,
                   let user = user,
                   let positiveInfoPeriod = user.positiveInfoPeriod else {
-                print("❌ No user settings or positiveInfoPeriod found")
                 completion(false)
                 return
             }
             
-            print("⏰ User positiveInfoPeriod: \(positiveInfoPeriod) minutes")
-            
             // Check if currently in paused period
             self.storageManager.getEmergencySettings { [weak self] settings in
                 guard let self = self,
-                      let emergencySettings = settings else {
-                    print("❌ No emergency settings found")
+                    let emergencySettings = settings else {
                     completion(false)
                     return
                 }
@@ -62,7 +56,6 @@ extension BackgroundHealthChecker: IHandleBackgroundHealthCheck {
                 )
                 
                 if isPaused {
-                    print("⏸️ Currently in paused period - skipping positive update")
                     completion(false)
                     return
                 }
@@ -75,9 +68,6 @@ extension BackgroundHealthChecker: IHandleBackgroundHealthCheck {
 
                 // Always attempt at least one check on silent push
                 let expectedUpdates = max(1, expectedUpdatesRaw)
-
-                print("📊 Expected updates in last hour: \(expectedUpdatesRaw) → using \(expectedUpdates)")
-
                 self.checkAndSendPositiveUpdates(
                     positiveInfoPeriod: positiveInfoPeriod,
                     expectedUpdates: expectedUpdates,
@@ -116,12 +106,10 @@ extension BackgroundHealthChecker: IHandleBackgroundHealthCheck {
         
         dispatchGroup.notify(queue: .main) {
             if hasRecentData {
-                print("✅ Recent health data found - sending positive update")
                 self.sendPositiveUpdateToServer(positiveInfoPeriod: positiveInfoPeriod) { success in
                     completion(success)
                 }
             } else {
-                print("❌ No recent health data found - not sending positive update")
                 completion(false)
             }
         }
@@ -144,13 +132,11 @@ extension BackgroundHealthChecker: IHandleBackgroundHealthCheck {
             sortDescriptors: [sortDescriptor]
         ) { _, samples, error in
             if let error = error {
-                print("❌ HealthKit query error: \(error)")
                 completion(false)
                 return
             }
             
             let hasData = samples?.first != nil
-            print("📊 Health data for \(identifier): \(hasData ? "Found" : "Not found")")
             completion(hasData)
         }
         
@@ -165,10 +151,8 @@ extension BackgroundHealthChecker: IHandleBackgroundHealthCheck {
         ) { result in
             switch result {
             case .success(let response):
-                print("✅ Positive update sent successfully: \(response)")
                 completion(true)
             case .failure(let error):
-                print("❌ Failed to send positive update: \(error)")
                 completion(false)
             }
         }
