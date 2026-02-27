@@ -1,5 +1,5 @@
 import {FormControl} from 'native-base';
-import React, {useCallback, useMemo, useState, VFC} from 'react';
+import React, {useCallback, useMemo, useState, VFC, useRef} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {
   View,
@@ -7,6 +7,7 @@ import {
   TextInputProps,
   NativeSyntheticEvent,
   TextInputFocusEventData,
+  TouchableWithoutFeedback
 } from 'react-native';
 import CheckMarkIcon from '~/assets/icons/CheckMarkIcon';
 import colors from '~/theme/colors';
@@ -64,33 +65,43 @@ const TextArea: VFC<ITextAreaProps> = ({
       [onBlur],
     );
 
-  return (
-    <FormControl
-      isInvalid={!!errorMessage && !isFocused}
-      style={containerStyle}>
-      <View style={[styles.container, {borderColor: validationColor}]}>
-        <View style={styles.inputContainer}>
-          <FormControl.Label>{label}</FormControl.Label>
-          <TextInput
-            placeholderTextColor={colors.gray[500]}
-            multiline={true}
-            {...props}
-            style={[styles.input, inputStyle]}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          />
-        </View>
-        {isValid && (
-          <View style={styles.validCheckMarkContainer}>
-            <CheckMarkIcon />
-          </View>
-        )}
-      </View>
+  const textAreaRef = useRef<TextInput>(null);
+    const focusTextArea = () => {
+      if(textAreaRef.current){
+        return textAreaRef.current.focus();
+      }
+  };
 
-      <FormControl.ErrorMessage style={styles.errorMessage}>
-        {errorMessage}
-      </FormControl.ErrorMessage>
-    </FormControl>
+  return (
+    <TouchableWithoutFeedback onPress={focusTextArea}>
+      <FormControl
+        isInvalid={!!errorMessage && !isFocused}
+        style={containerStyle}>
+        <View style={[styles.container, {borderColor: validationColor}]}>
+          <View style={styles.inputContainer}>
+            <FormControl.Label>{label}</FormControl.Label>
+            <TextInput
+              ref={textAreaRef}
+              placeholderTextColor={colors.gray[500]}
+              multiline={true}
+              {...props}
+              style={[styles.input, inputStyle]}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+          </View>
+          {isValid && (
+            <View style={styles.validCheckMarkContainer}>
+              <CheckMarkIcon />
+            </View>
+          )}
+        </View>
+
+        <FormControl.ErrorMessage style={styles.errorMessage}>
+          {errorMessage}
+        </FormControl.ErrorMessage>
+      </FormControl>
+    </TouchableWithoutFeedback>
   );
 };
 

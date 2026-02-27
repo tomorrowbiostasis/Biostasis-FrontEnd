@@ -59,6 +59,9 @@ const translations = {
     emergencyContactSettings: 'Emergency Contact Settings',
     pauseTimes: 'Pause Emergency System',
     signUpForCryopreservation: 'Sign Up with Tomorrow Bio',
+    devLogs: 'Current Health Log',
+    devHistoryLogs: 'Dev History Logs',
+    devPushLogs: 'Dev Push Logs',
   },
   signUpForTomorrow: {
     title: 'Sign up with Tomorrow Bio',
@@ -316,12 +319,12 @@ const translations = {
         turnOn: 'Bio-based',
         warning: 'Turning on bio-based will disable the time-based trigger!',
         appleWatch: {
-          title: 'Apple Watch is paired',
+          title: 'Wearable Device Connected',
           description:
-            "We use your Apple Watch (thanks to HealthKit integration) to retrieve your health data. If you don't use one, please choose the time-based trigger system instead.",
-          alertTitle: 'Pair Apple Watch',
+            "We use your wearable device (thanks to HealthKit integration) to retrieve your health data. If you don't use one, please choose the time-based trigger system instead.",
+          alertTitle: 'Pair Wearable Device',
           alertDescription:
-            "Your Apple Watch should be paired with your iPhone in order to sync your health data. Please make sure it's properly paired. If not, follow the instructions in the Watch iOS app.",
+            "Your wearable device should be paired with your iPhone in order to sync your health data. Please make sure it's properly paired. If not, follow the instructions in the device's companion app.",
         },
         googleFit: {
           title: 'Authenticate Google Fit',
@@ -697,6 +700,33 @@ const translations = {
     german: 'German',
     french: 'French',
     italian: 'Italian',
+  },
+  devLogs: {
+    title: 'Current Health Log',
+    description:
+      'This screen is for developers to log and track issues. It is not intended for end-users.',
+    logs: 'Logs',
+    noLogs: 'No logs available',
+    error: 'Error loading logs',
+    retry: 'Retry loading logs',
+  },
+  devHistoryLogs: {
+    title: 'Dev history logs',
+    description:
+      'This screen is for developers to log and track issues. It is not intended for end-users.',
+    logs: 'Logs',
+    noLogs: 'No logs available',
+    error: 'Error loading logs',
+    retry: 'Retry loading logs',
+  },
+  devPushLogs: {
+    title: 'Dev push logs',
+    description:
+      'This screen is for developers to log and track push notification issues. It is not intended for end-users.',
+    logs: 'Logs',
+    noLogs: 'No logs available',
+    error: 'Error loading logs',
+    retry: 'Retry loading logs',
   },
 };
 

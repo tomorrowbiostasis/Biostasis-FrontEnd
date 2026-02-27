@@ -8,75 +8,93 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* BiostasisTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BiostasisTests.m */; };
-		0570FF3E1F6D4A2C95B33583 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20258489A57B46A78E8A1884 /* Poppins-Regular.ttf */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1F983D67C3EE4845A6E00F5C /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F51AFD36FFB4E63A65977E4 /* Roboto-MediumItalic.ttf */; };
-		2AA9E4AFBB7749DE828B502F /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CC89AA1518B4007A8877B0B /* Roboto-Bold.ttf */; };
-		2D4BF4AEF2B84A4480606CBC /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0D8D47E1D184EBFA5C3C195 /* Roboto-ThinItalic.ttf */; };
-		2D53D5F74A9D451D897E9F01 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A67B051936864048B031BB89 /* Poppins-MediumItalic.ttf */; };
-		35607A78DEA54039A2397BB6 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA411FAB01E45F8B3C527E2 /* Poppins-Italic.ttf */; };
-		399B34F2DEE44D55A49E4320 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFAC562F4A5B458689627887 /* Roboto-Regular.ttf */; };
-		3B6283367626401DB4D29B53 /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C2323A8EEA1846A7B73F1046 /* Poppins-ExtraBoldItalic.ttf */; };
-		4A1A5CA6F73B4C34A3596565 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41399FEC40594D26A458E2AB /* Roboto-Italic.ttf */; };
-		4AA4CC367B62411FAB03C877 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD21C99A09D04F9FBD30524B /* Poppins-ExtraLight.ttf */; };
-		4AE91CD2943C43C2B44A72B5 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2231B4FED6BB46DAA2440097 /* Poppins-Thin.ttf */; };
-		4FA8F5E8626C4E0EBDFC439F /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5BBCC490671240E682D120BD /* Poppins-LightItalic.ttf */; };
-		50D8EEDD912E46D2901F5480 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E5BC30E6DC483CB1AFC8CA /* Roboto-Medium.ttf */; };
-		587D4E3B4C174C939A8B62DF /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46B1EBB209CF481A90A7DC7A /* Roboto-BoldItalic.ttf */; };
-		5BF94DA5DBA643CE9326A367 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B314B8A62E004443A6E7ED73 /* Roboto-LightItalic.ttf */; };
-		67CBB74FC701493D83CC1A08 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E20F990DA03E451B8195A023 /* Poppins-Medium.ttf */; };
-		68297F91669D825A527BA593 /* libPods-Biostasis-BiostasisTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F47E103D890D95385D6B73 /* libPods-Biostasis-BiostasisTests.a */; };
-		72D7DBAAB27A427D9E98155A /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 084B624A51274D81BFE7B5E3 /* Poppins-SemiBold.ttf */; };
-		7703FFCF6B7F4889AC9524F0 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EEB0E2F58B424E1B8E9D19AA /* Poppins-Bold.ttf */; };
-		7751210FFB5543B8BE9D1BE1 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 593FD130EEEB42F49822A0CA /* Poppins-Light.ttf */; };
-		7B19C3632859ECAB00A010BA /* alarm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7B19C3622859ECAB00A010BA /* alarm.mp3 */; };
+		5417E2292D5D2F69004FFB11 /* Poppins-Black.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D7D2D5B3E5800C85B44 /* Poppins-Black.ttf */; };
+		5417E22A2D5D2F69004FFB11 /* Poppins-BlackItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D7E2D5B3E5800C85B44 /* Poppins-BlackItalic.ttf */; };
+		5417E22B2D5D2F69004FFB11 /* Poppins-Bold.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D8E2D5B3E5800C85B44 /* Poppins-Bold.ttf */; };
+		5417E22C2D5D2F69004FFB11 /* Poppins-BoldItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D802D5B3E5800C85B44 /* Poppins-BoldItalic.ttf */; };
+		5417E22D2D5D2F69004FFB11 /* Poppins-ExtraBold.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D7B2D5B3E5800C85B44 /* Poppins-ExtraBold.ttf */; };
+		5417E22E2D5D2F69004FFB11 /* Poppins-ExtraBoldItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D882D5B3E5800C85B44 /* Poppins-ExtraBoldItalic.ttf */; };
+		5417E22F2D5D2F69004FFB11 /* Poppins-ExtraLight.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D762D5B3E5800C85B44 /* Poppins-ExtraLight.ttf */; };
+		5417E2302D5D2F69004FFB11 /* Poppins-ExtraLightItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D812D5B3E5800C85B44 /* Poppins-ExtraLightItalic.ttf */; };
+		5417E2312D5D2F69004FFB11 /* Poppins-Italic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D7A2D5B3E5800C85B44 /* Poppins-Italic.ttf */; };
+		5417E2322D5D2F69004FFB11 /* Poppins-Light.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D8C2D5B3E5800C85B44 /* Poppins-Light.ttf */; };
+		5417E2332D5D2F69004FFB11 /* Poppins-LightItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D752D5B3E5800C85B44 /* Poppins-LightItalic.ttf */; };
+		5417E2342D5D2F69004FFB11 /* Poppins-Medium.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D872D5B3E5800C85B44 /* Poppins-Medium.ttf */; };
+		5417E2352D5D2F69004FFB11 /* Poppins-MediumItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D732D5B3E5800C85B44 /* Poppins-MediumItalic.ttf */; };
+		5417E2362D5D2F69004FFB11 /* Poppins-Regular.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D902D5B3E5800C85B44 /* Poppins-Regular.ttf */; };
+		5417E2372D5D2F69004FFB11 /* Poppins-SemiBold.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D7C2D5B3E5800C85B44 /* Poppins-SemiBold.ttf */; };
+		5417E2382D5D2F69004FFB11 /* Poppins-SemiBoldItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D792D5B3E5800C85B44 /* Poppins-SemiBoldItalic.ttf */; };
+		5417E2392D5D2F69004FFB11 /* Poppins-Thin.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D7F2D5B3E5800C85B44 /* Poppins-Thin.ttf */; };
+		5417E23A2D5D2F69004FFB11 /* Poppins-ThinItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D832D5B3E5800C85B44 /* Poppins-ThinItalic.ttf */; };
+		5417E23B2D5D2F69004FFB11 /* Roboto-Black.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D852D5B3E5800C85B44 /* Roboto-Black.ttf */; };
+		5417E23C2D5D2F69004FFB11 /* Roboto-BlackItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D822D5B3E5800C85B44 /* Roboto-BlackItalic.ttf */; };
+		5417E23D2D5D2F69004FFB11 /* Roboto-Bold.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D8F2D5B3E5800C85B44 /* Roboto-Bold.ttf */; };
+		5417E23E2D5D2F69004FFB11 /* Roboto-BoldItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D8A2D5B3E5800C85B44 /* Roboto-BoldItalic.ttf */; };
+		5417E23F2D5D2F69004FFB11 /* Roboto-Italic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D8B2D5B3E5800C85B44 /* Roboto-Italic.ttf */; };
+		5417E2402D5D2F69004FFB11 /* Roboto-Light.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D862D5B3E5800C85B44 /* Roboto-Light.ttf */; };
+		5417E2412D5D2F69004FFB11 /* Roboto-LightItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D742D5B3E5800C85B44 /* Roboto-LightItalic.ttf */; };
+		5417E2422D5D2F69004FFB11 /* Roboto-Medium.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D772D5B3E5800C85B44 /* Roboto-Medium.ttf */; };
+		5417E2432D5D2F69004FFB11 /* Roboto-MediumItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D8D2D5B3E5800C85B44 /* Roboto-MediumItalic.ttf */; };
+		5417E2442D5D2F69004FFB11 /* Roboto-Regular.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D892D5B3E5800C85B44 /* Roboto-Regular.ttf */; };
+		5417E2452D5D2F69004FFB11 /* Roboto-Thin.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D782D5B3E5800C85B44 /* Roboto-Thin.ttf */; };
+		5417E2462D5D2F69004FFB11 /* Roboto-ThinItalic.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 54565D842D5B3E5800C85B44 /* Roboto-ThinItalic.ttf */; };
+		54565D722D5AB76B00C85B44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 54565D712D5AB76B00C85B44 /* GoogleService-Info.plist */; };
+		54565D912D5B3E5800C85B44 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D732D5B3E5800C85B44 /* Poppins-MediumItalic.ttf */; };
+		54565D922D5B3E5800C85B44 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D742D5B3E5800C85B44 /* Roboto-LightItalic.ttf */; };
+		54565D932D5B3E5800C85B44 /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D752D5B3E5800C85B44 /* Poppins-LightItalic.ttf */; };
+		54565D942D5B3E5800C85B44 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D762D5B3E5800C85B44 /* Poppins-ExtraLight.ttf */; };
+		54565D952D5B3E5800C85B44 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D772D5B3E5800C85B44 /* Roboto-Medium.ttf */; };
+		54565D962D5B3E5800C85B44 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D782D5B3E5800C85B44 /* Roboto-Thin.ttf */; };
+		54565D972D5B3E5800C85B44 /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D792D5B3E5800C85B44 /* Poppins-SemiBoldItalic.ttf */; };
+		54565D982D5B3E5800C85B44 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D7A2D5B3E5800C85B44 /* Poppins-Italic.ttf */; };
+		54565D992D5B3E5800C85B44 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D7B2D5B3E5800C85B44 /* Poppins-ExtraBold.ttf */; };
+		54565D9A2D5B3E5800C85B44 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D7C2D5B3E5800C85B44 /* Poppins-SemiBold.ttf */; };
+		54565D9B2D5B3E5800C85B44 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D7D2D5B3E5800C85B44 /* Poppins-Black.ttf */; };
+		54565D9C2D5B3E5800C85B44 /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D7E2D5B3E5800C85B44 /* Poppins-BlackItalic.ttf */; };
+		54565D9D2D5B3E5800C85B44 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D7F2D5B3E5800C85B44 /* Poppins-Thin.ttf */; };
+		54565D9E2D5B3E5800C85B44 /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D802D5B3E5800C85B44 /* Poppins-BoldItalic.ttf */; };
+		54565D9F2D5B3E5800C85B44 /* Poppins-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D812D5B3E5800C85B44 /* Poppins-ExtraLightItalic.ttf */; };
+		54565DA02D5B3E5800C85B44 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D822D5B3E5800C85B44 /* Roboto-BlackItalic.ttf */; };
+		54565DA12D5B3E5800C85B44 /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D832D5B3E5800C85B44 /* Poppins-ThinItalic.ttf */; };
+		54565DA22D5B3E5800C85B44 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D842D5B3E5800C85B44 /* Roboto-ThinItalic.ttf */; };
+		54565DA32D5B3E5800C85B44 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D852D5B3E5800C85B44 /* Roboto-Black.ttf */; };
+		54565DA42D5B3E5800C85B44 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D862D5B3E5800C85B44 /* Roboto-Light.ttf */; };
+		54565DA52D5B3E5800C85B44 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D872D5B3E5800C85B44 /* Poppins-Medium.ttf */; };
+		54565DA62D5B3E5800C85B44 /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D882D5B3E5800C85B44 /* Poppins-ExtraBoldItalic.ttf */; };
+		54565DA72D5B3E5800C85B44 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D892D5B3E5800C85B44 /* Roboto-Regular.ttf */; };
+		54565DA82D5B3E5800C85B44 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D8A2D5B3E5800C85B44 /* Roboto-BoldItalic.ttf */; };
+		54565DA92D5B3E5800C85B44 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D8B2D5B3E5800C85B44 /* Roboto-Italic.ttf */; };
+		54565DAA2D5B3E5800C85B44 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D8C2D5B3E5800C85B44 /* Poppins-Light.ttf */; };
+		54565DAB2D5B3E5800C85B44 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D8D2D5B3E5800C85B44 /* Roboto-MediumItalic.ttf */; };
+		54565DAC2D5B3E5800C85B44 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D8E2D5B3E5800C85B44 /* Poppins-Bold.ttf */; };
+		54565DAD2D5B3E5800C85B44 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D8F2D5B3E5800C85B44 /* Roboto-Bold.ttf */; };
+		54565DAE2D5B3E5800C85B44 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54565D902D5B3E5800C85B44 /* Poppins-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		85DCACA800344358973AF6B6 /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF1521A5D1F748C1A6CFC789 /* Poppins-SemiBoldItalic.ttf */; };
-		906626C426933B690059D71E /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41399FEC40594D26A458E2AB /* Roboto-Italic.ttf */; };
-		906626C526933B690059D71E /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFAC562F4A5B458689627887 /* Roboto-Regular.ttf */; };
-		906626C626933B690059D71E /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 707F0A9435984709B8E6A086 /* Roboto-Black.ttf */; };
-		906626C726933B690059D71E /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F64BF4B9E6E84221942CD427 /* Roboto-BlackItalic.ttf */; };
-		906626C826933B690059D71E /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CC89AA1518B4007A8877B0B /* Roboto-Bold.ttf */; };
-		906626C926933B690059D71E /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46B1EBB209CF481A90A7DC7A /* Roboto-BoldItalic.ttf */; };
-		906626CA26933B690059D71E /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A89B183B7204B9D98B18225 /* Roboto-Light.ttf */; };
-		906626CB26933B690059D71E /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B314B8A62E004443A6E7ED73 /* Roboto-LightItalic.ttf */; };
-		906626CC26933B690059D71E /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14E5BC30E6DC483CB1AFC8CA /* Roboto-Medium.ttf */; };
-		906626CD26933B690059D71E /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F51AFD36FFB4E63A65977E4 /* Roboto-MediumItalic.ttf */; };
-		906626CE26933B690059D71E /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECE29D24D55242C9954FD05D /* Roboto-Thin.ttf */; };
-		906626CF26933B690059D71E /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0D8D47E1D184EBFA5C3C195 /* Roboto-ThinItalic.ttf */; };
-		A0A52306FCBB45A0B8003AE1 /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7E45728F11A470EAFD68169 /* Poppins-ThinItalic.ttf */; };
-		A2CA1F32B8EC4408930697DB /* Poppins-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E9384B776D543A7BA99E07F /* Poppins-ExtraLightItalic.ttf */; };
-		A4E7E50E24FC44F5B3F25D7E /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 707F0A9435984709B8E6A086 /* Roboto-Black.ttf */; };
-		C1B958C277574F0285C3B0A9 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A89B183B7204B9D98B18225 /* Roboto-Light.ttf */; };
-		C8664E7E5F324D608BBE78A9 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F64BF4B9E6E84221942CD427 /* Roboto-BlackItalic.ttf */; };
-		CCAE2F0B22C549708CDF199D /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5479EAA30CE347F58CA85802 /* Poppins-BoldItalic.ttf */; };
-		D0C4FA5E897242BF9023B302 /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 786780C57981411282BF2C78 /* Poppins-BlackItalic.ttf */; };
-		D98176A124AD472EA4F9ED9E /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DBD984E5F6D54C98B420FBC9 /* Poppins-ExtraBold.ttf */; };
-		DD1AD32E2AC1D7A7003EB0AE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD1AD3302AC1D7A7003EB0AE /* Localizable.strings */; };
-		DD2C62442A669B5900178501 /* GoogleService-Info-debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD2C62422A669B5900178501 /* GoogleService-Info-debug.plist */; };
-		DD2C62452A669B5900178501 /* GoogleService-Info-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD2C62432A669B5900178501 /* GoogleService-Info-prod.plist */; };
-		DD33C2872A619D0400A91D4E /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD33C2862A619D0400A91D4E /* TimeManager.swift */; };
-		DD45CC6D2A404527003A0EB5 /* HealthDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD45CC6C2A404527003A0EB5 /* HealthDataModel.swift */; };
-		DD5280FD2AA9C077001A6EE9 /* RecommendationSystemManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5280FC2AA9C077001A6EE9 /* RecommendationSystemManage.swift */; };
-		DE44816D282D4FC90009C1E3 /* RefreshTokenRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE44816C282D4FC90009C1E3 /* RefreshTokenRO.swift */; };
-		DE483C4D271D56E5000D338D /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE483C4C271D56E5000D338D /* NetworkingManager.swift */; };
-		DE483C4F271D9C22000D338D /* NativeManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = DE483C4E271D9C22000D338D /* NativeManagerBridge.m */; };
-		DE4EBAF22715B8EA0004DB17 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4EBAF12715B8EA0004DB17 /* LocalNotificationManager.swift */; };
-		DE4EBAF42715D05B0004DB17 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4EBAF32715D05B0004DB17 /* HealthKitManager.swift */; };
-		DE4EBAF62715D83A0004DB17 /* HealthKitDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4EBAF52715D83A0004DB17 /* HealthKitDataHandler.swift */; };
-		DE4EBAF82715DF9A0004DB17 /* NativeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4EBAF72715DF9A0004DB17 /* NativeManager.swift */; };
-		DE570157271ECF5600802391 /* apiModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE570156271ECF5600802391 /* apiModels.swift */; };
-		DE7F88F3272710B900CFB5DC /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7F88F2272710B900CFB5DC /* UserModel.swift */; };
-		DEA22CFC271982070076E78B /* PersistentStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA22CFB271982070076E78B /* PersistentStorageManager.swift */; };
-		DEA22CFE2719CD4B0076E78B /* EmergencySettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA22CFD2719CD4B0076E78B /* EmergencySettingsModel.swift */; };
-		DEB710EC2716F21B00A52A20 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEB710EB2716F21B00A52A20 /* HealthKit.framework */; };
-		DECC4E6627282B2C00F030AA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECC4E6527282B2C00F030AA /* LocationManager.swift */; };
-		DED0F24A282A9358007EACBF /* NativeManagerSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED0F249282A9358007EACBF /* NativeManagerSingleton.swift */; };
-		E19656C984684C2DB8996427 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3FCD6E14A04483296F63C86 /* Poppins-Black.ttf */; };
-		E5967767BACAD761DA7038E1 /* libPods-Biostasis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4AC4EB595EAB4CEA2D2A9A0 /* libPods-Biostasis.a */; };
-		F5BA2FD9B8A24782ACFE8567 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECE29D24D55242C9954FD05D /* Roboto-Thin.ttf */; };
+		87F08C4B10F0C6E5FFEBCBA9 /* Pods_Biostasis_BiostasisTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF0F61D7E47BF84AC80C4E4 /* Pods_Biostasis_BiostasisTests.framework */; };
+		B9A3C546BADCEDDF10B08D59 /* Pods_Biostasis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E25FA1ABE317B26159981A0 /* Pods_Biostasis.framework */; };
+		C718526A2E9C0AF600796E3E /* BackgroundHealthChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71852692E9C0AF000796E3E /* BackgroundHealthChecker.swift */; };
+		C71852742EA6E89600796E3E /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71852732EA6E88B00796E3E /* BLEManager.swift */; };
+		C7B021C02E29496B0024E32C /* RefreshTokenRO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021BC2E29496B0024E32C /* RefreshTokenRO.swift */; };
+		C7B021C12E29496B0024E32C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021BD2E29496B0024E32C /* UserModel.swift */; };
+		C7B021C22E29496B0024E32C /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021AF2E29496B0024E32C /* HealthKitManager.swift */; };
+		C7B021C32E29496B0024E32C /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021B02E29496B0024E32C /* LocalNotificationManager.swift */; };
+		C7B021C42E29496B0024E32C /* apiModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021B92E29496B0024E32C /* apiModels.swift */; };
+		C7B021C52E29496B0024E32C /* EmergencySettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021BA2E29496B0024E32C /* EmergencySettingsModel.swift */; };
+		C7B021C62E29496B0024E32C /* HealthKitDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021AE2E29496B0024E32C /* HealthKitDataHandler.swift */; };
+		C7B021C72E29496B0024E32C /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021B42E29496B0024E32C /* NetworkingManager.swift */; };
+		C7B021C82E29496B0024E32C /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021B72E29496B0024E32C /* TimeManager.swift */; };
+		C7B021C92E29496B0024E32C /* NativeManagerSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021B32E29496B0024E32C /* NativeManagerSingleton.swift */; };
+		C7B021CA2E29496B0024E32C /* PersistentStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021B52E29496B0024E32C /* PersistentStorageManager.swift */; };
+		C7B021CB2E29496B0024E32C /* RecommendationSystemManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021B62E29496B0024E32C /* RecommendationSystemManage.swift */; };
+		C7B021CC2E29496B0024E32C /* NativeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021B22E29496B0024E32C /* NativeManager.swift */; };
+		C7B021CD2E29496B0024E32C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021B12E29496B0024E32C /* LocationManager.swift */; };
+		C7B021CE2E29496B0024E32C /* HealthDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021BB2E29496B0024E32C /* HealthDataModel.swift */; };
+		C7B021D02E294D210024E32C /* NativeManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B021CF2E294D210024E32C /* NativeManagerBridge.m */; };
+		C7F57EF22E2E5579008ABA99 /* NativeManagerEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F57EF12E2E5579008ABA99 /* NativeManagerEmitter.swift */; };
+		D09362A92CB91525797F07CF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,114 +107,81 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		DD5280FB2A9F2E93001A6EE9 /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* BiostasisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BiostasisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* BiostasisTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BiostasisTests.m; sourceTree = "<group>"; };
-		084B624A51274D81BFE7B5E3 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBold.ttf"; path = "../assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Biostasis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biostasis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Biostasis/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Biostasis/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Biostasis/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Biostasis/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Biostasis/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Biostasis/main.m; sourceTree = "<group>"; };
-		14E5BC30E6DC483CB1AFC8CA /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
-		20258489A57B46A78E8A1884 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
-		2231B4FED6BB46DAA2440097 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Thin.ttf"; path = "../assets/fonts/Poppins-Thin.ttf"; sourceTree = "<group>"; };
-		26A69A2277E960A1A350274F /* Pods-Biostasis-BiostasisTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis-BiostasisTests.release.xcconfig"; path = "Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests.release.xcconfig"; sourceTree = "<group>"; };
-		29A66A7BFE74170BA22AE611 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis-BiostasisTests.debug.xcconfig"; path = "Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests.debug.xcconfig"; sourceTree = "<group>"; };
-		3F51AFD36FFB4E63A65977E4 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../assets/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
-		41399FEC40594D26A458E2AB /* Roboto-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Italic.ttf"; path = "../assets/fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; };
-		46B1EBB209CF481A90A7DC7A /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BoldItalic.ttf"; path = "../assets/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
-		4CC89AA1518B4007A8877B0B /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
-		5479EAA30CE347F58CA85802 /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-BoldItalic.ttf"; path = "../assets/fonts/Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
-		56627B69016081C7B2123146 /* Pods-NotifeeNotificationService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotifeeNotificationService.release.xcconfig"; path = "Target Support Files/Pods-NotifeeNotificationService/Pods-NotifeeNotificationService.release.xcconfig"; sourceTree = "<group>"; };
-		593FD130EEEB42F49822A0CA /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
-		5A89B183B7204B9D98B18225 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
-		5AEB02D816B2B8A48A927A98 /* Pods-NotifeeNotificationService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NotifeeNotificationService.debug.xcconfig"; path = "Target Support Files/Pods-NotifeeNotificationService/Pods-NotifeeNotificationService.debug.xcconfig"; sourceTree = "<group>"; };
-		5BBCC490671240E682D120BD /* Poppins-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-LightItalic.ttf"; path = "../assets/fonts/Poppins-LightItalic.ttf"; sourceTree = "<group>"; };
-		6091FD612695879200CF10E5 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		6091FD622695879200CF10E5 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		6091FD632695879200CF10E5 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		6091FD642695879200CF10E5 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
-		6091FD652695879200CF10E5 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
-		6091FD662695879200CF10E5 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		6091FD672695879200CF10E5 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		6091FD682695879200CF10E5 /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		6091FD692695879200CF10E5 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		6091FD6A2695879200CF10E5 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		6091FD6B2695879200CF10E5 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		6091FD6C2695879200CF10E5 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		6091FD6D2695879200CF10E5 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		6091FD6E2695879200CF10E5 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		6091FD6F2695879300CF10E5 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		6091FD702695879300CF10E5 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		707F0A9435984709B8E6A086 /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
-		786780C57981411282BF2C78 /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-BlackItalic.ttf"; path = "../assets/fonts/Poppins-BlackItalic.ttf"; sourceTree = "<group>"; };
-		7B19C3622859ECAB00A010BA /* alarm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm.mp3; sourceTree = "<group>"; };
+		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = Biostasis/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		1E25FA1ABE317B26159981A0 /* Pods_Biostasis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Biostasis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5417E2282D5D2191004FFB11 /* BiostasisDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = BiostasisDebug.entitlements; path = Biostasis/BiostasisDebug.entitlements; sourceTree = "<group>"; };
+		54565D712D5AB76B00C85B44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		54565D732D5B3E5800C85B44 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-MediumItalic.ttf"; path = "../assets/fonts/Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
+		54565D742D5B3E5800C85B44 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-LightItalic.ttf"; path = "../assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
+		54565D752D5B3E5800C85B44 /* Poppins-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-LightItalic.ttf"; path = "../assets/fonts/Poppins-LightItalic.ttf"; sourceTree = "<group>"; };
+		54565D762D5B3E5800C85B44 /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-ExtraLight.ttf"; path = "../assets/fonts/Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
+		54565D772D5B3E5800C85B44 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		54565D782D5B3E5800C85B44 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Thin.ttf"; path = "../assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		54565D792D5B3E5800C85B44 /* Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-SemiBoldItalic.ttf"; path = "../assets/fonts/Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		54565D7A2D5B3E5800C85B44 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Italic.ttf"; path = "../assets/fonts/Poppins-Italic.ttf"; sourceTree = "<group>"; };
+		54565D7B2D5B3E5800C85B44 /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-ExtraBold.ttf"; path = "../assets/fonts/Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
+		54565D7C2D5B3E5800C85B44 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-SemiBold.ttf"; path = "../assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
+		54565D7D2D5B3E5800C85B44 /* Poppins-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Black.ttf"; path = "../assets/fonts/Poppins-Black.ttf"; sourceTree = "<group>"; };
+		54565D7E2D5B3E5800C85B44 /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-BlackItalic.ttf"; path = "../assets/fonts/Poppins-BlackItalic.ttf"; sourceTree = "<group>"; };
+		54565D7F2D5B3E5800C85B44 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Thin.ttf"; path = "../assets/fonts/Poppins-Thin.ttf"; sourceTree = "<group>"; };
+		54565D802D5B3E5800C85B44 /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-BoldItalic.ttf"; path = "../assets/fonts/Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
+		54565D812D5B3E5800C85B44 /* Poppins-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-ExtraLightItalic.ttf"; path = "../assets/fonts/Poppins-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		54565D822D5B3E5800C85B44 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-BlackItalic.ttf"; path = "../assets/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
+		54565D832D5B3E5800C85B44 /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-ThinItalic.ttf"; path = "../assets/fonts/Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
+		54565D842D5B3E5800C85B44 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-ThinItalic.ttf"; path = "../assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
+		54565D852D5B3E5800C85B44 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Black.ttf"; path = "../assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
+		54565D862D5B3E5800C85B44 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Light.ttf"; path = "../assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
+		54565D872D5B3E5800C85B44 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Medium.ttf"; path = "../assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		54565D882D5B3E5800C85B44 /* Poppins-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-ExtraBoldItalic.ttf"; path = "../assets/fonts/Poppins-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		54565D892D5B3E5800C85B44 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		54565D8A2D5B3E5800C85B44 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-BoldItalic.ttf"; path = "../assets/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
+		54565D8B2D5B3E5800C85B44 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Italic.ttf"; path = "../assets/fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; };
+		54565D8C2D5B3E5800C85B44 /* Poppins-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Light.ttf"; path = "../assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
+		54565D8D2D5B3E5800C85B44 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-MediumItalic.ttf"; path = "../assets/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
+		54565D8E2D5B3E5800C85B44 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		54565D8F2D5B3E5800C85B44 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		54565D902D5B3E5800C85B44 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		54A896042D5C0A2F00591E43 /* BiostasisRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = BiostasisRelease.entitlements; path = Biostasis/BiostasisRelease.entitlements; sourceTree = "<group>"; };
+		54CB30262E12FA4600E8E404 /* Biostasis-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Biostasis-Bridging-Header.h"; sourceTree = "<group>"; };
+		54CB302A2E12FACA00E8E404 /* Biostasis-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Biostasis-Bridging-Header.h"; sourceTree = "<group>"; };
+		5BF0F61D7E47BF84AC80C4E4 /* Pods_Biostasis_BiostasisTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Biostasis_BiostasisTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Biostasis/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8E9384B776D543A7BA99E07F /* Poppins-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLightItalic.ttf"; path = "../assets/fonts/Poppins-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
-		906626C1269324C30059D71E /* Biostasis-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Biostasis-Bridging-Header.h"; sourceTree = "<group>"; };
-		A2F86A0FBBFAB7CAB1929084 /* Pods-Biostasis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis.debug.xcconfig"; path = "Target Support Files/Pods-Biostasis/Pods-Biostasis.debug.xcconfig"; sourceTree = "<group>"; };
-		A3FCD6E14A04483296F63C86 /* Poppins-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Black.ttf"; path = "../assets/fonts/Poppins-Black.ttf"; sourceTree = "<group>"; };
-		A4AC4EB595EAB4CEA2D2A9A0 /* libPods-Biostasis.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Biostasis.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A67B051936864048B031BB89 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-MediumItalic.ttf"; path = "../assets/fonts/Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
-		AFAC562F4A5B458689627887 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
-		B0D8D47E1D184EBFA5C3C195 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
-		B314B8A62E004443A6E7ED73 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
-		B750FA7B5F4D7FAA944791B2 /* libPods-NotifeeNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NotifeeNotificationService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C2323A8EEA1846A7B73F1046 /* Poppins-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraBoldItalic.ttf"; path = "../assets/fonts/Poppins-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
-		CD21C99A09D04F9FBD30524B /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLight.ttf"; path = "../assets/fonts/Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
-		CD55FE3697E894BB47C11ED9 /* Pods-Biostasis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis.release.xcconfig"; path = "Target Support Files/Pods-Biostasis/Pods-Biostasis.release.xcconfig"; sourceTree = "<group>"; };
-		CF1521A5D1F748C1A6CFC789 /* Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBoldItalic.ttf"; path = "../assets/fonts/Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
-		DBD984E5F6D54C98B420FBC9 /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraBold.ttf"; path = "../assets/fonts/Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
-		DD1AD32F2AC1D7A7003EB0AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		DD1AD3312AC1D7A9003EB0AE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		DD1AD3322AC1D7AA003EB0AE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		DD1AD3332AC1D7AC003EB0AE /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		DD1AD3342AC1D7AD003EB0AE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		DD2C62422A669B5900178501 /* GoogleService-Info-debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-debug.plist"; sourceTree = "<group>"; };
-		DD2C62432A669B5900178501 /* GoogleService-Info-prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-prod.plist"; sourceTree = "<group>"; };
-		DD33C2862A619D0400A91D4E /* TimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
-		DD45CC6C2A404527003A0EB5 /* HealthDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataModel.swift; sourceTree = "<group>"; };
-		DD5280FC2AA9C077001A6EE9 /* RecommendationSystemManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationSystemManage.swift; sourceTree = "<group>"; };
-		DE44816C282D4FC90009C1E3 /* RefreshTokenRO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenRO.swift; sourceTree = "<group>"; };
-		DE483C4C271D56E5000D338D /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
-		DE483C4E271D9C22000D338D /* NativeManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativeManagerBridge.m; sourceTree = "<group>"; };
-		DE4EBAF12715B8EA0004DB17 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
-		DE4EBAF32715D05B0004DB17 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
-		DE4EBAF52715D83A0004DB17 /* HealthKitDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthKitDataHandler.swift; sourceTree = "<group>"; };
-		DE4EBAF72715DF9A0004DB17 /* NativeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeManager.swift; sourceTree = "<group>"; };
-		DE570156271ECF5600802391 /* apiModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apiModels.swift; sourceTree = "<group>"; };
-		DE7F88F2272710B900CFB5DC /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		DEA22CFB271982070076E78B /* PersistentStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentStorageManager.swift; sourceTree = "<group>"; };
-		DEA22CFD2719CD4B0076E78B /* EmergencySettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencySettingsModel.swift; sourceTree = "<group>"; };
-		DEB710EA2716F21B00A52A20 /* Biostasis.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Biostasis.entitlements; path = Biostasis/Biostasis.entitlements; sourceTree = "<group>"; };
-		DEB710EB2716F21B00A52A20 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
-		DECC4E6527282B2C00F030AA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		DED0F249282A9358007EACBF /* NativeManagerSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeManagerSingleton.swift; sourceTree = "<group>"; };
-		DEF976C3285234570091E4BB /* BiostasisRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = BiostasisRelease.entitlements; path = Biostasis/BiostasisRelease.entitlements; sourceTree = "<group>"; };
-		E20F990DA03E451B8195A023 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Medium.ttf"; path = "../assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
-		E6F47E103D890D95385D6B73 /* libPods-Biostasis-BiostasisTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Biostasis-BiostasisTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E7E45728F11A470EAFD68169 /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ThinItalic.ttf"; path = "../assets/fonts/Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
-		ECE29D24D55242C9954FD05D /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		836EAA3C3221F201C8AFD312 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis-BiostasisTests.debug.xcconfig"; path = "Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests.debug.xcconfig"; sourceTree = "<group>"; };
+		92DBEF26561B69ADA62D18B4 /* Pods-Biostasis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis.release.xcconfig"; path = "Target Support Files/Pods-Biostasis/Pods-Biostasis.release.xcconfig"; sourceTree = "<group>"; };
+		A867E3576C96E9984062A666 /* Pods-Biostasis-BiostasisTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis-BiostasisTests.release.xcconfig"; path = "Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests.release.xcconfig"; sourceTree = "<group>"; };
+		C71852692E9C0AF000796E3E /* BackgroundHealthChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundHealthChecker.swift; sourceTree = "<group>"; };
+		C718526B2E9C25B600796E3E /* NativeManagerSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativeManagerSingleton.h; sourceTree = "<group>"; };
+		C71852732EA6E88B00796E3E /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		C71852752EA6E8D000796E3E /* BLEManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEManager.h; sourceTree = "<group>"; };
+		C7B021AE2E29496B0024E32C /* HealthKitDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitDataHandler.swift; sourceTree = "<group>"; };
+		C7B021AF2E29496B0024E32C /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		C7B021B02E29496B0024E32C /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
+		C7B021B12E29496B0024E32C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		C7B021B22E29496B0024E32C /* NativeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeManager.swift; sourceTree = "<group>"; };
+		C7B021B32E29496B0024E32C /* NativeManagerSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeManagerSingleton.swift; sourceTree = "<group>"; };
+		C7B021B42E29496B0024E32C /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
+		C7B021B52E29496B0024E32C /* PersistentStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentStorageManager.swift; sourceTree = "<group>"; };
+		C7B021B62E29496B0024E32C /* RecommendationSystemManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationSystemManage.swift; sourceTree = "<group>"; };
+		C7B021B72E29496B0024E32C /* TimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
+		C7B021B92E29496B0024E32C /* apiModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apiModels.swift; sourceTree = "<group>"; };
+		C7B021BA2E29496B0024E32C /* EmergencySettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencySettingsModel.swift; sourceTree = "<group>"; };
+		C7B021BB2E29496B0024E32C /* HealthDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataModel.swift; sourceTree = "<group>"; };
+		C7B021BC2E29496B0024E32C /* RefreshTokenRO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenRO.swift; sourceTree = "<group>"; };
+		C7B021BD2E29496B0024E32C /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		C7B021CF2E294D210024E32C /* NativeManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativeManagerBridge.m; sourceTree = "<group>"; };
+		C7F57EF12E2E5579008ABA99 /* NativeManagerEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeManagerEmitter.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		EEB0E2F58B424E1B8E9D19AA /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
-		F64BF4B9E6E84221942CD427 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../assets/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
-		FBA411FAB01E45F8B3C527E2 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Italic.ttf"; path = "../assets/fonts/Poppins-Italic.ttf"; sourceTree = "<group>"; };
+		F77A44E0EF4A0959611D3D87 /* Pods-Biostasis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Biostasis.debug.xcconfig"; path = "Target Support Files/Pods-Biostasis/Pods-Biostasis.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,7 +189,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68297F91669D825A527BA593 /* libPods-Biostasis-BiostasisTests.a in Frameworks */,
+				87F08C4B10F0C6E5FFEBCBA9 /* Pods_Biostasis_BiostasisTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,27 +197,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEB710EC2716F21B00A52A20 /* HealthKit.framework in Frameworks */,
-				E5967767BACAD761DA7038E1 /* libPods-Biostasis.a in Frameworks */,
+				B9A3C546BADCEDDF10B08D59 /* Pods_Biostasis.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00340143C2C4CE4861EC7A73 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A2F86A0FBBFAB7CAB1929084 /* Pods-Biostasis.debug.xcconfig */,
-				CD55FE3697E894BB47C11ED9 /* Pods-Biostasis.release.xcconfig */,
-				29A66A7BFE74170BA22AE611 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */,
-				26A69A2277E960A1A350274F /* Pods-Biostasis-BiostasisTests.release.xcconfig */,
-				5AEB02D816B2B8A48A927A98 /* Pods-NotifeeNotificationService.debug.xcconfig */,
-				56627B69016081C7B2123146 /* Pods-NotifeeNotificationService.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		00E356EF1AD99517003FC87E /* BiostasisTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,16 +224,15 @@
 		13B07FAE1A68108700A75B9A /* Biostasis */ = {
 			isa = PBXGroup;
 			children = (
-				DE7DA3D22859F2C400F6AD78 /* Firebase */,
-				DEF976C3285234570091E4BB /* BiostasisRelease.entitlements */,
-				7B19C3622859ECAB00A010BA /* alarm.mp3 */,
-				DEB710EA2716F21B00A52A20 /* Biostasis.entitlements */,
+				5417E2282D5D2191004FFB11 /* BiostasisDebug.entitlements */,
+				54A896042D5C0A2F00591E43 /* BiostasisRelease.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 			);
 			name = Biostasis;
 			sourceTree = "<group>";
@@ -270,13 +240,18 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DEB710EB2716F21B00A52A20 /* HealthKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				A4AC4EB595EAB4CEA2D2A9A0 /* libPods-Biostasis.a */,
-				E6F47E103D890D95385D6B73 /* libPods-Biostasis-BiostasisTests.a */,
-				B750FA7B5F4D7FAA944791B2 /* libPods-NotifeeNotificationService.a */,
+				1E25FA1ABE317B26159981A0 /* Pods_Biostasis.framework */,
+				5BF0F61D7E47BF84AC80C4E4 /* Pods_Biostasis_BiostasisTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		54CB304A2E146F3900E8E404 /* New Group 2 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group 2";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -289,16 +264,49 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				906626C1269324C30059D71E /* Biostasis-Bridging-Header.h */,
-				DE483C4E271D9C22000D338D /* NativeManagerBridge.m */,
-				DE570153271ECEA400802391 /* Native */,
+				C71852752EA6E8D000796E3E /* BLEManager.h */,
+				C7B021CF2E294D210024E32C /* NativeManagerBridge.m */,
+				C7B021BF2E29496B0024E32C /* Native */,
+				54CB304A2E146F3900E8E404 /* New Group 2 */,
+				54CB30262E12FA4600E8E404 /* Biostasis-Bridging-Header.h */,
+				54565D7D2D5B3E5800C85B44 /* Poppins-Black.ttf */,
+				54565D7E2D5B3E5800C85B44 /* Poppins-BlackItalic.ttf */,
+				54565D8E2D5B3E5800C85B44 /* Poppins-Bold.ttf */,
+				54565D802D5B3E5800C85B44 /* Poppins-BoldItalic.ttf */,
+				54565D7B2D5B3E5800C85B44 /* Poppins-ExtraBold.ttf */,
+				54565D882D5B3E5800C85B44 /* Poppins-ExtraBoldItalic.ttf */,
+				54565D762D5B3E5800C85B44 /* Poppins-ExtraLight.ttf */,
+				54565D812D5B3E5800C85B44 /* Poppins-ExtraLightItalic.ttf */,
+				54565D7A2D5B3E5800C85B44 /* Poppins-Italic.ttf */,
+				54565D8C2D5B3E5800C85B44 /* Poppins-Light.ttf */,
+				54565D752D5B3E5800C85B44 /* Poppins-LightItalic.ttf */,
+				54565D872D5B3E5800C85B44 /* Poppins-Medium.ttf */,
+				54565D732D5B3E5800C85B44 /* Poppins-MediumItalic.ttf */,
+				54565D902D5B3E5800C85B44 /* Poppins-Regular.ttf */,
+				54565D7C2D5B3E5800C85B44 /* Poppins-SemiBold.ttf */,
+				54565D792D5B3E5800C85B44 /* Poppins-SemiBoldItalic.ttf */,
+				54565D7F2D5B3E5800C85B44 /* Poppins-Thin.ttf */,
+				54565D832D5B3E5800C85B44 /* Poppins-ThinItalic.ttf */,
+				54565D852D5B3E5800C85B44 /* Roboto-Black.ttf */,
+				54565D822D5B3E5800C85B44 /* Roboto-BlackItalic.ttf */,
+				54565D8F2D5B3E5800C85B44 /* Roboto-Bold.ttf */,
+				54565D8A2D5B3E5800C85B44 /* Roboto-BoldItalic.ttf */,
+				54565D8B2D5B3E5800C85B44 /* Roboto-Italic.ttf */,
+				54565D862D5B3E5800C85B44 /* Roboto-Light.ttf */,
+				54565D742D5B3E5800C85B44 /* Roboto-LightItalic.ttf */,
+				54565D772D5B3E5800C85B44 /* Roboto-Medium.ttf */,
+				54565D8D2D5B3E5800C85B44 /* Roboto-MediumItalic.ttf */,
+				54565D892D5B3E5800C85B44 /* Roboto-Regular.ttf */,
+				54565D782D5B3E5800C85B44 /* Roboto-Thin.ttf */,
+				54565D842D5B3E5800C85B44 /* Roboto-ThinItalic.ttf */,
+				54565D712D5AB76B00C85B44 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Biostasis */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* BiostasisTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				00340143C2C4CE4861EC7A73 /* Pods */,
-				9A58D114153D4114B8259CE9 /* Resources */,
+				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				54CB302A2E12FACA00E8E404 /* Biostasis-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -314,105 +322,57 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9A58D114153D4114B8259CE9 /* Resources */ = {
+		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6091FD652695879200CF10E5 /* AntDesign.ttf */,
-				6091FD682695879200CF10E5 /* Entypo.ttf */,
-				6091FD6C2695879200CF10E5 /* EvilIcons.ttf */,
-				6091FD6F2695879300CF10E5 /* Feather.ttf */,
-				6091FD642695879200CF10E5 /* FontAwesome.ttf */,
-				6091FD662695879200CF10E5 /* FontAwesome5_Brands.ttf */,
-				6091FD6D2695879200CF10E5 /* FontAwesome5_Regular.ttf */,
-				6091FD672695879200CF10E5 /* FontAwesome5_Solid.ttf */,
-				6091FD692695879200CF10E5 /* Fontisto.ttf */,
-				6091FD632695879200CF10E5 /* Foundation.ttf */,
-				6091FD612695879200CF10E5 /* Ionicons.ttf */,
-				6091FD622695879200CF10E5 /* MaterialCommunityIcons.ttf */,
-				6091FD6E2695879200CF10E5 /* MaterialIcons.ttf */,
-				6091FD702695879300CF10E5 /* Octicons.ttf */,
-				6091FD6A2695879200CF10E5 /* SimpleLineIcons.ttf */,
-				6091FD6B2695879200CF10E5 /* Zocial.ttf */,
-				41399FEC40594D26A458E2AB /* Roboto-Italic.ttf */,
-				AFAC562F4A5B458689627887 /* Roboto-Regular.ttf */,
-				707F0A9435984709B8E6A086 /* Roboto-Black.ttf */,
-				F64BF4B9E6E84221942CD427 /* Roboto-BlackItalic.ttf */,
-				4CC89AA1518B4007A8877B0B /* Roboto-Bold.ttf */,
-				46B1EBB209CF481A90A7DC7A /* Roboto-BoldItalic.ttf */,
-				5A89B183B7204B9D98B18225 /* Roboto-Light.ttf */,
-				B314B8A62E004443A6E7ED73 /* Roboto-LightItalic.ttf */,
-				14E5BC30E6DC483CB1AFC8CA /* Roboto-Medium.ttf */,
-				3F51AFD36FFB4E63A65977E4 /* Roboto-MediumItalic.ttf */,
-				ECE29D24D55242C9954FD05D /* Roboto-Thin.ttf */,
-				B0D8D47E1D184EBFA5C3C195 /* Roboto-ThinItalic.ttf */,
-				A3FCD6E14A04483296F63C86 /* Poppins-Black.ttf */,
-				786780C57981411282BF2C78 /* Poppins-BlackItalic.ttf */,
-				EEB0E2F58B424E1B8E9D19AA /* Poppins-Bold.ttf */,
-				5479EAA30CE347F58CA85802 /* Poppins-BoldItalic.ttf */,
-				DBD984E5F6D54C98B420FBC9 /* Poppins-ExtraBold.ttf */,
-				C2323A8EEA1846A7B73F1046 /* Poppins-ExtraBoldItalic.ttf */,
-				CD21C99A09D04F9FBD30524B /* Poppins-ExtraLight.ttf */,
-				8E9384B776D543A7BA99E07F /* Poppins-ExtraLightItalic.ttf */,
-				FBA411FAB01E45F8B3C527E2 /* Poppins-Italic.ttf */,
-				593FD130EEEB42F49822A0CA /* Poppins-Light.ttf */,
-				5BBCC490671240E682D120BD /* Poppins-LightItalic.ttf */,
-				E20F990DA03E451B8195A023 /* Poppins-Medium.ttf */,
-				A67B051936864048B031BB89 /* Poppins-MediumItalic.ttf */,
-				20258489A57B46A78E8A1884 /* Poppins-Regular.ttf */,
-				084B624A51274D81BFE7B5E3 /* Poppins-SemiBold.ttf */,
-				CF1521A5D1F748C1A6CFC789 /* Poppins-SemiBoldItalic.ttf */,
-				2231B4FED6BB46DAA2440097 /* Poppins-Thin.ttf */,
-				E7E45728F11A470EAFD68169 /* Poppins-ThinItalic.ttf */,
-				DD1AD3302AC1D7A7003EB0AE /* Localizable.strings */,
+				F77A44E0EF4A0959611D3D87 /* Pods-Biostasis.debug.xcconfig */,
+				92DBEF26561B69ADA62D18B4 /* Pods-Biostasis.release.xcconfig */,
+				836EAA3C3221F201C8AFD312 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */,
+				A867E3576C96E9984062A666 /* Pods-Biostasis-BiostasisTests.release.xcconfig */,
 			);
-			name = Resources;
+			path = Pods;
 			sourceTree = "<group>";
 		};
-		DE570153271ECEA400802391 /* Native */ = {
+		C7B021B82E29496B0024E32C /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				DE570154271ECEAF00802391 /* Managers */,
-				DE570155271ECF0200802391 /* Models */,
-			);
-			path = Native;
-			sourceTree = "<group>";
-		};
-		DE570154271ECEAF00802391 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				DE4EBAF72715DF9A0004DB17 /* NativeManager.swift */,
-				DD5280FC2AA9C077001A6EE9 /* RecommendationSystemManage.swift */,
-				DED0F249282A9358007EACBF /* NativeManagerSingleton.swift */,
-				DE4EBAF32715D05B0004DB17 /* HealthKitManager.swift */,
-				DE4EBAF52715D83A0004DB17 /* HealthKitDataHandler.swift */,
-				DE483C4C271D56E5000D338D /* NetworkingManager.swift */,
-				DEA22CFB271982070076E78B /* PersistentStorageManager.swift */,
-				DE4EBAF12715B8EA0004DB17 /* LocalNotificationManager.swift */,
-				DECC4E6527282B2C00F030AA /* LocationManager.swift */,
-				DD33C2862A619D0400A91D4E /* TimeManager.swift */,
+				C71852732EA6E88B00796E3E /* BLEManager.swift */,
+				C718526B2E9C25B600796E3E /* NativeManagerSingleton.h */,
+				C71852692E9C0AF000796E3E /* BackgroundHealthChecker.swift */,
+				C7B021AE2E29496B0024E32C /* HealthKitDataHandler.swift */,
+				C7B021AF2E29496B0024E32C /* HealthKitManager.swift */,
+				C7B021B02E29496B0024E32C /* LocalNotificationManager.swift */,
+				C7B021B12E29496B0024E32C /* LocationManager.swift */,
+				C7B021B22E29496B0024E32C /* NativeManager.swift */,
+				C7B021B32E29496B0024E32C /* NativeManagerSingleton.swift */,
+				C7B021B42E29496B0024E32C /* NetworkingManager.swift */,
+				C7B021B52E29496B0024E32C /* PersistentStorageManager.swift */,
+				C7B021B62E29496B0024E32C /* RecommendationSystemManage.swift */,
+				C7B021B72E29496B0024E32C /* TimeManager.swift */,
+				C7F57EF12E2E5579008ABA99 /* NativeManagerEmitter.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		DE570155271ECF0200802391 /* Models */ = {
+		C7B021BE2E29496B0024E32C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				DEA22CFD2719CD4B0076E78B /* EmergencySettingsModel.swift */,
-				DE570156271ECF5600802391 /* apiModels.swift */,
-				DE7F88F2272710B900CFB5DC /* UserModel.swift */,
-				DE44816C282D4FC90009C1E3 /* RefreshTokenRO.swift */,
-				DD45CC6C2A404527003A0EB5 /* HealthDataModel.swift */,
+				C7B021B92E29496B0024E32C /* apiModels.swift */,
+				C7B021BA2E29496B0024E32C /* EmergencySettingsModel.swift */,
+				C7B021BB2E29496B0024E32C /* HealthDataModel.swift */,
+				C7B021BC2E29496B0024E32C /* RefreshTokenRO.swift */,
+				C7B021BD2E29496B0024E32C /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		DE7DA3D22859F2C400F6AD78 /* Firebase */ = {
+		C7B021BF2E29496B0024E32C /* Native */ = {
 			isa = PBXGroup;
 			children = (
-				DD2C62422A669B5900178501 /* GoogleService-Info-debug.plist */,
-				DD2C62432A669B5900178501 /* GoogleService-Info-prod.plist */,
+				C7B021B82E29496B0024E32C /* Managers */,
+				C7B021BE2E29496B0024E32C /* Models */,
 			);
-			path = Firebase;
+			path = Native;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -422,12 +382,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "BiostasisTests" */;
 			buildPhases = (
-				D04C303EDBF058050C293CE2 /* [CP] Check Pods Manifest.lock */,
+				9C147A9BA7C5028F2ABC73F4 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				9F8A0D4E4490965F8FDAB4C2 /* [CP] Embed Pods Frameworks */,
-				2EEFD5C2A26ECFF8DC50DE7C /* [CP] Copy Pods Resources */,
+				193C702C0E9DBFD395694B23 /* [CP] Embed Pods Frameworks */,
+				CA5B06998565E73740C06F11 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -443,18 +403,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Biostasis" */;
 			buildPhases = (
-				70D26D669B9BFB10035A7B05 /* [CP] Check Pods Manifest.lock */,
-				FD10A7F022414F080027D42C /* Start Packager */,
+				077683C03CADA76F6407AFBC /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
-				DE7DA3D12859ED4E00F6AD78 /* Setup Firebase */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				9AAEC6012B1208D84EEEA883 /* [CP] Embed Pods Frameworks */,
-				BC4D71C00B6731E3FB0E35BD /* [CP] Copy Pods Resources */,
-				19E3C0C1DFADB637B9C1EAB0 /* [CP-User] [RNFB] Core Configuration */,
-				482F181830EA838602176307 /* [CP-User] [RNFB] Crashlytics Configuration */,
-				DD5280FB2A9F2E93001A6EE9 /* Embed Foundation Extensions */,
+				534A6CDB69CCB8C4D17594E3 /* [CP] Embed Pods Frameworks */,
+				CEEC856E50B87D71E86CF6A5 /* [CP] Copy Pods Resources */,
+				8135BB3C5F1AD5CF28D517F7 /* [CP-User] [RNFB] Core Configuration */,
+				89E049A8E7F5992804BAD43A /* [CP-User] [RNFB] Crashlytics Configuration */,
 			);
 			buildRules = (
 			);
@@ -471,7 +428,6 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -479,7 +435,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1250;
+						LastSwiftMigration = 1620;
 					};
 				};
 			};
@@ -489,10 +445,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				fr,
-				de,
-				it,
-				es,
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
@@ -511,18 +463,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				906626C426933B690059D71E /* Roboto-Italic.ttf in Resources */,
-				906626C526933B690059D71E /* Roboto-Regular.ttf in Resources */,
-				906626C626933B690059D71E /* Roboto-Black.ttf in Resources */,
-				906626C726933B690059D71E /* Roboto-BlackItalic.ttf in Resources */,
-				906626C826933B690059D71E /* Roboto-Bold.ttf in Resources */,
-				906626C926933B690059D71E /* Roboto-BoldItalic.ttf in Resources */,
-				906626CA26933B690059D71E /* Roboto-Light.ttf in Resources */,
-				906626CB26933B690059D71E /* Roboto-LightItalic.ttf in Resources */,
-				906626CC26933B690059D71E /* Roboto-Medium.ttf in Resources */,
-				906626CD26933B690059D71E /* Roboto-MediumItalic.ttf in Resources */,
-				906626CE26933B690059D71E /* Roboto-Thin.ttf in Resources */,
-				906626CF26933B690059D71E /* Roboto-ThinItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,42 +470,40 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54565D912D5B3E5800C85B44 /* Poppins-MediumItalic.ttf in Resources */,
+				54565D922D5B3E5800C85B44 /* Roboto-LightItalic.ttf in Resources */,
+				54565D932D5B3E5800C85B44 /* Poppins-LightItalic.ttf in Resources */,
+				54565D942D5B3E5800C85B44 /* Poppins-ExtraLight.ttf in Resources */,
+				54565D952D5B3E5800C85B44 /* Roboto-Medium.ttf in Resources */,
+				54565D962D5B3E5800C85B44 /* Roboto-Thin.ttf in Resources */,
+				54565D972D5B3E5800C85B44 /* Poppins-SemiBoldItalic.ttf in Resources */,
+				54565D982D5B3E5800C85B44 /* Poppins-Italic.ttf in Resources */,
+				54565D992D5B3E5800C85B44 /* Poppins-ExtraBold.ttf in Resources */,
+				54565D9A2D5B3E5800C85B44 /* Poppins-SemiBold.ttf in Resources */,
+				54565D9B2D5B3E5800C85B44 /* Poppins-Black.ttf in Resources */,
+				54565D9C2D5B3E5800C85B44 /* Poppins-BlackItalic.ttf in Resources */,
+				54565D9D2D5B3E5800C85B44 /* Poppins-Thin.ttf in Resources */,
+				54565D9E2D5B3E5800C85B44 /* Poppins-BoldItalic.ttf in Resources */,
+				54565D9F2D5B3E5800C85B44 /* Poppins-ExtraLightItalic.ttf in Resources */,
+				54565DA02D5B3E5800C85B44 /* Roboto-BlackItalic.ttf in Resources */,
+				54565DA12D5B3E5800C85B44 /* Poppins-ThinItalic.ttf in Resources */,
+				54565DA22D5B3E5800C85B44 /* Roboto-ThinItalic.ttf in Resources */,
+				54565DA32D5B3E5800C85B44 /* Roboto-Black.ttf in Resources */,
+				54565DA42D5B3E5800C85B44 /* Roboto-Light.ttf in Resources */,
+				54565DA52D5B3E5800C85B44 /* Poppins-Medium.ttf in Resources */,
+				54565DA62D5B3E5800C85B44 /* Poppins-ExtraBoldItalic.ttf in Resources */,
+				54565DA72D5B3E5800C85B44 /* Roboto-Regular.ttf in Resources */,
+				54565DA82D5B3E5800C85B44 /* Roboto-BoldItalic.ttf in Resources */,
+				54565DA92D5B3E5800C85B44 /* Roboto-Italic.ttf in Resources */,
+				54565DAA2D5B3E5800C85B44 /* Poppins-Light.ttf in Resources */,
+				54565DAB2D5B3E5800C85B44 /* Roboto-MediumItalic.ttf in Resources */,
+				54565DAC2D5B3E5800C85B44 /* Poppins-Bold.ttf in Resources */,
+				54565DAD2D5B3E5800C85B44 /* Roboto-Bold.ttf in Resources */,
+				54565DAE2D5B3E5800C85B44 /* Poppins-Regular.ttf in Resources */,
+				54565D722D5AB76B00C85B44 /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				4A1A5CA6F73B4C34A3596565 /* Roboto-Italic.ttf in Resources */,
-				DD2C62442A669B5900178501 /* GoogleService-Info-debug.plist in Resources */,
-				7B19C3632859ECAB00A010BA /* alarm.mp3 in Resources */,
-				399B34F2DEE44D55A49E4320 /* Roboto-Regular.ttf in Resources */,
-				A4E7E50E24FC44F5B3F25D7E /* Roboto-Black.ttf in Resources */,
-				C8664E7E5F324D608BBE78A9 /* Roboto-BlackItalic.ttf in Resources */,
-				2AA9E4AFBB7749DE828B502F /* Roboto-Bold.ttf in Resources */,
-				587D4E3B4C174C939A8B62DF /* Roboto-BoldItalic.ttf in Resources */,
-				C1B958C277574F0285C3B0A9 /* Roboto-Light.ttf in Resources */,
-				5BF94DA5DBA643CE9326A367 /* Roboto-LightItalic.ttf in Resources */,
-				DD2C62452A669B5900178501 /* GoogleService-Info-prod.plist in Resources */,
-				DD1AD32E2AC1D7A7003EB0AE /* Localizable.strings in Resources */,
-				50D8EEDD912E46D2901F5480 /* Roboto-Medium.ttf in Resources */,
-				1F983D67C3EE4845A6E00F5C /* Roboto-MediumItalic.ttf in Resources */,
-				F5BA2FD9B8A24782ACFE8567 /* Roboto-Thin.ttf in Resources */,
-				2D4BF4AEF2B84A4480606CBC /* Roboto-ThinItalic.ttf in Resources */,
-				E19656C984684C2DB8996427 /* Poppins-Black.ttf in Resources */,
-				D0C4FA5E897242BF9023B302 /* Poppins-BlackItalic.ttf in Resources */,
-				7703FFCF6B7F4889AC9524F0 /* Poppins-Bold.ttf in Resources */,
-				CCAE2F0B22C549708CDF199D /* Poppins-BoldItalic.ttf in Resources */,
-				D98176A124AD472EA4F9ED9E /* Poppins-ExtraBold.ttf in Resources */,
-				3B6283367626401DB4D29B53 /* Poppins-ExtraBoldItalic.ttf in Resources */,
-				4AA4CC367B62411FAB03C877 /* Poppins-ExtraLight.ttf in Resources */,
-				A2CA1F32B8EC4408930697DB /* Poppins-ExtraLightItalic.ttf in Resources */,
-				35607A78DEA54039A2397BB6 /* Poppins-Italic.ttf in Resources */,
-				7751210FFB5543B8BE9D1BE1 /* Poppins-Light.ttf in Resources */,
-				4FA8F5E8626C4E0EBDFC439F /* Poppins-LightItalic.ttf in Resources */,
-				67CBB74FC701493D83CC1A08 /* Poppins-Medium.ttf in Resources */,
-				2D53D5F74A9D451D897E9F01 /* Poppins-MediumItalic.ttf in Resources */,
-				0570FF3E1F6D4A2C95B33583 /* Poppins-Regular.ttf in Resources */,
-				72D7DBAAB27A427D9E98155A /* Poppins-SemiBold.ttf in Resources */,
-				85DCACA800344358973AF6B6 /* Poppins-SemiBoldItalic.ttf in Resources */,
-				4AE91CD2943C43C2B44A72B5 /* Poppins-Thin.ttf in Resources */,
-				A0A52306FCBB45A0B8003AE1 /* Poppins-ThinItalic.ttf in Resources */,
+				D09362A92CB91525797F07CF /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,63 +512,21 @@
 /* Begin PBXShellScriptBuildPhase section */
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/.xcode.env",
 			);
 			name = "Bundle React Native code and images";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		19E3C0C1DFADB637B9C1EAB0 /* [CP-User] [RNFB] Core Configuration */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "[CP-User] [RNFB] Core Configuration";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | /usr/bin/head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    _JSON_OUTPUT_BASE64=$(python -c 'import json,sys,base64;print(base64.b64encode(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"').read())['${_JSON_ROOT}'])))' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.google_analytics_automatic_screen_reporting_enabled\n  _ANALYTICS_AUTO_SCREEN_REPORTING=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"google_analytics_automatic_screen_reporting_enabled\")\n  if [[ $_ANALYTICS_AUTO_SCREEN_REPORTING ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAutomaticScreenReportingEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_SCREEN_REPORTING\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
-		};
-		2EEFD5C2A26ECFF8DC50DE7C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		482F181830EA838602176307 /* [CP-User] [RNFB] Crashlytics Configuration */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "[CP-User] [RNFB] Crashlytics Configuration";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\nif [[ ${PODS_ROOT} ]]; then\n  echo \"info: Exec FirebaseCrashlytics Run from Pods\"\n  \"${PODS_ROOT}/FirebaseCrashlytics/run\"\nelse\n  echo \"info: Exec FirebaseCrashlytics Run from framework\"\n  \"${PROJECT_DIR}/FirebaseCrashlytics.framework/run\"\nfi\n";
-		};
-		70D26D669B9BFB10035A7B05 /* [CP] Check Pods Manifest.lock */ = {
+		077683C03CADA76F6407AFBC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -652,24 +548,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9AAEC6012B1208D84EEEA883 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9F8A0D4E4490965F8FDAB4C2 /* [CP] Embed Pods Frameworks */ = {
+		193C702C0E9DBFD395694B23 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -677,33 +556,72 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BC4D71C00B6731E3FB0E35BD /* [CP] Copy Pods Resources */ = {
+		534A6CDB69CCB8C4D17594E3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D04C303EDBF058050C293CE2 /* [CP] Check Pods Manifest.lock */ = {
+		8135BB3C5F1AD5CF28D517F7 /* [CP-User] [RNFB] Core Configuration */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[CP-User] [RNFB] Core Configuration";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\n\n##########################################################################\n##########################################################################\n#\n#  NOTE THAT IF YOU CHANGE THIS FILE YOU MUST RUN pod install AFTERWARDS\n#\n#  This file is installed as an Xcode build script in the project file\n#  by cocoapods, and you will not see your changes until you pod install\n#\n##########################################################################\n##########################################################################\n\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -Ku -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | /usr/bin/head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -Ku -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    if ! python3 --version >/dev/null 2>&1; then echo \"python3 not found, firebase.json file processing error.\" && exit 1; fi\n    _JSON_OUTPUT_BASE64=$(python3 -c 'import json,sys,base64;print(base64.b64encode(bytes(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"', '\"'rb'\"').read())['${_JSON_ROOT}']), '\"'utf-8'\"')).decode())' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_analytics_storage\n  _ANALYTICS_STORAGE=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_analytics_storage\")\n  if [[ $_ANALYTICS_STORAGE ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_ANALYTICS_STORAGE\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_STORAGE\")\")\n  fi\n\n  # config.analytics_default_allow_ad_storage\n  _ANALYTICS_AD_STORAGE=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_storage\")\n  if [[ $_ANALYTICS_AD_STORAGE ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_STORAGE\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AD_STORAGE\")\")\n  fi\n\n  # config.analytics_default_allow_ad_user_data\n  _ANALYTICS_AD_USER_DATA=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_user_data\")\n  if [[ $_ANALYTICS_AD_USER_DATA ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_USER_DATA\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AD_USER_DATA\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.analytics_registration_with_ad_network_enabled\n  _ANALYTICS_REGISTRATION_WITH_AD_NETWORK=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"google_analytics_registration_with_ad_network_enabled\")\n  if [[ $_ANALYTICS_REGISTRATION_WITH_AD_NETWORK ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_REGISTRATION_WITH_AD_NETWORK_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_REGISTRATION_WITH_AD_NETWORK\")\")\n  fi\n\n  # config.google_analytics_automatic_screen_reporting_enabled\n  _ANALYTICS_AUTO_SCREEN_REPORTING=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"google_analytics_automatic_screen_reporting_enabled\")\n  if [[ $_ANALYTICS_AUTO_SCREEN_REPORTING ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAutomaticScreenReportingEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_SCREEN_REPORTING\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
+		};
+		89E049A8E7F5992804BAD43A /* [CP-User] [RNFB] Crashlytics Configuration */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[CP-User] [RNFB] Crashlytics Configuration";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\nif [[ ${PODS_ROOT} ]]; then\n  echo \"info: Exec FirebaseCrashlytics Run from Pods\"\n  \"${PODS_ROOT}/FirebaseCrashlytics/run\"\nelse\n  echo \"info: Exec FirebaseCrashlytics Run from framework\"\n  \"${PROJECT_DIR}/FirebaseCrashlytics.framework/run\"\nfi\n";
+		};
+		9C147A9BA7C5028F2ABC73F4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -725,41 +643,46 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DE7DA3D12859ED4E00F6AD78 /* Setup Firebase */ = {
+		CA5B06998565E73740C06F11 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			inputPaths = (
 			);
-			name = "Setup Firebase";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Firebase\"\n\necho \"Firebase configuration for ${CONFIGURATION}\"\ncase \"${CONFIGURATION}\" in\n\n   \"Debug\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-debug.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"Release\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n    *)\n    echo \"error: The Firebase setup is not configured for this scheme\" >&2\n    exit 1 ;;\nesac\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis-BiostasisTests/Pods-Biostasis-BiostasisTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
-		FD10A7F022414F080027D42C /* Start Packager */ = {
+		CEEC856E50B87D71E86CF6A5 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			inputPaths = (
 			);
-			name = "Start Packager";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Biostasis/Pods-Biostasis-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -777,24 +700,57 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				DD45CC6D2A404527003A0EB5 /* HealthDataModel.swift in Sources */,
-				DECC4E6627282B2C00F030AA /* LocationManager.swift in Sources */,
-				DD33C2872A619D0400A91D4E /* TimeManager.swift in Sources */,
-				DE4EBAF22715B8EA0004DB17 /* LocalNotificationManager.swift in Sources */,
-				DE4EBAF62715D83A0004DB17 /* HealthKitDataHandler.swift in Sources */,
-				DE4EBAF42715D05B0004DB17 /* HealthKitManager.swift in Sources */,
-				DE570157271ECF5600802391 /* apiModels.swift in Sources */,
-				DEA22CFE2719CD4B0076E78B /* EmergencySettingsModel.swift in Sources */,
-				DEA22CFC271982070076E78B /* PersistentStorageManager.swift in Sources */,
-				DD5280FD2AA9C077001A6EE9 /* RecommendationSystemManage.swift in Sources */,
-				DE44816D282D4FC90009C1E3 /* RefreshTokenRO.swift in Sources */,
-				DE483C4F271D9C22000D338D /* NativeManagerBridge.m in Sources */,
-				DE483C4D271D56E5000D338D /* NetworkingManager.swift in Sources */,
-				DE4EBAF82715DF9A0004DB17 /* NativeManager.swift in Sources */,
-				DED0F24A282A9358007EACBF /* NativeManagerSingleton.swift in Sources */,
-				DE7F88F3272710B900CFB5DC /* UserModel.swift in Sources */,
+				5417E2292D5D2F69004FFB11 /* Poppins-Black.ttf in Sources */,
+				5417E22A2D5D2F69004FFB11 /* Poppins-BlackItalic.ttf in Sources */,
+				5417E22B2D5D2F69004FFB11 /* Poppins-Bold.ttf in Sources */,
+				5417E22C2D5D2F69004FFB11 /* Poppins-BoldItalic.ttf in Sources */,
+				5417E22D2D5D2F69004FFB11 /* Poppins-ExtraBold.ttf in Sources */,
+				5417E22E2D5D2F69004FFB11 /* Poppins-ExtraBoldItalic.ttf in Sources */,
+				5417E22F2D5D2F69004FFB11 /* Poppins-ExtraLight.ttf in Sources */,
+				C7B021C02E29496B0024E32C /* RefreshTokenRO.swift in Sources */,
+				C7B021C12E29496B0024E32C /* UserModel.swift in Sources */,
+				C7B021C22E29496B0024E32C /* HealthKitManager.swift in Sources */,
+				C7B021C32E29496B0024E32C /* LocalNotificationManager.swift in Sources */,
+				C7B021C42E29496B0024E32C /* apiModels.swift in Sources */,
+				C7F57EF22E2E5579008ABA99 /* NativeManagerEmitter.swift in Sources */,
+				C7B021C52E29496B0024E32C /* EmergencySettingsModel.swift in Sources */,
+				C7B021C62E29496B0024E32C /* HealthKitDataHandler.swift in Sources */,
+				C7B021C72E29496B0024E32C /* NetworkingManager.swift in Sources */,
+				C7B021C82E29496B0024E32C /* TimeManager.swift in Sources */,
+				C7B021C92E29496B0024E32C /* NativeManagerSingleton.swift in Sources */,
+				C7B021CA2E29496B0024E32C /* PersistentStorageManager.swift in Sources */,
+				C7B021CB2E29496B0024E32C /* RecommendationSystemManage.swift in Sources */,
+				C7B021CC2E29496B0024E32C /* NativeManager.swift in Sources */,
+				C7B021CD2E29496B0024E32C /* LocationManager.swift in Sources */,
+				C7B021CE2E29496B0024E32C /* HealthDataModel.swift in Sources */,
+				5417E2302D5D2F69004FFB11 /* Poppins-ExtraLightItalic.ttf in Sources */,
+				5417E2312D5D2F69004FFB11 /* Poppins-Italic.ttf in Sources */,
+				5417E2322D5D2F69004FFB11 /* Poppins-Light.ttf in Sources */,
+				5417E2332D5D2F69004FFB11 /* Poppins-LightItalic.ttf in Sources */,
+				5417E2342D5D2F69004FFB11 /* Poppins-Medium.ttf in Sources */,
+				5417E2352D5D2F69004FFB11 /* Poppins-MediumItalic.ttf in Sources */,
+				5417E2362D5D2F69004FFB11 /* Poppins-Regular.ttf in Sources */,
+				5417E2372D5D2F69004FFB11 /* Poppins-SemiBold.ttf in Sources */,
+				5417E2382D5D2F69004FFB11 /* Poppins-SemiBoldItalic.ttf in Sources */,
+				C7B021D02E294D210024E32C /* NativeManagerBridge.m in Sources */,
+				5417E2392D5D2F69004FFB11 /* Poppins-Thin.ttf in Sources */,
+				5417E23A2D5D2F69004FFB11 /* Poppins-ThinItalic.ttf in Sources */,
+				5417E23B2D5D2F69004FFB11 /* Roboto-Black.ttf in Sources */,
+				5417E23C2D5D2F69004FFB11 /* Roboto-BlackItalic.ttf in Sources */,
+				C71852742EA6E89600796E3E /* BLEManager.swift in Sources */,
+				5417E23D2D5D2F69004FFB11 /* Roboto-Bold.ttf in Sources */,
+				5417E23E2D5D2F69004FFB11 /* Roboto-BoldItalic.ttf in Sources */,
+				5417E23F2D5D2F69004FFB11 /* Roboto-Italic.ttf in Sources */,
+				5417E2402D5D2F69004FFB11 /* Roboto-Light.ttf in Sources */,
+				5417E2412D5D2F69004FFB11 /* Roboto-LightItalic.ttf in Sources */,
+				5417E2422D5D2F69004FFB11 /* Roboto-Medium.ttf in Sources */,
+				5417E2432D5D2F69004FFB11 /* Roboto-MediumItalic.ttf in Sources */,
+				5417E2442D5D2F69004FFB11 /* Roboto-Regular.ttf in Sources */,
+				5417E2452D5D2F69004FFB11 /* Roboto-Thin.ttf in Sources */,
+				5417E2462D5D2F69004FFB11 /* Roboto-ThinItalic.ttf in Sources */,
+				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				C718526A2E9C0AF600796E3E /* BackgroundHealthChecker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -808,34 +764,19 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		DD1AD3302AC1D7A7003EB0AE /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DD1AD32F2AC1D7A7003EB0AE /* en */,
-				DD1AD3312AC1D7A9003EB0AE /* fr */,
-				DD1AD3322AC1D7AA003EB0AE /* de */,
-				DD1AD3332AC1D7AC003EB0AE /* it */,
-				DD1AD3342AC1D7AD003EB0AE /* es */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 29A66A7BFE74170BA22AE611 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */;
+			baseConfigurationReference = 836EAA3C3221F201C8AFD312 /* Pods-Biostasis-BiostasisTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = BiostasisTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -846,7 +787,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = app.biostasis;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Biostasis.app/Biostasis";
 			};
@@ -854,13 +795,12 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 26A69A2277E960A1A350274F /* Pods-Biostasis-BiostasisTests.release.xcconfig */;
+			baseConfigurationReference = A867E3576C96E9984062A666 /* Pods-Biostasis-BiostasisTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = BiostasisTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -879,34 +819,28 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2F86A0FBBFAB7CAB1929084 /* Pods-Biostasis.debug.xcconfig */;
+			baseConfigurationReference = F77A44E0EF4A0959611D3D87 /* Pods-Biostasis.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Biostasis/Biostasis.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Biostasis/BiostasisDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = 379N8TSZND;
 				ENABLE_BITCODE = NO;
-				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Biostasis/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Biostasis;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.6;
+				MARKETING_VERSION = 2.1.7;
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
-					"$(inherited)",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -Xcc -fmodule-map-file=\"${PODS_CONFIGURATION_BUILD_DIR}/YogaKit/YogaKit.modulemap\" -Xcc -fmodule-map-file=\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-geolocation-service/react_native_geolocation_service.modulemap\" -Xcc -fmodule-map-file=\"${PODS_ROOT}/Headers/Public/FBLPromises/PromisesObjC.modulemap\" -Xcc -fmodule-map-file=\"${PODS_ROOT}/Headers/Public/FlipperKit/FlipperKit.modulemap\" -Xcc -fmodule-map-file=\"${PODS_ROOT}/Headers/Public/React/React-Core.modulemap\" -Xcc -fmodule-map-file=\"${PODS_ROOT}/Headers/Public/yoga/Yoga.modulemap\" -Xcc -DFB_SONARKIT_ENABLED=1 -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = app.biostasis;
 				PRODUCT_NAME = Biostasis;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -919,31 +853,26 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD55FE3697E894BB47C11ED9 /* Pods-Biostasis.release.xcconfig */;
+			baseConfigurationReference = 92DBEF26561B69ADA62D18B4 /* Pods-Biostasis.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Biostasis/BiostasisRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = 379N8TSZND;
-				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Biostasis/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Biostasis;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.6;
+				MARKETING_VERSION = 2.1.7;
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
-					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.biostasis;
 				PRODUCT_NAME = Biostasis;
@@ -959,7 +888,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1003,19 +932,43 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers/react/nativemodule/core",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers/platform/ios",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-Fabric/React_Fabric.framework/Headers/react/renderer/components/view/platform/cxx",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-NativeModulesApple/React_NativeModulesApple.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers/react/renderer/graphics/platform/ios",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
+					"\"$(SDKROOT)/usr/lib/swift\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-DFOLLY_NO_CONFIG",
+					"-DFOLLY_MOBILE=1",
+					"-DFOLLY_USE_LIBCPP=1",
+					"-DFOLLY_CFG_NO_COROUTINES=1",
+					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
+				);
+				OTHER_LDFLAGS = "$(inherited)  ";
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Biostasis-Bridging-Header.h";
+				USE_HERMES = true;
 			};
 			name = Debug;
 		};
@@ -1024,7 +977,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1061,18 +1014,41 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon/ReactCommon.framework/Headers/react/nativemodule/core",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon-Samples/ReactCommon_Samples.framework/Headers/platform/ios",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-Fabric/React_Fabric.framework/Headers/react/renderer/components/view/platform/cxx",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-NativeModulesApple/React_NativeModulesApple.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers",
+					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers/react/renderer/graphics/platform/ios",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
+					"\"$(SDKROOT)/usr/lib/swift\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-DFOLLY_NO_CONFIG",
+					"-DFOLLY_MOBILE=1",
+					"-DFOLLY_USE_LIBCPP=1",
+					"-DFOLLY_CFG_NO_COROUTINES=1",
+					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
+				);
+				OTHER_LDFLAGS = "$(inherited)  ";
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Biostasis-Bridging-Header.h";
+				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1087,7 +1063,7 @@
 				00E356F71AD99517003FC87E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Biostasis" */ = {
 			isa = XCConfigurationList;
@@ -1096,7 +1072,7 @@
 				13B07F951A680F5B00A75B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Biostasis" */ = {
 			isa = XCConfigurationList;
@@ -1105,7 +1081,7 @@
 				83CBBA211A601CBA00E9B192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

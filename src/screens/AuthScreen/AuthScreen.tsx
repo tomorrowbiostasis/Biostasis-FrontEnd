@@ -36,7 +36,7 @@ const AuthScreen = () => {
     >();
   const dispatch = useAppDispatch();
   const {t} = useAppTranslation();
-
+  
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const defaultTabIndex = getTabIndexByParam(`${params?.action}`);
   const swiperRef = useRef<ScrollView>(null);
@@ -68,10 +68,10 @@ const AuthScreen = () => {
   useEffect(() => {
     changeTab(defaultTabIndex, false);
   }, [changeTab, defaultTabIndex]);
-
+  
   useEffect(() => {
-    const confirmAuth = async () => {
-      if (params?.email && params?.code) {
+      const confirmAuth = async () => {
+      if(params?.email && params?.code) {
         changeTab(0, false);
 
         dispatch(

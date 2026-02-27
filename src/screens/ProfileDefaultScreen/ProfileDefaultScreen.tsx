@@ -40,13 +40,13 @@ const ProfileDefaultScreen = () => {
         <TouchableOpacity style={styles.panel} onPress={handleEditProfile}>
           <View style={styles.panelHeader}>
             <IconAntDesign name={'profile'} size={26} style={styles.icon} />
-            <Text fontSize={'md'} fontWeight={700}>
+            <Text style={styles.panelTitle} fontWeight={700}>
               {t('profileDefault.editProfile.title')}
             </Text>
           </View>
           <View style={styles.lineStyle} />
           <View style={styles.panelBody}>
-            <Text fontSize={'sm'}>
+            <Text style={styles.panelInfoText}>
               {t('profileDefault.editProfile.description')}
             </Text>
           </View>
@@ -64,13 +64,13 @@ const ProfileDefaultScreen = () => {
               size={26}
               style={styles.icon}
             />
-            <Text fontSize={'md'} fontWeight={700}>
+            <Text style={styles.panelTitle} fontWeight={700}>
               {t('profileDefault.accountSettings.title')}
             </Text>
           </View>
           <View style={styles.lineStyle} />
           <View style={styles.panelBody}>
-            <Text fontSize={'sm'}>
+            <Text style={styles.panelInfoText}>
               {t('profileDefault.accountSettings.description')}
             </Text>
           </View>
@@ -90,13 +90,13 @@ const ProfileDefaultScreen = () => {
               size={26}
               style={styles.icon}
             />
-            <Text fontSize={'md'} fontWeight={700}>
+            <Text style={styles.panelTitle} fontWeight={700}>
               {t('profileDefault.medicalInfo.title')}
             </Text>
           </View>
           <View style={styles.lineStyle} />
           <View style={styles.panelBody}>
-            <Text fontSize={'sm'}>
+            <Text style={styles.panelInfoText}>
               {t('profileDefault.medicalInfo.description')}
             </Text>
           </View>

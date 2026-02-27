@@ -3,6 +3,7 @@ import messaging from '@react-native-firebase/messaging';
 import {handleNotificationEvents} from '~/services/Notification.service';
 import notifee from '@notifee/react-native';
 import {handleRemoteMessages} from '~/services/Push.service';
+import { NativeModules } from 'react-native';
 /*  Remote Notification  */
 
 const NotificationListener = () => {

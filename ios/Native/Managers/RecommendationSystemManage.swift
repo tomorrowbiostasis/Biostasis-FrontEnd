@@ -43,6 +43,7 @@ class RecommendationService: IManageRecommendationSystem {
     UserDefaults.standard.removeObject(forKey: "@BioData")
     UserDefaults.standard.removeObject(forKey: "@LastUpdatedDate")
     UserDefaults.standard.removeObject(forKey: "@LongestPeriod")
+    // UserDefaults.standard.removeObject(forKey: "@AllBioData")
   }
 }
 
@@ -94,6 +95,8 @@ extension RecommendationService : IManageRecommendationServices {
         }
         setLastUpdatedDate()
         setStoredData(data: data)
+        print("📊 New health data: \(data)")
+        
         
         print("New Bio Data found")
       }
@@ -148,6 +151,21 @@ extension RecommendationService: IManageUserDefaults {
       return nil
     }
   }
+
+  func getAllStoredData() -> [HealthMetrics] {
+    if let jsonString = UserDefaults.standard.string(forKey: "@AllBioData"),
+       let jsonData = jsonString.data(using: .utf8) {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        do {
+            let allMetrics = try decoder.decode([HealthMetrics].self, from: jsonData)
+            return allMetrics
+        } catch {
+            print("Error decoding all HealthMetrics: \(error)")
+        }
+    }
+    return []
+}
   
   func setLastUpdatedDate() {
     let now = Date()

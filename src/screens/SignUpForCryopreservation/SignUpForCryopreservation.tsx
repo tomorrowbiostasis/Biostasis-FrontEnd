@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {Alert, View} from 'react-native';
 import {WebView} from 'react-native-webview';
 import Container from '~/components/Container';
-import Loader from '~/components/Loader/Loader';
+// import Loader from '~/components/Loader/Loader';
 import {Screens} from '~/models/Navigation.model';
 import {navigationRef} from '~/navigators';
 import styles from './styles';
@@ -47,8 +47,7 @@ const SignUpForCryopreservation = () => {
   const handleLoadEnd = () => {
     setIsLoading(false);
   };
-
-  return (
+return (
     <Container
       title={t('signUpForTomorrow.title')}
       containerStyle={styles.container}
@@ -62,12 +61,12 @@ const SignUpForCryopreservation = () => {
           source={{uri}}
           injectedJavaScript={injectedJavaScript}
           startInLoadingState
-          renderLoading={() => <Loader absolute={true} />}
+          // renderLoading={() => <Loader absolute={true} />}
           onLoadEnd={handleLoadEnd}
           style={
             !isLoading
               ? {flex: 1}
-              : {display: 'none', backgroundColor: colors.gray[50]}
+              : { backgroundColor: colors.gray[50]}
           }
         />
       </View>

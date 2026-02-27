@@ -13,7 +13,7 @@ import {
 import Container from '~/components/Container';
 import {selectEmergencyContacts} from '~/redux/emergencyContacts/selectors';
 import {useRoute} from '@react-navigation/core';
-import {RouteProp, useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation, CommonActions} from '@react-navigation/native';
 import {Screens, ScreensNavigationParamsList} from '~/models/Navigation.model';
 
 import styles from './styles';
@@ -30,7 +30,7 @@ export type AddNewEmergencyContactFormFields = {
 export const AddNewEmergencyContactScreen = () => {
   const {t} = useAppTranslation();
   const dispatch = useAppDispatch();
-  const {navigate} = useNavigation();
+  const navigate = useNavigation();
   const emergencyContacts = useAppSelector(selectEmergencyContacts);
   const [editedContact, setEditedContact] =
     useState<IEmergencyContactResponse | null>(null);
@@ -39,10 +39,11 @@ export const AddNewEmergencyContactScreen = () => {
     useRoute<RouteProp<ScreensNavigationParamsList, 'EditEmergencyContact'>>();
 
   const handleGoToContactsList = useCallback(() => {
-    // @ts-ignore
-    navigate(Screens.EmergencyContactSettings);
+    navigate.dispatch(CommonActions.reset({
+      index:0,
+      routes:[{name:Screens.Home},{name:Screens.EmergencyContactSettings}],
+    }));
   }, [navigate]);
-
   const handleAddContact = useCallback(
     (newContact: IEmergencyContact) => {
       dispatch(AddNewEmergencyContact(newContact));

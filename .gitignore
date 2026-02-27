@@ -22,6 +22,7 @@ DerivedData
 *.xcuserstate
 **/GoogleService-Info-debug.plist
 **/GoogleService-Info*.plist
+**/.xcode.env.local
 
 
 # Android/IntelliJ
@@ -44,6 +45,7 @@ yarn-error.log
 # BUCK
 buck-out/
 \.buckd/
+.cxx/
 *.keystore
 !debug.keystore
 keystore.properties
@@ -58,12 +60,30 @@ keystore.properties
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
+**/fastlane/test_output
 
 # Bundle artifact
 *.jsbundle
 
 # CocoaPods
 /ios/Pods/
+# Ruby / CocoaPods
+**/Pods/
+/vendor/bundle/
+ 
+# Temporary files created by Metro to check the health of the file watcher
+.metro-health-check*
+ 
+# testing
+/coverage
+ 
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # Environment Variables
 .env

@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import colors from '~/theme/colors';
+import { globalTextStyles } from '~/theme/globalTextStyles';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,6 +30,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'flex-start',
     marginVertical: 10,
+  },
+  panelTitle: {
+    ...globalTextStyles.titleMedium,
+  },
+  panelInfoText: {
+    ...globalTextStyles.textMedium,
   },
   panelBody: {
     flex: 1,

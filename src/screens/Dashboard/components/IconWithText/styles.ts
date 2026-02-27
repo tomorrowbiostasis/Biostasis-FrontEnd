@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import boxShadow from '~/theme/boxShadow';
 import colors from '~/theme/colors';
 import {fontConfig} from '~/theme/fonts';
+import { globalTextStyles } from '~/theme/globalTextStyles';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,9 +26,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   linkTitle: {
+    ...globalTextStyles.titleMedium,
     color: colors.black,
-    fontSize: 14,
     fontFamily: fontConfig.Poppins[700].normal,
+  },
+  linkText: {
+    ...globalTextStyles.textMedium,
   },
 });
 

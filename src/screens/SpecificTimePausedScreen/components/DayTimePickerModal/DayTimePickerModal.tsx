@@ -162,6 +162,7 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
           </View>
           <Button
             variant={'solid'}
+            _disabled={{opacity: 1}}
             disabled={!isStartHourValid || !isEndHourValid}
             style={styles.saveButton}
             onPress={handleSave}>

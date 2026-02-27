@@ -8,13 +8,16 @@ import BackgroundFetch from 'react-native-background-fetch';
 import {mainScheduledEvent} from '~/services/Background.service';
 import {handleRemoteMessages} from '~/services/Push.service';
 import {startLogger} from '~/services/Logger.service';
+import { enableScreens } from 'react-native-screens';
 import {name as appName} from './app.json';
 
+enableScreens(true);
 startLogger();
 
 if (!isIOS) {
   BackgroundFetch.registerHeadlessTask(mainScheduledEvent);
-  messaging().setBackgroundMessageHandler(handleRemoteMessages);
 }
+
+messaging().setBackgroundMessageHandler(handleRemoteMessages);
 
 AppRegistry.registerComponent(appName, () => App);

@@ -57,7 +57,7 @@ const OnboardingSummarySlide: FC = () => {
       <Heading size={'md'} style={styles.margin20}>
         {t('onboarding.title')}
       </Heading>
-      <Text fontSize={'sm'} style={styles.margin20}>
+      <Text style={[styles.margin20, styles.infoText]}>
         {t('onboarding.slogan')}
       </Text>
       <View style={styles.buttonsBox}>

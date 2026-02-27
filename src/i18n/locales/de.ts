@@ -62,10 +62,13 @@ const translations: ITranslation = {
     emergencyContactSettings: 'Notfallkontakt-Einstellungen',
     pauseTimes: 'Notfallsystem pausieren',
     signUpForCryopreservation: 'Melden Sie sich bei Tomorrow Bio an',
+    devLogs: 'Aktuelles Gesundheitsprotokoll',
+    devHistoryLogs: 'Entwicklungsprotokolle',
+    devPushLogs: 'Push-Benachrichtigungsprotokolle',
   },
   signUpForTomorrow: {
     title: 'Melden Sie sich bei Tomorrow Bio an',
-    signUpUrl: 'https://tomorrowbiostasis.com/de/signup/',
+    signUpUrl: 'https://member.tomorrow.bio/de/signup/start/',
     internetError: {
       title: 'Keine Internetverbindung',
       description: 'Diese Seite benötigt eine Internetverbindung!',
@@ -331,12 +334,12 @@ const translations: ITranslation = {
         warning:
           'Das Einschalten von Biostasis deaktiviert den zeitbasierten Auslöser!',
         appleWatch: {
-          title: 'Apple Watch ist gekoppelt',
+          title: 'Wearable-Gerät verbunden',
           description:
-            'Wir verwenden Ihre Apple Watch (dank der HealthKit-Integration), um Ihre Gesundheitsdaten abzurufen. Wenn Sie keine verwenden, wählen Sie bitte stattdessen das zeitbasierte Trigger-System.',
-          alertTitle: 'Apple Watch koppeln',
+            "Wir verwenden dein Wearable-Gerät (dank HealthKit-Integration), um deine Gesundheitsdaten abzurufen. Wenn du keines verwendest, wähle bitte stattdessen das zeitbasierte Auslösesystem.",
+          alertTitle: 'Wearable-Gerät koppeln',
           alertDescription:
-            'Ihre Apple Watch sollte mit Ihrem iPhone gekoppelt sein, um Ihre Gesundheitsdaten zu synchronisieren. Bitte stellen Sie sicher, dass sie richtig gekoppelt ist. Falls nicht, folgen Sie den Anweisungen in der iOS-App der Uhr.',
+            "Dein Wearable-Gerät sollte mit deinem iPhone gekoppelt sein, um Gesundheitsdaten zu synchronisieren. Bitte stelle sicher, dass es korrekt gekoppelt ist. Falls nicht, folge den Anweisungen in der Begleit-App des Geräts.",
         },
         googleFit: {
           title: 'Google Fit authentifizieren',
@@ -719,6 +722,30 @@ const translations: ITranslation = {
     german: 'Deutsch',
     french: 'Französisch',
     italian: 'Italienisch',
+  },
+  devLogs: {
+  title: 'Aktuelles Gesundheitsprotokoll',
+  description: 'Dieser Bildschirm ist für Entwickler gedacht, um Probleme zu protokollieren und nachzuverfolgen. Er ist nicht für Endbenutzer vorgesehen.',
+  logs: 'Protokolle',
+  noLogs: 'Keine Protokolle verfügbar',
+  error: 'Fehler beim Laden der Protokolle',
+  retry: 'Protokolle erneut laden',
+  },
+  devHistoryLogs: {
+    title: 'Entwicklerprotokolle (Verlauf)',
+    description: 'Dieser Bildschirm ist für Entwickler gedacht, um Probleme zu protokollieren und nachzuverfolgen. Er ist nicht für Endbenutzer vorgesehen.',
+    logs: 'Protokolle',
+    noLogs: 'Keine Protokolle verfügbar',
+    error: 'Fehler beim Laden der Protokolle',
+    retry: 'Protokolle erneut laden',
+  },
+  devPushLogs: {
+    title: 'Entwicklerprotokolle (Push-Benachrichtigungen)',
+    description: 'Dieser Bildschirm ist für Entwickler gedacht, um Probleme mit Push-Benachrichtigungen zu protokollieren und nachzuverfolgen. Er ist nicht für Endbenutzer vorgesehen.',
+    logs: 'Protokolle',
+    noLogs: 'Keine Protokolle verfügbar',
+    error: 'Fehler beim Laden der Protokolle',
+    retry: 'Protokolle erneut laden',
   },
 };
 

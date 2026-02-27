@@ -1,4 +1,5 @@
 import {Dimensions, StyleSheet} from 'react-native';
+import { globalTextStyles } from '~/theme/globalTextStyles';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -20,6 +21,9 @@ const styles = StyleSheet.create({
   margin20: {
     marginTop: 20,
     textAlign: 'center',
+  },
+  infoText: {
+    ...globalTextStyles.textMedium,
   },
 });
 

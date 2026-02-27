@@ -7,6 +7,8 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     backgroundColor: colors.gray[50],
+    marginTop: 25,
+    marginBottom: 10,
   },
   header: {
     position: 'absolute',
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     backgroundColor: colors.gray[50],
-    paddingTop: 40,
+    paddingTop: 65,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     width: '100%',
-    paddingTop: 120,
+    paddingTop: 145,
     flex: 1,
     ...boxShadow,
   },

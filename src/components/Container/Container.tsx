@@ -16,6 +16,7 @@ import styles from './styles';
 import {useCallback} from 'react';
 import DrawerTrigger from '../DrawerTrigger';
 import BackButtonTrigger from '../BackButtonTrigger';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type ContainerType = 'static' | 'scroll' | 'keyboardAvoidingScrollView';
 interface ContainerProps {
@@ -29,6 +30,7 @@ interface ContainerProps {
   titleText?: StyleProp<TextStyle>;
   showDrawerIcon?: boolean;
   showBackIcon?: boolean;
+  children:React.ReactNode | null
 }
 
 const Container: FC<ContainerProps> = ({
@@ -66,17 +68,14 @@ const Container: FC<ContainerProps> = ({
           );
         case 'keyboardAvoidingScrollView':
           return (
-            <KeyboardAvoidingView
-              behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-              style={styles.keyboardAvoidingContainer}
-              enabled>
-              <ScrollView
-                bounces={false}
-                contentContainerStyle={[styles.scrollContainer, containerStyle]}
-                showsHorizontalScrollIndicator={false}
-                {...props}
-              />
-            </KeyboardAvoidingView>
+            <KeyboardAwareScrollView
+      enableOnAndroid
+      extraScrollHeight={2} // fixes the 2px overlap
+      keyboardOpeningTime={0} // smoother animation
+      contentContainerStyle={[styles.scrollContainer, containerStyle]}
+      showsVerticalScrollIndicator={false}
+      {...props}
+    />
           );
         case 'scroll':
         default:
@@ -95,7 +94,7 @@ const Container: FC<ContainerProps> = ({
 
   return (
     <>
-      <View style={styles.header}>
+    <View style={styles.header}>
         {showBackIcon && <BackButtonTrigger />}
         {title && <Heading style={titleText}>{title}</Heading>}
         {showDrawerIcon && <DrawerTrigger />}

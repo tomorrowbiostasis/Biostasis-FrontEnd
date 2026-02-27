@@ -57,6 +57,7 @@ export const DateOfBirthScreen = () => {
             onChangeValidation={setIsDateValid}
             onSubmit={handleContinuePress}
             type="birth"
+            label={t('userDateOfBirth.selectDate')}
           />
           <Button
             variant={'solid'}

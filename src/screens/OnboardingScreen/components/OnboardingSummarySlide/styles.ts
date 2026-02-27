@@ -1,5 +1,6 @@
 import {Dimensions, StyleSheet} from 'react-native';
 import colors from '~/theme/colors';
+import { globalTextStyles } from '~/theme/globalTextStyles';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -36,6 +37,9 @@ const styles = StyleSheet.create({
   buttonLogin: {
     marginTop: 10,
     backgroundColor: colors.sea[600],
+  },
+  infoText: {
+    ...globalTextStyles.textMedium,
   },
 });
 

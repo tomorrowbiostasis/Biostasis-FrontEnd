@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     padding: 7,
     borderRadius: 10,
     alignItems: 'center',
-    justifyContents: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.white,
     ...boxShadow,
   },

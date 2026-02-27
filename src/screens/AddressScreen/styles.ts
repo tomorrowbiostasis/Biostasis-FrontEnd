@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import colors from '~/theme/colors';
+import { globalTextStyles } from '~/theme/globalTextStyles';
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -30,6 +31,9 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 20,
   },
+  panelTitle: {
+    ...globalTextStyles.titleMedium,
+  },
   panelFooter: {
     marginVertical: 10,
   },
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: colors.blue[600],
+    backgroundColor: colors.blue[700],
     borderColor: colors.gray[50],
     marginTop: 20,
     borderRadius: 10,

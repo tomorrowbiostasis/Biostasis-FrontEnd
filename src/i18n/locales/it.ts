@@ -62,10 +62,13 @@ const translations: ITranslation = {
     emergencyContactSettings: 'Impostazioni del contatto di emergenza',
     pauseTimes: 'Pausa del sistema di emergenza',
     signUpForCryopreservation: 'Iscriviti con Tomorrow Bio',
+    devLogs: 'Registro salute attuale',
+    devHistoryLogs: 'Registro salute precedente',
+    devPushLogs: 'Registro push attuale',
   },
   signUpForTomorrow: {
     title: 'Iscriviti con Tomorrow Bio',
-    signUpUrl: 'https://tomorrowbiostasis.com/it/signup/',
+    signUpUrl: 'https://member.tomorrow.bio/it/signup/start',
     internetError: {
       title: 'Nessuna connessione a Internet',
       description: 'Questa pagina richiede una connessione a Internet!',
@@ -324,12 +327,12 @@ const translations: ITranslation = {
         turnOn: 'Bio-based',
         warning: "L'attivazione di biobase disabilita l'innesco a tempo!",
         appleWatch: {
-          title: "L'Apple Watch è accoppiato",
+          title: 'Dispositivo indossabile connesso',
           description:
-            "Utilizziamo il vostro Apple Watch (grazie all'integrazione con HealthKit) per recuperare i vostri dati sulla salute. Se non ne usi uno, scegli invece il sistema di attivazione basato sul tempo",
-          alertTitle: 'Accoppiamento Apple Watch',
+            "Utilizziamo il tuo dispositivo indossabile (grazie all'integrazione con HealthKit) per recuperare i tuoi dati sanitari. Se non ne usi uno, scegli invece il sistema di attivazione basato sul tempo.",
+          alertTitle: 'Associa dispositivo indossabile',
           alertDescription:
-            "Per sincronizzare i dati sanitari, l'Apple Watch deve essere associato all'iPhone. Assicurarsi che sia accoppiato correttamente. In caso contrario, seguire le istruzioni dell'app Watch iOS",
+            "Il tuo dispositivo indossabile deve essere associato al tuo iPhone per sincronizzare i dati sanitari. Assicurati che sia correttamente associato. In caso contrario, segui le istruzioni nell'app complementare del dispositivo.",
         },
         googleFit: {
           title: 'Autentica Google Fit',
@@ -712,6 +715,32 @@ const translations: ITranslation = {
     french: 'Francese',
     italian: 'Italiano',
   },
+  devLogs: {
+  title: 'Registro sanitario attuale',
+  description: 'Questa schermata è destinata agli sviluppatori per registrare e monitorare i problemi. Non è destinata agli utenti finali.',
+  logs: 'Registri',
+  noLogs: 'Nessun registro disponibile',
+  error: 'Errore nel caricamento dei registri',
+  retry: 'Riprova a caricare i registri',
+},
+devHistoryLogs: {
+  title: 'Storico registri di sviluppo',
+  description: 'Questa schermata è destinata agli sviluppatori per registrare e monitorare i problemi. Non è destinata agli utenti finali.',
+  logs: 'Registri',
+  noLogs: 'Nessun registro disponibile',
+  error: 'Errore nel caricamento dei registri',
+  retry: 'Riprova a caricare i registri',
+},
+devPushLogs: {
+  title: 'Registro push attuale',
+  description:
+    'Questa schermata è destinata agli sviluppatori per registrare e monitorare i problemi con le notifiche push. Non è destinata agli utenti finali.',
+  logs: 'Registri',
+  noLogs: 'Nessun registro disponibile',
+  error: 'Errore nel caricamento dei registri',
+  retry: 'Riprova a caricare i registri',
+}
+
 };
 
 export default translations;

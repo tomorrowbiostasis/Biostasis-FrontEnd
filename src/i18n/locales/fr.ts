@@ -62,10 +62,13 @@ const translations: ITranslation = {
     emergencyContactSettings: "Paramètres de contact d'urgence",
     pauseTimes: "Mise en pause du système d'urgence",
     signUpForCryopreservation: "S'inscrire avec Tomorrow Bio",
+    devLogs: 'Journal de santé actuel',
+    devHistoryLogs: 'Journal de santé précédent',
+    devPushLogs: 'Journal de push actuel'
   },
   signUpForTomorrow: {
     title: "S'inscrire avec Tomorrow Bio",
-    signUpUrl: 'https://tomorrowbiostasis.com/fr/signup/',
+    signUpUrl: 'https://member.tomorrow.bio/fr/signup/start',
     internetError: {
       title: 'Pas de connexion internet',
       description: 'Cette page nécessite une connexion internet',
@@ -327,12 +330,12 @@ const translations: ITranslation = {
         warning:
           "L'activation de la base biologique désactivera le déclencheur temporel",
         appleWatch: {
-          title: 'Apple Watch is paired',
+          title: 'Appareil portable connecté',
           description:
-            "Nous utilisons votre Apple Watch (grâce à l'intégration de HealthKit) pour récupérer vos données de santé. Si vous n'en utilisez pas, choisissez plutôt le système de déclenchement basé sur le temps",
-          alertTitle: 'Pair Apple Watch',
+            "Nous utilisons votre appareil portable (grâce à l’intégration de HealthKit) pour récupérer vos données de santé. Si vous n’en utilisez pas, veuillez choisir plutôt le système de déclenchement basé sur le temps.",
+          alertTitle: 'Appairer l’appareil portable',
           alertDescription:
-            "Votre Apple Watch doit être couplée à votre iPhone pour synchroniser vos données de santé. Assurez-vous qu'elle est correctement appariée. Si ce n'est pas le cas, suivez les instructions de l'application Watch iOS",
+            "Votre appareil portable doit être appairé avec votre iPhone afin de synchroniser vos données de santé. Veuillez vérifier qu’il est bien appairé. Sinon, suivez les instructions dans l’application compagnon de l’appareil.",
         },
         googleFit: {
           title: 'Authentifier Google Fit',
@@ -719,6 +722,31 @@ const translations: ITranslation = {
     french: 'Français',
     italian: 'Italien',
   },
+  devLogs: {
+  title: 'Journal de santé actuel',
+  description: 'Cet écran est destiné aux développeurs pour enregistrer et suivre les problèmes. Il n’est pas destiné aux utilisateurs finaux.',
+  logs: 'Journaux',
+  noLogs: 'Aucun journal disponible',
+  error: 'Erreur lors du chargement des journaux',
+  retry: 'Réessayer de charger les journaux',
+},
+devHistoryLogs: {
+  title: 'Historique des journaux de développement',
+  description: 'Cet écran est destiné aux développeurs pour enregistrer et suivre les problèmes. Il n’est pas destiné aux utilisateurs finaux.',
+  logs: 'Journaux',
+  noLogs: 'Aucun journal disponible',
+  error: 'Erreur lors du chargement des journaux',
+  retry: 'Réessayer de charger les journaux',
+},
+devPushLogs: {
+  title: 'Journal de push actuel',
+  description: 'Cet écran est destiné aux développeurs pour enregistrer et suivre les problèmes liés aux notifications push. Il n’est pas destiné aux utilisateurs finaux.',
+  logs: 'Journaux',
+  noLogs: 'Aucun journal disponible',
+  error: 'Erreur lors du chargement des journaux',
+  retry: 'Réessayer de charger les journaux',
+}
+
 };
 
 export default translations;

@@ -11,6 +11,7 @@ protocol IManageNetwork {
   func updateLocation(locationUrl: String,
                       completion: @escaping (Result<Void,Error>) -> ())
   func refreshToken(completion: @escaping (String?, Error?) -> ())
+  func triggerEmergency(completion: @escaping (Result<Void,Error>) -> ())
 }
 
 final class NetworkingManager {
@@ -21,6 +22,7 @@ final class NetworkingManager {
     case sendTestEmergency
     case updateLocation
     case refreshToken
+    case triggerEmergency
     
     var path: String {
       switch self {
@@ -34,6 +36,8 @@ final class NetworkingManager {
         return "/api/v2/user"
       case .refreshToken:
         return "/oauth2/token"
+      case .triggerEmergency:
+        return "/api/v1/user/trigger-emergency"
       }
     }
     
@@ -214,6 +218,26 @@ extension NetworkingManager: IManageNetwork {
       })
     }
   }
+
+  func triggerEmergency(completion: @escaping (Result<Void, Error>) -> ()) {
+    storageManager.getAccessToken { [weak self] token in
+      guard let accessToken = token else {
+        completion(.failure(NetworkManagerError.Auth))
+        return
+      }
+      self?.sendApiRequest(endpoint: .triggerEmergency,
+                           token: accessToken,
+                           bodyData: nil,
+                           completion: { result in
+        switch result {
+        case .success:
+          completion(.success(()))
+        case .failure(let error):
+          completion(.failure(error))
+        }
+      })
+    }
+  }
   
   func sendPositiveUpdateToServer(nextCheckInMinutes: Int,
                                   completion: @escaping (Result<PositiveUpdatResponse, Error>) -> ()) {
@@ -222,8 +246,8 @@ extension NetworkingManager: IManageNetwork {
         completion(.failure(NetworkManagerError.Auth))
         return
       }
+      let lastHealthKitUpdate = UserDefaults.standard.double(forKey: "LastHealthKitUpdateTimestamp")
       let params = try? JSONEncoder().encode(PositiveUpdateApiParams(minutesToNext: nextCheckInMinutes))
-      
       self?.sendApiRequest(endpoint: .sendPositiveInfo,
                            token: accessToken,
                            bodyData: params,

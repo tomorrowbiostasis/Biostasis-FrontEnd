@@ -8,7 +8,7 @@ interface IDocumentsHeader {
 const DocumentsHeader: FC<IDocumentsHeader> = ({caption}) => {
   return (
     <Box flexDirection="row" alignItems="center">
-      <Text mt={4} mb={2} opacity={0.4} fontSize="sm">
+      <Text mt={4} mb={2} opacity={1} bold={true} fontSize="sm">
         {caption}
       </Text>
     </Box>

@@ -126,14 +126,14 @@ const EmergencyMessage = () => {
   );
 
   return (
-    <View style={mainStyles.panel}>
+  <View style={mainStyles.panel}>
       <View style={mainStyles.panelHeader}>
         <IconMaterialCommunityIcons
           name={'message-cog-outline'}
           size={26}
           style={mainStyles.icon}
         />
-        <Text fontWeight={700} px={2}>
+        <Text fontWeight={700} px={2} style={mainStyles.panelTitle}>
           {t('emergencyContactsSettings.emergencyButtonSettings')}
         </Text>
       </View>
@@ -161,7 +161,7 @@ const EmergencyMessage = () => {
             }) => {
               return (
                 <>
-                  <Text style={styles.headerText}>
+                  <Text style={mainStyles.panelInfoText}>
                     {t('emergencyContactsSettings.settings.disclaimer')}
                   </Text>
                   <Text
@@ -189,6 +189,7 @@ const EmergencyMessage = () => {
                   />
                   <TextArea
                     label={t('common.message')}
+                    inputStyle={{fontSize:mainStyles.panelInfoText.fontSize, lineHeight:mainStyles.panelInfoText.lineHeight}}
                     onChangeText={handleChange('emergencyMessage')}
                     onBlur={handleBlur('emergencyMessage')}
                     value={values.emergencyMessage}

@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import boxShadow from '~/theme/boxShadow';
 import colors from '~/theme/colors';
 import {fontConfig} from '~/theme/fonts';
+import { globalTextStyles } from '~/theme/globalTextStyles';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   sectionTitle: {
-    fontSize: 16,
+    ...globalTextStyles.titleMedium,
     fontFamily: fontConfig.Poppins[600].normal,
     color: colors.blueDark[200],
   },
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 20,
     minHeight: 80,
-    width: '80%',
+    width: '90%',
     backgroundColor: colors.pink[600],
   },
   activeButton: {

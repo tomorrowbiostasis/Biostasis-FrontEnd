@@ -20,7 +20,7 @@ const EmergencyContactsSettingsScreen = () => {
       showBackIcon
       showDrawerIcon>
       <Box style={styles.curveElement} />
-
+      
       <ScrollView
         bounces={false}
         style={styles.scrollContent}

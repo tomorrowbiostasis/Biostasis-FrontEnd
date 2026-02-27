@@ -201,6 +201,7 @@ const ProfileEditScreen = () => {
                         !isSubmitted
                       )
                     }
+                    _disabled={{opacity: 1}}
                     style={styles.saveButton}
                     onPress={() => handleSubmit()}>
                     {t('common.save')}

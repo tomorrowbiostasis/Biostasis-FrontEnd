@@ -119,6 +119,7 @@ export const AddNewContact: FC<IAddNewContactProps> = ({onSavePress}) => {
 
             <Button
               variant={'solid'}
+              _disabled={{opacity: 1}}
               disabled={!isValid || !dirty || !isPhoneValid}
               style={styles.saveButton}
               onPress={() => handleSubmit()}>

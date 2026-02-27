@@ -46,7 +46,7 @@ const GDPR = () => {
       <Text fontSize={'sm'} color={colors.gray[600]}>
         {t('accountSettings.GDPR.description')}
       </Text>
-      <Text fontSize={12} color={colors.red[600]} pt={2}>
+      <Text fontSize={'sm'} color={colors.red[600]} pt={2}>
         {t('accountSettings.GDPR.label')}
       </Text>
       <Formik<GDPRScreenFormFields>

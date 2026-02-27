@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: addOpacity(colors.blue[300], 20),
   },
   saveButton: {
-    backgroundColor: colors.blue[600],
+    backgroundColor: colors.blue[700],
     borderColor: colors.gray[200],
     marginTop: buttonsMargin,
   },

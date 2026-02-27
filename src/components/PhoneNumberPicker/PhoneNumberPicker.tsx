@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import {View} from 'native-base';
-import {Text} from 'react-native';
+import {Text, TouchableWithoutFeedback} from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
@@ -94,46 +94,53 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
   }, [onTouched]);
   const isCurrentNumberValid =
     (initialPhone && !isTouched) || (isTouched && isNumberValid);
+  const focusInput = () => {
+    if(phoneNumberPickerRef.current){
+      return phoneNumberPickerRef.current.focus();
+    }
+  };
   return (
-    <View>
-      <Text style={styles.label}>{label || t('userPhone.phoneNumber')}</Text>
-      <View style={[styles.inputContainer, inputStyles]}>
-        <PhoneInput
-          style={styles.input}
-          ref={phoneNumberPickerRef}
-          initialCountry={'de'}
-          // @ts-ignore
-          initialValue={initialPhoneNumber}
-          onChangePhoneNumber={handlePhoneNumberChange}
-          onPressFlag={() => {
+    <TouchableWithoutFeedback onPress={focusInput}>
+      <View>
+        <Text style={styles.label}>{label || t('userPhone.phoneNumber')}</Text>
+        <View style={[styles.inputContainer, inputStyles]}>
+          <PhoneInput
+            style={styles.input}
+            ref={phoneNumberPickerRef}
+            initialCountry={'de'}
             // @ts-ignore
-            if (phoneNumberPickerRef.current?.getValue()?.length <= 1) {
+            initialValue={initialPhoneNumber}
+            onChangePhoneNumber={handlePhoneNumberChange}
+            onPressFlag={() => {
               // @ts-ignore
-              phoneNumberPickerRef.current?.picker?.show();
-            }
-          }}
-          cancelText={t('common.cancel')}
-          confirmText={t('common.confirm')}
-          textProps={{
-            onBlur: handleInputBlur,
-            keyboardType: 'number-pad',
-            onSubmitEditing: () => {
-              if (isNumberValid) {
-                onSubmit?.();
+              if (phoneNumberPickerRef.current?.getValue()?.length <= 1) {
+                // @ts-ignore
+                phoneNumberPickerRef.current?.picker?.show();
               }
-            },
-          }}
-          textStyle={styles.inputContainerText}
-        />
-        {isCurrentNumberValid && <CheckMarkIcon />}
+            }}
+            cancelText={t('common.cancel')}
+            confirmText={t('common.confirm')}
+            textProps={{
+              onBlur: handleInputBlur,
+              keyboardType: 'number-pad',
+              onSubmitEditing: () => {
+                if (isNumberValid) {
+                  onSubmit?.();
+                }
+              },
+            }}
+            textStyle={styles.inputContainerText}
+          />
+          {isCurrentNumberValid && <CheckMarkIcon />}
+        </View>
+        <View style={styles.errorMessageContainer}>
+          {!isNumberValid && isTouched && (
+            <Text style={styles.errorMessage}>
+              {t('userPhone.invalidPhoneNumber')}
+            </Text>
+          )}
+        </View>
       </View>
-      <View style={styles.errorMessageContainer}>
-        {!isNumberValid && isTouched && (
-          <Text style={styles.errorMessage}>
-            {t('userPhone.invalidPhoneNumber')}
-          </Text>
-        )}
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };

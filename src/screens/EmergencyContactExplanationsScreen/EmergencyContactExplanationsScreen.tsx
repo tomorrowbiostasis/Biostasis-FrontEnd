@@ -14,10 +14,8 @@ const EmergencyContactExplanationsScreen = () => {
 
   const handleSetUpPress = useCallback(() => {
     dispatch((state: any) => {
-      state.routes.pop();
-
       const newRoutes = [
-        ...state.routes,
+        ...state.routes.slice(0,-1),
         {name: Screens.AddNewEmergencyContact},
       ];
       return CommonActions.reset({

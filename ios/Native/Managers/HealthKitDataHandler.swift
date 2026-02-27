@@ -5,6 +5,10 @@ import UIKit
 ///Informs about proper / unproper values received from healthkit.
 ///Call completion handler when all background tasks will end.
 
+private enum HealthKitDefaultsKey {
+  static let lastHealthKitUpdate = "LastHealthKitUpdateTimestamp"
+}
+
 protocol IDelegateHealthKitDataHandler: AnyObject
 {
   func aquiredCorrectDataset(data: HealthMetrics)
@@ -23,7 +27,6 @@ protocol IHandleHealthMetrics {
 }
 
 final class HealthKitDataHandler {
-  
   //Private
   private unowned let healthKitStore: HKHealthStore
   private unowned var delegate: IDelegateHealthKitDataHandler
@@ -45,7 +48,6 @@ extension HealthKitDataHandler: IHandleHealthKitData {
         completionHandler(nil)
         return
       }
-      
       let endDate = Date()
       let startDate = Calendar.current.date(byAdding: .minute, value: -positiveInfoPeriod, to: endDate)
       
@@ -67,6 +69,20 @@ extension HealthKitDataHandler: IHandleHealthKitData {
   }
   
   func processNewData(for type:HKSampleType,with sample: HKQuantitySample) {
+    // let timestamp = sample.endDate.timeIntervalSince1970
+    // now
+    let timestamp = Date().timeIntervalSince1970
+    UserDefaults.standard.set(timestamp, forKey: HealthKitDefaultsKey.lastHealthKitUpdate)
+    print("Saved HealthKit timestamp:", timestamp)
+
+    let savedTimestamp = UserDefaults.standard.double(forKey: HealthKitDefaultsKey.lastHealthKitUpdate)
+    if savedTimestamp > 0 {
+        let date = Date(timeIntervalSince1970: savedTimestamp)
+        print("Last HealthKit update:", date)
+    } else {
+        print("No HealthKit update timestamp found")
+    }
+
     updateHealthMetrics(for: type, with: sample)
     self.delegate.aquiredCorrectDataset(data: loadHealthMetricsFromStorage())
   }
@@ -93,18 +109,18 @@ extension HealthKitDataHandler: IHandleHealthMetrics {
       break
     }
     saveHealthMetricsToStorage(healthMetrics)
-  }
-  
-  func saveHealthMetricsToStorage(_ healthMetrics: HealthMetrics) {
-    do {
-      let encoder = JSONEncoder()
-      let encodedData = try encoder.encode(healthMetrics)
-      let defaults = UserDefaults.standard
-      defaults.set(encodedData, forKey: "HealthMetrics")
-    } catch {
-      print("Error encoding healthMetrics: \(error)")
+   DispatchQueue.main.async {
+        let currentData = self.healthMetricsToDict(healthMetrics)
+        NativeManagerEmitter.shared?.sendHealthDataToJS(data: currentData)
+
+
+        let allMetrics = self.loadAllHealthMetrics()
+    let allDataArray = allMetrics.map { self.healthMetricsToDict($0) }
+    NativeManagerEmitter.shared?.sendHealthDataToJS(data: ["allHealthData": allDataArray])
     }
+   
   }
+
   
   func loadHealthMetricsFromStorage() -> HealthMetrics {
     let defaults = UserDefaults.standard
@@ -119,4 +135,63 @@ extension HealthKitDataHandler: IHandleHealthMetrics {
     }
     return HealthMetrics()
   }
+
+  func loadAllHealthMetrics() -> [HealthMetrics] {
+    let defaults = UserDefaults.standard
+    guard let data = defaults.data(forKey: "@AllBioData") else {
+        return []
+    }
+    do {
+        return try JSONDecoder().decode([HealthMetrics].self, from: data)
+    } catch {
+        print("❌ Error decoding all HealthMetrics:", error)
+        return []
+    }
+}
+
+
+  func healthMetricsToDict(_ metric: HealthMetrics) -> [String: Any] {
+    return [
+        "heartRate": metric.heartRate ?? 0,
+        "restingHeartRate": metric.restingHeartRate ?? 0,
+        "steps": metric.steps ?? 0,
+        "heartRateEndDate": metric.heartRateEndDate?.timeIntervalSince1970 ?? NSNull(),
+        "restingHeartRateEndDate": metric.restingHeartRateEndDate?.timeIntervalSince1970 ?? NSNull(),
+        "stepsEndDate": metric.stepsEndDate?.timeIntervalSince1970 ?? NSNull()
+    ]
+  }
+
+  func saveHealthMetricsToStorage(_ healthMetrics: HealthMetrics) {
+    let defaults = UserDefaults.standard
+    let encoder = JSONEncoder()
+    
+    // 1. Save the latest single record
+    do {
+        let encodedSingle = try encoder.encode(healthMetrics)
+        defaults.set(encodedSingle, forKey: "HealthMetrics")
+    } catch {
+        print("❌ Error saving single healthMetrics:", error)
+    }
+    
+    // 2. Append to @AllBioData
+    let allDataKey = "@AllBioData"
+    var allRecords: [HealthMetrics] = []
+
+    if let existingData = defaults.data(forKey: allDataKey) {
+        do {
+            allRecords = try JSONDecoder().decode([HealthMetrics].self, from: existingData)
+        } catch {
+            print("Failed to decode existing array:", error)
+        }
+    }
+
+    allRecords.append(healthMetrics)
+
+    do {
+        let encodedArray = try encoder.encode(allRecords)
+        defaults.set(encodedArray, forKey: allDataKey)
+    } catch {
+        print("Error saving array:", error)
+    }
+}
 }

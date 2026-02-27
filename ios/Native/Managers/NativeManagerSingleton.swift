@@ -46,13 +46,20 @@ final class NativeManagerSingleton: NSObject {
   private lazy var recommendationService: RecommendationService = {
     return RecommendationService()
   }()
+  private lazy var backgroundHealthChecker: IHandleBackgroundHealthCheck = {
+    return BackgroundHealthChecker(
+      healthKitStore: HKHealthStore(),
+      storageManager: storageManager,
+      timeManager: timeManager,
+      networkingManager: networkingManager
+    )
+  }()
   
   private var debounceWorkItem: DispatchWorkItem?
   
   override init() {
     super.init()
     
-    print("🐤 NativeManager started")
     determineAndSetDataCollectionStatus()
   }
   
@@ -66,19 +73,47 @@ extension NativeManagerSingleton: IManageNativeComponents {
       self.determineAndSetDataCollectionStatus()
     }
   }
-}
 
+  @objc(handleSilentPushNotificationWithCompletion:)
+  func handleSilentPushNotification(completion: @escaping (Bool) -> Void) {
+      let lastHealthKitUpdate =
+          UserDefaults.standard.double(forKey: "LastHealthKitUpdateTimestamp")
+      guard lastHealthKitUpdate > 0 else {
+          print("No HealthKit timestamp found")
+          completion(false)
+          return
+      }
+      // hardcoded 8 hours as the expiration time for triggering emergency, can be adjusted later based on needs and user feedback
+      let eightHours: TimeInterval = 8 * 60 * 60
+      let expirationTimestamp = lastHealthKitUpdate + eightHours
+
+      guard Date().timeIntervalSince1970 > expirationTimestamp else {
+          print("Not expired yet — skipping emergency trigger")
+          completion(true)
+          return
+      }
+
+      networkingManager.triggerEmergency { result in
+          switch result {
+          case .success:
+              print("Trigger emergency sent")
+              completion(true)
+          case .failure(let error):
+              print("Trigger emergency failed:", error)
+              completion(false)
+          }
+      }
+  }
+}
 // MARK: private Methods
 extension NativeManagerSingleton {
   private func determineAndSetDataCollectionStatus() {
     self.storageManager.getUser { [weak self] user in
       guard let user = user else {
-        print("🐤 User Settings: not found?")
         self?.stopHealthKitDataCollection()
         self?.stopLocationDataCollection()
         return
       }
-      print("🐤 User Settings: \(user)")
       if user.automatedEmergency {
         if !user.regularPushNotification && user.pulseBasedTriggerIOSAppleWatchPaired{
           self?.startHealthKitDataCollection()
@@ -100,32 +135,32 @@ extension NativeManagerSingleton {
   }
   
   private func startHealthKitDataCollection() {
-    print("🐤 Starting health kit data collection")
+    print("Starting health kit data collection")
     healthKitManager.requestAuthorizationAndStartObservers(completion: { _ in })
   }
   
   private func stopHealthKitDataCollection() {
-    print("🐤 Stopping health kit data collection")
+    print("Stopping health kit data collection")
     healthKitManager.disableObservers()
   }
   
   private func startLocationDataCollection() {
-    print("🐤 Starting location data collection")
+    print("Starting location data collection")
     locationManager.startCollectingLocation()
   }
   
   private func stopLocationDataCollection() {
-    print("🐤 Stopping location data collection")
+    print("Stopping location data collection")
     locationManager.stopCollectingLocation()
   }
   
   private func startRecommendationSystem() {
-    print("🐤 Start recommendation system")
+    print("Start recommendation system")
     recommendationService.startRecomendationSystem()
   }
   
   private func stopRecommendationSystem() {
-    print("🐤 Stop recommendation system")
+    print("Stop recommendation system")
     recommendationService.stopRecommendtionSystem()
   }
   
@@ -158,6 +193,7 @@ extension NativeManagerSingleton {
         completion(.failure(NativeManagerError.UserNotFound))
         return
       }
+      print("Frequency from storage: \(positiveInfoPeriod) minutes")
       completion(.success(positiveInfoPeriod))
     })
   }

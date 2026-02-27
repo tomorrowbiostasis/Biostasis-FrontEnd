@@ -105,13 +105,13 @@ const EmergencyContactsList = () => {
     <View style={styles.panel}>
       <View style={styles.panelHeader}>
         <IconAntDesign name={'contacts'} size={26} style={styles.icon} />
-        <Text fontSize={'md'} fontWeight={700}>
+        <Text fontWeight={700} style={styles.panelTitle}>
           {t('emergencyContactsSettings.emergencyList')}
         </Text>
       </View>
       <View style={styles.lineStyle} />
       <View style={styles.panelBody}>
-        <Text fontSize={'sm'}>
+        <Text style={styles.panelInfoText}>
           {t('emergencyContactsSettings.makeSureToTestEmergencyContact')}
         </Text>
         <View style={styles.listContentContainer}>

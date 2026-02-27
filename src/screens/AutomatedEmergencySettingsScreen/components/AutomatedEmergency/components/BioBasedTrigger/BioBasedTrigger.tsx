@@ -110,6 +110,7 @@ const BioBasedTrigger = () => {
   const handleUpdateUser = useCallback(
     (updateData: AutomatedEmergencySettings, touched?: boolean) => {
       if (touched) {
+        console.log('BioBasedTrigger: handleUpdateUser', updateData);
         dispatch(updateUser(updateData));
       }
     },
@@ -185,6 +186,7 @@ const BioBasedTrigger = () => {
   const handleFrequency = useCallback(
     (frequency: number) => {
       const updateData: IUser = {};
+      console.log('Frequency selected:', frequency);
       updateData.positiveInfoPeriod = frequency;
 
       // user chose 6 or 9 hours
@@ -474,7 +476,7 @@ const BioBasedTrigger = () => {
                     )
                   }
                 />
-                <View mt={5}>
+                {/* <View mt={5}>
                   <Text fontSize={16}>
                     {t(
                       'emergencyContactsSettings.automatedEmergencySettings.bioTrigger.frequency',
@@ -485,7 +487,7 @@ const BioBasedTrigger = () => {
                     onValueChange={itemValue => handleFrequency(+itemValue)}
                     selectedValue={`${positiveInfoPeriod}`}
                   />
-                </View>
+                </View> */}
                 <View style={styles.message}>
                   {isPlatformConditionsValid &&
                     (recommendedPeriod ? (
@@ -496,7 +498,7 @@ const BioBasedTrigger = () => {
                         )}
                       </Text>
                     ) : (
-                      <Text fontSize={12} color={colors.red[600]}>
+                      <Text fontSize={'sm'} color={colors.red[600]}>
                         {t(
                           'dashboard.automatedEmergency.recommendationDaysLeft',
                           {daysLeft},

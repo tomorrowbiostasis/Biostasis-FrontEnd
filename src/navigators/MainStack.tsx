@@ -18,6 +18,9 @@ import ProfileEditScreen from '~/screens/ProfileEditScreen';
 import ProfileAddMedicalInfoScreen from '~/screens/MedicalInfoScreen';
 import SignUpForCryopreservation from '~/screens/SignUpForCryopreservation';
 import EmergencyContactsSettingsScreen from '~/screens/EmergencyContactsSettingsScreen';
+import DevLogsScreen from '~/screens/DevLogs/DevLogsScreen';
+import DevHistoryLogsScreen from '~/screens/DevHistoryLogs/DevHistoryLogsScreen';
+import DevPushLogsScreen from '~/screens/DevPushLogs/DevPushLogsScreen';
 
 const Stack = createStackNavigator<MainStackNavigatorParamList>();
 
@@ -77,6 +80,21 @@ export const MainStack = () => {
       <Stack.Screen
         name={Screens.ProfileMedicalInfo as never}
         component={ProfileAddMedicalInfoScreen}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.DevLogs as never}
+        component={DevLogsScreen}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.DevHistoryLogs as never}
+        component={DevHistoryLogsScreen}
+        options={homeScreenOptions as StackNavigationOptions}
+      />
+      <Stack.Screen
+        name={Screens.DevPushLogs as never}
+        component={DevPushLogsScreen}
         options={homeScreenOptions as StackNavigationOptions}
       />
     </Stack.Navigator>

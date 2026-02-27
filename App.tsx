@@ -5,6 +5,8 @@ import NavigationContainer from '~/navigators';
 import Providers from '~/providers/Providers';
 import SplashScreen from 'react-native-splash-screen';
 import SoundService from '~/services/Alert.service';
+import messaging from '@react-native-firebase/messaging';
+import { logPushEvent } from '~/services/PushLogger.service';
 
 import {awsInit} from '~/services/Amazon.service';
 import '~/i18n/i18n';
@@ -30,6 +32,15 @@ const App = () => {
       UIManager.setLayoutAnimationEnabledExperimental(true);
 
     SplashScreen.hide();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log('📩 Silent push received in FOREGROUND:', remoteMessage.data);
+      await logPushEvent({ source: 'foreground', ...remoteMessage });
+    });
+
+    return unsubscribe;
   }, []);
 
   useEffect(() => {

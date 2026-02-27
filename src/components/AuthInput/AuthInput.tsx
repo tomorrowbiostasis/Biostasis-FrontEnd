@@ -1,5 +1,5 @@
-import React, {FC, useCallback, useMemo} from 'react';
-import {StyleProp, View, ViewStyle} from 'react-native';
+import React, {FC, useCallback, useMemo, useRef} from 'react';
+import {StyleProp, View, ViewStyle, TextInput, TouchableWithoutFeedback} from 'react-native';
 import {Input, IInputProps, FormControl, Stack} from 'native-base';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -21,7 +21,7 @@ const AuthInput: FC<AuthInputProps> = props => {
       case 'password':
         return {
           placeholder: t('placeholder.password'),
-          autoCompleteType: 'password',
+          autoComplete: 'password',
           textContentType: 'password',
           secureTextEntry: true,
           autoCapitalize: 'none',
@@ -32,7 +32,7 @@ const AuthInput: FC<AuthInputProps> = props => {
       case 'email':
         return {
           placeholder: t('placeholder.email'),
-          autoCompleteType: 'email',
+          autoComplete: 'email',
           keyboardType: 'email-address',
           textContentType: 'emailAddress',
           autoCapitalize: 'none',
@@ -54,22 +54,32 @@ const AuthInput: FC<AuthInputProps> = props => {
     );
   }, [inputTypeProps.InputLeftElement]);
 
+  const inputRef = useRef<TextInput>(null);
+    const focusInput = () => {
+      if(inputRef.current){
+        return inputRef.current.focus();
+      }
+  };
+
   return (
-    <View style={props.containerStyle}>
-      <FormControl isInvalid={!!props.errorMessage}>
-        <Stack>
-          <Input
-            {...inputTypeProps}
-            {...props}
-            style={[styles.input, props.style]}
-            InputLeftElement={<InputLeftElement />}
-          />
-          <FormControl.ErrorMessage>
-            {props.errorMessage}
-          </FormControl.ErrorMessage>
-        </Stack>
-      </FormControl>
-    </View>
+    <TouchableWithoutFeedback onPress={focusInput}>
+      <View style={props.containerStyle}>
+        <FormControl isInvalid={!!props.errorMessage}>
+          <Stack>
+            <Input
+              ref={inputRef}
+              {...inputTypeProps}
+              {...props}
+              style={[styles.input, props.style]}
+              InputLeftElement={<InputLeftElement />}
+            />
+            <FormControl.ErrorMessage>
+              {props.errorMessage}
+            </FormControl.ErrorMessage>
+          </Stack>
+        </FormControl>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
