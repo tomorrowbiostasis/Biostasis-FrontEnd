@@ -363,6 +363,15 @@ const translations = {
         description:
           'Stop the emergency system from triggering for recurring or temporary time frames.',
       },
+      sleepSchedule: {
+        title: 'Sleep Schedule',
+        description:
+          'Automatically pause the emergency system during your usual sleep hours to prevent false alarms.',
+        enableSchedule: 'Enable sleep schedule',
+        bedtime: 'Bedtime',
+        wakeTime: 'Wake time',
+        sleepWindow: 'System pauses nightly from {{bedtime}} to {{wakeTime}}',
+      },
       time: {
         hours: '{{count}} hours',
         hoursDefault: '{{count}} hours (default)',
@@ -465,6 +474,13 @@ const translations = {
       userProfile: 'My Data',
       emergencySystem: 'Emergency System Settings',
       signUp: 'Sign up for Cryopreservation',
+    },
+    sleep: {
+      goingToSleep: 'Going to Sleep',
+      sleepModeActive: 'Sleep Mode Active',
+      sleepModeDescription: 'Emergency system paused until {{wakeTime}}',
+      wakeUp: 'I\'m Awake',
+      tapToSleep: 'Tap when going to bed',
     },
   },
   location: {
