@@ -138,6 +138,22 @@ export const updateLocation = async () => {
 
 export const emergencyRetry = async () => {
   try {
+    const airplaneMode = await DeviceInfo.isAirplaneMode();
+    if (airplaneMode) {
+      console.log(
+        '-> Emergency retry skipped (airplane mode — will re-evaluate when connectivity returns)',
+      );
+      await updateNotification(
+        i18n.t('bioCheck.messages.unableToSendEmergency'),
+        i18n.t('bioCheck.messages.airPlaneOff'),
+      );
+      scheduleEvent(
+        BackgroundEventsEnum.EmergencyRetryMechanism,
+        60 * 1000,
+      ).then(() => console.log('retry scheduled (airplane mode)...'));
+      return;
+    }
+
     const {status} = await API.startEmergency({});
     if (status >= 200 && status < 300) {
       await stopBackgroundFetch();

@@ -1,5 +1,6 @@
 import {AsyncStorageService} from './AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from './AsyncStorage.service/AsyncStorage.types';
+import {shouldSmartDetectionPause} from './DeviceSignals.service';
 
 export interface SleepSchedule {
   enabled: boolean;
@@ -9,14 +10,7 @@ export interface SleepSchedule {
   wakeMinute: number;
 }
 
-export interface SleepModeState {
-  isAsleep: boolean;
-  sleepStartedAt: number | null;
-  expectedWakeAt: number | null;
-}
-
 const SLEEP_SCHEDULE_KEY = AsyncStorageEnum.SleepSchedule;
-const SLEEP_MODE_KEY = AsyncStorageEnum.SleepModeState;
 
 const DEFAULT_SCHEDULE: SleepSchedule = {
   enabled: false,
@@ -47,73 +41,20 @@ export const saveSleepSchedule = async (
   );
 };
 
-export const getSleepModeState = async (): Promise<SleepModeState> => {
-  try {
-    const raw = await AsyncStorageService.getItem(SLEEP_MODE_KEY);
-    if (raw) {
-      return JSON.parse(raw);
-    }
-  } catch (e) {
-    console.log('Error reading sleep mode state', e);
-  }
-  return {isAsleep: false, sleepStartedAt: null, expectedWakeAt: null};
-};
-
-export const activateSleepMode = async (
-  schedule: SleepSchedule,
-): Promise<SleepModeState> => {
-  const now = new Date();
-  const wakeAt = new Date();
-  wakeAt.setHours(schedule.wakeHour, schedule.wakeMinute, 0, 0);
-
-  if (wakeAt.getTime() <= now.getTime()) {
-    wakeAt.setDate(wakeAt.getDate() + 1);
-  }
-
-  const state: SleepModeState = {
-    isAsleep: true,
-    sleepStartedAt: now.getTime(),
-    expectedWakeAt: wakeAt.getTime(),
-  };
-
-  await AsyncStorageService.setItem(SLEEP_MODE_KEY, JSON.stringify(state));
-  return state;
-};
-
-export const deactivateSleepMode = async (): Promise<void> => {
-  const state: SleepModeState = {
-    isAsleep: false,
-    sleepStartedAt: null,
-    expectedWakeAt: null,
-  };
-  await AsyncStorageService.setItem(SLEEP_MODE_KEY, JSON.stringify(state));
-};
-
 /**
  * Check if the system should be paused due to sleep.
  * Returns true if:
- *  1. Manual sleep mode is active and wake time hasn't passed, OR
- *  2. A sleep schedule is enabled and current time falls within the window
+ *  1. A sleep schedule is enabled and current time falls within the window, OR
+ *  2. Smart detection signals indicate the user is likely sleeping
+ *     (Focus/DND active, charging at night, stale health data + corroborating signal)
  */
 export const isSleepPaused = async (): Promise<boolean> => {
-  const manualState = await getSleepModeState();
-  if (manualState.isAsleep) {
-    if (
-      manualState.expectedWakeAt &&
-      Date.now() < manualState.expectedWakeAt
-    ) {
-      return true;
-    }
-    await deactivateSleepMode();
-    return false;
-  }
-
   const schedule = await getSleepSchedule();
-  if (!schedule.enabled) {
-    return false;
+  if (schedule.enabled && isWithinSleepWindow(schedule)) {
+    return true;
   }
 
-  return isWithinSleepWindow(schedule);
+  return shouldSmartDetectionPause();
 };
 
 export const isWithinSleepWindow = (schedule: SleepSchedule): boolean => {

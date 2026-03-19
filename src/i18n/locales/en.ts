@@ -372,6 +372,26 @@ const translations = {
         wakeTime: 'Wake time',
         sleepWindow: 'System pauses nightly from {{bedtime}} to {{wakeTime}}',
       },
+      smartDetection: {
+        title: 'Smart Sleep Detection',
+        description:
+          'Automatically detect when you are sleeping using device signals to prevent false alarms.',
+        enableDetection: 'Enable smart detection',
+        useFocus: 'Use Focus / Do Not Disturb',
+        useFocusDescription:
+          'Pause emergency system when your phone is in Focus or Do Not Disturb mode.',
+        useCharging: 'Use charging detection',
+        useChargingDescription:
+          'Treat nighttime charging as a sleep signal.',
+        useHealthData: 'Use health data recency',
+        useHealthDataDescription:
+          'Detect when your ring or watch stops sending data as a sleep signal.',
+        nighttimeWindow: 'Nighttime window',
+        nighttimeWindowDescription:
+          'Hours considered nighttime when no sleep schedule is set.',
+        nighttimeFrom: 'From',
+        nighttimeTo: 'To',
+      },
       time: {
         hours: '{{count}} hours',
         hoursDefault: '{{count}} hours (default)',
@@ -474,13 +494,6 @@ const translations = {
       userProfile: 'My Data',
       emergencySystem: 'Emergency System Settings',
       signUp: 'Sign up for Cryopreservation',
-    },
-    sleep: {
-      goingToSleep: 'Going to Sleep',
-      sleepModeActive: 'Sleep Mode Active',
-      sleepModeDescription: 'Emergency system paused until {{wakeTime}}',
-      wakeUp: 'I\'m Awake',
-      tapToSleep: 'Tap when going to bed',
     },
   },
   location: {

@@ -17,5 +17,7 @@ export enum AsyncStorageEnum {
   RecommendedPeriod = '@RecommendedPeriod',
   Language = '@language',
   SleepSchedule = '@SleepSchedule',
-  SleepModeState = '@SleepModeState',
+  SmartDetectionSettings = '@SmartDetectionSettings',
+  TimezoneBaseline = '@TimezoneBaseline',
+  TravelDetectedAt = '@TravelDetectedAt',
 }

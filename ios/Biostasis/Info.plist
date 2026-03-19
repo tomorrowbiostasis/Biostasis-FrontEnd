@@ -56,6 +56,8 @@
 	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to your photo library to allow you to upload or select images.</string>
+	<key>NSFocusStatusUsageDescription</key>
+	<string>${PRODUCT_NAME} uses Focus status to detect when you are sleeping and prevent false emergency alerts.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>${PRODUCT_NAME} uses bluetooth to connect with the smart devices to detect health problems and to trigger an automated emergency.</string>
 	<key>NSHealthShareUsageDescription</key>
