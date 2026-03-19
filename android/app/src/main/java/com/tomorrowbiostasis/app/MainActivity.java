@@ -1,4 +1,4 @@
-package com.biostasis;
+package com.tomorrowbiostasis.app;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,13 +25,11 @@ public class MainActivity extends ReactActivity implements ProviderInstaller.Pro
     return "Biostasis";
   }
 
-  //Update the security provider when the activity is created.
   @Override
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.show(this, R.style.SplashScreenTheme, false);
         /*
-         * This is potential android 9 fix for  androidx.fragment.app.Fragment$InstantiationException* Unable to start activity ComponentInfo{com.biostasis/com.biostasis.MainActivity}:
-         * Unable to instantiate fragment com.swmansion.rnscreens.ScreenFragment: calling Fragment constructor caused an exception
+         * This is potential android 9 fix for  androidx.fragment.app.Fragment$InstantiationException
          * savedInstanceState -> null
         */
         super.onCreate(savedInstanceState);
@@ -56,8 +54,6 @@ public class MainActivity extends ReactActivity implements ProviderInstaller.Pro
   public void onProviderInstallFailed(int errorCode, Intent recoveryIntent) {
     GoogleApiAvailability availability = GoogleApiAvailability.getInstance();
     if (availability.isUserResolvableError(errorCode)) {
-      // Recoverable error. Show a dialog prompting the user to
-      // install/update/enable Google Play services.
       availability.showErrorDialogFragment(
               this,
               errorCode,
@@ -65,12 +61,10 @@ public class MainActivity extends ReactActivity implements ProviderInstaller.Pro
               new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
-                  // The user chose not to take the recovery action.
                   onProviderInstallerNotAvailable();
                 }
               });
     } else {
-      // Google Play services isn't available.
       onProviderInstallerNotAvailable();
     }
   }
@@ -80,10 +74,6 @@ public class MainActivity extends ReactActivity implements ProviderInstaller.Pro
                                   Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == ERROR_DIALOG_REQUEST_CODE) {
-      // Adding a fragment via GoogleApiAvailability.showErrorDialogFragment
-      // before the instance state is restored throws an error. So instead,
-      // set a flag here, which causes the fragment to delay until
-      // onPostResume.
       retryProviderInstall = true;
     }
   }
@@ -96,7 +86,6 @@ public class MainActivity extends ReactActivity implements ProviderInstaller.Pro
   protected void onPostResume() {
     super.onPostResume();
     if (retryProviderInstall) {
-      // It's safe to retry installation.
       ProviderInstaller.installIfNeededAsync(this, this);
     }
     retryProviderInstall = false;

@@ -2,11 +2,12 @@
 
 [![license](https://img.shields.io/badge/license-GPLv3-blue)]()
 [![platform](https://img.shields.io/badge/platform-IOS%20%7C%20Android-lightgrey)]()
-[![react-native](https://img.shields.io/badge/react%20native-0.67.2-blue)]()
+[![react-native](https://img.shields.io/badge/react%20native-0.76.7-blue)]()
 
 ## Table of Contents:
 
 - [Before You Start](#before-you-start)
+- [Documentation](#documentation)
 - [Introduction](#introduction)
 - [Installation](#installation)
   - [Preparation](#preparation)
@@ -26,6 +27,16 @@
   - [Android](#android-1)
 - [Disclaimer](#disclaimer)
 - [License](#license)
+
+## Documentation
+
+Full project documentation (app purpose, business logic, and technical architecture) is in the **[docs/](docs/)** folder:
+
+- **[docs/README.md](docs/README.md)** — Index of all documentation.
+- **[Purpose and Business Logic](docs/PURPOSE_AND_BUSINESS_LOGIC.md)** — What the app does, user flows, and detailed business rules (auth, sign-up, emergency contacts, Automated Emergency System, documents, profile, validation).
+- **[Technical Architecture](docs/TECHNICAL_ARCHITECTURE.md)** — Tech stack, entry and shell, navigation, Redux state and persistence, background tasks, notifications, deep linking.
+- **[API and Services](docs/API_AND_SERVICES.md)** — API client, endpoints, types, and service descriptions.
+- **[iOS Launch](docs/IOS_LAUNCH.md)** — What you need besides `pod install` to launch the iOS app (prerequisites, env files, Firebase, Xcode/CLI).
 
 ## Before You Start:
 
@@ -75,7 +86,7 @@ There are multiple steps you should take before you start the installation stage
 
     - First, pick the platform that you want to work on (Android or iOS).
     - Then, add a new app for that platform.
-    - Make sure that the package name for your app is `app.biostasis`
+    - Make sure that the package name for your app is `com.tomorrowbiostasis.app`
 
       **or else you need to change the local package name inside `build.gradle` file to match your input name.**
 
@@ -156,6 +167,8 @@ You can run the application outside Android Studio.
 
 ---
 
+For a full checklist of what you need **besides** `pod install` (Xcode, Yarn, CocoaPods, env files, Firebase plist, Metro), see **[iOS Launch](docs/IOS_LAUNCH.md)**.
+
 1.  Install [Cocoapods](https://cocoapods.org/) on your Mac machine using:
 
         sudo gem install cocoapods
@@ -173,8 +186,8 @@ You can run the application outside Android Studio.
 
     > Pod installation complete! There are X dependencies from the Podfile and X total pods installed.
 
-4.  Using Xcode open the application's iOS folder `~/biostasis-frontend/ios`. Xcode will start building your application automatically.
-5.  Then, after Xcode finishes building the project, you can run the application. Visit [this page](https://developer.apple.com/documentation/xcode/running-your-app-in-simulator-or-on-a-device) to learn more about how you can run the application on a simulator or physical device.
+4.  Using Xcode open the application's iOS folder `~/biostasis-frontend/ios` (or your project path). Xcode will start building your application automatically.
+5.  Start Metro in a terminal from the project root: `yarn start`. Then run the application from Xcode (or run `yarn ios` from the project root). Visit [this page](https://developer.apple.com/documentation/xcode/running-your-app-in-simulator-or-on-a-device) to learn more about how you can run the application on a simulator or physical device.
 
 **_PS: if you faced an error with the `Yoga` file just add `|` where the error is mentioned._**
 
