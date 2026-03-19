@@ -14,6 +14,7 @@ import {
   updateNotification,
 } from './Notification.service';
 import {getTimeSettings, isPausedTime} from './Time.service';
+import {isSleepPaused} from './SleepSchedule.service';
 import {IHealthData} from './BioCheck.types';
 import {recommendationSystem} from './Recommendation.service';
 import {AppState} from 'react-native';
@@ -27,10 +28,16 @@ export const startBioCheck = async () => {
     // check if the system is paused
     const {pausedDate, specificPausedTimes} = await getTimeSettings();
 
-    if (!isPausedTime(new Date(), pausedDate, specificPausedTimes)) {
-      // Allow notification is on make sure that the notification channel is created to send notification
+    const sleepPaused = await isSleepPaused();
+
+    if (
+      !isPausedTime(new Date(), pausedDate, specificPausedTimes) &&
+      !sleepPaused
+    ) {
       allowNotifications && createNotificationChannels();
       automatedEmergency && (await checkForBioData());
+    } else {
+      console.log('-> BIO CHECK SKIPPED (paused or sleep mode)');
     }
   } catch (e) {
     console.log(e);

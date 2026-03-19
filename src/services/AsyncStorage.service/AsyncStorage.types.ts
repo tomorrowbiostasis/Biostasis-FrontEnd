@@ -16,4 +16,6 @@ export enum AsyncStorageEnum {
   LongestPeriod = '@LongestPeriod',
   RecommendedPeriod = '@RecommendedPeriod',
   Language = '@language',
+  SleepSchedule = '@SleepSchedule',
+  SleepModeState = '@SleepModeState',
 }

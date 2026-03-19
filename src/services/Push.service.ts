@@ -10,7 +10,8 @@ import {NotificationTypesEnum} from '~/constants/notification.constants';
 import {AppState, Vibration} from 'react-native';
 import {navigationRef} from '~/navigators';
 import {Screens} from '~/models/Navigation.model';
-import { logPushEvent } from './PushLogger.service';
+import {logPushEvent} from './PushLogger.service';
+import {isSleepPaused} from './SleepSchedule.service';
 let initialized = false;
 
 export const listenForPushTokenAndUpdate = async () => {
@@ -76,14 +77,26 @@ const handleForegroundState = (isRegularCheck: boolean) => {
 
 export const handleRemoteMessages = async (message: {
   data: any;
-  notification?: any; // optional
+  notification?: any;
 }) => {
   console.log('📩 Remote message received:', message);
-  await logPushEvent({ source: 'background', ...message })
-  const { data, notification } = message;
-  const { type } = data || {};
+  await logPushEvent({source: 'background', ...message});
+  const {data, notification} = message;
+  const {type} = data || {};
   const title = notification?.title;
   const body = notification?.body;
+
+  const sleepPaused = await isSleepPaused();
+  if (
+    sleepPaused &&
+    [
+      NotificationTypesEnum.EmergencyRegularCheck,
+      NotificationTypesEnum.EmergencyHealthCheck,
+    ].includes(type)
+  ) {
+    console.log('📩 Push suppressed during sleep mode:', type);
+    return;
+  }
 
   if (
     [
