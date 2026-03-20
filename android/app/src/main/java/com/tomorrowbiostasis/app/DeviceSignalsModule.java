@@ -1,4 +1,4 @@
-package com.biostasis;
+package com.tomorrowbiostasis.app;
 
 import android.app.NotificationManager;
 import android.content.Context;
