@@ -33,7 +33,7 @@ There are two independent trigger modes. Only one can be active at a time.
 1. User enables **Bio-Based** trigger and pairs an Apple Watch or wearable.
 2. A background task (`react-native-background-fetch`) runs every ~15 minutes (1 min in dev).
 3. Each cycle calls `startBioCheck()`:
-   - Checks if the system is **paused** (manual pause, scheduled pause times, or sleep mode).
+   - Checks if the system is **paused** (manual pause, scheduled pause times, or sleep schedule/smart detection).
    - If not paused, calls `checkForBioData()`.
 4. `checkForBioData()` reads the last health samples from Google Fit within the configured period window.
 5. If valid data exists (heart rate > 10 bpm, steps > 10):
@@ -81,8 +81,8 @@ The system can be paused to prevent false alarms:
 |---|---|---|
 | **Manual Pause** | Automated Emergency Settings → Pause Times | Set a specific date/time until which the system is paused |
 | **Scheduled Pause** | Automated Emergency Settings → Pause Times | Recurring weekly windows (e.g. every Tuesday 10am–12pm) |
-| **Sleep Mode (manual)** | Dashboard → "Going to Sleep" button | One-tap pause until the configured wake time |
-| **Sleep Schedule (auto)** | Automated Emergency Settings → Sleep Schedule | Recurring nightly window (e.g. 10pm–7am) auto-pauses every night |
+| **Sleep Schedule** | Automated Emergency Settings → Sleep Schedule | Recurring nightly window (e.g. 10pm–7am) auto-pauses every night |
+| **Smart Detection** | Automated Emergency Settings → Smart Sleep Detection | Auto-detects sleep via Focus/DND, charging, and health data recency |
 
 All pause checks happen at the start of `startBioCheck()` and in the push notification handler. When paused, bio checks are skipped and `EmergencyRegularCheck` / `EmergencyHealthCheck` pushes are suppressed. **`EmergencyAlert` is never suppressed** — if the backend has already escalated to a full emergency, the alert always gets through.
 

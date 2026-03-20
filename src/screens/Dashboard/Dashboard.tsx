@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useLayoutEffect, useState, useRef} from 'react';
 import {
-  Alert,
   Image,
   ScrollView,
   Settings,
@@ -37,7 +36,6 @@ import {
 } from '~/services/Location.service';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import IconFontisto from 'react-native-vector-icons/Fontisto';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch} from 'react-redux';
 import {
   getUser,
@@ -50,15 +48,6 @@ import {IUser} from '~/redux/user/user.slice';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
 import {getHealthDataEmitter} from '~/utils';
 import {setHealthData, setAllHealthData} from '~/redux/health/health.slice';
-import {
-  getSleepSchedule,
-  getSleepModeState,
-  activateSleepMode,
-  deactivateSleepMode,
-  formatTime,
-  SleepSchedule,
-  SleepModeState,
-} from '~/services/SleepSchedule.service';
 
 const Dashboard = () => {
   const {t} = useAppTranslation();
@@ -76,12 +65,6 @@ const Dashboard = () => {
   const [recommendedPeriod, setRecommendedPeriod] = useState<string | null>(
     null,
   );
-  const [sleepMode, setSleepMode] = useState<SleepModeState>({
-    isAsleep: false,
-    sleepStartedAt: null,
-    expectedWakeAt: null,
-  });
-  const [sleepSchedule, setSleepScheduleState] = useState<SleepSchedule | null>(null);
   const pressTimeOutRef = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
     const abortController = new AbortController();
@@ -106,41 +89,6 @@ const Dashboard = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const loadSleepState = async () => {
-      const [schedule, mode] = await Promise.all([
-        getSleepSchedule(),
-        getSleepModeState(),
-      ]);
-      setSleepScheduleState(schedule);
-      if (mode.isAsleep && mode.expectedWakeAt && Date.now() >= mode.expectedWakeAt) {
-        await deactivateSleepMode();
-        setSleepMode({isAsleep: false, sleepStartedAt: null, expectedWakeAt: null});
-      } else {
-        setSleepMode(mode);
-      }
-    };
-    loadSleepState();
-  }, [isActive]);
-
-  const handleGoToSleep = useCallback(async () => {
-    const schedule = await getSleepSchedule();
-    if (!schedule.enabled) {
-      Alert.alert(
-        t('dashboard.sleep.goingToSleep'),
-        'Please set up your sleep schedule first in Emergency System Settings.',
-        [{text: t('common.ok')}],
-      );
-      return;
-    }
-    const state = await activateSleepMode(schedule);
-    setSleepMode(state);
-  }, [t]);
-
-  const handleWakeUp = useCallback(async () => {
-    await deactivateSleepMode();
-    setSleepMode({isAsleep: false, sleepStartedAt: null, expectedWakeAt: null});
-  }, []);
 
 useEffect(() => {
   const subscription = getHealthDataEmitter()?.addListener('HealthDataEvent', (data) => {
@@ -499,69 +447,6 @@ useEffect(() => {
                 )}
             </TouchableOpacity>
 
-            {automatedEmergency && (
-              <TouchableOpacity
-                onPress={sleepMode.isAsleep ? handleWakeUp : handleGoToSleep}
-                style={[
-                  styles.panel,
-                  sleepMode.isAsleep && styles.sleepPanelActive,
-                ]}>
-                <IconWithText
-                  icon={
-                    <Box style={styles.sleepIconContainer}>
-                      <IconIonicons
-                        name={sleepMode.isAsleep ? 'sunny' : 'moon'}
-                        size={28}
-                        color={sleepMode.isAsleep ? '#F4BB44' : '#4682B4'}
-                      />
-                    </Box>
-                  }
-                  title={
-                    sleepMode.isAsleep
-                      ? t('dashboard.sleep.sleepModeActive')
-                      : t('dashboard.sleep.goingToSleep')
-                  }
-                  description={
-                    sleepMode.isAsleep && sleepMode.expectedWakeAt
-                      ? t('dashboard.sleep.sleepModeDescription', {
-                          wakeTime: new Date(
-                            sleepMode.expectedWakeAt,
-                          ).toLocaleTimeString([], {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          }),
-                        })
-                      : t('dashboard.sleep.tapToSleep')
-                  }
-                  style={styles.panelBody}
-                />
-                <Box style={styles.panelFooter}>
-                  <Box
-                    style={[
-                      styles.activeButton,
-                      sleepMode.isAsleep && styles.sleepActiveButton,
-                    ]}>
-                    <Box style={styles.buttonIcon}>
-                      <IconIonicons
-                        name={sleepMode.isAsleep ? 'sunny' : 'moon'}
-                        size={14}
-                        color={sleepMode.isAsleep ? '#F4BB44' : '#4682B4'}
-                      />
-                    </Box>
-                    <Text
-                      fontSize={'xs'}
-                      style={[
-                        styles.buttonText,
-                        sleepMode.isAsleep && {color: colors.white},
-                      ]}>
-                      {sleepMode.isAsleep
-                        ? t('dashboard.sleep.wakeUp')
-                        : t('dashboard.sleep.goingToSleep')}
-                    </Text>
-                  </Box>
-                </Box>
-              </TouchableOpacity>
-            )}
           </Box>
           <Box style={styles.section}>
             <Text style={styles.sectionTitle}>

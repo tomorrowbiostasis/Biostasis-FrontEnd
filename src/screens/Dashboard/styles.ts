@@ -139,23 +139,6 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: fontConfig.Poppins[400].normal,
   },
-  sleepPanelActive: {
-    backgroundColor: '#1a1a3e',
-    borderWidth: 1,
-    borderColor: '#4682B4',
-  },
-  sleepActiveButton: {
-    backgroundColor: '#4682B4',
-    borderColor: '#4682B4',
-  },
-  sleepIconContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 12,
-    backgroundColor: colors.gray[100],
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 });
 
 export default styles;

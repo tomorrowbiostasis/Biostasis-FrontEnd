@@ -38,6 +38,7 @@ import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommun
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AutomatedEmergency from './components/AutomatedEmergency';
 import SleepSchedulePanel from './components/SleepSchedulePanel/SleepSchedulePanel';
+import SmartDetectionPanel from './components/SmartDetectionPanel/SmartDetectionPanel';
 import {isAndroid} from '~/utils';
 import {resetRecommendationSystem} from '~/services/Recommendation.service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -236,6 +237,7 @@ const AutomatedEmergencySettingsScreen = () => {
           )}
 
           {automatedEmergency && <SleepSchedulePanel />}
+          {automatedEmergency && <SmartDetectionPanel />}
 
           <TouchableOpacity
             onPress={handleSpecificTimesNavigation}

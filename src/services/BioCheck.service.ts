@@ -15,6 +15,7 @@ import {
 } from './Notification.service';
 import {getTimeSettings, isPausedTime} from './Time.service';
 import {isSleepPaused} from './SleepSchedule.service';
+import {isAirplaneModeOn} from './DeviceSignals.service';
 import {IHealthData} from './BioCheck.types';
 import {recommendationSystem} from './Recommendation.service';
 import {AppState} from 'react-native';
@@ -25,7 +26,14 @@ export const startBioCheck = async () => {
   console.log('-> BIO CHECK STARTED');
 
   try {
-    // check if the system is paused
+    const airplaneMode = await isAirplaneModeOn();
+    if (airplaneMode) {
+      console.log(
+        '-> BIO CHECK SKIPPED (airplane mode — no connectivity to deliver emergency)',
+      );
+      return;
+    }
+
     const {pausedDate, specificPausedTimes} = await getTimeSettings();
 
     const sleepPaused = await isSleepPaused();
