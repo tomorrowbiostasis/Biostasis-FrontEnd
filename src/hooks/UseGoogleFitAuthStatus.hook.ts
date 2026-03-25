@@ -4,7 +4,7 @@ import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.typ
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 
 interface IUseGoogleFitAuthStatusResult {
-  authorizeGoogleFit: () => Promise<void>;
+  authorizeGoogleFit: () => Promise<boolean>;
   isGoogleFitAuthorized: boolean;
   resetGoogleFit: () => Promise<void>;
 }
@@ -17,9 +17,14 @@ export const useGoogleFitAuthStatus = (): IUseGoogleFitAuthStatusResult => {
       value => {
         console.log('Read value of Google Fit authorization status', value);
         if (value) {
-          const isGoogleFitAuthorized = JSON.parse(value);
-          console.log('Saved Google Fit authorization status', isAuthorized);
-          setIsAuthorized(isGoogleFitAuthorized);
+          try {
+            const parsedValue = JSON.parse(value);
+            console.log('Saved Google Fit authorization status', parsedValue);
+            setIsAuthorized(Boolean(parsedValue));
+          } catch (error) {
+            console.warn('Invalid Google Fit authorization status value', error);
+            setIsAuthorized(false);
+          }
         }
       },
     );
@@ -35,7 +40,14 @@ export const useGoogleFitAuthStatus = (): IUseGoogleFitAuthStatusResult => {
         JSON.stringify(true),
       );
       console.log('Saved Google Fit authorization status');
+      return true;
     }
+    setIsAuthorized(false);
+    await AsyncStorageService.setItem(
+      AsyncStorageEnum.GoogleFitAuthorized,
+      JSON.stringify(false),
+    );
+    return false;
   }, [setIsAuthorized]);
 
   const resetGoogleFit = useCallback(async () => {

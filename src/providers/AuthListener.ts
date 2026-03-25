@@ -1,6 +1,6 @@
 import messaging from '@react-native-firebase/messaging';
 import {useEffect, useState} from 'react';
-import {Platform, Settings} from 'react-native';
+import {Platform} from 'react-native';
 import {useAppDispatch} from '~/redux/store/hooks';
 import {getAwsUser} from '~/services/Amazon.service';
 import {Hub} from '@aws-amplify/core';
@@ -10,13 +10,10 @@ import {getUser} from '~/redux/user/thunks';
 import {getTimeSlot} from '~/redux/automatedEmergency/thunks';
 import {getEmergencyContacts} from '~/redux/emergencyContacts/thunks';
 import {setLoadingInitData} from '~/redux/config/config.slice';
-import {useAppSelector} from '~/redux/store/hooks';
-import {userSelector} from '~/redux/user/selectors';
 import API from '~/services/API.service';
 import {stopBackgroundFetch} from '~/services/Background.service';
 import {BackgroundEventsEnum} from '~/services/Background.types';
 import {AwsUserInternalStatus} from '~/services/Amazon.types';
-import {useGoogleFitAuthStatus} from '~/hooks/UseGoogleFitAuthStatus.hook';
 import {isAndroid} from '~/utils';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
@@ -25,11 +22,9 @@ import {isAndroid} from '~/utils';
 
 const AuthListener = () => {
   const dispatch = useAppDispatch();
-  const {user: profile} = useAppSelector(userSelector);
   const [user, setUser] = useState({
     internalStatus: AwsUserInternalStatus.loading,
   });
-  const {authorizeGoogleFit} = useGoogleFitAuthStatus();
   // const {setAppLanguage} = useAppTranslation();
 
   useEffect(() => {
@@ -51,12 +46,6 @@ const AuthListener = () => {
 
     getAwsUser().then(setUser);
   }, []);
-
-  useEffect(() => {
-    if (profile.pulseBasedTriggerGoogleFitAuthenticated && isAndroid) {
-      authorizeGoogleFit();
-    }
-  }, [authorizeGoogleFit, profile.pulseBasedTriggerGoogleFitAuthenticated]);
 
   useEffect(() => {
     // @ts-ignore-next-line

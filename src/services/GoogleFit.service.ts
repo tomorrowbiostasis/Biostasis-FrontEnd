@@ -1,5 +1,7 @@
 /* eslint-disable no-shadow */
 import GoogleFit, {BucketUnit, Scopes} from 'react-native-google-fit';
+import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
+import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import {getUserPersistedSettings} from '~/services/AsyncStorage.service/helpers';
 import {IBioData, IGoogleFitConfig} from './GoogleFit.types';
 
@@ -22,7 +24,17 @@ export const authenticateGoogleFit = async () => {
 
 export const recentBioData = async () => {
   try {
-    const authResult = await authenticateGoogleFit();
+    const authStatusRaw = await AsyncStorageService.getItem(
+      AsyncStorageEnum.GoogleFitAuthorized,
+    );
+    let authResult = false;
+    if (authStatusRaw) {
+      try {
+        authResult = Boolean(JSON.parse(authStatusRaw));
+      } catch (error) {
+        console.warn('Invalid Google Fit authorization cache value', error);
+      }
+    }
 
     const {positiveInfoPeriod} = await getUserPersistedSettings();
 

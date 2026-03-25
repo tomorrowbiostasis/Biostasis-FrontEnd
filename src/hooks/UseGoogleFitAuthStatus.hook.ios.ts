@@ -1,16 +1,16 @@
 import {useCallback, useState} from 'react';
 
 interface IUseGoogleFitAuthStatusResult {
-  authorizeGoogleFit: () => void;
+  authorizeGoogleFit: () => Promise<boolean>;
   isGoogleFitAuthorized: boolean;
-  resetGoogleFit: () => void;
+  resetGoogleFit: () => Promise<void>;
 }
 
 export const useGoogleFitAuthStatus = (): IUseGoogleFitAuthStatusResult => {
   const [status] = useState(false);
-  const authorizeGoogleFit = useCallback(() => null, []);
+  const authorizeGoogleFit = useCallback(async () => false, []);
 
-  const resetGoogleFit = useCallback(() => null, []);
+  const resetGoogleFit = useCallback(async () => undefined, []);
 
   return {
     authorizeGoogleFit,

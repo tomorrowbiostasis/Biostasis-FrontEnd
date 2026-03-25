@@ -120,10 +120,11 @@ const AutomatedSystemListener = () => {
       };
       if (isBioChosen) {
         updateData.regularPushNotification = false;
-        handleUpdateUser(updateData);
+        handleUpdateUser(updateData, true);
         await startAutomatedEmergency();
       } else {
-        stopAutomatedEmergency();
+        handleUpdateUser(updateData, true);
+        await stopAutomatedEmergency();
       }
     },
     [handleUpdateUser, startAutomatedEmergency, stopAutomatedEmergency],

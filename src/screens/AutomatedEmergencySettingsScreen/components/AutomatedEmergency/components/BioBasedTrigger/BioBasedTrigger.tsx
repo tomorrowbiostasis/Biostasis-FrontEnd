@@ -320,11 +320,15 @@ const BioBasedTrigger = () => {
           {
             text: t('common.ok'),
             onPress: async () => {
-              await authorizeGoogleFit();
-              handleUpdateUser(
-                {pulseBasedTriggerGoogleFitAuthenticated: value},
-                true,
-              );
+              const authSuccess = await authorizeGoogleFit();
+              if (authSuccess) {
+                handleUpdateUser(
+                  {pulseBasedTriggerGoogleFitAuthenticated: value},
+                  true,
+                );
+                return;
+              }
+              ToastService.error('Google Fit authorization was cancelled');
             },
           },
         ]);
