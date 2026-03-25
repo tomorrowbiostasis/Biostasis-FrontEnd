@@ -1,6 +1,6 @@
 import React, {useCallback, useLayoutEffect, useState} from 'react';
 import {Text, View} from 'native-base';
-import {TouchableOpacity} from 'react-native';
+import {Text as RNText, TouchableOpacity} from 'react-native';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
@@ -122,9 +122,9 @@ const SpecificTimesPanel = () => {
       <View style={styles.lineStyle} />
 
       <View style={styles.panelBody}>
-        <Text style={styles.panelDescription}>
+        <RNText style={styles.panelDescription}>
           {t('specificTimesScreen.specificTimes.description')}
-        </Text>
+        </RNText>
 
         <SpecificDateList
           items={pausedTimes}
