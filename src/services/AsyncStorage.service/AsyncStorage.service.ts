@@ -6,29 +6,43 @@ export const AsyncStorageService = {
     key: AsyncStorageEnum | string,
     value: string,
     disableLog?: boolean,
-  ): Promise<void> =>
-    await AsyncStorage.setItem(key, value)
-      .then(() => {
-        if (!disableLog) {
-          console.log(
-            `AsyncStorageService: Item saved key: ${key}, value: ${value}`,
-          );
-        }
-      })
-      .catch(() => {
-        if (!disableLog) {
-          console.log(
-            `AsyncStorageService: Problem during save key: ${key}, value: ${value}`,
-          );
-        }
-      }),
-  getItem: async (key: AsyncStorageEnum): Promise<string | null> =>
-    await AsyncStorage.getItem(key).catch(() => {
+  ): Promise<void> => {
+    try {
+      await AsyncStorage.setItem(key, value);
+      if (!disableLog) {
+        console.log(
+          `AsyncStorageService: Item saved key: ${key}, value: ${value}`,
+        );
+      }
+    } catch (e) {
+      if (!disableLog) {
+        console.log(
+          `AsyncStorageService: Problem during save key: ${key}, value: ${value}`,
+        );
+      }
+      throw e;
+    }
+  },
+  getItem: async (key: AsyncStorageEnum): Promise<string | null> => {
+    try {
+      return await AsyncStorage.getItem(key);
+    } catch {
       console.log(
         `AsyncStorageService: Problem during getting item key: ${key}`,
       );
       return null;
-    }),
+    }
+  },
+  removeItem: async (key: AsyncStorageEnum | string): Promise<void> => {
+    try {
+      await AsyncStorage.removeItem(key);
+      console.log(`AsyncStorageService: Item removed key: ${key}`);
+    } catch {
+      console.log(
+        `AsyncStorageService: Problem during removal key: ${key}`,
+      );
+    }
+  },
   getAllKeys: async (): Promise<readonly string[]> =>
     await AsyncStorage.getAllKeys(),
   multiGet: async (

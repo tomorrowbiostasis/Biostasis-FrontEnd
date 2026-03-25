@@ -4,27 +4,32 @@ import colors from '~/theme/colors';
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 80,
     width: '100%',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    paddingVertical: 10,
+    marginBottom: 4,
   },
   item: {
-    backgroundColor: colors.gray[300],
+    backgroundColor: colors.gray[200],
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-    width: 40,
-    height: 40,
+    borderRadius: 22,
+    width: 42,
+    height: 42,
   },
   itemActive: {
     backgroundColor: colors.blue[700],
   },
   itemInactiveText: {
-    color: 'black',
+    color: colors.gray[700],
+    fontSize: 13,
+    fontWeight: '600',
   },
   itemActiveText: {
     color: 'white',
+    fontSize: 13,
+    fontWeight: '600',
   },
 });
 

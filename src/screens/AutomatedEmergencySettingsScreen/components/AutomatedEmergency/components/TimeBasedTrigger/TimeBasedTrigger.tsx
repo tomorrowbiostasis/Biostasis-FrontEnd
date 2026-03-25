@@ -13,6 +13,7 @@ import {IUser} from '~/redux/user/user.slice';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {updateUser} from '~/redux/user/thunks';
 import IconFontisto from 'react-native-vector-icons/Fontisto';
+import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {setEmergencyCheckType} from '~/redux/automatedEmergency/automatedEmergency.slice';
 import ToastService from '~/services/Toast.service';
 import EnvConfig from '~/services/Env.service';
@@ -178,11 +179,20 @@ const TimeBasedTrigger = () => {
   return (
     <View style={styles.panel}>
       <View style={styles.triggerPanelHeader}>
-        <Text style={styles.triggerTitle}>
-          {t(
-            'emergencyContactsSettings.automatedEmergencySettings.timeTrigger.title',
-          )}
-        </Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={[styles.circle, styles.icon]}>
+            <IconMaterialCommunityIcons
+              name="timer-sand"
+              size={20}
+              color="#1976D2"
+            />
+          </View>
+          <Text style={styles.triggerTitle}>
+            {t(
+              'emergencyContactsSettings.automatedEmergencySettings.timeTrigger.title',
+            )}
+          </Text>
+        </View>
         {!regularPushNotification ? (
           <View style={styles.activeButton}>
             <View style={styles.buttonIcon}>

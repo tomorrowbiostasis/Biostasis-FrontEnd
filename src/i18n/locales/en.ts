@@ -289,14 +289,20 @@ const translations = {
     automatedEmergencySettings: {
       title: 'Emergency Settings',
       enableSystemTitle: 'Automated Emergency Settings',
-      instructions: 'Read instructions',
       compatibleSmartDeviceConnected: 'Compatible smartdevice connected',
-      pleaseReadManual:
-        'Please read the Automated Emergency System Manual before activating the system',
-      systemDescription:
-        'This system will automatically send an emergency signal based on a variety of data point from a smartdevice with health data.\nLearn more about how the system works in detail here:',
-      manualDescription: 'Automated Emergency System Manual',
-      confirmReadManual: 'Confirm reading the manual',
+      confirmReadManual: 'I understand how it works',
+      howItWorks: {
+        title: 'How it works',
+        step1Title: 'Connect',
+        step1Desc:
+          'Pair your wearable or use your phone\'s built-in sensors (steps, heart rate).',
+        step2Title: 'Monitor',
+        step2Desc:
+          'The app checks your health data regularly. If no signal is detected, you\'ll get a warning notification first.',
+        step3Title: 'Emergency',
+        step3Desc:
+          'If there\'s still no response, the system triggers an alert to your emergency contacts.',
+      },
       enableAutomatedEmergency: 'Enable automated emergency',
       setUpSmartDevice: 'Set up Smart device',
       connectedSmartDevice: 'Connected with {{device}}',
@@ -352,7 +358,7 @@ const translations = {
       timeTrigger: {
         title: 'Time-based trigger',
         description:
-          "We will send notifications every chosen amount of time. In case you don't respond to one of them, the emergency system will be triggered. Night (10pm - 6am) is excluded.",
+          "We will send notifications every chosen amount of time. If you don't respond to one of them, the emergency system will be triggered. Your sleep schedule hours are automatically excluded.",
         frequency: 'Emergency Trigger Time-frame:',
         systemStart: 'Time-based automated system is running',
         turnOn: 'Time-based',
@@ -371,6 +377,14 @@ const translations = {
         bedtime: 'Bedtime',
         wakeTime: 'Wake time',
         sleepWindow: 'System pauses nightly from {{bedtime}} to {{wakeTime}}',
+      },
+      sleepScheduleSheet: {
+        title: 'Set up your sleep schedule',
+        description:
+          'The emergency system needs to know when you sleep so it doesn\u2019t trigger false alarms during the night.',
+        hint: 'Tap a time to adjust it',
+        save: 'Enable sleep schedule',
+        skip: 'Skip for now',
       },
       smartDetection: {
         title: 'Smart Sleep Detection',
@@ -527,14 +541,15 @@ const translations = {
   specificTimesScreen: {
     title: 'Pause Emergency System',
     pauseNow: {
-      title: 'Pause Emergency System Now',
+      title: 'Pause Emergency System',
       description:
-        'You can temporarily pause the automated emergency system from the current moment until a specific time of your choice.',
-      cancelMessage:
-        'Pausing the automated emergency system has been successfully canceled.',
-      startDisclaimer: 'Tap here to pause the system now',
-      pausedDisclaimer:
-        'The system is pause now\nTap here again to cancel the pause.',
+        'Temporarily pause the automated emergency system until a specific time of your choice.',
+      cancelMessage: 'Pause has been cancelled. The system is active again.',
+      pauseConfirmed: 'System paused until {{time}}',
+      startDisclaimer: 'Pause the system',
+      systemPaused: 'System is paused',
+      pausedUntil: 'The emergency system is paused until {{time}}.',
+      cancelPause: 'Cancel pause',
     },
     specificTimes: {
       title: 'Set-up Specific Times',
@@ -572,6 +587,8 @@ const translations = {
         sunday: 'Sun',
       },
       changeSettings: 'Time settings changed successfully',
+      active: 'Active',
+      inactive: 'Inactive',
     },
   },
   profileDefault: {
@@ -697,6 +714,9 @@ const translations = {
       },
       noDataUnit: 'no-data',
       noData: '⚠️ No Data found, Please check your health data source',
+      wearableSyncWarning: 'No recent health data received',
+      wearableSyncWarningBody:
+        'Please open your wearable app to sync your health data. If this persists, an emergency check will follow.',
       refresh: 'Refreshing your health data...',
       userSendSignal:
         'Positive signal sent successfully ✅. Make sure to check your health data source!',

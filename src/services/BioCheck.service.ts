@@ -20,12 +20,20 @@ import {IHealthData} from './BioCheck.types';
 import {recommendationSystem} from './Recommendation.service';
 import {AppState} from 'react-native';
 
-export const startBioCheck = async () => {
-  const response = await getUserPersistedSettings();
-  const {automatedEmergency, allowNotifications} = response;
-  console.log('-> BIO CHECK STARTED');
+let bioCheckMutex = false;
 
+const safeParseCount = (raw: string | null): number => {
+  if (!raw) return 0;
+  const parsed = parseInt(raw, 10);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+};
+
+export const startBioCheck = async () => {
   try {
+    const response = await getUserPersistedSettings();
+    const {automatedEmergency, allowNotifications} = response;
+    console.log('-> BIO CHECK STARTED');
+
     const airplaneMode = await isAirplaneModeOn();
     if (airplaneMode) {
       console.log(
@@ -38,18 +46,22 @@ export const startBioCheck = async () => {
 
     const sleepPaused = await isSleepPaused();
 
-    if (
-      !isPausedTime(new Date(), pausedDate, specificPausedTimes) &&
-      !sleepPaused
-    ) {
+    const isPaused =
+      isPausedTime(new Date(), pausedDate, specificPausedTimes) || sleepPaused;
+
+    if (!isPaused) {
       allowNotifications && createNotificationChannels();
       automatedEmergency && (await checkForBioData());
     } else {
       console.log('-> BIO CHECK SKIPPED (paused or sleep mode)');
+      await AsyncStorageService.setItem(
+        AsyncStorageEnum.ConsecutiveNoDataCount,
+        '0',
+      );
     }
   } catch (e) {
-    console.log(e);
-    handleDisconnection();
+    console.log('startBioCheck error:', e);
+    await handleDisconnection();
   }
 };
 
@@ -57,9 +69,13 @@ export const checkForBioData = async () => {
   try {
     const recentAndCorrectBioData = await recentBioData();
 
-    if (recentAndCorrectBioData !== null) {
-      await handleBioData(recentAndCorrectBioData);
-    }
+    const emptyBioData: IBioData = {
+      pulseData: {value: 0, time: ''},
+      restingPulseData: {value: 0, time: ''},
+      movementData: {value: 0, time: ''},
+    };
+
+    await handleBioData(recentAndCorrectBioData ?? emptyBioData);
   } catch (e) {
     await updateNotification(
       'Something went wrong',
@@ -71,8 +87,15 @@ export const checkForBioData = async () => {
 };
 
 export const handleBioData = async (recentAndCorrectBioData: IBioData) => {
+  if (bioCheckMutex) {
+    console.log('-> BIO CHECK: skipping (already in progress)');
+    return;
+  }
+  bioCheckMutex = true;
+
   try {
-    const {pulseData, restingPulseData, movementData} = recentAndCorrectBioData;
+    const {pulseData, restingPulseData, movementData} =
+      recentAndCorrectBioData;
     if (pulseData.value || restingPulseData.value || movementData.value) {
       await handlePositiveData(pulseData, restingPulseData, movementData);
       await AsyncStorageService.setItem(
@@ -85,24 +108,55 @@ export const handleBioData = async (recentAndCorrectBioData: IBioData) => {
         console.log('Error: recommendation system', e);
       }
     } else {
-      await updateNotification(
-        i18n.t('bioCheck.messages.automatedEmergency'),
-        i18n.t('bioCheck.messages.noData'),
-        NotificationTypesEnum.NoDataFound,
+      const rawCount = await AsyncStorageService.getItem(
+        AsyncStorageEnum.ConsecutiveNoDataCount,
       );
-      await AsyncStorageService.setItem(AsyncStorageEnum.HealthTrigger, 'true');
-      // navigate to health condition screen while the application is active
-      ['active', 'background'].includes(AppState.currentState) &&
-        navigate(Screens.HealthConditionError, {healthCheck: true});
+      const noDataCount = safeParseCount(rawCount);
+
+      if (noDataCount < 1) {
+        await AsyncStorageService.setItem(
+          AsyncStorageEnum.ConsecutiveNoDataCount,
+          String(noDataCount + 1),
+        );
+        await updateNotification(
+          i18n.t('bioCheck.messages.wearableSyncWarning'),
+          i18n.t('bioCheck.messages.wearableSyncWarningBody'),
+          NotificationTypesEnum.WearableSyncWarning,
+        );
+        console.log(
+          '-> BIO CHECK: no data (strike ' +
+            (noDataCount + 1) +
+            ') — warning sent, not escalating yet',
+        );
+      } else {
+        await AsyncStorageService.setItem(
+          AsyncStorageEnum.ConsecutiveNoDataCount,
+          '0',
+        );
+        await updateNotification(
+          i18n.t('bioCheck.messages.automatedEmergency'),
+          i18n.t('bioCheck.messages.noData'),
+          NotificationTypesEnum.NoDataFound,
+        );
+        await AsyncStorageService.setItem(
+          AsyncStorageEnum.HealthTrigger,
+          'true',
+        );
+        if (['active', 'background'].includes(AppState.currentState)) {
+          navigate(Screens.HealthConditionError, {healthCheck: true});
+        }
+      }
     }
   } catch (e: any) {
-    handleDisconnection();
-
-    const {status, statusText} = e.response || {
-      status: 0,
-      statusText: 'Network error',
-    };
-    console.log('error while sending positive info', status, statusText);
+    if (e?.response) {
+      const {status, statusText} = e.response;
+      console.log('error while sending positive info', status, statusText);
+    } else {
+      console.log('handleBioData error:', e);
+    }
+    await handleDisconnection();
+  } finally {
+    bioCheckMutex = false;
   }
 };
 
@@ -112,6 +166,10 @@ export const handlePositiveData = async (
   movementData: IHealthData,
 ) => {
   console.log('has positive data or positive info');
+  await AsyncStorageService.setItem(
+    AsyncStorageEnum.ConsecutiveNoDataCount,
+    '0',
+  );
 
   const {positiveInfoPeriod} = await getUserPersistedSettings();
   const positiveInfoResponse = await API.positiveInfo(positiveInfoPeriod);
@@ -139,7 +197,7 @@ export const handlePositiveData = async (
         ' - 🕑 ' +
         (pulseData.time
           ? new Date(pulseData.time).toLocaleTimeString(
-              'en-Us',
+              undefined,
               TIME_FORMAT_OPTION,
             )
           : i18n.t('bioCheck.messages.noDataUnit')) +
@@ -151,7 +209,7 @@ export const handlePositiveData = async (
         ' - 🕑 ' +
         (restingPulseData.time
           ? new Date(restingPulseData.time).toLocaleTimeString(
-              'en-Us',
+              undefined,
               TIME_FORMAT_OPTION,
             )
           : i18n.t('bioCheck.messages.noDataUnit')) +
@@ -163,7 +221,7 @@ export const handlePositiveData = async (
         ' - 🕑 ' +
         (movementData.time
           ? new Date(movementData.time).toLocaleTimeString(
-              'en-Us',
+              undefined,
               TIME_FORMAT_OPTION,
             )
           : i18n.t('bioCheck.messages.noDataUnit')),
@@ -177,5 +235,7 @@ export const handleDisconnection = async () => {
     i18n.t('bioCheck.messages.offline'),
     i18n.t('bioCheck.messages.pleaseComeBackOnline'),
   );
-  navigate(Screens.LostConnection as never);
+  if (['active', 'background'].includes(AppState.currentState)) {
+    navigate(Screens.LostConnection as never);
+  }
 };

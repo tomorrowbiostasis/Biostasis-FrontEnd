@@ -1,5 +1,6 @@
 import React, {useCallback, useLayoutEffect, useState} from 'react';
 import {Text, View} from 'native-base';
+import {Text as RNText, TouchableOpacity} from 'react-native';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
@@ -23,12 +24,10 @@ import {SpecificDateList} from '../SpecificDateComponent/SpecificDateList';
 import {useTimeFormat} from '../../hooks/UseTimeFormat.hook';
 import {serializePausedTimes} from '../../util';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import IconFeather from 'react-native-vector-icons/Feather';
 import colors from '~/theme/colors';
 
 const SpecificTimesPanel = () => {
-  // Needed here to get async timeFormatValue before usage
   useTimeFormat();
   const {t} = useAppTranslation();
   const dispatch = useAppDispatch();
@@ -107,6 +106,7 @@ const SpecificTimesPanel = () => {
   const handleModalClose = useCallback(() => {
     setIsAddNewModalOpen(false);
   }, []);
+
   return (
     <View style={styles.panel}>
       <View style={styles.panelHeader}>
@@ -120,10 +120,11 @@ const SpecificTimesPanel = () => {
         </Text>
       </View>
       <View style={styles.lineStyle} />
+
       <View style={styles.panelBody}>
-        <Text style={styles.panelTitle} p={1}>
+        <RNText style={styles.panelDescription}>
           {t('specificTimesScreen.specificTimes.description')}
-        </Text>
+        </RNText>
 
         <SpecificDateList
           items={pausedTimes}
@@ -131,6 +132,7 @@ const SpecificTimesPanel = () => {
           onEdit={handleEdit}
           onSave={handleSave}
         />
+
         {isAddNewModalOpen && (
           <DayTimePicker
             item={pausedTimes.find(i => i.id === editedId)}
@@ -138,17 +140,10 @@ const SpecificTimesPanel = () => {
             onClose={handleModalClose}
           />
         )}
-      </View>
-      <View style={styles.lineStyleBottom} />
-      <View style={styles.panelFooter}>
-        <TouchableOpacity style={styles.panelFooter} onPress={handleAddNew}>
-          <IconFeather
-            name="plus"
-            style={styles.icon}
-            size={20}
-            color={colors.gray[642]}
-          />
-          <Text fontSize={'sm'} color={colors.gray[642]}>
+
+        <TouchableOpacity style={styles.addButton} onPress={handleAddNew}>
+          <IconFeather name="plus" size={18} color={colors.gray[700]} />
+          <Text style={styles.addButtonText}>
             {t('specificTimesScreen.specificTimes.addAdditionalTime')}
           </Text>
         </TouchableOpacity>

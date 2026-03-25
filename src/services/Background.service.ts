@@ -86,26 +86,25 @@ export const mainScheduledEvent = async (event: {
     }
     return;
   }
-  switch (event.taskId) {
-    case BackgroundEventsEnum.EmergencyRetryMechanism:
-      emergencyRetry().catch(() =>
-        console.log(`error from background task ${event.taskId}`),
-      );
-      break;
-    case BackgroundEventsEnum.ReactNativeBackgroundFetch:
-      startBioCheck().catch(() =>
-        console.log(`error from background task ${event.taskId}`),
-      );
-      break;
-    case BackgroundEventsEnum.AlarmBeforeEmergency:
-      soundNotification().catch(() =>
-        console.log(`error from background task ${event.taskId}`),
-      );
-      break;
-    default:
-      console.log(`doing nothing for task ${event.taskId}`);
+  try {
+    switch (event.taskId) {
+      case BackgroundEventsEnum.EmergencyRetryMechanism:
+        await emergencyRetry();
+        break;
+      case BackgroundEventsEnum.ReactNativeBackgroundFetch:
+        await startBioCheck();
+        break;
+      case BackgroundEventsEnum.AlarmBeforeEmergency:
+        await soundNotification();
+        break;
+      default:
+        console.log(`doing nothing for task ${event.taskId}`);
+    }
+  } catch (e) {
+    console.log(`error from background task ${event.taskId}`, e);
+  } finally {
+    BackgroundFetch.finish(event.taskId);
   }
-  BackgroundFetch.finish(event.taskId);
 };
 
 /**
@@ -190,12 +189,18 @@ export const emergencyRetry = async () => {
 };
 
 export const soundNotification = async () => {
-  const response = await AsyncStorageService.getItem(
-    AsyncStorageEnum.PersistedUserSettings,
-  );
-  const responseParse = JSON.parse(response ?? '');
-  const {id} = JSON.parse(responseParse?.user ?? {id: ''});
-  if (id) {
+  try {
+    const response = await AsyncStorageService.getItem(
+      AsyncStorageEnum.PersistedUserSettings,
+    );
+    if (!response) return;
+    const fullData = JSON.parse(response);
+    const user = fullData?.user ? JSON.parse(fullData.user) : null;
+    if (user?.id) {
+      SoundService.playAlert();
+    }
+  } catch (e) {
+    console.warn('soundNotification error — playing alert as fallback', e);
     SoundService.playAlert();
   }
 };

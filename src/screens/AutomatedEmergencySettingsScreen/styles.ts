@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   scrollContentContainer: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
   },
   curveElement: {
     position: 'absolute',
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   switchButton: {
-    marginTop: 10,
+    marginTop: 8,
     alignItems: 'center',
   },
   infoText: {
@@ -54,41 +54,52 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     fontSize: 14,
   },
-  expandableSectionWrapper: {
-    flexDirection: 'row',
+  howItWorksContainer: {
+    marginTop: 16,
     borderRadius: 10,
-    padding: 10,
     backgroundColor: colors.gray[50],
-    borderWidth: 0.5,
-    borderColor: colors.gray[200],
+    padding: 16,
   },
-  expandIconWrapper: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  howItWorksTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.gray[800],
+    marginBottom: 12,
   },
-  noneDisplay: {
-    display: 'none',
-  },
-  underline: {
-    textDecorationLine: 'underline',
-    color: colors.magenta[400],
-  },
-  manualLinkBox: {
+  stepRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
+    marginBottom: 12,
   },
-  manualLink: {
-    color: colors.blue[800],
-    // fontSize: 12,
+  stepNumberCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  stepTextContainer: {
+    flex: 1,
+    paddingTop: 2,
+  },
+  stepTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.black,
+    marginBottom: 2,
+  },
+  stepDescription: {
+    fontSize: 13,
+    lineHeight: 18,
+    color: colors.gray[700],
   },
   panel: {
     flex: 1,
     backgroundColor: colors.white,
     borderRadius: 10,
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    padding: 20,
+    marginBottom: 16,
     justifyContent: 'space-evenly',
     ...boxShadow,
   },
@@ -107,10 +118,12 @@ const styles = StyleSheet.create({
   panelBody: {
     flex: 1,
     marginVertical: 10,
+    paddingHorizontal: 4,
   },
   panelFooter: {
     flex: 1,
     width: '100%',
+    paddingHorizontal: 4,
   },
   triggerPanelHeader: {
     width: '100%',
@@ -118,15 +131,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
-  },
-  instructionBox: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  instructionBody: {
-    flex: 1,
+    gap: 8,
   },
   lineStyle: {
     flex: 1,
@@ -140,8 +145,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   triggerTitle: {
-    fontSize: 16,
-    fontWeight: '500',
+    fontSize: 17,
+    fontWeight: '600',
   },
   readText: {
     fontSize: 12,
@@ -186,11 +191,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   circle: {
-    padding: 5,
+    width: 36,
+    height: 36,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 30,
-    borderWidth: 2,
+    borderRadius: 18,
+    backgroundColor: colors.gray[50],
   },
   message: {
     flex: 1,

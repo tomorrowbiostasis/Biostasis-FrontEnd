@@ -47,6 +47,8 @@ export const createNotificationChannels = async () => {
     .catch(() => console.log('Error: Notification channel creation'));
 };
 
+let backgroundEventRegistered = false;
+
 export const updateNotification = async (
   title: string,
   text: string,
@@ -64,7 +66,10 @@ export const updateNotification = async (
     emergencyNotification.id,
   ]);
 
-  notifee.onBackgroundEvent(handleNotificationEvents);
+  if (!backgroundEventRegistered) {
+    notifee.onBackgroundEvent(handleNotificationEvents);
+    backgroundEventRegistered = true;
+  }
 
   await notifee
     .displayNotification(notification)
@@ -106,51 +111,53 @@ export const stopForegroundFetch = async () => {
 };
 
 const handleActionPress = async (id: string) => {
-  switch (id) {
-    case 'send-signal':
-      const {positiveInfoPeriod} = await getUserPersistedSettings();
-      await updateNotification(
-        i18n.t('bioCheck.messages.refresh'),
-        '',
-        NotificationTypesEnum.WaitRefresh,
-      ).then(async () => {
-        await API.positiveInfo(positiveInfoPeriod).then(async () => {
-          console.log('user sent positive signal');
-          await updateNotification(
-            i18n.t('bioCheck.messages.automatedEmergency'),
-            i18n.t('bioCheck.messages.userSendSignal'),
-          );
-        });
-        systemReset();
-      });
-      break;
+  try {
+    switch (id) {
+      case 'send-signal': {
+        const settings = await getUserPersistedSettings();
+        const positiveInfoPeriod =
+          settings?.positiveInfoPeriod && settings.positiveInfoPeriod > 0
+            ? settings.positiveInfoPeriod
+            : 360;
+        await updateNotification(
+          i18n.t('bioCheck.messages.refresh'),
+          '',
+          NotificationTypesEnum.WaitRefresh,
+        );
+        await API.positiveInfo(positiveInfoPeriod);
+        console.log('user sent positive signal');
+        await updateNotification(
+          i18n.t('bioCheck.messages.automatedEmergency'),
+          i18n.t('bioCheck.messages.userSendSignal'),
+        );
+        await systemReset();
+        break;
+      }
 
-    case 'bio-refresh':
-      await updateNotification(
-        i18n.t('bioCheck.messages.refresh'),
-        '',
-        NotificationTypesEnum.WaitRefresh,
-      ).then(
-        async () =>
-          await startBioCheck().then(() => {
-            console.log('user refresh bio data manually');
-          }),
-      );
-      break;
-    case 'start-emergency':
-      await updateNotification(
-        i18n.t('automatedEmergencyStatus.emergency'),
-        '',
-        NotificationTypesEnum.WaitEmergencyAlert,
-      );
-      await scheduleEvent(BackgroundEventsEnum.EmergencyRetryMechanism, 0)
-        .then(() => console.log('first retry task set'))
-        .catch(e => {
-          console.log('task not scheduled', e);
-        });
+      case 'bio-refresh':
+        await updateNotification(
+          i18n.t('bioCheck.messages.refresh'),
+          '',
+          NotificationTypesEnum.WaitRefresh,
+        );
+        await startBioCheck();
+        console.log('user refresh bio data manually');
+        break;
 
-      await API.updateUser({automatedEmergency: false});
-      systemReset();
+      case 'start-emergency':
+        await updateNotification(
+          i18n.t('automatedEmergencyStatus.emergency'),
+          '',
+          NotificationTypesEnum.WaitEmergencyAlert,
+        );
+        await scheduleEvent(BackgroundEventsEnum.EmergencyRetryMechanism, 0);
+        console.log('first retry task set');
+        await API.updateUser({automatedEmergency: false});
+        await systemReset();
+        break;
+    }
+  } catch (e) {
+    console.log('handleActionPress error:', id, e);
   }
 };
 
@@ -217,7 +224,6 @@ const createNotificationBasedOnType = async (
           category: AndroidCategory.ALARM,
           fullScreenAction: {
             id: 'emergency-notification',
-            mainComponent: `${navigate(Screens.HealthConditionError as never)}`,
           },
           autoCancel: false,
           actions: [
@@ -270,9 +276,6 @@ const createNotificationBasedOnType = async (
           category: AndroidCategory.ALARM,
           fullScreenAction: {
             id: 'emergency-notification',
-            mainComponent: `${navigate(Screens.HealthConditionError as never, {
-              regularCheck: true,
-            })}`,
           },
           autoCancel: false,
           actions: [
@@ -390,6 +393,54 @@ const createNotificationBasedOnType = async (
         },
       };
       break;
+    case NotificationTypesEnum.WearableSyncWarning:
+      notification = {
+        id: regularCheckNotification.id,
+        title: isIOS
+          ? title
+          : `<p style="color: ${colors.magenta[200]}"><b>${title}</b></p>`,
+        subtitle: new Date().toLocaleTimeString(),
+        body: text,
+        android: {
+          channelId: regularCheckNotification.channelId,
+          pressAction: {
+            id: 'default',
+          },
+          autoCancel: false,
+          actions: [
+            {
+              title: `<p style="color: ${colors.green[200]}">↻ ${i18n.t(
+                'common.refresh',
+              )}</p>`,
+              pressAction: {
+                id: 'bio-refresh',
+              },
+            },
+            {
+              title: `<p style="color: ${colors.green[800]}">${i18n.t(
+                'common.fine',
+              )} ✔️</p>`,
+              pressAction: {
+                id: 'send-signal',
+              },
+            },
+          ],
+          ongoing: true,
+          color: '#0096FF',
+          largeIcon: 'ic_stat_notification',
+          style: {type: AndroidStyle.BIGTEXT, text},
+        },
+        ios: {
+          interruptionLevel: 'timeSensitive',
+          sound: 'default',
+          foregroundPresentationOptions: {
+            alert: true,
+            badge: true,
+            list: true,
+          },
+        },
+      };
+      break;
     default:
       notification = {
         id: normalNotification.id,
@@ -421,9 +472,13 @@ const createNotificationBasedOnType = async (
   return notification;
 };
 
-const systemReset = () => {
+const systemReset = async () => {
   SoundService.resetAllSounds();
-  AsyncStorageService.setItem(AsyncStorageEnum.TimeTrigger, 'false');
-  AsyncStorageService.setItem(AsyncStorageEnum.HealthTrigger, 'false');
+  await AsyncStorageService.setItem(AsyncStorageEnum.TimeTrigger, 'false');
+  await AsyncStorageService.setItem(AsyncStorageEnum.HealthTrigger, 'false');
+  await AsyncStorageService.setItem(
+    AsyncStorageEnum.ConsecutiveNoDataCount,
+    '0',
+  );
   navigate(Screens.Home as never);
 };

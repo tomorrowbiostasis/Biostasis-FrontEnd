@@ -15,7 +15,11 @@ import {
 import colors from '~/theme/colors';
 import styles from '../../styles';
 
-const SleepSchedulePanel = () => {
+interface Props {
+  refreshKey?: number;
+}
+
+const SleepSchedulePanel = ({refreshKey}: Props) => {
   const {t} = useAppTranslation();
   const [schedule, setSchedule] = useState<SleepSchedule>({
     enabled: false,
@@ -29,7 +33,7 @@ const SleepSchedulePanel = () => {
 
   useEffect(() => {
     getSleepSchedule().then(setSchedule);
-  }, []);
+  }, [refreshKey]);
 
   const persistSchedule = useCallback(async (updated: SleepSchedule) => {
     setSchedule(updated);

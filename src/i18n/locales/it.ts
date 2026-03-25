@@ -297,14 +297,20 @@ const translations: ITranslation = {
     automatedEmergencySettings: {
       title: 'Impostazioni di emergenza',
       enableSystemTitle: 'Impostazioni automatiche di emergenza',
-      instructions: 'Leggere le istruzioni',
       compatibleSmartDeviceConnected: 'Smartdevice compatibile connesso',
-      pleaseReadManual:
-        'Leggere il manuale del sistema di emergenza automatizzato prima di attivare il sistema',
-      systemDescription:
-        'Questo sistema invia automaticamente un segnale di emergenza in base a una serie di dati provenienti da uno smartdevice con dati sulla salute',
-      manualDescription: 'Manuale del sistema di emergenza automatizzato',
-      confirmReadManual: 'Conferma la lettura del manuale',
+      confirmReadManual: 'Capisco come funziona',
+      howItWorks: {
+        title: 'Come funziona',
+        step1Title: 'Connetti',
+        step1Desc:
+          'Associa il tuo wearable o usa i sensori integrati del telefono (passi, frequenza cardiaca).',
+        step2Title: 'Monitora',
+        step2Desc:
+          'L\'app controlla regolarmente i tuoi dati sulla salute. Se non viene rilevato alcun segnale, riceverai prima una notifica di avviso.',
+        step3Title: 'Emergenza',
+        step3Desc:
+          'Se non c\'è ancora risposta, il sistema invia un avviso ai tuoi contatti di emergenza.',
+      },
       enableAutomatedEmergency: "Abilita l'emergenza automatica",
       setUpSmartDevice: 'Imposta dispositivo intelligente',
       connectedSmartDevice: 'Connesso con {{device}}',
@@ -361,12 +367,30 @@ const translations: ITranslation = {
       timeTrigger: {
         title: 'Innesco a tempo',
         description:
-          'Invieremo notifiche ogni tot di tempo. Nel caso in cui non si risponda a una di esse, verrà attivato il sistema di emergenza. La notte (dalle 22 alle 6) è esclusa',
+          'Invieremo notifiche ogni tot di tempo. Se non rispondi a una di esse, verrà attivato il sistema di emergenza. I tuoi orari di sonno vengono esclusi automaticamente.',
         frequency: 'Tempo di attivazione di emergenza:',
         systemStart: 'Il sistema automatico a tempo è in funzione',
         turnOn: 'Time-based',
         warning:
           "L'attivazione del tempo disabilita l'innesco a base biologica!",
+      },
+      sleepSchedule: {
+        title: 'Programma del sonno',
+        description:
+          'Mette automaticamente in pausa il sistema di emergenza durante le tue ore di sonno abituali per evitare falsi allarmi.',
+        enableSchedule: 'Attiva programma del sonno',
+        bedtime: 'Ora di andare a letto',
+        wakeTime: 'Ora del risveglio',
+        sleepWindow:
+          'Il sistema si mette in pausa ogni notte dalle {{bedtime}} alle {{wakeTime}}',
+      },
+      sleepScheduleSheet: {
+        title: 'Configura il tuo programma del sonno',
+        description:
+          'Il sistema di emergenza deve sapere quando dormi per non attivare falsi allarmi durante la notte.',
+        hint: 'Tocca un orario per modificarlo',
+        save: 'Attiva programma del sonno',
+        skip: 'Salta per ora',
       },
       pauseTime: {
         title: 'Impostazione dei tempi di pausa del sistema',
@@ -510,14 +534,15 @@ const translations: ITranslation = {
   specificTimesScreen: {
     title: 'Sistema di emergenza in pausa',
     pauseNow: {
-      title: 'Metti subito in pausa il sistema di emergenza',
+      title: 'Pausa sistema di emergenza',
       description:
-        "È possibile mettere temporaneamente in pausa il sistema automatico di emergenza dal momento attuale fino a un'ora specifica di vostra scelta",
-      cancelMessage:
-        'La messa in pausa del sistema di emergenza automatico è stata annullata con successo',
-      startDisclaimer: 'Toccare qui per mettere subito in pausa il sistema',
-      pausedDisclaimer:
-        'Il sistema è in pausa ora. Toccare di nuovo qui per annullare la pausa',
+        "Metti temporaneamente in pausa il sistema di emergenza automatico fino all'ora che preferisci.",
+      cancelMessage: 'Pausa annullata. Il sistema è di nuovo attivo.',
+      pauseConfirmed: 'Sistema in pausa fino a {{time}}',
+      startDisclaimer: 'Metti in pausa',
+      systemPaused: 'Sistema in pausa',
+      pausedUntil: "Il sistema di emergenza è in pausa fino a {{time}}.",
+      cancelPause: 'Annulla pausa',
     },
     specificTimes: {
       title: 'Impostazione di orari specifici',
@@ -555,6 +580,8 @@ const translations: ITranslation = {
         sunday: 'Dom',
       },
       changeSettings: "Impostazioni dell'ora modificate con successo",
+      active: 'Attivo',
+      inactive: 'Inattivo',
     },
   },
   profileDefault: {
@@ -682,6 +709,9 @@ const translations: ITranslation = {
       },
       noDataUnit: 'nessun dato',
       noData: '⚠️ Nessun dato trovato, controllare la fonte dei dati sanitari',
+      wearableSyncWarning: 'Nessun dato sanitario recente ricevuto',
+      wearableSyncWarningBody:
+        'Apri l\'app del tuo wearable per sincronizzare i dati sanitari. Se il problema persiste, seguirà un controllo di emergenza.',
       refresh: 'Aggiornamento dei dati sanitari...',
       userSendSignal:
         'Segnale positivo inviato con successo ✅. Assicurarsi di controllare la fonte dei dati sanitari!',

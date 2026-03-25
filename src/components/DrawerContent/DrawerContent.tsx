@@ -34,7 +34,6 @@ const DrawerContent: FC<
     Screens.AutomatedEmergencySettings,
     Screens.EmergencyContactSettings,
     Screens.SignUpForCryopreservation,
-    Screens.SpecificTimePaused,
     Screens.DevLogs,
     Screens.DevHistoryLogs,
     Screens.DevPushLogs,
@@ -138,16 +137,6 @@ const DrawerContent: FC<
             <Text style={styles.menuText}>
               {t('drawer.automatedEmergency')}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.menuItem,
-              activeItem === Screens.SpecificTimePaused &&
-                styles.activeMenuItem,
-            ]}
-            onPress={() => handleMenuItemPress(Screens.SpecificTimePaused)}>
-            <Icon name="pause-circle" size={20} color={colors.white} />
-            <Text style={styles.menuText}>{t('drawer.pauseTimes')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[

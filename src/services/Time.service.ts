@@ -13,6 +13,17 @@ export const getTimeSettings = async () => {
   return ApiToLocal.mapApiToLocalData(response.data);
 };
 
+const isHourInRange = (
+  givenHour: number,
+  startingHour: number,
+  endingHour: number,
+): boolean => {
+  if (startingHour <= endingHour) {
+    return givenHour >= startingHour && givenHour < endingHour;
+  }
+  return givenHour >= startingHour || givenHour < endingHour;
+};
+
 export const isPausedTime = (
   givenDate: any,
   pausedDate: any,
@@ -20,74 +31,68 @@ export const isPausedTime = (
 ) => {
   const timestamp = +new Date(givenDate);
 
-  if (timestamp < pausedDate?.timestamp) {
+  if (pausedDate?.timestamp && timestamp < pausedDate.timestamp) {
     return true;
   }
 
+  if (!Array.isArray(specificPausedTimes)) return false;
+
   return specificPausedTimes.some((pausedTime: any) => {
     const {isActive, startTime, endTime, startDay, endDay} = pausedTime;
+    if (!isActive) return false;
 
-    const startingWeekDay = startDay[0];
-    const endingWeekDay = endDay[endDay.length - 1];
+    const startingWeekDay = startDay?.[0];
+    const endingWeekDay = endDay?.[endDay.length - 1];
     const startingHour = pseudoTime(startTime);
     const endingHour = pseudoTime(endTime);
     const givenWeekDay = givenDate.getDay();
     const givenHour = pseudoTime(timestamp);
 
-    if (isActive) {
-      let dayMatch = false;
-      let hourMatch = false;
+    let dayMatch = false;
+    let hourMatch = false;
 
-      if (startDay.length === 7) {
+    if (startDay.length === 7) {
+      dayMatch = true;
+      hourMatch = isHourInRange(givenHour, startingHour, endingHour);
+    } else if (startingWeekDay === endingWeekDay) {
+      if (startingWeekDay === givenWeekDay) {
+        dayMatch = true;
+        hourMatch = isHourInRange(givenHour, startingHour, endingHour);
+      }
+    } else if (startingWeekDay < endingWeekDay) {
+      if (givenWeekDay >= startingWeekDay && givenWeekDay <= endingWeekDay) {
         dayMatch = true;
 
-        if (givenHour >= startingHour && givenHour < endingHour) {
+        if (givenWeekDay > startingWeekDay && givenWeekDay < endingWeekDay) {
           hourMatch = true;
         }
-      } else if (startingWeekDay === endingWeekDay) {
-        if (startingWeekDay === givenWeekDay) {
-          dayMatch = true;
 
-          if (givenHour >= startingHour && givenHour < endingHour) {
-            hourMatch = true;
-          }
+        if (givenWeekDay === startingWeekDay && givenHour >= startingHour) {
+          hourMatch = true;
         }
-      } else if (startingWeekDay < endingWeekDay) {
-        if (givenWeekDay >= startingWeekDay && givenWeekDay <= endingWeekDay) {
-          dayMatch = true;
 
-          if (givenWeekDay > startingWeekDay && givenWeekDay < endingWeekDay) {
-            hourMatch = true;
-          }
-
-          if (givenWeekDay === startingWeekDay && givenHour >= startingHour) {
-            hourMatch = true;
-          }
-
-          if (givenWeekDay === endingWeekDay && givenHour < endingHour) {
-            hourMatch = true;
-          }
-        }
-      } else {
-        // starting day > ending day
-        if (givenWeekDay >= startingWeekDay || givenWeekDay <= endingWeekDay) {
-          dayMatch = true;
-
-          if (givenWeekDay > startingWeekDay || givenWeekDay < endingWeekDay) {
-            hourMatch = true;
-          }
-
-          if (givenWeekDay === startingWeekDay && givenHour >= startingHour) {
-            hourMatch = true;
-          }
-
-          if (givenWeekDay === endingWeekDay && givenHour < endingHour) {
-            hourMatch = true;
-          }
+        if (givenWeekDay === endingWeekDay && givenHour < endingHour) {
+          hourMatch = true;
         }
       }
+    } else {
+      if (givenWeekDay >= startingWeekDay || givenWeekDay <= endingWeekDay) {
+        dayMatch = true;
 
-      return dayMatch && hourMatch;
+        if (givenWeekDay > startingWeekDay || givenWeekDay < endingWeekDay) {
+          hourMatch = true;
+        }
+
+        if (givenWeekDay === startingWeekDay && givenHour >= startingHour) {
+          hourMatch = true;
+        }
+
+        if (givenWeekDay === endingWeekDay && givenHour < endingHour) {
+          hourMatch = true;
+        }
+      }
     }
+
+    return dayMatch && hourMatch;
   });
 };

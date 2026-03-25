@@ -303,14 +303,20 @@ const translations: ITranslation = {
     automatedEmergencySettings: {
       title: 'Notfall-Einstellungen',
       enableSystemTitle: 'Automatisierte Notfalleinstellungen',
-      instructions: 'Anweisungen lesen',
       compatibleSmartDeviceConnected: 'Kompatibles Smartdevice angeschlossen',
-      pleaseReadManual:
-        'Bitte lesen Sie das Handbuch für das automatisierte Notfallsystem, bevor Sie das System aktivieren',
-      systemDescription:
-        'Dieses System sendet automatisch ein Notfallsignal auf der Grundlage einer Vielzahl von Datenpunkten von einem Smartdevice mit Gesundheitsdaten.\nErfahren Sie hier mehr darüber, wie das System im Detail funktioniert:',
-      manualDescription: 'Handbuch für das automatisierte Notfallsystem',
-      confirmReadManual: 'Bestätigen Sie das Lesen des Handbuchs',
+      confirmReadManual: 'Ich verstehe, wie es funktioniert',
+      howItWorks: {
+        title: 'So funktioniert es',
+        step1Title: 'Verbinden',
+        step1Desc:
+          'Koppeln Sie Ihr Wearable oder nutzen Sie die integrierten Sensoren Ihres Telefons (Schritte, Herzfrequenz).',
+        step2Title: 'Überwachen',
+        step2Desc:
+          'Die App überprüft regelmäßig Ihre Gesundheitsdaten. Wenn kein Signal erkannt wird, erhalten Sie zuerst eine Warnbenachrichtigung.',
+        step3Title: 'Notfall',
+        step3Desc:
+          'Wenn weiterhin keine Reaktion erfolgt, löst das System einen Alarm an Ihre Notfallkontakte aus.',
+      },
       enableAutomatedEmergency: 'Automatisierten Notfall aktivieren',
       setUpSmartDevice: 'Smart-Gerät einrichten',
       connectedSmartDevice: 'Verbunden mit {{device}}',
@@ -368,12 +374,30 @@ const translations: ITranslation = {
       timeTrigger: {
         title: 'Zeitbasierter Auslöser',
         description:
-          'Wir werden nach einer bestimmten Zeitspanne Benachrichtigungen senden. Falls Sie auf eine dieser Benachrichtigungen nicht reagieren, wird das Notfallsystem ausgelöst. Die Nacht (22 Uhr - 6 Uhr) ist davon ausgenommen.',
+          'Wir senden Benachrichtigungen in regelmäßigen Abständen. Wenn Sie auf eine nicht reagieren, wird das Notfallsystem ausgelöst. Ihre Schlafenszeiten werden automatisch ausgenommen.',
         frequency: 'Notfall-Auslöser Zeitrahmen:',
         systemStart: 'Zeitbasiertes automatisches System läuft',
         turnOn: 'Zeitbasiert',
         warning:
           'Das Einschalten des zeitbasierten Systems wird den biobasierten Auslöser deaktivieren!',
+      },
+      sleepSchedule: {
+        title: 'Schlafplan',
+        description:
+          'Pausiert das Notfallsystem automatisch während Ihrer üblichen Schlafenszeiten, um Fehlalarme zu vermeiden.',
+        enableSchedule: 'Schlafplan aktivieren',
+        bedtime: 'Schlafenszeit',
+        wakeTime: 'Aufwachzeit',
+        sleepWindow:
+          'System pausiert nachts von {{bedtime}} bis {{wakeTime}}',
+      },
+      sleepScheduleSheet: {
+        title: 'Schlafplan einrichten',
+        description:
+          'Das Notfallsystem muss wissen, wann Sie schlafen, damit es nachts keinen Fehlalarm auslöst.',
+        hint: 'Tippen Sie auf eine Uhrzeit, um sie anzupassen',
+        save: 'Schlafplan aktivieren',
+        skip: 'Vorerst überspringen',
       },
       pauseTime: {
         title: 'System-Pausenzeiten einrichten',
@@ -517,14 +541,15 @@ const translations: ITranslation = {
   specificTimesScreen: {
     title: 'Pause Notfallsystem',
     pauseNow: {
-      title: 'Notfallsystem jetzt anhalten',
+      title: 'Notfallsystem pausieren',
       description:
-        'Sie können das automatische Notrufsystem von diesem Moment an bis zu einem bestimmten Zeitpunkt Ihrer Wahl vorübergehend anhalten',
-      cancelMessage:
-        'Die Unterbrechung des automatischen Notrufsystems wurde erfolgreich abgebrochen',
-      startDisclaimer: 'Tippen Sie hier, um das System jetzt anzuhalten',
-      pausedDisclaimer:
-        'Das System wird jetzt angehalten\nTippen Sie hier erneut, um die Pause aufzuheben',
+        'Pausieren Sie das automatische Notfallsystem vorübergehend bis zu einem Zeitpunkt Ihrer Wahl.',
+      cancelMessage: 'Pause wurde aufgehoben. Das System ist wieder aktiv.',
+      pauseConfirmed: 'System pausiert bis {{time}}',
+      startDisclaimer: 'System pausieren',
+      systemPaused: 'System ist pausiert',
+      pausedUntil: 'Das Notfallsystem ist pausiert bis {{time}}.',
+      cancelPause: 'Pause aufheben',
     },
     specificTimes: {
       title: 'Besondere Zeiten einrichten',
@@ -562,6 +587,8 @@ const translations: ITranslation = {
         sunday: 'Sonne',
       },
       changeSettings: 'Zeiteinstellungen erfolgreich geändert',
+      active: 'Aktiv',
+      inactive: 'Inaktiv',
     },
   },
   profileDefault: {
@@ -690,6 +717,9 @@ const translations: ITranslation = {
       noDataUnit: 'keine Daten',
       noData:
         '⚠️ Keine Daten gefunden, bitte überprüfen Sie Ihre Gesundheitsdatenquelle',
+      wearableSyncWarning: 'Keine aktuellen Gesundheitsdaten empfangen',
+      wearableSyncWarningBody:
+        'Bitte öffnen Sie Ihre Wearable-App, um Ihre Gesundheitsdaten zu synchronisieren. Falls dies anhält, folgt eine Notfallüberprüfung.',
       refresh: 'Aktualisieren Ihrer Gesundheitsdaten...',
       userSendSignal:
         'Positives Signal erfolgreich gesendet ✅. Stellen Sie sicher, dass Sie Ihre Gesundheitsdatenquelle überprüfen!',

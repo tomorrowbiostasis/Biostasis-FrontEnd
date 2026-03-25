@@ -1,17 +1,20 @@
-import {Button, Modal, Text} from 'native-base';
+import {Modal, Text} from 'native-base';
 import React, {FC, useCallback, useMemo, useState} from 'react';
+import {Platform, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import IconFeather from 'react-native-vector-icons/Feather';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
+import colors from '~/theme/colors';
 import {DaysOfTheWeekEnum, getUniqueId} from '../../util';
 import {DayOfTheWeekPicker} from './components/DayOfTheWeekPicker/DayOfTheWeekPicker';
 import {ISpecificDateComponentItem} from '../SpecificDateComponent/SpecificDateComponent';
 import styles from './styles';
 import {useTimeFormat} from '../../hooks/UseTimeFormat.hook';
 import {TimeFormatService} from '../../services/TimeFormat.service';
-import {MaskedTimeView} from './components/MaskedTimeInput/MaskedTimeView';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import colors from '~/theme/colors';
-import {View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const initialDaysSelected: DaysOfTheWeekEnum[] = [0, 1, 2, 3, 4, 5, 6];
 
@@ -24,7 +27,6 @@ const initialItem: Omit<ISpecificDateComponentItem, 'id'> = {
 };
 
 type StartEndDayType = 'startDay' | 'endDay';
-type StartEndHourType = 'startTime' | 'endTime';
 
 interface IDayTimePickerProps {
   item?: ISpecificDateComponentItem;
@@ -42,8 +44,23 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
   const [dayTimeItem, setDayTimeItem] = useState(
     item || {...initialItem, id: getUniqueId()},
   );
-  const [isStartHourValid, setIsStartHourValid] = useState(!!item);
-  const [isEndHourValid, setIsEndHourValid] = useState(!!item);
+  const [activeTimePicker, setActiveTimePicker] = useState<
+    'startTime' | 'endTime' | null
+  >(null);
+
+  const startTimeFormatted = useMemo(() => {
+    if (!dayTimeItem.startTime) {
+      return '--:--';
+    }
+    return new TimeFormatService(dayTimeItem.startTime).format(is24TimeFormat);
+  }, [dayTimeItem.startTime, is24TimeFormat]);
+
+  const endTimeFormatted = useMemo(() => {
+    if (!dayTimeItem.endTime) {
+      return '--:--';
+    }
+    return new TimeFormatService(dayTimeItem.endTime).format(is24TimeFormat);
+  }, [dayTimeItem.endTime, is24TimeFormat]);
 
   const handleSave = useCallback(() => {
     onSave(dayTimeItem);
@@ -74,113 +91,134 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
     [dayTimeItem],
   );
 
-  const handleHours = useCallback((time: Date, startEnd: StartEndHourType) => {
-    setDayTimeItem(prev => ({
-      ...prev,
-      [startEnd]: time,
-    }));
-  }, []);
-
-  const handleHoursValidation = useCallback(
-    (isValid: boolean, startEnd: StartEndHourType) => {
-      if (startEnd === 'startTime') {
-        return setIsStartHourValid(isValid);
+  const handleTimeConfirm = useCallback(
+    (date: Date) => {
+      if (activeTimePicker) {
+        setDayTimeItem(prev => ({...prev, [activeTimePicker]: date}));
       }
-      setIsEndHourValid(isValid);
+      setActiveTimePicker(null);
     },
-    [],
+    [activeTimePicker],
   );
 
-  const getStartTimeFormatted = useCallback(() => {
-    return new TimeFormatService(dayTimeItem.startTime).format(is24TimeFormat);
-  }, [dayTimeItem.startTime, is24TimeFormat]);
+  const canSave = !!dayTimeItem.startTime && !!dayTimeItem.endTime;
 
-  const getEndTimeFormatted = useCallback(() => {
-    return new TimeFormatService(dayTimeItem.endTime).format(is24TimeFormat);
-  }, [dayTimeItem.endTime, is24TimeFormat]);
-
-  const startTimeFormatted = useMemo(
-    () => getStartTimeFormatted(),
-    [getStartTimeFormatted],
-  );
-
-  const endTimeFormatted = useMemo(
-    () => getEndTimeFormatted(),
-    [getEndTimeFormatted],
-  );
+  const pickerDate =
+    activeTimePicker && dayTimeItem[activeTimePicker]
+      ? (dayTimeItem[activeTimePicker] as Date)
+      : new Date();
 
   return (
     <Modal isOpen={true} style={styles.container}>
       <SafeAreaView style={styles.safeAreaContainer}>
-        <Text style={styles.title}>
-          {t('specificTimesScreen.specificTimes.title')}
-        </Text>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+            <IconFeather name="x" size={18} color={colors.gray[700]} />
+          </TouchableOpacity>
+          <Text style={styles.title}>
+            {t('specificTimesScreen.specificTimes.title')}
+          </Text>
+        </View>
+
         <KeyboardAwareScrollView
           enableOnAndroid
           extraScrollHeight={20}
           keyboardOpeningTime={0}
           contentContainerStyle={styles.contentContainerStyle}>
-          <View style={styles.panel}>
-            <Text style={styles.label}>
+          <View style={[styles.panel, styles.startPanel]}>
+            <Text style={[styles.sectionLabel, styles.startLabel]}>
               {t('specificTimesScreen.specificTimes.startSection.pickDay')}
             </Text>
             <DayOfTheWeekPicker
               days={dayTimeItem.startDay}
               onChangeDays={days => handleDayOfTheWeek(days, 'startDay')}
             />
-            <MaskedTimeView
-              label={t(
-                'specificTimesScreen.specificTimes.startSection.pickTime',
-              )}
-              initialValue={startTimeFormatted}
-              name="startTime"
-              onChangeValue={(time, name) =>
-                handleHours(time, name as StartEndHourType)
-              }
-              onChangeValidation={(isValid, name) =>
-                handleHoursValidation(isValid, name as StartEndHourType)
-              }
-            />
+            <Text style={styles.timePickerLabel}>
+              {t('specificTimesScreen.specificTimes.startSection.pickTime')}
+            </Text>
+            <TouchableOpacity
+              style={styles.timePickerButton}
+              onPress={() => setActiveTimePicker('startTime')}>
+              <IconIonicons
+                name="time-outline"
+                size={20}
+                color={
+                  dayTimeItem.startTime ? '#4CAF50' : colors.gray[400]
+                }
+              />
+              <Text
+                style={[
+                  styles.timePickerValue,
+                  !dayTimeItem.startTime && styles.timePickerPlaceholder,
+                ]}>
+                {startTimeFormatted}
+              </Text>
+              <IconFeather
+                name="chevron-right"
+                size={18}
+                color={colors.gray[400]}
+              />
+            </TouchableOpacity>
           </View>
-          <View style={styles.panel}>
-            <Text style={styles.label}>
+
+          <View style={[styles.panel, styles.endPanel]}>
+            <Text style={[styles.sectionLabel, styles.endLabel]}>
               {t('specificTimesScreen.specificTimes.endSection.pickDay')}
             </Text>
             <DayOfTheWeekPicker
               days={dayTimeItem.endDay}
               onChangeDays={days => handleDayOfTheWeek(days, 'endDay')}
             />
-
-            <MaskedTimeView
-              label={t(
-                'specificTimesScreen.specificTimes.startSection.pickTime',
-              )}
-              initialValue={endTimeFormatted}
-              name="endTime"
-              onChangeValue={(time, name) =>
-                handleHours(time, name as StartEndHourType)
-              }
-              onChangeValidation={(isValid, name) =>
-                handleHoursValidation(isValid, name as StartEndHourType)
-              }
-            />
+            <Text style={styles.timePickerLabel}>
+              {t('specificTimesScreen.specificTimes.endSection.pickTime')}
+            </Text>
+            <TouchableOpacity
+              style={styles.timePickerButton}
+              onPress={() => setActiveTimePicker('endTime')}>
+              <IconIonicons
+                name="time-outline"
+                size={20}
+                color={
+                  dayTimeItem.endTime ? colors.blue[700] : colors.gray[400]
+                }
+              />
+              <Text
+                style={[
+                  styles.timePickerValue,
+                  !dayTimeItem.endTime && styles.timePickerPlaceholder,
+                ]}>
+                {endTimeFormatted}
+              </Text>
+              <IconFeather
+                name="chevron-right"
+                size={18}
+                color={colors.gray[400]}
+              />
+            </TouchableOpacity>
           </View>
-          <Button
-            variant={'solid'}
-            _disabled={{opacity: 1}}
-            disabled={!isStartHourValid || !isEndHourValid}
-            style={styles.saveButton}
-            onPress={handleSave}>
-            <Text color={colors.white} fontSize={'md'} fontWeight={700}>
-              {t('common.save')}
-            </Text>
-          </Button>
-          <Button variant={'unstyled'} onPress={onClose}>
-            <Text color={colors.red[600]} fontSize={'md'} fontWeight={700}>
-              {t('common.cancel')}
-            </Text>
-          </Button>
+
+          <View style={styles.buttonRow}>
+            <TouchableOpacity
+              style={[styles.saveButton, !canSave && styles.saveButtonDisabled]}
+              onPress={handleSave}
+              disabled={!canSave}>
+              <Text style={styles.saveButtonText}>{t('common.save')}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
+              <Text style={styles.cancelButtonText}>{t('common.cancel')}</Text>
+            </TouchableOpacity>
+          </View>
         </KeyboardAwareScrollView>
+
+        <DateTimePickerModal
+          isVisible={!!activeTimePicker}
+          mode="time"
+          date={pickerDate}
+          onConfirm={handleTimeConfirm}
+          onCancel={() => setActiveTimePicker(null)}
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+        />
       </SafeAreaView>
     </Modal>
   );

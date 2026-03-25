@@ -76,6 +76,12 @@ keystore.properties
  
 # testing
 /coverage
+
+# Python (local PDF scripts)
+.venv/
+
+# Bundler local config
+.bundle/
  
 # Yarn
 .yarn/*

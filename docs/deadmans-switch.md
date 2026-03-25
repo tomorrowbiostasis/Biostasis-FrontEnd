@@ -39,10 +39,10 @@ There are two independent trigger modes. Only one can be active at a time.
 5. If valid data exists (heart rate > 10 bpm, steps > 10):
    - Sends `POST /api/v1/user/positive-info` with the next check-in interval.
    - Backend resets its internal countdown.
-6. If **no valid data** is found:
-   - A local notification warns: "No data found."
-   - The `HealthTrigger` flag is set to `true`.
-   - The app navigates to the **Health Condition Error** screen (if in foreground/background).
+6. If **no valid data** is found, a two-strike warning system applies:
+   - **1st miss:** A "check your wearable" notification is shown (`WearableSyncWarning`), asking the user to open their wearable app to sync. The `HealthTrigger` flag is **not** set and the Health Condition Error screen is **not** shown. This gives the user ~15 minutes (one background fetch cycle) to sync their wearable or accumulate phone steps.
+   - **2nd consecutive miss:** The system escalates — `HealthTrigger` is set to `true`, the Health Condition Error screen is shown, and the counter resets.
+   - If valid data is found at any point, the consecutive miss counter resets to zero.
 7. If positive info is never sent, the backend escalates and sends an `EMERGENCY_ALERT` push.
 
 ### iOS Native Path
@@ -83,8 +83,13 @@ The system can be paused to prevent false alarms:
 | **Scheduled Pause** | Automated Emergency Settings → Pause Times | Recurring weekly windows (e.g. every Tuesday 10am–12pm) |
 | **Sleep Schedule** | Automated Emergency Settings → Sleep Schedule | Recurring nightly window (e.g. 10pm–7am) auto-pauses every night |
 | **Smart Detection** | Automated Emergency Settings → Smart Sleep Detection | Auto-detects sleep via Focus/DND, charging, and health data recency |
+| **Post-Wake Buffer** | Automatic (1 hour after wake time) | Extends the sleep schedule pause by 60 minutes past the configured wake time, giving the phone's step counter time to register movement and the user time to sync their wearable |
 
 All pause checks happen at the start of `startBioCheck()` and in the push notification handler. When paused, bio checks are skipped and `EmergencyRegularCheck` / `EmergencyHealthCheck` pushes are suppressed. **`EmergencyAlert` is never suppressed** — if the backend has already escalated to a full emergency, the alert always gets through.
+
+### Post-Wake Buffer
+
+The sleep schedule includes a built-in 60-minute buffer after the configured wake time (`POST_WAKE_BUFFER_MINUTES` in `SleepSchedule.service.ts`). For example, if wake time is 7:00 AM, bio checks remain paused until 8:00 AM. This prevents false alarms caused by stale wearable data (e.g. when the user hasn't opened their Oura Ring app yet). During this buffer, the phone's built-in step counter naturally accumulates walking data (bathroom, kitchen, etc.), which satisfies the bio check without any wearable sync.
 
 ---
 
@@ -110,7 +115,12 @@ Health data syncs to HealthKit / Google Fit
 │     │                       │
 │     ├─ Data found ──────────┼──► POST /positive-info ──► Backend resets timer
 │     │                       │
-│     └─ No data ─────────────┼──► Show Health Condition screen
+│     └─ No data              │
+│        │                    │
+│        ├─ 1st miss ─────────┼──► "Check your wearable" warning notification
+│        │                    │        (no escalation, retry in ~15 min)
+│        │                    │
+│        └─ 2nd miss ─────────┼──► Show Health Condition screen
 │                             │        │
 └─────────────────────────────┘        │
                                        ▼
