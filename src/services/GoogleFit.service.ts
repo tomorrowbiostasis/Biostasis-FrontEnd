@@ -114,19 +114,19 @@ export const recentMovementData = async (config: IGoogleFitConfig) => {
     const samples = await GoogleFit.getDailyStepCountSamples(config);
 
     if (samples.length) {
-      let maxSteps = 0,
-        latestTime = 0;
+      let maxSteps = 0;
+      let latestTime = '';
       samples.forEach(sample => {
         const steps = sample.rawSteps.reduce(
-          (sum, data) => (sum += data.steps),
+          (sum, data) => sum + data.steps,
           0,
         );
-        const time = sample.rawSteps.reduce((time, data) => {
-          if (data.endDate > time) {
+        const time = sample.rawSteps.reduce((latest: string, data) => {
+          if (!latest || data.endDate > latest) {
             return data.endDate;
           }
-          return time;
-        }, 0);
+          return latest;
+        }, '');
         if (steps > maxSteps) {
           maxSteps = steps;
           latestTime = time;

@@ -11,6 +11,7 @@ export interface SleepSchedule {
 }
 
 const SLEEP_SCHEDULE_KEY = AsyncStorageEnum.SleepSchedule;
+const POST_WAKE_BUFFER_MINUTES = 60;
 
 const DEFAULT_SCHEDULE: SleepSchedule = {
   enabled: false,
@@ -61,12 +62,27 @@ export const isWithinSleepWindow = (schedule: SleepSchedule): boolean => {
   const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   const bedtimeMinutes = schedule.bedtimeHour * 60 + schedule.bedtimeMinute;
-  const wakeMinutes = schedule.wakeHour * 60 + schedule.wakeMinute;
+  let wakeMinutes =
+    schedule.wakeHour * 60 + schedule.wakeMinute + POST_WAKE_BUFFER_MINUTES;
+  if (wakeMinutes >= 1440) {
+    wakeMinutes -= 1440;
+  }
+
+  // Guard: if buffer extends window to ≥23h, cap it to prevent always-true
+  const windowLength =
+    bedtimeMinutes <= wakeMinutes
+      ? wakeMinutes - bedtimeMinutes
+      : 1440 - bedtimeMinutes + wakeMinutes;
+  if (windowLength >= 1380) {
+    console.warn(
+      'Sleep window is too long (>=23h), capping buffer to prevent always-true',
+    );
+    wakeMinutes = (schedule.wakeHour * 60 + schedule.wakeMinute + 30) % 1440;
+  }
 
   if (bedtimeMinutes < wakeMinutes) {
     return currentMinutes >= bedtimeMinutes && currentMinutes < wakeMinutes;
   }
-  // Crosses midnight (e.g. 22:00 - 07:00)
   return currentMinutes >= bedtimeMinutes || currentMinutes < wakeMinutes;
 };
 

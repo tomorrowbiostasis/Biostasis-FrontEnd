@@ -4,12 +4,13 @@ import colors from '~/theme/colors';
 const styles = StyleSheet.create({
   inputContainer: {
     borderBottomWidth: 2,
-    paddingBottom: '1%',
+    paddingBottom: 6,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: '1%',
-    marginBottom: '1%',
-    borderColor: colors.blue[200],
+    alignItems: 'center',
+    marginTop: 4,
+    marginBottom: 4,
+    borderColor: colors.gray[300],
   },
   valid: {
     borderColor: colors.green[400],
@@ -21,25 +22,30 @@ const styles = StyleSheet.create({
     width: '90%',
     paddingVertical: 0,
     paddingLeft: 0,
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: '600',
     color: colors.black,
   },
   errorMessage: {
     color: colors.red[400],
+    fontSize: 12,
   },
   errorMessageContainer: {
-    height: 20,
+    height: 18,
   },
   label: {
-    color: colors.gray[800],
-    opacity: 0.8,
+    color: colors.gray[700],
     fontSize: 14,
+    fontWeight: '500',
+    marginTop: 8,
   },
   radioContainer: {
     flexDirection: 'row',
+    marginTop: 8,
+    gap: 12,
   },
   radioItem: {
-    paddingHorizontal: '1%',
+    paddingHorizontal: 2,
   },
 });
 

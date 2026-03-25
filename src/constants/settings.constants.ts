@@ -10,7 +10,7 @@ export const intervalsConfig = [
     time: 6,
     value: '6',
     unit: 'minutes',
-    debug: false,
+    debug: true,
     warning: false,
   },
   {

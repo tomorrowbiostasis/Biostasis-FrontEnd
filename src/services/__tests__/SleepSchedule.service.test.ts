@@ -9,6 +9,50 @@ import {
   formatTime,
 } from '../SleepSchedule.service';
 
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
+);
+
+jest.mock('react-native-device-info', () => ({
+  isBatteryCharging: jest.fn().mockResolvedValue(false),
+  isAirplaneMode: jest.fn().mockResolvedValue(false),
+}));
+
+jest.mock('react-native-device-time-format', () => ({
+  is24HourFormat: jest.fn().mockResolvedValue(false),
+}));
+
+jest.mock('react-native-fs', () => ({
+  readFile: jest.fn(),
+  writeFile: jest.fn(),
+  exists: jest.fn(),
+  DocumentDirectoryPath: '/mock',
+}));
+
+jest.mock('../API.service', () => ({
+  __esModule: true,
+  default: {
+    positiveInfo: jest.fn(),
+    getTimeSlot: jest.fn(),
+  },
+}));
+
+jest.mock('@notifee/react-native', () => ({
+  AndroidChannel: {},
+  AndroidChannelGroup: {},
+  AndroidColor: {},
+  AndroidImportance: {HIGH: 4, DEFAULT: 3},
+  AndroidStyle: {BIGTEXT: 0},
+  default: {
+    createChannel: jest.fn(),
+    createChannelGroup: jest.fn(),
+    displayNotification: jest.fn(),
+    cancelAllNotifications: jest.fn(),
+    onForegroundEvent: jest.fn(),
+    onBackgroundEvent: jest.fn(),
+  },
+}));
+
 beforeEach(() => {
   AsyncStorage.clear();
   jest.restoreAllMocks();
@@ -16,6 +60,8 @@ beforeEach(() => {
 
 // ─────────────────────────────────────────────────────────
 // isWithinSleepWindow — pure function, no mocks needed
+// NOTE: the sleep window includes a 60-minute post-wake buffer,
+// so actual wake boundary = wakeTime + 60min.
 // ─────────────────────────────────────────────────────────
 
 describe('isWithinSleepWindow', () => {
@@ -42,7 +88,7 @@ describe('isWithinSleepWindow', () => {
 
   afterEach(() => jest.restoreAllMocks());
 
-  describe('crosses midnight (e.g. 22:00–07:00)', () => {
+  describe('crosses midnight (bed 22:00, wake 07:00, buffer → 08:00)', () => {
     const s = schedule(22, 0, 7, 0);
 
     it('11:00 PM → inside window', () => {
@@ -65,18 +111,33 @@ describe('isWithinSleepWindow', () => {
       expect(isWithinSleepWindow(s)).toBe(true);
     });
 
-    it('6:59 AM → inside window (1 min before wake)', () => {
+    it('6:59 AM → inside window (1 min before raw wake)', () => {
       mockTime(6, 59);
       expect(isWithinSleepWindow(s)).toBe(true);
     });
 
-    it('7:00 AM exactly (wake time) → outside window', () => {
+    it('7:00 AM (raw wake time) → still inside due to 1h buffer', () => {
       mockTime(7, 0);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('7:30 AM → still inside buffer window', () => {
+      mockTime(7, 30);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('7:59 AM → inside (1 min before buffer end)', () => {
+      mockTime(7, 59);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('8:00 AM → outside (buffer ended)', () => {
+      mockTime(8, 0);
       expect(isWithinSleepWindow(s)).toBe(false);
     });
 
-    it('7:01 AM → outside window', () => {
-      mockTime(7, 1);
+    it('8:01 AM → outside', () => {
+      mockTime(8, 1);
       expect(isWithinSleepWindow(s)).toBe(false);
     });
 
@@ -91,7 +152,7 @@ describe('isWithinSleepWindow', () => {
     });
   });
 
-  describe('same day (e.g. 01:00–06:00 — nap)', () => {
+  describe('same day (bed 01:00, wake 06:00, buffer → 07:00)', () => {
     const s = schedule(1, 0, 6, 0);
 
     it('3:00 AM → inside', () => {
@@ -109,8 +170,18 @@ describe('isWithinSleepWindow', () => {
       expect(isWithinSleepWindow(s)).toBe(true);
     });
 
-    it('6:00 AM → outside', () => {
+    it('6:00 AM (raw wake) → inside due to buffer', () => {
       mockTime(6, 0);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('6:59 AM → inside (1 min before buffer end)', () => {
+      mockTime(6, 59);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('7:00 AM → outside (buffer ended)', () => {
+      mockTime(7, 0);
       expect(isWithinSleepWindow(s)).toBe(false);
     });
 
@@ -125,16 +196,16 @@ describe('isWithinSleepWindow', () => {
     });
   });
 
-  describe('edge: bedtime equals wake time', () => {
+  describe('edge: bedtime equals wake time (08:00–08:00, buffer → 09:00)', () => {
     const s = schedule(8, 0, 8, 0);
 
-    it('8:00 AM → bedtime==wake means window is zero width, should be outside', () => {
+    it('8:00 AM → inside (bedtime==wake, window extends to 09:00)', () => {
       mockTime(8, 0);
       expect(isWithinSleepWindow(s)).toBe(true);
     });
   });
 
-  describe('edge: very short window (23:55–00:05)', () => {
+  describe('edge: very short window (bed 23:55, wake 00:05, buffer → 01:05)', () => {
     const s = schedule(23, 55, 0, 5);
 
     it('23:57 → inside', () => {
@@ -147,8 +218,18 @@ describe('isWithinSleepWindow', () => {
       expect(isWithinSleepWindow(s)).toBe(true);
     });
 
-    it('00:05 → outside', () => {
+    it('00:05 (raw wake) → inside due to buffer', () => {
       mockTime(0, 5);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('01:04 → inside (1 min before buffer end)', () => {
+      mockTime(1, 4);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('01:05 → outside (buffer ended)', () => {
+      mockTime(1, 5);
       expect(isWithinSleepWindow(s)).toBe(false);
     });
 
@@ -158,21 +239,26 @@ describe('isWithinSleepWindow', () => {
     });
   });
 
-  describe('edge: almost full day (00:01–00:00)', () => {
+  describe('edge: almost full day (bed 00:01, wake 00:00, buffer → 01:00)', () => {
     const s = schedule(0, 1, 0, 0);
 
-    it('12:00 PM → inside', () => {
-      mockTime(12, 0);
+    it('00:30 → inside (within buffered window 00:01–01:00)', () => {
+      mockTime(0, 30);
       expect(isWithinSleepWindow(s)).toBe(true);
     });
 
-    it('00:00 → outside (wake time)', () => {
+    it('12:00 PM → outside (buffer collapses the nearly-full-day window)', () => {
+      mockTime(12, 0);
+      expect(isWithinSleepWindow(s)).toBe(false);
+    });
+
+    it('00:00 → outside (before bedtime)', () => {
       mockTime(0, 0);
       expect(isWithinSleepWindow(s)).toBe(false);
     });
   });
 
-  describe('minutes precision', () => {
+  describe('minutes precision (bed 22:30, wake 06:45, buffer → 07:45)', () => {
     const s = schedule(22, 30, 6, 45);
 
     it('22:29 → outside', () => {
@@ -190,8 +276,52 @@ describe('isWithinSleepWindow', () => {
       expect(isWithinSleepWindow(s)).toBe(true);
     });
 
-    it('6:45 → outside', () => {
+    it('6:45 (raw wake) → inside due to buffer', () => {
       mockTime(6, 45);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('7:44 → inside (1 min before buffer end)', () => {
+      mockTime(7, 44);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('7:45 → outside (buffer ended)', () => {
+      mockTime(7, 45);
+      expect(isWithinSleepWindow(s)).toBe(false);
+    });
+  });
+
+  describe('post-wake buffer wrapping past midnight (bed 20:00, wake 23:30, buffer → 00:30)', () => {
+    const s = schedule(20, 0, 23, 30);
+
+    it('23:00 → inside (before raw wake)', () => {
+      mockTime(23, 0);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('23:30 (raw wake) → inside due to buffer', () => {
+      mockTime(23, 30);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('00:00 midnight → inside (buffer extends past midnight)', () => {
+      mockTime(0, 0);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('00:29 → inside (1 min before buffer end)', () => {
+      mockTime(0, 29);
+      expect(isWithinSleepWindow(s)).toBe(true);
+    });
+
+    it('00:30 → outside (buffer ended)', () => {
+      mockTime(0, 30);
+      expect(isWithinSleepWindow(s)).toBe(false);
+    });
+
+    it('19:59 → outside', () => {
+      mockTime(19, 59);
       expect(isWithinSleepWindow(s)).toBe(false);
     });
   });
@@ -270,15 +400,21 @@ describe('saveSleepSchedule', () => {
 // isSleepPaused — schedule + smart detection
 // ─────────────────────────────────────────────────────────
 
+const RealDate = global.Date;
+
+const mockDateAndNow = (fakeNow: Date) => {
+  const mock = jest.spyOn(global, 'Date').mockImplementation(
+    (...args: any[]) => (args.length ? new (RealDate as any)(...args) : fakeNow),
+  );
+  (global.Date as any).now = jest.fn(() => fakeNow.getTime());
+  return mock;
+};
+
 describe('isSleepPaused', () => {
   describe('automatic schedule', () => {
     it('returns true when schedule enabled and current time is within window', async () => {
       const fakeNow = new Date(2026, 2, 18, 23, 30, 0);
-      jest.spyOn(global, 'Date').mockImplementation(
-        (...args: any[]) =>
-          args.length ? new (jest.requireActual('Date') as any)(...args) : fakeNow,
-      );
-      jest.spyOn(Date, 'now').mockReturnValue(fakeNow.getTime());
+      mockDateAndNow(fakeNow);
 
       const schedule: SleepSchedule = {
         enabled: true,
@@ -297,11 +433,7 @@ describe('isSleepPaused', () => {
 
     it('returns false when schedule enabled but current time is outside window', async () => {
       const fakeNow = new Date(2026, 2, 18, 14, 0, 0);
-      jest.spyOn(global, 'Date').mockImplementation(
-        (...args: any[]) =>
-          args.length ? new (jest.requireActual('Date') as any)(...args) : fakeNow,
-      );
-      jest.spyOn(Date, 'now').mockReturnValue(fakeNow.getTime());
+      mockDateAndNow(fakeNow);
 
       const schedule: SleepSchedule = {
         enabled: true,
@@ -341,13 +473,13 @@ describe('isSleepPaused', () => {
 });
 
 // ─────────────────────────────────────────────────────────
-// Real-world scenarios
+// Real-world scenarios (updated for 1h post-wake buffer)
 // ─────────────────────────────────────────────────────────
 
 describe('Real-world scenarios', () => {
   afterEach(() => jest.restoreAllMocks());
 
-  it('Scenario: User goes to bed at 10 PM, system should be paused at 2 AM', async () => {
+  it('User asleep at 2 AM — system paused', async () => {
     const schedule: SleepSchedule = {
       enabled: true,
       bedtimeHour: 22,
@@ -361,16 +493,12 @@ describe('Real-world scenarios', () => {
     );
 
     const twoAM = new Date(2026, 2, 19, 2, 0, 0);
-    jest.spyOn(global, 'Date').mockImplementation(
-      (...args: any[]) =>
-        args.length ? new (jest.requireActual('Date') as any)(...args) : twoAM,
-    );
-    jest.spyOn(Date, 'now').mockReturnValue(twoAM.getTime());
+    mockDateAndNow(twoAM);
 
     expect(await isSleepPaused()).toBe(true);
   });
 
-  it('Scenario: 7:01 AM — system should resume', async () => {
+  it('7:01 AM — still paused (within 1h post-wake buffer)', async () => {
     const schedule: SleepSchedule = {
       enabled: true,
       bedtimeHour: 22,
@@ -383,17 +511,48 @@ describe('Real-world scenarios', () => {
       JSON.stringify(schedule),
     );
 
-    const sevenOhOne = new Date(2026, 2, 19, 7, 1, 0);
-    jest.spyOn(global, 'Date').mockImplementation(
-      (...args: any[]) =>
-        args.length ? new (jest.requireActual('Date') as any)(...args) : sevenOhOne,
+    mockDateAndNow(new Date(2026, 2, 19, 7, 1, 0));
+
+    expect(await isSleepPaused()).toBe(true);
+  });
+
+  it('7:30 AM — still paused (30 min into buffer)', async () => {
+    const schedule: SleepSchedule = {
+      enabled: true,
+      bedtimeHour: 22,
+      bedtimeMinute: 0,
+      wakeHour: 7,
+      wakeMinute: 0,
+    };
+    await AsyncStorage.setItem(
+      AsyncStorageEnum.SleepSchedule,
+      JSON.stringify(schedule),
     );
-    jest.spyOn(Date, 'now').mockReturnValue(sevenOhOne.getTime());
+
+    mockDateAndNow(new Date(2026, 2, 19, 7, 30, 0));
+
+    expect(await isSleepPaused()).toBe(true);
+  });
+
+  it('8:01 AM — system resumes (buffer expired)', async () => {
+    const schedule: SleepSchedule = {
+      enabled: true,
+      bedtimeHour: 22,
+      bedtimeMinute: 0,
+      wakeHour: 7,
+      wakeMinute: 0,
+    };
+    await AsyncStorage.setItem(
+      AsyncStorageEnum.SleepSchedule,
+      JSON.stringify(schedule),
+    );
+
+    mockDateAndNow(new Date(2026, 2, 19, 8, 1, 0));
 
     expect(await isSleepPaused()).toBe(false);
   });
 
-  it('Scenario: Schedule disabled — system runs 24/7', async () => {
+  it('Schedule disabled — system runs 24/7', async () => {
     const schedule: SleepSchedule = {
       enabled: false,
       bedtimeHour: 22,
@@ -406,17 +565,12 @@ describe('Real-world scenarios', () => {
       JSON.stringify(schedule),
     );
 
-    const twoAM = new Date(2026, 2, 19, 2, 0, 0);
-    jest.spyOn(global, 'Date').mockImplementation(
-      (...args: any[]) =>
-        args.length ? new (jest.requireActual('Date') as any)(...args) : twoAM,
-    );
-    jest.spyOn(Date, 'now').mockReturnValue(twoAM.getTime());
+    mockDateAndNow(new Date(2026, 2, 19, 2, 0, 0));
 
     expect(await isSleepPaused()).toBe(false);
   });
 
-  it('Scenario: Night shift worker — bedtime 06:00, wake 14:00', async () => {
+  it('Night shift worker — bedtime 06:00, wake 14:00, buffer → 15:00', async () => {
     const schedule: SleepSchedule = {
       enabled: true,
       bedtimeHour: 6,
@@ -429,21 +583,38 @@ describe('Real-world scenarios', () => {
       JSON.stringify(schedule),
     );
 
-    const tenAM = new Date(2026, 2, 19, 10, 0, 0);
-    jest.spyOn(global, 'Date').mockImplementation(
-      (...args: any[]) =>
-        args.length ? new (jest.requireActual('Date') as any)(...args) : tenAM,
-    );
-    jest.spyOn(Date, 'now').mockReturnValue(tenAM.getTime());
+    mockDateAndNow(new Date(2026, 2, 19, 10, 0, 0));
     expect(await isSleepPaused()).toBe(true);
   });
 
-  it('Scenario: Corrupted storage — should not crash', async () => {
+  it('Night shift — 14:30 still paused (in buffer), 15:01 resumes', async () => {
+    const schedule: SleepSchedule = {
+      enabled: true,
+      bedtimeHour: 6,
+      bedtimeMinute: 0,
+      wakeHour: 14,
+      wakeMinute: 0,
+    };
+    await AsyncStorage.setItem(
+      AsyncStorageEnum.SleepSchedule,
+      JSON.stringify(schedule),
+    );
+
+    mockDateAndNow(new Date(2026, 2, 19, 14, 30, 0));
+    expect(await isSleepPaused()).toBe(true);
+
+    jest.restoreAllMocks();
+
+    mockDateAndNow(new Date(2026, 2, 19, 15, 1, 0));
+    expect(await isSleepPaused()).toBe(false);
+  });
+
+  it('Corrupted storage — should not crash', async () => {
     await AsyncStorage.setItem(AsyncStorageEnum.SleepSchedule, '%%%CORRUPT%%%');
     expect(await isSleepPaused()).toBe(false);
   });
 
-  it('Scenario: Fresh install — nothing saved', async () => {
+  it('Fresh install — nothing saved', async () => {
     expect(await isSleepPaused()).toBe(false);
   });
 });

@@ -14,6 +14,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {IUser} from '~/redux/user/user.slice';
 import ToastService from '~/services/Toast.service';
 import IconFontisto from 'react-native-vector-icons/Fontisto';
+import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {updateUser} from '~/redux/user/thunks';
 import EnvConfig from '~/services/Env.service';
 import {setEmergencyCheckType} from '~/redux/automatedEmergency/automatedEmergency.slice';
@@ -387,11 +388,20 @@ const BioBasedTrigger = () => {
   return (
     <View style={styles.panel}>
       <View style={styles.triggerPanelHeader}>
-        <Text style={styles.triggerTitle}>
-          {t(
-            'emergencyContactsSettings.automatedEmergencySettings.bioTrigger.title',
-          )}
-        </Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={[styles.circle, styles.icon]}>
+            <IconMaterialCommunityIcons
+              name="heart-pulse"
+              size={20}
+              color="#E91E63"
+            />
+          </View>
+          <Text style={styles.triggerTitle}>
+            {t(
+              'emergencyContactsSettings.automatedEmergencySettings.bioTrigger.title',
+            )}
+          </Text>
+        </View>
         {isPlatformConditionsValid ? (
           <View style={[styles.activeButton, styles.isActive]}>
             <View style={styles.buttonIcon}>

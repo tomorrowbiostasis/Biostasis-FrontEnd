@@ -1,0 +1,150 @@
+================================================================================
+BIOSTASIS FRONTEND - UI CHANGES REPORT (Automated Emergency / Deadman Switch)
+================================================================================
+Generated for stakeholder and design review. Focus: user-visible screens and flows.
+
+--------------------------------------------------------------------------------
+1. AUTOMATED EMERGENCY SETTINGS (main screen)
+--------------------------------------------------------------------------------
+
+BEFORE (problems addressed)
+- "Read instructions" expanded a link that was broken or confusing.
+- Sleep schedule and pause flows were split across the drawer or hard to find.
+- Time-based copy hardcoded night hours (e.g. 10pm-6am) instead of user schedule.
+- Trigger cards had no icons; horizontal padding felt tighter than vertical.
+
+AFTER (what users see now)
+- Inline "How it works" section: three short steps (Connect / Monitor / Emergency)
+  with colored icon circles. Always visible (no accordion to a dead link).
+- Primary toggles: "I understand how it works" and "Enable automated emergency"
+  remain at the top of the first card.
+- Bio-based trigger card: heart-pulse icon in header; time-based: timer-sand icon.
+- When automated emergency is ON: Bio + Time panels appear, then Sleep Schedule
+  card directly below (same screen, no separate menu entry for sleep schedule).
+- Smart Sleep Detection: always on in logic; no user toggle to turn it off.
+- Scroll padding: increased horizontal padding on the main scroll content;
+  shared card styles (panel, panelBody, panelFooter) for consistent left/right
+  rhythm.
+
+FILES (reference)
+- src/screens/AutomatedEmergencySettingsScreen/AutomatedEmergencySettingsScreen.tsx
+- src/screens/AutomatedEmergencySettingsScreen/styles.ts
+- src/screens/.../BioBasedTrigger/BioBasedTrigger.tsx
+- src/screens/.../TimeBasedTrigger/TimeBasedTrigger.tsx
+
+--------------------------------------------------------------------------------
+2. SLEEP SCHEDULE
+--------------------------------------------------------------------------------
+
+- Card title "Sleep Schedule" with moon icon; description explains pausing during
+  sleep to avoid false alarms.
+- Toggle "Enable sleep schedule"; when on, bedtime and wake time rows with
+  native time pickers (react-native-modal-datetime-picker).
+- Footer line summarizes the active window using the user's times (not hardcoded).
+- BOTTOM SHEET (first activation): When the user turns automated emergency ON
+  and sleep schedule is not yet enabled, a modal slides up from the bottom with
+  title "Set up your sleep schedule", native time selection for bed/wake,
+  "Enable sleep schedule" and "Skip for now". Dismissing refreshes the inline
+  card so the toggle matches storage (refreshKey).
+
+FILES
+- SleepSchedulePanel.tsx, SleepScheduleBottomSheet.tsx
+- AutomatedEmergencySettingsScreen.tsx (showSleepSheet, sleepScheduleKey)
+
+--------------------------------------------------------------------------------
+3. PAUSE EMERGENCY SYSTEM
+--------------------------------------------------------------------------------
+
+- When paused: prominent status area (yellow-style card) with "System is paused"
+  and text showing until when; "Cancel pause" action.
+- Toast on confirm: confirms pause until the formatted time.
+- Copy and keys updated across EN, DE, FR, ES, IT.
+
+FILES
+- PauseEmergencyPanel.tsx, PauseEmergencyPanel/styles.ts
+
+--------------------------------------------------------------------------------
+4. SET-UP SPECIFIC TIMES (recurring pause windows)
+--------------------------------------------------------------------------------
+
+- Panel title with calendar-clock icon; description unchanged in intent.
+- Each saved slot is a SUB-CARD: Active/Inactive badge, edit + delete icon
+  buttons, Start (day + time) and End (day + time) with arrow between, footer
+  row with the enable toggle.
+- "Add additional time" is a full-width dashed-border button with plus icon
+  (easier to discover than plain text link).
+
+FILES
+- SpecificTimesPanel.tsx, SpecificTimesPanel/styles.ts
+- SpecificDateComponent.tsx, SpecificDateComponent/styles.ts
+
+--------------------------------------------------------------------------------
+5. SET-UP SPECIFIC TIMES - MODAL (add / edit window)
+--------------------------------------------------------------------------------
+
+- Replaced masked text input + AM/PM radio buttons with NATIVE time pickers
+  (react-native-modal-datetime-picker): tap row opens iOS spinner / Android
+  default time dialog.
+- Start block: green accent; End block: blue accent; section labels in uppercase.
+- Header with X to close; Save disabled until both start and end times chosen.
+- Fixed copy bug: end section now uses "Set end time" (endSection.pickTime),
+  not the start string twice.
+
+FILES
+- DayTimePickerModal.tsx, DayTimePickerModal/styles.ts
+
+--------------------------------------------------------------------------------
+6. TIME-BASED TRIGGER COPY
+--------------------------------------------------------------------------------
+
+- Description no longer says fixed "Night (10pm - 6am)". It states that sleep
+  schedule hours are excluded (aligned with actual user schedule in Sleep card).
+
+FILES
+- src/i18n/locales/en.ts (and de, fr, es, it)
+
+--------------------------------------------------------------------------------
+7. INTERVAL SELECTOR (TIME-BASED FREQUENCY)
+--------------------------------------------------------------------------------
+
+- "6 minutes" option hidden in production (debug flag on that interval entry).
+
+FILES
+- src/constants/settings.constants.ts (IntervalSelect filters debug items in prod)
+
+--------------------------------------------------------------------------------
+8. NAVIGATION / DRAWER
+--------------------------------------------------------------------------------
+
+- Pause emergency and specific times are embedded on Automated Emergency
+  Settings; dedicated drawer entries for those standalone screens were removed
+  or de-emphasized per product request (single place to configure).
+
+REFERENCE
+- DrawerContent.tsx still lists AutomatedEmergencySettings; pause/specific
+  panels live inside that screen.
+
+--------------------------------------------------------------------------------
+REAL SCREENSHOTS (this repo, not AI-generated)
+--------------------------------------------------------------------------------
+
+Removed: docs/ui-changes-overview.png (AI-generated overview image) - deleted per request.
+
+Included:
+  docs/screenshots/simulator-current.png
+  - Captured from booted iOS Simulator (iPhone 16 Pro) using:
+      xcrun simctl io booted screenshot <path>
+    after launching the app (bundle id app.biostasis).
+  - Shows the in-app "Emergency Settings" view: Pause the system + Set-up
+    Specific Times (redesigned slot cards, Add additional time button).
+
+To capture more screens yourself (Automated Emergency main: How it works,
+bio/time triggers, sleep schedule, bottom sheet):
+  1. Run the app in Simulator, open the drawer (top-right), tap
+     "Automated Emergency" (or your localized menu label).
+  2. Cmd+S in Simulator, or:
+       xcrun simctl io booted screenshot docs/screenshots/your-name.png
+
+================================================================================
+END OF REPORT
+================================================================================

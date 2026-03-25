@@ -298,15 +298,21 @@ const translations: ITranslation = {
     automatedEmergencySettings: {
       title: "Réglages d'urgence",
       enableSystemTitle: 'Ajustes automáticos de emergencia',
-      instructions: 'Lire les instructions',
       compatibleSmartDeviceConnected:
         'Appareil intelligent compatible connecté',
-      pleaseReadManual:
-        "Veuillez lire le manuel du système d'urgence automatisé avant d'activer le système",
-      systemDescription:
-        "Ce système enverra automatiquement un signal d'urgence sur la base d'une série de données provenant d'un appareil intelligent contenant des données sur la santé",
-      manualDescription: "Manuel du système d'urgence automatisé",
-      confirmReadManual: 'Confirme la lecture du manuel',
+      confirmReadManual: 'Je comprends comment ça fonctionne',
+      howItWorks: {
+        title: 'Comment ça fonctionne',
+        step1Title: 'Connecter',
+        step1Desc:
+          'Associez votre wearable ou utilisez les capteurs intégrés de votre téléphone (pas, fréquence cardiaque).',
+        step2Title: 'Surveiller',
+        step2Desc:
+          "L'application vérifie régulièrement vos données de santé. Si aucun signal n'est détecté, vous recevrez d'abord une notification d'avertissement.",
+        step3Title: 'Urgence',
+        step3Desc:
+          "S'il n'y a toujours pas de réponse, le système déclenche une alerte à vos contacts d'urgence.",
+      },
       enableAutomatedEmergency: "Activer l'urgence automatisée",
       setUpSmartDevice: 'Configurer un appareil intelligent',
       connectedSmartDevice: 'Connecté avec {{appareil}}',
@@ -364,13 +370,31 @@ const translations: ITranslation = {
       timeTrigger: {
         title: 'Déclencheur temporel',
         description:
-          "Nous enverrons des notifications à intervalles réguliers. Si vous ne répondez pas à l'une d'entre elles, le système d'urgence sera déclenché. La nuit (22h - 6h) est exclue",
+          "Nous enverrons des notifications à intervalles réguliers. Si vous ne répondez pas à l'une d'entre elles, le système d'urgence sera déclenché. Vos heures de sommeil sont automatiquement exclues.",
         frequency: "Cadre temporel du déclenchement d'urgence :",
         systemStart:
           "Le système automatisé basé sur le temps est en cours d'exécution",
         turnOn: 'Basé sur le temps',
         warning:
           "L'activation de la fonction temporelle désactivera le déclencheur biologique",
+      },
+      sleepSchedule: {
+        title: 'Horaire de sommeil',
+        description:
+          'Met automatiquement en pause le système d\u2019urgence pendant vos heures de sommeil habituelles pour éviter les fausses alarmes.',
+        enableSchedule: 'Activer l\u2019horaire de sommeil',
+        bedtime: 'Heure du coucher',
+        wakeTime: 'Heure du réveil',
+        sleepWindow:
+          'Le système se met en pause de {{bedtime}} à {{wakeTime}}',
+      },
+      sleepScheduleSheet: {
+        title: 'Configurez votre horaire de sommeil',
+        description:
+          'Le système d\u2019urgence doit savoir quand vous dormez pour ne pas déclencher de fausses alarmes pendant la nuit.',
+        hint: 'Appuyez sur une heure pour la modifier',
+        save: 'Activer l\u2019horaire de sommeil',
+        skip: 'Passer pour l\u2019instant',
       },
       pauseTime: {
         title: 'Réglage des temps de pause du système',
@@ -515,14 +539,15 @@ const translations: ITranslation = {
   specificTimesScreen: {
     title: 'Pausa Sistema de Emergencia',
     pauseNow: {
-      title: "Pause du système d'urgence maintenant",
+      title: "Pause du système d'urgence",
       description:
-        "Vous pouvez interrompre temporairement le système d'urgence automatisé du moment présent jusqu'à une heure précise de votre choix",
-      cancelMessage:
-        "La mise en pause du système d'urgence automatisé a été annulée avec succès",
-      startDisclaimer: 'Tapez ici pour mettre le système en pause maintenant',
-      pausedDisclaimer:
-        'Le système est en pause en ce moment. Tapez à nouveau ici pour annuler la pause',
+        "Mettez temporairement en pause le système d'urgence automatisé jusqu'à l'heure de votre choix.",
+      cancelMessage: 'Pause annulée. Le système est de nouveau actif.',
+      pauseConfirmed: "Système en pause jusqu'à {{time}}",
+      startDisclaimer: 'Mettre en pause',
+      systemPaused: 'Système en pause',
+      pausedUntil: "Le système d'urgence est en pause jusqu'à {{time}}.",
+      cancelPause: 'Annuler la pause',
     },
     specificTimes: {
       title: 'Establecer horarios específicos',
@@ -560,6 +585,8 @@ const translations: ITranslation = {
         sunday: 'Dim',
       },
       changeSettings: 'Les paramètres de temps ont été modifiés avec succès',
+      active: 'Actif',
+      inactive: 'Inactif',
     },
   },
   profileDefault: {
@@ -688,6 +715,9 @@ const translations: ITranslation = {
       noDataUnit: 'pas de données',
       noData:
         '⚠️ Aucune donnée trouvée, veuillez vérifier votre source de données sur la santé',
+      wearableSyncWarning: 'Aucune donnée de santé récente reçue',
+      wearableSyncWarningBody:
+        'Veuillez ouvrir votre application de wearable pour synchroniser vos données de santé. Si cela persiste, une vérification d\'urgence suivra.',
       refresh: 'Actualisation de vos données de santé...',
       userSendSignal:
         'Signal positif envoyé avec succès ✅. Assurez-vous de vérifier votre source de données de santé !',

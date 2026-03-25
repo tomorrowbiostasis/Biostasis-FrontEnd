@@ -20,4 +20,5 @@ export enum AsyncStorageEnum {
   SmartDetectionSettings = '@SmartDetectionSettings',
   TimezoneBaseline = '@TimezoneBaseline',
   TravelDetectedAt = '@TravelDetectedAt',
+  ConsecutiveNoDataCount = '@ConsecutiveNoDataCount',
 }

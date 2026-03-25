@@ -5,6 +5,13 @@ export const getUserPersistedSettings = async () => {
   const data = await AsyncStorageService.getItem(
     AsyncStorageEnum.PersistedUserSettings,
   );
-  const fullData = JSON.parse(data ?? '');
-  return JSON.parse(fullData?.user || '{}');
+  if (!data) return {};
+  try {
+    const fullData = JSON.parse(data);
+    if (!fullData?.user) return {};
+    return JSON.parse(fullData.user);
+  } catch (e) {
+    console.warn('getUserPersistedSettings: failed to parse data', e);
+    return {};
+  }
 };

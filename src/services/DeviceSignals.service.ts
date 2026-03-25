@@ -30,7 +30,7 @@ const TIMEZONE_SHIFT_THRESHOLD_MINUTES = 60;
 const DEFAULT_STALE_THRESHOLD_MS = 2 * 60 * 60 * 1000; // 2 hours
 
 const DEFAULT_SETTINGS: SmartDetectionSettings = {
-  enabled: false,
+  enabled: true,
   useFocusDetection: true,
   useChargingDetection: true,
   useHealthDataRecency: true,
@@ -260,26 +260,28 @@ export const isInNighttimeWindow = (
  */
 export const shouldSmartDetectionPause = async (): Promise<boolean> => {
   const settings = await getSmartDetectionSettings();
-  if (!settings.enabled) {
-    return false;
-  }
 
   const signals = await getDeviceSignals(settings);
   const schedule = await getSleepSchedule();
 
-  // Focus/DND alone is a strong enough signal
-  if (settings.useFocusDetection && signals.isFocusActive) {
-    console.log('-> Smart detection: PAUSE (Focus/DND active)');
-    return true;
-  }
-
-  // Travel grace period expands nighttime to 24h — charging or stale data
-  // at any hour is treated as if it were nighttime (jet lag protection)
   const nighttime =
     signals.isInTravelGracePeriod || isInNighttimeWindow(schedule, settings);
 
   if (signals.isInTravelGracePeriod) {
-    console.log('-> Smart detection: travel grace period active (24h expanded nighttime)');
+    console.log(
+      '-> Smart detection: travel grace period active (24h expanded nighttime)',
+    );
+  }
+
+  // Focus/DND only pauses during nighttime or travel grace to prevent
+  // indefinite daytime pausing (e.g. work Focus modes)
+  if (
+    settings.useFocusDetection &&
+    signals.isFocusActive &&
+    nighttime
+  ) {
+    console.log('-> Smart detection: PAUSE (Focus/DND active + nighttime)');
+    return true;
   }
 
   // Charging during nighttime hours (or travel grace period)
@@ -288,12 +290,11 @@ export const shouldSmartDetectionPause = async (): Promise<boolean> => {
     return true;
   }
 
-  // Health data stale with a strong corroborating signal
-  // (Focus/DND or nighttime/travel — charging alone during the day is not enough)
+  // Stale health data requires a corroborating nighttime signal
   if (settings.useHealthDataRecency && signals.isHealthDataStale) {
-    if (signals.isFocusActive || nighttime) {
+    if (nighttime) {
       console.log(
-        '-> Smart detection: PAUSE (stale health data + corroborating signal)',
+        '-> Smart detection: PAUSE (stale health data + nighttime/travel)',
       );
       return true;
     }

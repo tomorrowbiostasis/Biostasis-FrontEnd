@@ -19,6 +19,7 @@ export enum NotificationTypesEnum {
   WaitEmergencyAlert = 'WAIT_EMERGENCY_ALERT',
   WaitRefresh = 'WAIT_REFRESH',
   StartAutomatedSystem = 'START_AUTOMATED_SYSTEM',
+  WearableSyncWarning = 'WEARABLE_SYNC_WARNING',
 }
 
 export const notificationGroupId = 'biostasis';
@@ -47,7 +48,7 @@ export const emergencyNotification = {
 export const normalChannelConfig: AndroidChannel = {
   id: normalNotification.channelId,
   groupId: notificationGroupId,
-  name: 'Biostasis',
+  name: 'Biostasis Info',
   description: 'Information from the application',
   badge: true,
   vibration: true,
@@ -58,7 +59,7 @@ export const normalChannelConfig: AndroidChannel = {
 export const regularCheckChannelConfig: AndroidChannel = {
   id: regularCheckNotification.channelId,
   groupId: notificationGroupId,
-  name: 'Biostasis',
+  name: 'Biostasis Checks',
   description: 'Bio check notification',
   badge: true,
   vibration: false,
@@ -69,7 +70,7 @@ export const regularCheckChannelConfig: AndroidChannel = {
 export const emergencyChannelConfig: AndroidChannel = {
   id: emergencyNotification.channelId,
   groupId: notificationGroupId,
-  name: 'Biostasis',
+  name: 'Biostasis Emergency',
   description: 'Alert type of notification',
   badge: true,
   vibration: true,
