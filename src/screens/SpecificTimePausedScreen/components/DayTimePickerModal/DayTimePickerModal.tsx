@@ -1,4 +1,4 @@
-import {Button, Modal, ScrollView, Text} from 'native-base';
+import {Button, Modal, Text} from 'native-base';
 import React, {FC, useCallback, useMemo, useState} from 'react';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {DaysOfTheWeekEnum, getUniqueId} from '../../util';
@@ -11,6 +11,7 @@ import {MaskedTimeView} from './components/MaskedTimeInput/MaskedTimeView';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import colors from '~/theme/colors';
 import {View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const initialDaysSelected: DaysOfTheWeekEnum[] = [0, 1, 2, 3, 4, 5, 6];
 
@@ -114,7 +115,11 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
         <Text style={styles.title}>
           {t('specificTimesScreen.specificTimes.title')}
         </Text>
-        <ScrollView contentContainerStyle={styles.contentContainerStyle}>
+        <KeyboardAwareScrollView
+          enableOnAndroid
+          extraScrollHeight={20}
+          keyboardOpeningTime={0}
+          contentContainerStyle={styles.contentContainerStyle}>
           <View style={styles.panel}>
             <Text style={styles.label}>
               {t('specificTimesScreen.specificTimes.startSection.pickDay')}
@@ -175,7 +180,7 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
               {t('common.cancel')}
             </Text>
           </Button>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </SafeAreaView>
     </Modal>
   );

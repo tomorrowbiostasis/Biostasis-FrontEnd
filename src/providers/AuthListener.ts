@@ -73,13 +73,38 @@ const AuthListener = () => {
     const initData = async () => {
       try {
         if (isAndroid) {
-          const fcmToken = await messaging().getToken();
-          fcmToken && (await API.updateUserToken(fcmToken));
+          const updateFcmToken = async (retries = 2) => {
+            for (let i = 0; i <= retries; i++) {
+              try {
+                if (i > 0) {
+                  await new Promise(r => setTimeout(r, 2000));
+                }
+                const fcmToken = await messaging().getToken();
+                if (fcmToken) {
+                  await API.updateUserToken(fcmToken);
+                }
+                return;
+              } catch (e) {
+                if (i === retries) {
+                  console.log('[AuthListener] FCM token update failed after retries:', e);
+                }
+              }
+            }
+          };
+          updateFcmToken();
         }
-        await dispatch(getUser());
+        const userResult = await dispatch(getUser());
+        if (userResult.meta.requestStatus === 'rejected') {
+          console.log(
+            '[AuthListener] getUser failed, retrying in 1s...',
+          );
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          await dispatch(getUser());
+        }
         await dispatch(getEmergencyContacts());
         await dispatch(getTimeSlot());
-      } catch (_) {
+      } catch (e) {
+        console.log('[AuthListener] initData error:', e);
       } finally {
         dispatch(setLoadingInitData(false));
       }

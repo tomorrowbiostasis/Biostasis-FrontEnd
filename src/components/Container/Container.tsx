@@ -70,8 +70,8 @@ const Container: FC<ContainerProps> = ({
           return (
             <KeyboardAwareScrollView
       enableOnAndroid
-      extraScrollHeight={2} // fixes the 2px overlap
-      keyboardOpeningTime={0} // smoother animation
+      extraScrollHeight={Platform.OS === 'ios' ? 20 : 80}
+      keyboardOpeningTime={0}
       contentContainerStyle={[styles.scrollContainer, containerStyle]}
       showsVerticalScrollIndicator={false}
       {...props}

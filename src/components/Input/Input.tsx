@@ -24,6 +24,17 @@ const Input: FC<InputProps> = props => {
       : // Used <></> here because without this, input component is rerendered and loses focus
         {InputRightElement: <></>};
   }, [props.isValid]);
+  const inputTypeProps: Partial<IInputProps> = useMemo(() => {
+    if (props.type === 'email') {
+      return {
+        keyboardType: 'email-address',
+        autoComplete: 'email',
+        textContentType: 'emailAddress',
+        autoCapitalize: 'none',
+      };
+    }
+    return {};
+  }, [props.type]);
   const inputRef = useRef<TextInput>(null);
   const focusInput = () => {
     if(inputRef.current){
@@ -39,6 +50,7 @@ const Input: FC<InputProps> = props => {
             ref={inputRef}
             size="lg"
             variant="underlined"
+            {...inputTypeProps}
             {...props}
             {...validProps}
             style={[props.style, validProps.style]}

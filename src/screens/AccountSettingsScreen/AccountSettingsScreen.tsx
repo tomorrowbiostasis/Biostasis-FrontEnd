@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useLayoutEffect, useMemo, useState} from 'react';
-import {LayoutAnimation, ScrollView, View} from 'react-native';
+import {LayoutAnimation, View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
@@ -105,8 +106,11 @@ const AccountSettingsScreen = () => {
       contentContainerStyle={styles.contentContainer}
       showBackIcon
       showDrawerIcon>
-      <ScrollView
+      <KeyboardAwareScrollView
         bounces={false}
+        enableOnAndroid
+        extraScrollHeight={20}
+        keyboardOpeningTime={0}
         style={styles.scrollContent}
         contentContainerStyle={styles.scrollContentContainer}>
         <View style={styles.panel}>
@@ -198,7 +202,7 @@ const AccountSettingsScreen = () => {
             </View>
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </Container>
   );
 };
