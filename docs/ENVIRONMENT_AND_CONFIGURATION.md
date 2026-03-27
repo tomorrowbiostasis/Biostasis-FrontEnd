@@ -82,7 +82,24 @@ This file is gitignored (`**/google-services.json` in `.gitignore`). A placehold
 
 ---
 
-## 3. `android/keystore.properties`
+## 3. Android `client_secrets.json` (Google OAuth / Fit)
+
+Google’s Android OAuth client metadata for **Google Fit** (and related flows) is packaged as a **Java classpath resource** named `client_secrets.json`. It is **not** read from TypeScript; the native stack resolves it at runtime.
+
+The project uses **product flavors** (`development` / `production` in `android/app/build.gradle`). Each flavor has its own file:
+
+| Flavor | Path |
+|--------|------|
+| **development** | `android/app/src/development/resources/client_secrets.json` |
+| **production** | `android/app/src/production/resources/client_secrets.json` |
+
+Do **not** place a competing `client_secrets.json` under `android/app/src/main/resources/` — only one file should be merged per variant.
+
+The JSON shape is Google’s `installed` client format (`client_id`, `project_id`, `auth_uri`, `token_uri`, etc.). When you rotate OAuth clients in [Google Cloud Console](https://console.cloud.google.com/) → APIs & Services → Credentials, update the appropriate flavor file and keep **`google-services.json`** (section 2) and Firebase **SHA certificate fingerprints** in sync with your signing keys (including **Play App Signing** for store builds).
+
+---
+
+## 4. `android/keystore.properties`
 
 Signing configuration used by `android/app/build.gradle` for both debug and release builds. The build script loads this file **only if it exists**, so debug builds work without it (using the default Android debug keystore).
 
@@ -108,7 +125,7 @@ This file is gitignored (`keystore.properties` in `.gitignore`). See [Android Pl
 
 ---
 
-## 4. `android/local.properties`
+## 5. `android/local.properties`
 
 Contains the path to your local Android SDK (and optionally NDK). Android Studio typically generates this automatically.
 
@@ -125,7 +142,7 @@ This file is gitignored (`local.properties` in `.gitignore`).
 
 ---
 
-## 5. `android/gradle.properties`
+## 6. `android/gradle.properties`
 
 Project-wide Gradle settings. These are checked into version control. Relevant tunables:
 
@@ -139,7 +156,7 @@ Project-wide Gradle settings. These are checked into version control. Relevant t
 
 ---
 
-## 6. Upload Keystore (`.keystore` / `.jks`)
+## 7. Upload Keystore (`.keystore` / `.jks`)
 
 The actual keystore file used for signing release builds. It is referenced by `storeFile` in `keystore.properties`.
 
@@ -152,6 +169,7 @@ This file is gitignored (`*.keystore` in `.gitignore`). Keep it in a secure loca
 1. Run `yarn` to install dependencies and apply patches.
 2. Create `.env.development` and `.env.production` in the project root with the variables listed above. With a single production backend, use the same API and Cognito values in both files (only `ENVIRONMENT` differs: `development` vs `production`). Obtain real values from Biostasis-Cloud-infrastructure or team config and replace the placeholders in both files.
 3. Place a real `google-services.json` at `android/app/google-services.json` (from Firebase Console).
-4. Verify `android/local.properties` exists with your SDK path (or set `ANDROID_HOME`).
-5. (Optional, release only) Create `android/keystore.properties` and place your keystore file.
-6. Open `android/` in Android Studio, sync, and build.
+4. Confirm `client_secrets.json` exists for both flavors under `android/app/src/development/resources/` and `android/app/src/production/resources/` (checked in for this repo; update if your team rotates OAuth clients).
+5. Verify `android/local.properties` exists with your SDK path (or set `ANDROID_HOME`).
+6. (Optional, release only) Create `android/keystore.properties` and place your keystore file.
+7. Open `android/` in Android Studio, sync, and build.
