@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useState} from 'react';
+import React, {FC, useCallback, useMemo, useState} from 'react';
 import {TouchableOpacity, Linking} from 'react-native';
 import {Text, Box, Divider, ScrollView} from 'native-base';
 import {
@@ -24,20 +24,25 @@ const DrawerContent: FC<
   }
 > = ({navigation, ...rest}) => {
   const {t} = useAppTranslation();
+  const showDevLogMenu = !EnvConfig.PROD;
 
   const [activeItem, setActiveItem] = useState<Screens>(Screens.Home);
 
-  const drawerScreens = [
-    Screens.Home,
-    Screens.ProfileDefault,
-    Screens.AccountSettings,
-    Screens.AutomatedEmergencySettings,
-    Screens.EmergencyContactSettings,
-    Screens.SignUpForCryopreservation,
-    Screens.DevLogs,
-    Screens.DevHistoryLogs,
-    Screens.DevPushLogs,
-  ];
+  const drawerScreens = useMemo(
+    () =>
+      [
+        Screens.Home,
+        Screens.ProfileDefault,
+        Screens.AccountSettings,
+        Screens.AutomatedEmergencySettings,
+        Screens.EmergencyContactSettings,
+        Screens.SignUpForCryopreservation,
+        ...(showDevLogMenu
+          ? [Screens.DevLogs, Screens.DevHistoryLogs, Screens.DevPushLogs]
+          : []),
+      ] as Screens[],
+    [showDevLogMenu],
+  );
 
   useFocusEffect(() => {
     const currentScreenName = navigationRef.getCurrentRoute()?.name as Screens;
@@ -166,30 +171,36 @@ const DrawerContent: FC<
             <Text style={styles.menuText}>{t('drawer.privacyLabel')}</Text>
           </TouchableOpacity>
           <Divider my={3} style={styles.spacer} />
-          
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => handleMenuItemPress(Screens.DevLogs)}>
-            <Icon name="code" size={20} color={colors.white} />
-            <Text style={styles.menuText}>{t('drawer.devLogs')}</Text>
-          </TouchableOpacity>
-          <Divider my={3} style={styles.spacer} />
 
-          <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => handleMenuItemPress(Screens.DevHistoryLogs)}>
-          <Icon name="code" size={20} color={colors.white} />
-          <Text style={styles.menuText}>{t('drawer.devHistoryLogs')}</Text>
-          </TouchableOpacity>
-          <Divider my={3} style={styles.spacer} />
+          {showDevLogMenu && (
+            <>
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => handleMenuItemPress(Screens.DevLogs)}>
+                <Icon name="code" size={20} color={colors.white} />
+                <Text style={styles.menuText}>{t('drawer.devLogs')}</Text>
+              </TouchableOpacity>
+              <Divider my={3} style={styles.spacer} />
 
-           <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => handleMenuItemPress(Screens.DevPushLogs)}>
-          <Icon name="code" size={20} color={colors.white} />
-          <Text style={styles.menuText}>{t('drawer.devPushLogs')}</Text>
-          </TouchableOpacity>
-          <Divider my={3} style={styles.spacer} />
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => handleMenuItemPress(Screens.DevHistoryLogs)}>
+                <Icon name="code" size={20} color={colors.white} />
+                <Text style={styles.menuText}>
+                  {t('drawer.devHistoryLogs')}
+                </Text>
+              </TouchableOpacity>
+              <Divider my={3} style={styles.spacer} />
+
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => handleMenuItemPress(Screens.DevPushLogs)}>
+                <Icon name="code" size={20} color={colors.white} />
+                <Text style={styles.menuText}>{t('drawer.devPushLogs')}</Text>
+              </TouchableOpacity>
+              <Divider my={3} style={styles.spacer} />
+            </>
+          )}
 
           <Box style={styles.socialMedia}>
             <TouchableOpacity onPress={openWebsite}>

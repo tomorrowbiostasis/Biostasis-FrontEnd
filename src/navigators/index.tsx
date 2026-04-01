@@ -1,9 +1,5 @@
 import React, {useState} from 'react';
-import {
-  createNavigationContainerRef,
-  LinkingOptions,
-  NavigationContainer,
-} from '@react-navigation/native';
+import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import AuthStack from './AuthStack';
 import Drawer from './Drawer';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -17,7 +13,6 @@ import Toast from 'react-native-toast-message';
 import {toastConfig} from '~/theme/toast';
 import {isAuthed} from '~/redux/auth/selectors';
 import {configSelector} from '~/redux/config/config.slice';
-import Loader from '~/components/Loader';
 import CancelEmergencyPopup from '~/screens/CancelEmergencyPopup';
 import LostConnectionScreen from '~/screens/LostConnectionScreen';
 import HealthConditionErrorScreen from '~/screens/HealthConditionErrorScreen';
@@ -25,8 +20,11 @@ import NotificationListener from '~/providers/NotificationListener';
 import LostConnection from './helper/LostConnection';
 import {userInitializedSelector} from '~/redux/user/selectors';
 import SignUpStack from './SignUpStack';
+import {navigationRef} from './navigationContainerRef';
 
 const Stack = createStackNavigator<RootStackParamList>();
+
+export {navigationRef};
 
 const linkingOptions: LinkingOptions<{}> = {
   prefixes: ['biostasis://'],
@@ -43,7 +41,6 @@ const linkingOptions: LinkingOptions<{}> = {
   },
 };
 
-export const navigationRef = createNavigationContainerRef<Routes>();
 //TODO fix typing
 export function navigate(
   route: NavigationRouteName | keyof RootStackParamList,
@@ -61,6 +58,9 @@ const Container = () => {
   const [isReady, setIsReady] = useState(false);
   const isInitialized = useAppSelector(userInitializedSelector);
 
+  const showAuthenticatedShell =
+    isReady && isLogged && !loadingInitData;
+
   return (
     <NavigationContainer
       ref={navigationRef as never}
@@ -69,7 +69,7 @@ const Container = () => {
       {isReady && (
         <>
           <NotificationListener />
-          {isLogged && <CancelEmergencyPopup />}
+          {showAuthenticatedShell && <CancelEmergencyPopup />}
         </>
       )}
       <Stack.Navigator
@@ -77,8 +77,7 @@ const Container = () => {
           headerShown: false,
         }}>
         <Stack.Screen name="LostConnection" component={LostConnectionScreen} />
-        {isReady && isLogged ? (
-          // Make sure if the user is signing up or logging in
+        {showAuthenticatedShell ? (
           isInitialized ? (
             <>
               <Stack.Screen name="MainStack" component={Drawer} />
@@ -97,7 +96,6 @@ const Container = () => {
       </Stack.Navigator>
       <LostConnection />
       <Toast config={toastConfig} />
-      {loadingInitData && <Loader absolute />}
     </NavigationContainer>
   );
 };

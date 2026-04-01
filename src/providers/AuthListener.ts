@@ -1,10 +1,10 @@
 import messaging from '@react-native-firebase/messaging';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Platform} from 'react-native';
 import {useAppDispatch} from '~/redux/store/hooks';
 import {getAwsUser} from '~/services/Amazon.service';
 import {Hub} from '@aws-amplify/core';
-import {setIsAuthed} from '~/redux/auth/auth.slice';
+import {setAuthSessionResolved, setIsAuthed} from '~/redux/auth/auth.slice';
 import {clearUser} from '~/redux/user/user.slice';
 import {getUser} from '~/redux/user/thunks';
 import {getTimeSlot} from '~/redux/automatedEmergency/thunks';
@@ -22,6 +22,7 @@ import {isAndroid} from '~/utils';
 
 const AuthListener = () => {
   const dispatch = useAppDispatch();
+  const prevAwsInternalStatusRef = useRef<AwsUserInternalStatus | null>(null);
   const [user, setUser] = useState({
     internalStatus: AwsUserInternalStatus.loading,
   });
@@ -44,22 +45,24 @@ const AuthListener = () => {
       }
     });
 
-    getAwsUser().then(setUser);
-  }, []);
+    getAwsUser()
+      .then(setUser)
+      .finally(() => {
+        dispatch(setAuthSessionResolved({isAuthSessionResolved: true}));
+      });
+  }, [dispatch]);
 
   useEffect(() => {
     // @ts-ignore-next-line
     const isAuthed = Boolean(user?.username);
-    if (isAuthed) {
-      dispatch(setLoadingInitData(true));
-    }
     dispatch(setIsAuthed({isAuthed}));
   }, [dispatch, user]);
 
   useEffect(() => {
-    const abortController = new AbortController();
+    const status = user.internalStatus;
 
     const initData = async () => {
+      dispatch(setLoadingInitData(true));
       try {
         if (isAndroid) {
           const updateFcmToken = async (retries = 2) => {
@@ -98,21 +101,27 @@ const AuthListener = () => {
         dispatch(setLoadingInitData(false));
       }
     };
-    if (user.internalStatus === AwsUserInternalStatus.loggedIn) {
-      initData();
-    } else if (user.internalStatus === AwsUserInternalStatus.notLoggedIn) {
-      dispatch(clearUser());
 
-      if (Platform.OS === 'android') {
-        stopBackgroundFetch(
-          BackgroundEventsEnum.ReactNativeBackgroundFetch,
-        ).then(() => console.log('stopped background fetch'));
+    if (status === AwsUserInternalStatus.loggedIn) {
+      const wasLoggedIn =
+        prevAwsInternalStatusRef.current === AwsUserInternalStatus.loggedIn;
+      prevAwsInternalStatusRef.current = status;
+      if (!wasLoggedIn) {
+        void initData();
+      }
+    } else {
+      prevAwsInternalStatusRef.current = status;
+      if (status === AwsUserInternalStatus.notLoggedIn) {
+        dispatch(setLoadingInitData(false));
+        dispatch(clearUser());
+
+        if (Platform.OS === 'android') {
+          stopBackgroundFetch(
+            BackgroundEventsEnum.ReactNativeBackgroundFetch,
+          ).then(() => console.log('stopped background fetch'));
+        }
       }
     }
-
-    return () => {
-      abortController.abort();
-    };
     // @ts-ignore-next-line
   }, [dispatch, user]);
 

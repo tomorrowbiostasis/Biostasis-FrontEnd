@@ -26,6 +26,8 @@ const App = () => {
       'Using an insecure random number generator',
       'Node of type rule not supported',
       'new NativeEventEmitter()',
+      // RN LogBox (Fusebox): shown when warnings are deferred to the debugger; unwanted on prod-flavour debug builds
+      'Open debugger to view warnings.',
     ]);
 
     UIManager.setLayoutAnimationEnabledExperimental &&

@@ -6,6 +6,8 @@ import {IAlertMessage} from '~/models/Message.model';
 
 export interface IAuthState {
   isAuthed: boolean;
+  /** True after the first Cognito session probe on this app launch (never persisted). */
+  isAuthSessionResolved: boolean;
   signIn: {
     pending: boolean;
     message?: IAlertMessage;
@@ -28,6 +30,7 @@ export interface IAuthState {
 
 export const initialState: IAuthState = {
   isAuthed: false,
+  isAuthSessionResolved: false,
   signIn: {
     pending: false,
     message: undefined,
@@ -54,6 +57,7 @@ export const authSlice = createSlice({
 
 export const {
   setIsAuthed,
+  setAuthSessionResolved,
   setForgotPasswordEmailMessage,
   setShouldBackToAuthScreen,
 } = authSlice.actions;

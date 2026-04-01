@@ -11,6 +11,8 @@ import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import {Screens} from '~/models/Navigation.model';
+import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
+import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 
 const slideImage1 = require('~/assets/images/onboarding/OnboardingImage1.png');
 const slideImage2 = require('~/assets/images/onboarding/OnboardingImage2.png');
@@ -26,6 +28,14 @@ const OnboardingScreen: FC = () => {
   );
 
   const handleLogin = useCallback(async () => {
+    try {
+      await AsyncStorageService.setItem(
+        AsyncStorageEnum.HasSeenOnboarding,
+        'true',
+      );
+    } catch (e) {
+      console.warn('Error when saving onboarding state', e);
+    }
     //@ts-ignore
     navigate(Screens.Auth, {action: 'SIGN_IN'});
   }, [navigate]);

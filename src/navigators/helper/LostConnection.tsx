@@ -5,9 +5,13 @@ import {Screens} from '~/models/Navigation.model';
 import {isAuthed} from '~/redux/auth/selectors';
 import {useAppSelector} from '~/redux/store/hooks';
 import {userInitializedSelector} from '~/redux/user/selectors';
+import {configSelector} from '~/redux/config/config.slice';
+import {navigationRef} from '~/navigators/navigationContainerRef';
+import {getReconnectRootResetState} from './rootReconnectNavigation';
 
 const LostConnection = () => {
   const isLogged = useAppSelector(isAuthed);
+  const {loadingInitData} = useAppSelector(configSelector);
   const {type, isConnected} = useNetInfo();
   const {navigate, reset} = useNavigation();
   const isInitialized = useAppSelector(userInitializedSelector);
@@ -17,17 +21,25 @@ const LostConnection = () => {
       if (!isConnected) {
         navigate(Screens.LostConnection as never);
       } else {
-        reset({
-          index: 0,
-          routes: isLogged
-            ? isInitialized
-              ? [{name: 'MainStack'}]
-              : [{name: 'SignUpStack'}]
-            : [{name: 'AuthStack'}],
-        });
+        reset(
+          getReconnectRootResetState({
+            isLogged,
+            loadingInitData,
+            isInitialized,
+            navigationReady: navigationRef.isReady(),
+          }),
+        );
       }
     }
-  }, [isConnected, isInitialized, isLogged, navigate, reset, type]);
+  }, [
+    isConnected,
+    isInitialized,
+    isLogged,
+    loadingInitData,
+    navigate,
+    reset,
+    type,
+  ]);
   return null;
 };
 

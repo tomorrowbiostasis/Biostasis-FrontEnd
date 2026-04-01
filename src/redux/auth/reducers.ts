@@ -8,6 +8,13 @@ export const setIsAuthed = (
   state.isAuthed = payload.isAuthed;
 };
 
+export const setAuthSessionResolved = (
+  state: IAuthState,
+  {payload}: PayloadAction<Pick<IAuthState, 'isAuthSessionResolved'>>,
+) => {
+  state.isAuthSessionResolved = payload.isAuthSessionResolved;
+};
+
 const setForgotPasswordEmailMessage = (
   state: IAuthState,
   {payload}: PayloadAction<IAuthState['forgotPassword']['emailMessage']>,
@@ -26,6 +33,7 @@ const setShouldBackToAuthScreen = (
 
 export const reducers = {
   setIsAuthed,
+  setAuthSessionResolved,
   setForgotPasswordEmailMessage,
   setShouldBackToAuthScreen,
 };

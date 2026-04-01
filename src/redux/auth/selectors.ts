@@ -5,6 +5,9 @@ export const authSelector = (state: RootState): IAuthState => state.auth;
 
 export const isAuthed = (state: RootState): boolean => state.auth.isAuthed;
 
+export const isAuthSessionResolved = (state: RootState): boolean =>
+  state.auth.isAuthSessionResolved;
+
 export const getSignInParams = (state: RootState): IAuthState['signIn'] =>
   state.auth.signIn;
 

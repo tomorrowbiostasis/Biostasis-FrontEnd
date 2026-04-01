@@ -55,8 +55,26 @@ export const appleSignIn = () =>
   // @ts-ignore-next-line
   Auth.federatedSignIn({provider: 'SignInWithApple'});
 
+/** Amplify storage key: skip Hosted UI logout webview on local sign-out */
+const HOSTED_UI_SESSION_KEY = 'amplify-signin-with-hostedUI';
+
+type AuthWithStorage = typeof Auth & {
+  _storage?: {removeItem: (key: string) => unknown};
+  _storageSync?: Promise<void>;
+};
+
+/**
+ * Local sign-out only. Removes the Hosted UI marker before Auth.signOut() so Amplify
+ * does not open Cognito's OAuth logout URL in InAppBrowser (brief flash on logout).
+ * Tokens are still cleared; full IdP session may remain in the system browser until cleared there.
+ */
 export const signOut = async () => {
   try {
+    const auth = Auth as AuthWithStorage;
+    if (auth._storageSync) {
+      await auth._storageSync.catch(() => undefined);
+    }
+    auth._storage?.removeItem(HOSTED_UI_SESSION_KEY);
     await Auth.signOut();
   } catch (error) {
     console.log('error while signout from Cognito');

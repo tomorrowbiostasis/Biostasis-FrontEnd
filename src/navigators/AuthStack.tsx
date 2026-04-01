@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {Center, Spinner} from 'native-base';
 import {
   StackNavigationOptions,
   createStackNavigator,
@@ -13,6 +12,10 @@ import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import NewPasswordScreen from '~/screens/NewPasswordScreen';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
+import {useAppSelector} from '~/redux/store/hooks';
+import {isAuthed, isAuthSessionResolved} from '~/redux/auth/selectors';
+import {configSelector} from '~/redux/config/config.slice';
+import AuthBootstrapLoading from '~/components/AuthBootstrapLoading';
 
 const Stack = createStackNavigator<AuthStackNavigatorParamList>();
 
@@ -20,6 +23,14 @@ export const AuthStack = () => {
   const [loading, setLoading] = useState(true);
   const [hasSeenOnboarding, setHasSeenOnboarding] = useState(false);
   const {t} = useAppTranslation();
+  const authSessionResolved = useAppSelector(isAuthSessionResolved);
+  const isLogged = useAppSelector(isAuthed);
+  const {loadingInitData} = useAppSelector(configSelector);
+
+  const showBootstrapLoading =
+    loading ||
+    !authSessionResolved ||
+    (isLogged && loadingInitData);
   const setup = async () => {
     try {
       const savedValue = await AsyncStorageService.getItem(
@@ -47,12 +58,8 @@ export const AuthStack = () => {
     };
   }, []);
 
-  if (loading) {
-    return (
-      <Center flex={1}>
-        <Spinner />
-      </Center>
-    );
+  if (showBootstrapLoading) {
+    return <AuthBootstrapLoading />;
   }
 
   return (

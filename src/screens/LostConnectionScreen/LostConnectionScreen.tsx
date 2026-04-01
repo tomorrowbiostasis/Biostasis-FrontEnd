@@ -10,6 +10,12 @@ import styles from './styles';
 import colors from '~/theme/colors';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useAppSelector} from '~/redux/store/hooks';
+import {isAuthed} from '~/redux/auth/selectors';
+import {configSelector} from '~/redux/config/config.slice';
+import {userInitializedSelector} from '~/redux/user/selectors';
+import {navigationRef} from '~/navigators/navigationContainerRef';
+import {getReconnectRootResetState} from '~/navigators/helper/rootReconnectNavigation';
 
 const LostConnectionScreen: VFC = () => {
   const {t} = useAppTranslation();
@@ -17,18 +23,25 @@ const LostConnectionScreen: VFC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isAirplaneMode, setIsAirplaneMode] = useState(false);
   const {isConnected, type} = useNetInfo();
+  const isLogged = useAppSelector(isAuthed);
+  const {loadingInitData} = useAppSelector(configSelector);
+  const isInitialized = useAppSelector(userInitializedSelector);
 
   const handleConfirm = useCallback(async () => {
     SoundService.resetAllSounds();
     //@ts-ignore
     if (isConnected && type !== 'unknown') {
       setIsOpen(prev => !prev);
-      reset({
-        index: 0,
-        routes: [{name: 'MainStack'}],
-      });
+      reset(
+        getReconnectRootResetState({
+          isLogged,
+          loadingInitData,
+          isInitialized,
+          navigationReady: navigationRef.isReady(),
+        }),
+      );
     }
-  }, [isConnected, reset, type]);
+  }, [isConnected, isInitialized, isLogged, loadingInitData, reset, type]);
 
   useEffect(() => {
     const handleAirplaneMode = async () => {
