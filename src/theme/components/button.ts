@@ -17,6 +17,9 @@ export const buttonStyles = {
     outline: () => {
       return secondaryButtonStyles;
     },
+    figmaPrimary: () => figmaPrimaryButtonStyles,
+    figmaSecondary: () => figmaSecondaryButtonStyles,
+    figmaEmergency: () => figmaEmergencyButtonStyles,
   },
 };
 
@@ -46,5 +49,60 @@ export const secondaryButtonStyles = {
   _pressed: {
     opacity: 0.7,
     bg: 'gray.100',
+  },
+};
+
+// Figma-aligned variants — consume semantic tokens; opt-in per call site.
+export const figmaPrimaryButtonStyles = {
+  backgroundColor: 'primary',
+  borderWidth: 0,
+  minHeight: 50,
+  _text: {
+    color: 'textInverse',
+    fontFamily: 'DMSans',
+    fontWeight: '600',
+  },
+  _pressed: {
+    backgroundColor: 'primaryPressed',
+  },
+  _disabled: {
+    backgroundColor: 'primaryDisabled',
+    opacity: 1,
+  },
+};
+
+export const figmaSecondaryButtonStyles = {
+  backgroundColor: 'surface',
+  borderColor: 'primary',
+  borderWidth: 1,
+  minHeight: 50,
+  _text: {
+    color: 'primary',
+    fontFamily: 'DMSans',
+    fontWeight: '600',
+  },
+  _pressed: {
+    backgroundColor: 'surfaceMuted',
+  },
+  _disabled: {
+    borderColor: 'borderStrong',
+    _text: {color: 'textDisabled'},
+  },
+};
+
+export const figmaEmergencyButtonStyles = {
+  backgroundColor: 'dangerStrong',
+  borderWidth: 0,
+  minHeight: 50,
+  _text: {
+    color: 'textInverse',
+    fontFamily: 'DMSans',
+    fontWeight: '700',
+  },
+  _pressed: {
+    backgroundColor: 'danger',
+  },
+  _disabled: {
+    opacity: 0.5,
   },
 };

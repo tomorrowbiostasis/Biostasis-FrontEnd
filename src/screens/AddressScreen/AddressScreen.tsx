@@ -7,6 +7,7 @@ import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 
 import Container from '~/components/Container';
 import Input from '~/components/Input';
+import Panel from '~/components/Panel';
 
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {updateUser} from '~/redux/user/thunks';
@@ -108,7 +109,7 @@ export const AddressScreen = () => {
       containerStyle={styles.container}
       contentContainerStyle={styles.contentContainer}
       type={'keyboardAvoidingScrollView'}>
-      <View style={styles.panel}>
+      <Panel align="start" padding="xl">
         <Text style={styles.userName}>
           {t('common.welcome', {username: user.name || 'user'})}
         </Text>
@@ -232,7 +233,7 @@ export const AddressScreen = () => {
                   </TouchableOpacity>
                 </View>
                 <Button
-                  variant={'solid'}
+                  variant={'figmaPrimary' as never}
                   disabled={
                     !!errors.street ||
                     !values.street ||
@@ -253,7 +254,7 @@ export const AddressScreen = () => {
             )}
           </Formik>
         </View>
-      </View>
+      </Panel>
     </Container>
   );
 };

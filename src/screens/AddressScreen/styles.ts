@@ -13,12 +13,6 @@ const styles = StyleSheet.create({
     padding: 20,
     width: '100%',
   },
-  panel: {
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    padding: 20,
-    alignItems: 'flex-start',
-  },
   panelHeader: {
     flex: 1,
     flexDirection: 'row',

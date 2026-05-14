@@ -100,3 +100,9 @@ keystore.properties
 #Vscode
 .vscode
 .swp
+
+# Claude Code / Agent skills
+.claude/
+.agents/
+skills-lock.json
+.mcp.json

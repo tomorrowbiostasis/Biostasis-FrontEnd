@@ -77,6 +77,33 @@ export const fontConfig = {
   },
 };
 
+Object.assign(fontConfig, {
+  DMSans: {
+    400: {
+      normal: 'DMSans-Regular',
+      italic: 'DMSans-Italic',
+    },
+    500: {
+      normal: 'DMSans-Medium',
+      italic: 'DMSans-MediumItalic',
+    },
+    600: {
+      normal: 'DMSans-SemiBold',
+      italic: 'DMSans-SemiBoldItalic',
+    },
+    700: {
+      normal: 'DMSans-Bold',
+      italic: 'DMSans-BoldItalic',
+    },
+  },
+  DMSerifDisplay: {
+    400: {
+      normal: 'DMSerifDisplay-Regular',
+      italic: 'DMSerifDisplay-Italic',
+    },
+  },
+});
+
 export const fonts: ITheme['fonts'] = {
   body: 'Poppins',
   heading: 'Roboto',

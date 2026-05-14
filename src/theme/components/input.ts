@@ -26,9 +26,45 @@ export const inputStyles = {
 
   variants: {
     underlined: () => underlinedInputVariantStyles,
+    figma: () => figmaInputVariantStyles,
   },
   defaultProps: {
     selectionColor: 'blue.600',
+  },
+};
+
+// Figma-aligned input variant — pill border, subtle bg, DM Sans text.
+// State styling: pass `isInvalid` for error; success/warning are handled by
+// the FormField wrapper's helper text + caller-provided border color overrides.
+const figmaInputVariantStyles = {
+  backgroundColor: 'surface',
+  borderColor: 'border',
+  borderWidth: 1,
+  borderRadius: 12,
+  color: 'textPrimary',
+  paddingX: 4,
+  fontFamily: 'DMSans',
+  fontWeight: '400',
+  _light: {
+    placeholderTextColor: 'textMuted',
+  },
+  _dark: {
+    placeholderTextColor: 'textMuted',
+  },
+  _android: {
+    _focus: {borderColor: 'borderStrong'},
+  },
+  _ios: {
+    _focus: {borderColor: 'borderStrong'},
+  },
+  _invalid: {
+    borderColor: 'danger',
+    backgroundColor: 'dangerSurface',
+  },
+  _disabled: {
+    backgroundColor: 'surfaceMuted',
+    borderColor: 'border',
+    _text: {color: 'textDisabled'},
   },
 };
 

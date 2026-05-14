@@ -1,5 +1,7 @@
 import colors from './colors';
 
+// Legacy single-shadow definition preserved for back-compat with existing imports.
+// New code should consume `shadow.md` from `./tokens` instead.
 const boxShadow = {
   //shadow iOS
   shadowColor: colors.gray[350],
