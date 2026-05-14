@@ -40,7 +40,7 @@ const figmaInputVariantStyles = {
   backgroundColor: 'surface',
   borderColor: 'border',
   borderWidth: 1,
-  borderRadius: 12,
+  borderRadius: 14,
   color: 'textPrimary',
   paddingX: 4,
   fontFamily: 'DMSans',

@@ -1,60 +1,27 @@
 import {StyleSheet} from 'react-native';
-import colors from '~/theme/colors';
-import {isIOS} from '~/utils';
+import {semanticColors, spacing} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 0,
+  root: {
+    flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
+  },
+  scrollView: {
+    flex: 1,
   },
   contentContainer: {
-    paddingTop: 50,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: spacing.xl,
+    paddingHorizontal: 34,
+    paddingBottom: spacing['3xl'],
   },
-  slideContainer: {
-    marginVertical: 30,
+  segmentedControl: {
+    marginBottom: spacing['2xl'],
   },
-  tabBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderBottomColor: colors.gray[200],
-    borderBottomWidth: 1,
+  socialButton: {
+    marginBottom: spacing.md,
   },
-  tabItem: {
-    flex: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  activeTab: {
-    color: colors.black,
-    borderBottomColor: colors.black,
-    backgroundColor: isIOS ? colors.gray[100] : colors.white,
-    borderBottomWidth: 1,
-  },
-  panel: {
-    width: '100%',
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    marginVertical: 20,
-    padding: 20,
-  },
-  panelHeader: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginVertical: 10,
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: '900',
-  },
-  panelBody: {
-    marginVertical: 10,
-  },
-  icon: {
-    marginRight: 10,
+  dividerWrap: {
+    paddingVertical: spacing.lg,
   },
 });
 

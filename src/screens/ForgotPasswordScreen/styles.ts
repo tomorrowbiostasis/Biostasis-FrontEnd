@@ -1,53 +1,25 @@
 import {StyleSheet} from 'react-native';
-import colors from '~/theme/colors';
+import {semanticColors, spacing} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-  },
-  panel: {
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    marginVertical: 10,
-    padding: 20,
-    alignItems: 'flex-start',
-  },
-  panelHeader: {
+  root: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginVertical: 10,
+    backgroundColor: semanticColors.surfaceCanvas,
   },
-  panelBody: {
+  scrollView: {
     flex: 1,
-    width: '100%',
-    marginVertical: 10,
   },
-  panelFooter: {
-    flexDirection: 'row',
-    width: '100%',
-    alignItems: 'flex-start',
-    marginTop: 20,
+  contentContainer: {
+    paddingTop: spacing.xl,
+    paddingHorizontal: 34,
+    paddingBottom: spacing['3xl'],
   },
-  lineStyle: {
-    flex: 1,
-    width: '100%',
-    borderBottomColor: colors.gray[300],
-    borderBottomWidth: 2,
-    height: 2,
+  alertContainer: {
+    paddingBottom: 10,
   },
-  icon: {
-    marginRight: 10,
-  },
-  description: {
-    marginBottom: 10,
-  },
-  warning: {
-    color: colors.yellow[600],
-    fontWeight: '700',
-    fontSize: 10,
-    marginTop: 20,
-    textAlign: 'center',
+  submitButton: {
+    marginTop: spacing.md,
   },
 });
+
 export default styles;

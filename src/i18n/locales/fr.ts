@@ -137,6 +137,10 @@ const translations: ITranslation = {
     newPassword: 'Nouveau mot de passe',
     warning:
       "Assurez-vous que vous avez déjà un compte enregistré en utilisant votre courriel personnalisé. Notez que les enregistrements effectués par l'intermédiaire d'Apple et de Google ne seront pas fonctionnels",
+    subtitle: 'Nous vous enverrons un lien de réinitialisation par e-mail.',
+    newPasswordTitle: 'Créer un nouveau mot de passe',
+    newPasswordSubtitle: 'Choisissez un mot de passe sécurisé pour votre compte.',
+    confirmPasswordLabel: 'Confirmer le mot de passe',
   },
   placeholder: {
     password: 'votre mot de passe',
@@ -152,6 +156,32 @@ const translations: ITranslation = {
     linkExpired: 'Le lien a expiré. Veuillez réessayer',
     accountActivated:
       'Votre compte a été activé. Vous pouvez maintenant vous connecter',
+  },
+  authScreen: {
+    tabSignIn: 'Se connecter',
+    tabSignUp: "S'inscrire",
+    appleCta: 'Continuer avec Apple',
+    googleCta: 'Continuer avec Google',
+    emailLabel: 'Adresse e-mail',
+    emailPlaceholder: 'vous@exemple.com',
+    passwordLabel: 'Mot de passe',
+    termsAgree: "J'accepte les",
+    terms: "Conditions d'utilisation",
+    signIn: {
+      title: 'Bon retour.',
+      subtitle: 'Connectez-vous à votre compte Biostasis.',
+      cta: 'Se connecter',
+      dividerLabel: 'ou se connecter avec e-mail',
+      passwordPlaceholder: 'Votre mot de passe',
+      forgotPassword: 'Mot de passe oublié ?',
+    },
+    signUp: {
+      title: 'Créer un compte',
+      subtitle: "Rejoignez Biostasis pour gérer votre préparation aux urgences.",
+      cta: 'Créer un compte',
+      dividerLabel: "ou s'inscrire avec e-mail",
+      passwordPlaceholder: 'Créer un mot de passe',
+    },
   },
   defaultError: "L'opération n'a pas abouti",
   validation: {

@@ -18,7 +18,7 @@ import {updateUser} from '~/redux/user/thunks';
 import {IUser} from '~/redux/user/user.slice';
 import {useEditProfileValidationSchema} from '~/services/Validation.service';
 
-import {MaskedDateInput} from '../DateOfBirthScreen/components/MaskedDateInput/MaskedDateInput';
+import {MaskedDateInput} from '~/components/MaskedDateInput';
 import {useDataValidState} from './hooks/UseDataValidState';
 
 import styles from './styles';

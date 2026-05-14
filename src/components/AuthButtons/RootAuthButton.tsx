@@ -32,7 +32,7 @@ export const RootAuthButton = ({
         variant === 'solid' ? styles.buttonSolid : styles.buttonOutlined,
         style,
       ]}
-      _text={styles.text}
+      _text={variant === 'solid' ? styles.textSolid : styles.textOutline}
       disabled={disabled}
       startIcon={startIcon}>
       {text}
@@ -42,12 +42,21 @@ export const RootAuthButton = ({
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 10,
+    borderRadius: 14,
     borderWidth: 1,
+    height: 44,
   },
-  text: {
-    fontSize: 15,
-    paddingLeft: 1,
+  textSolid: {
+    fontFamily: 'DMSans-Medium',
+    fontWeight: '500',
+    fontSize: 16,
+    color: colors.white,
+  },
+  textOutline: {
+    fontFamily: 'DMSans-Medium',
+    fontWeight: '500',
+    fontSize: 16,
+    color: '#0B1F3A',
   },
   pressed: {
     borderRadius: 0,
@@ -57,6 +66,7 @@ const styles = StyleSheet.create({
     borderColor: colors.black,
   },
   buttonOutlined: {
-    borderColor: colors.gray[500],
+    borderColor: 'rgba(11, 31, 58, 0.18)',
+    backgroundColor: colors.white,
   },
 });

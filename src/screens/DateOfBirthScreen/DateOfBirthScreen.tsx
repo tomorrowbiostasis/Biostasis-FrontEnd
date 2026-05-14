@@ -10,7 +10,7 @@ import {updateUser} from '~/redux/user/thunks';
 import Container from '~/components/Container';
 
 import styles from './styles';
-import {MaskedDateInput} from './components/MaskedDateInput/MaskedDateInput';
+import {MaskedDateInput} from '~/components/MaskedDateInput';
 import {Screens} from '~/models/Navigation.model';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 

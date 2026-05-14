@@ -1,47 +1,24 @@
 import {StyleSheet} from 'react-native';
-import colors from '~/theme/colors';
+import {semanticColors, spacing} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  containerContent: {
-    justifyContent: 'center',
-  },
-  description: {
-    marginBottom: 20,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  panel: {
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    padding: 20,
-    marginBottom: 20,
-    justifyContent: 'space-evenly',
-  },
-  panelHeader: {
-    alignSelf: 'center',
-  },
-  panelBody: {
+  root: {
     flex: 1,
-    marginVertical: 10,
+    backgroundColor: semanticColors.surfaceCanvas,
   },
-  panelFooter: {
+  scrollView: {
     flex: 1,
-    width: '100%',
   },
-  buttonContainer: {
-    marginHorizontal: 10,
+  contentContainer: {
+    paddingTop: spacing.xl,
+    paddingHorizontal: 34,
+    paddingBottom: spacing['3xl'],
   },
-  button: {
-    marginTop: 20,
+  alertContainer: {
+    paddingBottom: 10,
   },
-  passwordInput: {
-    marginTop: 30,
-  },
-  confirmPasswordInput: {
-    marginTop: 20,
+  submitButton: {
+    marginTop: spacing.md,
   },
 });
 

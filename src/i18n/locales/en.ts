@@ -134,6 +134,10 @@ const translations = {
     newPassword: 'New Password',
     warning:
       'Ensure that you already have an account registered using your custom email. Note that registrations made through Apple and Google will not be functional.',
+    subtitle: "We'll send a reset link to your email.",
+    newPasswordTitle: 'Create new password',
+    newPasswordSubtitle: 'Choose a strong password for your account.',
+    confirmPasswordLabel: 'Confirm password',
   },
   placeholder: {
     password: 'your password',
@@ -148,6 +152,32 @@ const translations = {
     invalidCredentials: 'Incorrect username or password',
     linkExpired: 'Link has expired. Please try again',
     accountActivated: 'Your account has been activated. You can now sign in.',
+  },
+  authScreen: {
+    tabSignIn: 'Log in',
+    tabSignUp: 'Sign up',
+    appleCta: 'Continue with Apple',
+    googleCta: 'Continue with Google',
+    emailLabel: 'Email address',
+    emailPlaceholder: 'yours@example.com',
+    passwordLabel: 'Password',
+    termsAgree: 'I agree to the',
+    terms: 'Terms of Service',
+    signIn: {
+      title: 'Welcome back.',
+      subtitle: 'Log in to your Biostasis account.',
+      cta: 'Log in',
+      dividerLabel: 'or log in with email',
+      passwordPlaceholder: 'Your password',
+      forgotPassword: 'Forgot password?',
+    },
+    signUp: {
+      title: 'Create account',
+      subtitle: 'Join Biostasis to manage your emergency preparedness.',
+      cta: 'Create account',
+      dividerLabel: 'or sign up with email',
+      passwordPlaceholder: 'Create a password',
+    },
   },
   defaultError: 'The operation was unsuccessful',
   validation: {

@@ -19,7 +19,7 @@ export const AppleButton: FC<IAppleButtonProps> = ({
       onClick={onClick}
       text={text}
       variant="solid"
-      startIcon={<Icon name="apple" size={25} color="white" />}
+      startIcon={<Icon name="apple" size={19} color="white" />}
       style={style}
       disabled={disabled}
     />

@@ -1,23 +1,26 @@
 import React, {useCallback, useEffect} from 'react';
-import {View} from 'react-native';
-import {Text, Button} from 'native-base';
+import {Platform, View} from 'react-native';
+import {Button} from 'native-base';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Formik} from 'formik';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 
-import Container from '~/components/Container';
-import AuthInput from '~/components/AuthInput';
+import AuthHeader from '~/components/AuthHeader';
+import FormInput from '~/components/FormInput';
+import Alert from '~/components/Alert';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-import styles from './styles';
 import {useConfirmPasswordValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {forgotPasswordSetNewPassword} from '~/redux/auth/thunks';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {Screens, ScreensNavigationParamsList} from '~/models/Navigation.model';
 import {getForgotPasswordParams} from '~/redux/auth/selectors';
-import Alert from '~/components/Alert';
 import {
   setForgotPasswordEmailMessage,
   setShouldBackToAuthScreen,
 } from '~/redux/auth/auth.slice';
+import {semanticColors} from '~/theme/tokens';
+
+import styles from './styles';
 
 type NewPasswordFormFields = {
   password: string;
@@ -74,46 +77,51 @@ const NewPasswordScreen = () => {
   );
 
   return (
-    <Container
-      containerStyle={styles.container}
-      contentContainerStyle={styles.containerContent}
-      type={'keyboardAvoidingScrollView'}
-    >
-      {newPasswordMessage && (
-        <Alert
-          label={t(newPasswordMessage.messageKey)}
-          error={!newPasswordMessage.success}
-        />
-      )}
-      <Text fontSize={'xl'} textAlign={'center'} pb={5} fontWeight={'600'}>
-        {t('auth.welcomeTo')}
-      </Text>
-      <View style={styles.panel}>
-        <Text style={[styles.description, styles.panelHeader]}>
-          {t('forgotPassword.enterNewPasswordForEmail')}
-        </Text>
-        <View style={styles.panelBody}>
-          <Formik<NewPasswordFormFields>
-            initialValues={{password: '', confirmPassword: ''}}
-            onSubmit={handleContinue}
-            validationSchema={confirmPasswordValidationSchema}
-            validateOnChange={true}
-          >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              touched,
-              errors,
-              dirty,
-              isValid,
-            }) => (
+    <View style={styles.root}>
+      <AuthHeader
+        title={t('forgotPassword.newPasswordTitle')}
+        subtitle={t('forgotPassword.newPasswordSubtitle')}
+        eyebrow={t('welcome.eyebrow')}
+      />
+      <KeyboardAwareScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
+        enableOnAndroid
+        extraScrollHeight={Platform.OS === 'ios' ? 20 : 80}
+        keyboardOpeningTime={0}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        bounces={false}>
+        {newPasswordMessage && (
+          <View style={styles.alertContainer}>
+            <Alert
+              label={t(newPasswordMessage.messageKey)}
+              error={!newPasswordMessage.success}
+            />
+          </View>
+        )}
+        <Formik<NewPasswordFormFields>
+          initialValues={{password: '', confirmPassword: ''}}
+          onSubmit={handleContinue}
+          validationSchema={confirmPasswordValidationSchema}
+          validateOnChange>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            touched,
+            errors,
+            dirty,
+            isValid,
+          }) => {
+            const canSubmit = isValid && dirty && !pending;
+            return (
               <>
-                <AuthInput
-                  type={'password'}
+                <FormInput
+                  label={t('authScreen.passwordLabel')}
+                  type="password"
                   placeholder={t('placeholder.newPassword')}
-                  containerStyle={styles.passwordInput}
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
@@ -123,10 +131,10 @@ const NewPasswordScreen = () => {
                       : undefined
                   }
                 />
-                <AuthInput
-                  type={'password'}
+                <FormInput
+                  label={t('forgotPassword.confirmPasswordLabel')}
+                  type="password"
                   placeholder={t('placeholder.confirmNewPassword')}
-                  containerStyle={styles.confirmPasswordInput}
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={handleBlur('confirmPassword')}
                   value={values.confirmPassword}
@@ -136,22 +144,24 @@ const NewPasswordScreen = () => {
                       : undefined
                   }
                 />
-                <View style={styles.buttonContainer}>
-                  <Button
-                    disabled={!(isValid && dirty) || pending}
-                    isLoading={pending}
-                    style={styles.button}
-                    onPress={() => handleSubmit()}
-                  >
-                    {t('common.continue')}
-                  </Button>
-                </View>
+                <Button
+                  variant={'figmaPrimary' as never}
+                  bg={semanticColors.primaryDeep}
+                  _pressed={{bg: semanticColors.primary}}
+                  h={44}
+                  opacity={canSubmit ? 1 : 0.4}
+                  isDisabled={!canSubmit}
+                  isLoading={pending}
+                  onPress={() => handleSubmit()}
+                  style={styles.submitButton}>
+                  {t('common.continue')}
+                </Button>
               </>
-            )}
-          </Formik>
-        </View>
-      </View>
-    </Container>
+            );
+          }}
+        </Formik>
+      </KeyboardAwareScrollView>
+    </View>
   );
 };
 

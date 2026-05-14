@@ -137,6 +137,10 @@ const translations: ITranslation = {
     newPassword: 'Nuova password',
     warning:
       "Assicurarsi di avere già un account registrato utilizzando l'e-mail personalizzata. Si noti che le registrazioni effettuate tramite Apple e Google non funzioneranno",
+    subtitle: 'Ti invieremo un link per reimpostare la password via e-mail.',
+    newPasswordTitle: 'Crea nuova password',
+    newPasswordSubtitle: 'Scegli una password sicura per il tuo account.',
+    confirmPasswordLabel: 'Conferma password',
   },
   placeholder: {
     password: 'la tua password',
@@ -151,6 +155,32 @@ const translations: ITranslation = {
     invalidCredentials: 'Nome utente o password errati',
     linkExpired: 'Il link è scaduto. Si prega di riprovare',
     accountActivated: 'Il tuo account è stato attivato. Ora puoi accedere',
+  },
+  authScreen: {
+    tabSignIn: 'Accedi',
+    tabSignUp: 'Registrati',
+    appleCta: 'Continua con Apple',
+    googleCta: 'Continua con Google',
+    emailLabel: 'Indirizzo email',
+    emailPlaceholder: 'tuo@esempio.com',
+    passwordLabel: 'Password',
+    termsAgree: 'Accetto i',
+    terms: 'Termini di Servizio',
+    signIn: {
+      title: 'Bentornato.',
+      subtitle: 'Accedi al tuo account Biostasis.',
+      cta: 'Accedi',
+      dividerLabel: 'oppure accedi con email',
+      passwordPlaceholder: 'La tua password',
+      forgotPassword: 'Password dimenticata?',
+    },
+    signUp: {
+      title: 'Crea account',
+      subtitle: 'Unisciti a Biostasis per gestire la tua preparazione alle emergenze.',
+      cta: 'Crea account',
+      dividerLabel: 'oppure registrati con email',
+      passwordPlaceholder: 'Crea una password',
+    },
   },
   defaultError: "L'operazione non è andata a buon fine",
   validation: {

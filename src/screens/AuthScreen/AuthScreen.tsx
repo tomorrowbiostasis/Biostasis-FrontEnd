@@ -1,31 +1,32 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {View, Text, Animated, ScrollView} from 'react-native';
-import Container from '~/components/Container';
-import Login from './components/Login';
-import Register from './components/Register';
-import styles from './styles';
-import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Platform, View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useRoute, RouteProp} from '@react-navigation/core';
-import {ScreensNavigationParamsList} from '~/models/Navigation.model';
-import {Dimensions} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useAppDispatch} from '~/redux/store/hooks';
+
+import AuthHeader from '~/components/AuthHeader';
+import SegmentedControl from '~/components/SegmentedControl';
+import {AppleButton} from '~/components/AuthButtons/AppleButton';
+import {GoogleButton} from '~/components/AuthButtons/GoogleButton';
+import OrDivider from '~/components/OrDivider';
+import Login from './components/Login';
+import Register from './components/Register';
+
+import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
+import {appleSignIn, googleSignIn} from '~/services/Amazon.service';
+import {ScreensNavigationParamsList} from '~/models/Navigation.model';
+import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {confirmSignUp} from '~/redux/auth/thunks';
-import {useCallback} from 'react';
+import {getSignInParams, getSignUpParams} from '~/redux/auth/selectors';
 
-const screenWidth = Dimensions.get('window').width;
+import styles from './styles';
 
-const getTabIndexByParam: (param: string) => number = param => {
-  switch (param) {
-    case 'SIGN_IN':
-      return 0;
-    case 'SIGN_UP':
-      return 1;
-    default:
-      return 0;
-  }
-};
+const SIGN_IN = 0;
+const SIGN_UP = 1;
+
+const getTabIndexByParam = (param?: string): number =>
+  param === 'SIGN_UP' ? SIGN_UP : SIGN_IN;
 
 const AuthScreen = () => {
   const {params} =
@@ -36,89 +37,89 @@ const AuthScreen = () => {
     >();
   const dispatch = useAppDispatch();
   const {t} = useAppTranslation();
-  
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const defaultTabIndex = getTabIndexByParam(`${params?.action}`);
-  const swiperRef = useRef<ScrollView>(null);
-  const fadeIn = useRef(new Animated.Value(0)).current;
 
-  const changeTab = useCallback(
-    (newIndex: number, animated: boolean = true) => {
-      Animated.timing(fadeIn, {
-        toValue: 0.05,
-        duration: 100,
-        useNativeDriver: true,
-      }).start(() => {
-        setActiveTabIndex(newIndex);
-        swiperRef.current?.scrollTo({
-          x: newIndex * screenWidth,
-          y: 0,
-          animated: animated,
-        });
-        Animated.timing(fadeIn, {
-          toValue: 1,
-          duration: 200,
-          useNativeDriver: true,
-        }).start();
-      });
-    },
-    [fadeIn],
+  const [activeIndex, setActiveIndex] = useState(
+    getTabIndexByParam(params?.action),
   );
 
-  useEffect(() => {
-    changeTab(defaultTabIndex, false);
-  }, [changeTab, defaultTabIndex]);
-  
-  useEffect(() => {
-      const confirmAuth = async () => {
-      if(params?.email && params?.code) {
-        changeTab(0, false);
+  const {pending: signInPending} = useAppSelector(getSignInParams);
+  const {pending: signUpPending} = useAppSelector(getSignUpParams);
+  const socialPending = signInPending || signUpPending;
 
-        dispatch(
-          confirmSignUp({
-            email: params.email,
-            code: params.code,
-          }),
-        );
-        navigation.setParams({
-          email: undefined,
-          code: undefined,
-        });
-        setTimeout(() => {
-          changeTab(defaultTabIndex, true);
-        }, 100);
-      }
-    };
-    confirmAuth();
-  }, [changeTab, defaultTabIndex, dispatch, navigation, params]);
+  const isSignUp = activeIndex === SIGN_UP;
+
+  useEffect(() => {
+    if (params?.email && params?.code) {
+      setActiveIndex(SIGN_IN);
+      dispatch(
+        confirmSignUp({email: params.email, code: params.code}),
+      );
+      navigation.setParams({email: undefined, code: undefined});
+    }
+  }, [dispatch, navigation, params]);
+
+  const handleApple = useCallback(() => {
+    appleSignIn();
+  }, []);
+  const handleGoogle = useCallback(() => {
+    googleSignIn();
+  }, []);
 
   return (
-    <Container
-      containerStyle={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      safeTopArea
-      type={'keyboardAvoidingScrollView'}>
-      <View style={styles.panel}>
-        <Text style={styles.panelHeader}>{t('auth.welcomeTo')}</Text>
-        <View style={styles.panelBody}>
-          <View style={styles.tabBar}>
-            <Text
-              style={[styles.tabItem, activeTabIndex === 0 && styles.activeTab]}
-              onPress={() => changeTab(0)}>
-              {t('LogIn.LogIn')}
-            </Text>
-            <Text
-              style={[styles.tabItem, activeTabIndex === 1 && styles.activeTab]}
-              onPress={() => changeTab(1)}>
-              {t('signUp.signUp')}
-            </Text>
-          </View>
-          <Animated.View style={[{opacity: fadeIn}, styles.slideContainer]}>
-            {activeTabIndex === 0 ? <Login /> : <Register />}
-          </Animated.View>
+    <View style={styles.root}>
+      <AuthHeader
+        title={
+          isSignUp
+            ? t('authScreen.signUp.title')
+            : t('authScreen.signIn.title')
+        }
+        subtitle={
+          isSignUp
+            ? t('authScreen.signUp.subtitle')
+            : t('authScreen.signIn.subtitle')
+        }
+        eyebrow={t('welcome.eyebrow')}
+        showBack={false}
+      />
+      <KeyboardAwareScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
+        enableOnAndroid
+        extraScrollHeight={Platform.OS === 'ios' ? 20 : 80}
+        keyboardOpeningTime={0}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        bounces={false}>
+        <SegmentedControl
+          segments={[t('authScreen.tabSignIn'), t('authScreen.tabSignUp')]}
+          selectedIndex={activeIndex}
+          onChange={setActiveIndex}
+          style={styles.segmentedControl}
+        />
+        <AppleButton
+          text={t('authScreen.appleCta')}
+          onClick={handleApple}
+          disabled={socialPending}
+          style={styles.socialButton}
+        />
+        <GoogleButton
+          text={t('authScreen.googleCta')}
+          onClick={handleGoogle}
+          disabled={socialPending}
+          style={styles.socialButton}
+        />
+        <View style={styles.dividerWrap}>
+          <OrDivider
+            label={
+              isSignUp
+                ? t('authScreen.signUp.dividerLabel')
+                : t('authScreen.signIn.dividerLabel')
+            }
+          />
         </View>
-      </View>
-    </Container>
+        {isSignUp ? <Register /> : <Login />}
+      </KeyboardAwareScrollView>
+    </View>
   );
 };
 

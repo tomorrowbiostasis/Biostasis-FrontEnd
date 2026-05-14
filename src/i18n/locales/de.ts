@@ -138,6 +138,10 @@ const translations: ITranslation = {
     newPassword: 'Neues Passwort',
     warning:
       'Stellen Sie sicher, dass Sie bereits ein Konto mit Ihrer benutzerdefinierten E-Mail-Adresse registriert haben. Beachten Sie, dass über Apple und Google vorgenommene Registrierungen nicht funktionieren.',
+    subtitle: 'Wir senden Ihnen einen Link zum Zurücksetzen per E-Mail.',
+    newPasswordTitle: 'Neues Passwort erstellen',
+    newPasswordSubtitle: 'Wählen Sie ein sicheres Passwort für Ihr Konto.',
+    confirmPasswordLabel: 'Passwort bestätigen',
   },
   placeholder: {
     password: 'Ihr Passwort',
@@ -153,6 +157,32 @@ const translations: ITranslation = {
     linkExpired: 'Link has expired. Bitte versuchen Sie es erneut',
     accountActivated:
       'Ihr Konto wurde aktiviert. Sie können sich jetzt anmelden.',
+  },
+  authScreen: {
+    tabSignIn: 'Anmelden',
+    tabSignUp: 'Registrieren',
+    appleCta: 'Weiter mit Apple',
+    googleCta: 'Weiter mit Google',
+    emailLabel: 'E-Mail-Adresse',
+    emailPlaceholder: 'name@beispiel.com',
+    passwordLabel: 'Passwort',
+    termsAgree: 'Ich akzeptiere die',
+    terms: 'Nutzungsbedingungen',
+    signIn: {
+      title: 'Willkommen zurück.',
+      subtitle: 'Melden Sie sich in Ihrem Biostasis-Konto an.',
+      cta: 'Anmelden',
+      dividerLabel: 'oder mit E-Mail anmelden',
+      passwordPlaceholder: 'Ihr Passwort',
+      forgotPassword: 'Passwort vergessen?',
+    },
+    signUp: {
+      title: 'Konto erstellen',
+      subtitle: 'Treten Sie Biostasis bei, um Ihre Notfallvorsorge zu verwalten.',
+      cta: 'Konto erstellen',
+      dividerLabel: 'oder mit E-Mail registrieren',
+      passwordPlaceholder: 'Passwort erstellen',
+    },
   },
   defaultError: 'Der Vorgang war nicht erfolgreich',
   validation: {

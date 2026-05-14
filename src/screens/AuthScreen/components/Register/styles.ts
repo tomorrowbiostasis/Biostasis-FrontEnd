@@ -1,34 +1,32 @@
 import {StyleSheet} from 'react-native';
-import colors from '~/theme/colors';
+import {semanticColors} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: '5%',
-  },
-  authInputTopSpace: {
-    marginTop: 20,
-  },
-  separator: {
-    marginTop: 20,
-  },
-  lineStyle: {
-    width: '100%',
-    borderBottomColor: colors.gray[600],
-    borderBottomWidth: 2,
-    height: 1,
-    marginVertical: 20,
-  },
-  bottomContainer: {
-    paddingHorizontal: 5,
-  },
-  button: {
-    marginTop: 20,
   },
   alertContainer: {
     paddingBottom: 10,
+  },
+  termsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingVertical: 12,
+    minHeight: 68,
+  },
+  termsText: {
+    flex: 1,
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    lineHeight: 22,
+    color: '#5A6A7E',
+  },
+  termsLink: {
+    color: semanticColors.primaryAccent,
+  },
+  submitButton: {
+    marginTop: 12,
   },
 });
 

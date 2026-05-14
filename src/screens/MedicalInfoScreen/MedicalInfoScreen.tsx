@@ -16,7 +16,7 @@ import Container from '~/components/Container';
 import Input from '~/components/Input';
 import SwitchButton from '~/components/SwitchButton';
 
-import {MaskedDateInput} from '../DateOfBirthScreen/components/MaskedDateInput/MaskedDateInput';
+import {MaskedDateInput} from '~/components/MaskedDateInput';
 
 import styles from './styles';
 import {Screens} from '~/models/Navigation.model';

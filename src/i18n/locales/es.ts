@@ -138,6 +138,10 @@ const translations: ITranslation = {
     newPassword: 'Nueva Contraseña',
     warning:
       'Asegúrate de que ya tienes una cuenta registrada con tu correo electrónico personalizado. Tenga en cuenta que los registros realizados a través de Apple y Google no serán funcionales',
+    subtitle: 'Le enviaremos un enlace de restablecimiento por correo.',
+    newPasswordTitle: 'Crear nueva contraseña',
+    newPasswordSubtitle: 'Elija una contraseña segura para su cuenta.',
+    confirmPasswordLabel: 'Confirmar contraseña',
   },
   placeholder: {
     password: 'tu contraseña',
@@ -152,6 +156,32 @@ const translations: ITranslation = {
     invalidCredentials: 'Nombre de usuario o contraseña incorrectos',
     linkExpired: 'El enlace ha caducado. Inténtelo de nuevo',
     accountActivated: 'Su cuenta ha sido activada. Ya puede iniciar sesión',
+  },
+  authScreen: {
+    tabSignIn: 'Iniciar sesión',
+    tabSignUp: 'Registrarse',
+    appleCta: 'Continuar con Apple',
+    googleCta: 'Continuar con Google',
+    emailLabel: 'Correo electrónico',
+    emailPlaceholder: 'tuyo@ejemplo.com',
+    passwordLabel: 'Contraseña',
+    termsAgree: 'Acepto los',
+    terms: 'Términos del Servicio',
+    signIn: {
+      title: 'Bienvenido de nuevo.',
+      subtitle: 'Inicia sesión en tu cuenta de Biostasis.',
+      cta: 'Iniciar sesión',
+      dividerLabel: 'o inicia sesión con correo',
+      passwordPlaceholder: 'Tu contraseña',
+      forgotPassword: '¿Olvidaste tu contraseña?',
+    },
+    signUp: {
+      title: 'Crear cuenta',
+      subtitle: 'Únete a Biostasis para gestionar tu preparación ante emergencias.',
+      cta: 'Crear cuenta',
+      dividerLabel: 'o regístrate con correo',
+      passwordPlaceholder: 'Crea una contraseña',
+    },
   },
   defaultError: 'La operación no tuvo éxito',
   validation: {
