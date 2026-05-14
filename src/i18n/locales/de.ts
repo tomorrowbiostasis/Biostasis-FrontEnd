@@ -3,19 +3,36 @@ import {ITranslation} from '../interfaces/Translation.interface';
 const translations: ITranslation = {
   appName: 'Biostasis',
   onboarding: {
-    title: 'Biostasis Notfall-App',
-    // slogan: 'Holen Sie sich die bestmögliche$ medizinische Biostase',
-    alreadyUser: 'Bereits ein Biostasis-Benutzer?',
-    slogan:
-      'Fortschrittliche Biostasenpflege und Unterstützung für eine sichere Zukunft.',
+    next: 'Weiter',
+    getStarted: 'Loslegen',
+    skipIntro: 'Intro überspringen',
     slide1: {
-      label: 'Die Sicherheit Ihrer Biostasis-Reise gewährleisten',
-      text: 'Mit dieser App können andere schnell benachrichtigt werden, wenn Sie eine Kryokonservierung benötigen, was zu einer schnelleren Bereitschaftsreaktion führt.',
+      badge: 'BIOSTASIS-SICHERHEIT',
+      title: 'Ihr Notfall, unsere Priorität.',
+      body: 'Wenn Sie jemals eine Kryokonservierung benötigen, sorgt diese App dafür, dass die richtigen Personen sofort benachrichtigt werden — für eine schnellere Bereitschaftsreaktion.',
     },
     slide2: {
-      label: 'Erstellen Sie Ihr persönliches Notfall-Benachrichtigungssystem',
-      text: 'Erstellen Sie Notfallkontakte, passen Sie Ihre Notfallnachricht an, laden Sie Dokumente hoch, konfigurieren Sie ein automatisches Notfallsystem und vieles mehr.',
+      badge: 'NOTFALLBENACHRICHTIGUNGEN',
+      title: 'Bauen Sie Ihr Benachrichtigungsnetzwerk auf.',
+      body: 'Fügen Sie Notfallkontakte hinzu, legen Sie individuelle Nachrichten fest, laden Sie Dokumente hoch und konfigurieren Sie automatische Auslöser — alles an einem Ort.',
     },
+    slide3: {
+      badge: 'SCHNELLE REAKTION',
+      title: 'Fortschrittliche Versorgung, bereit wenn es darauf ankommt.',
+      body: 'Biostasis verbindet Sie mit geschulten Notfallteams für schnellere und koordiniertere Unterstützung bei der Kryokonservierung.',
+    },
+  },
+  welcome: {
+    eyebrow: 'BIOSTASIS',
+    title: 'Notfallversorgung, immer griffbereit.',
+    tagline:
+      'Sofortige Benachrichtigungen. Automatisierte Systeme. Beruhigung, wenn es am wichtigsten ist.',
+    createAccount: 'Konto erstellen',
+    logIn: 'Anmelden',
+    termsPrefix: 'Indem Sie fortfahren, stimmen Sie unseren',
+    terms: 'Nutzungsbedingungen',
+    and: '&',
+    privacy: 'Datenschutzrichtlinie',
   },
   common: {
     or: 'oder',

@@ -8,6 +8,7 @@
 
 export const semanticColors = {
   primary: '#0B1F3A',
+  primaryDeep: '#1A3558',
   primaryAccent: '#2B6E99',
   primaryPressed: '#0D1B2E',
   primaryDisabled: '#9BA8B5',
@@ -15,6 +16,7 @@ export const semanticColors = {
   surface: '#FFFFFF',
   surfaceMuted: '#EEF0F3',
   surfaceSubtle: '#F2F3F5',
+  surfaceCanvas: '#F5F6F8',
   surfaceAlt: '#EAF0F5',
 
   border: '#E2E6EA',

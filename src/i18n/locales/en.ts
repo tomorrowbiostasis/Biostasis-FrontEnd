@@ -1,19 +1,36 @@
 const translations = {
   appName: 'Biostasis',
   onboarding: {
-    title: 'Biostasis Emergency App',
-    // slogan: `Get the best${'\n'}medical biostasis possible`,
-    alreadyUser: 'Already a Biostasis user?',
-    slogan:
-      'Delivering advanced biostasis care and support for a secure future.',
+    next: 'Next',
+    getStarted: 'Get Started',
+    skipIntro: 'Skip intro',
     slide1: {
-      label: 'Ensuring the Security of Your Biostasis Journey',
-      text: 'With this app others can be quickly notified if you are in need of cryopreservation, leading to faster standby response.',
+      badge: 'BIOSTASIS SECURITY',
+      title: 'Your emergency, our priority.',
+      body: 'If you ever need cryopreservation care, this app ensures the right people are notified instantly — leading to faster standby response.',
     },
     slide2: {
-      label: 'Build Your Personalized Emergency Notification System',
-      text: 'Create emergency contacts, customize your emergency message, upload documents, configure an automated emergency system, and more.',
+      badge: 'EMERGENCY ALERTS',
+      title: 'Build your notification network.',
+      body: 'Add emergency contacts, set custom messages, upload documents, and configure automated triggers — all in one place.',
     },
+    slide3: {
+      badge: 'RAPID RESPONSE',
+      title: 'Advanced care, ready when it matters.',
+      body: 'Biostasis connects you with trained emergency response teams for faster, more coordinated cryopreservation support.',
+    },
+  },
+  welcome: {
+    eyebrow: 'BIOSTASIS',
+    title: 'Emergency care, at your fingertips.',
+    tagline:
+      'Instant alerts. Automated systems. Peace of mind for when it counts most.',
+    createAccount: 'Create an account',
+    logIn: 'Log in',
+    termsPrefix: 'By continuing you agree to our',
+    terms: 'Terms of Service',
+    and: '&',
+    privacy: 'Privacy Policy',
   },
   common: {
     or: 'or',

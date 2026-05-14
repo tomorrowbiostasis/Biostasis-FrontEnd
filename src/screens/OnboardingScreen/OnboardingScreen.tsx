@@ -1,80 +1,123 @@
-import React, {FC, useCallback, useMemo, useState} from 'react';
-import {View, Text} from 'native-base';
+import React, {FC, useCallback, useRef, useState} from 'react';
+import {Pressable, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
+import {Button} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
 
-import OnboardingSlide from './components/OnboardingSlide';
-import OnboardingSummarySlide from './components/OnboardingSummarySlide';
+import Badge, {BadgeVariant} from '~/components/Badge';
+import StepIndicator from '~/components/StepIndicator';
+import OnboardingShield from '~/assets/illustrations/onboarding/OnboardingShield';
+import OnboardingBell from '~/assets/illustrations/onboarding/OnboardingBell';
+import OnboardingMedical from '~/assets/illustrations/onboarding/OnboardingMedical';
+import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
+import {Screens} from '~/models/Navigation.model';
 
 import styles from './styles';
-import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
-import {Screens} from '~/models/Navigation.model';
-import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
-import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 
-const slideImage1 = require('~/assets/images/onboarding/OnboardingImage1.png');
-const slideImage2 = require('~/assets/images/onboarding/OnboardingImage2.png');
+type SlideContent = {
+  badgeKey: string;
+  titleKey: string;
+  bodyKey: string;
+  variant: BadgeVariant;
+  illustration: React.ReactNode;
+};
+
+const SLIDES: SlideContent[] = [
+  {
+    badgeKey: 'onboarding.slide1.badge',
+    titleKey: 'onboarding.slide1.title',
+    bodyKey: 'onboarding.slide1.body',
+    variant: 'info',
+    illustration: <OnboardingShield width={240} height={218} />,
+  },
+  {
+    badgeKey: 'onboarding.slide2.badge',
+    titleKey: 'onboarding.slide2.title',
+    bodyKey: 'onboarding.slide2.body',
+    variant: 'danger',
+    illustration: <OnboardingBell width={240} height={218} />,
+  },
+  {
+    badgeKey: 'onboarding.slide3.badge',
+    titleKey: 'onboarding.slide3.title',
+    bodyKey: 'onboarding.slide3.body',
+    variant: 'success',
+    illustration: <OnboardingMedical width={240} height={218} />,
+  },
+];
 
 const OnboardingScreen: FC = () => {
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const swiperRef = useRef<Swiper>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
   const {t} = useAppTranslation();
   const {navigate} = useNavigation();
 
-  const isNotLastSlide = useMemo(
-    () => activeSlideIndex < 2,
-    [activeSlideIndex],
-  );
+  const isLastSlide = activeIndex === SLIDES.length - 1;
 
-  const handleLogin = useCallback(async () => {
-    try {
-      await AsyncStorageService.setItem(
-        AsyncStorageEnum.HasSeenOnboarding,
-        'true',
-      );
-    } catch (e) {
-      console.warn('Error when saving onboarding state', e);
-    }
-    //@ts-ignore
-    navigate(Screens.Auth, {action: 'SIGN_IN'});
+  const goToWelcome = useCallback(() => {
+    // @ts-ignore — Screens enum lookup
+    navigate(Screens.Welcome);
   }, [navigate]);
+
+  const handleCTA = useCallback(() => {
+    if (isLastSlide) {
+      goToWelcome();
+    } else {
+      swiperRef.current?.scrollBy(1, true);
+    }
+  }, [isLastSlide, goToWelcome]);
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={styles.safeAreaContainer}>
+      <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+        <View style={styles.header}>
+          <StepIndicator total={SLIDES.length} currentIndex={activeIndex} />
+        </View>
+
         <Swiper
+          ref={swiperRef}
           loop={false}
-          dotStyle={styles.paginationDot}
-          activeDotStyle={styles.activePaginationDot}
-          onIndexChanged={index => setActiveSlideIndex(index)}>
-          <OnboardingSlide
-            key={'slide-1'}
-            image={slideImage1}
-            label={t('onboarding.slide1.label')}
-            text={t('onboarding.slide1.text')}
-          />
-          <OnboardingSlide
-            key={'slide-2'}
-            image={slideImage2}
-            label={t('onboarding.slide2.label')}
-            text={t('onboarding.slide2.text')}
-          />
-          <OnboardingSummarySlide key={'slide-summary'} />
+          showsPagination={false}
+          removeClippedSubviews={false}
+          loadMinimal={false}
+          onIndexChanged={setActiveIndex}>
+          {SLIDES.map(slide => (
+            <View style={styles.slide} key={slide.badgeKey}>
+              <View style={styles.illustrationWrap}>{slide.illustration}</View>
+              <Badge
+                label={t(slide.badgeKey)}
+                variant={slide.variant}
+                style={styles.badgeSpacing}
+              />
+              <Text style={styles.title}>{t(slide.titleKey)}</Text>
+              <Text style={styles.body}>{t(slide.bodyKey)}</Text>
+            </View>
+          ))}
         </Swiper>
-        <View style={styles.alreadyUserBox}>
-          {
-            isNotLastSlide && <>
-            <Text fontSize={'md'}>{t('onboarding.alreadyUser')}</Text>
-            <TouchableOpacity onPress={handleLogin} style={styles.logInBox}>
-              <Text style={styles.logInText} underline>
-                {t('LogIn.LogIn')}
-              </Text>
-            </TouchableOpacity>
-            </>
-          }
-          </View>
-        </SafeAreaView>
+
+        <View style={styles.footer}>
+          <Button
+            variant={'figmaPrimary' as never}
+            onPress={handleCTA}>
+            {isLastSlide
+              ? t('onboarding.getStarted')
+              : t('onboarding.next')}
+          </Button>
+          <Pressable
+            onPress={goToWelcome}
+            style={styles.skipButton}
+            disabled={isLastSlide}>
+            <Text
+              style={[
+                styles.skipText,
+                isLastSlide && styles.skipTextHidden,
+              ]}>
+              {t('onboarding.skipIntro')}
+            </Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
     </View>
   );
 };

@@ -56,6 +56,7 @@ export const secondaryButtonStyles = {
 export const figmaPrimaryButtonStyles = {
   backgroundColor: 'primary',
   borderWidth: 0,
+  borderRadius: 14,
   minHeight: 50,
   _text: {
     color: 'textInverse',
@@ -75,6 +76,7 @@ export const figmaSecondaryButtonStyles = {
   backgroundColor: 'surface',
   borderColor: 'primary',
   borderWidth: 1,
+  borderRadius: 14,
   minHeight: 50,
   _text: {
     color: 'primary',
@@ -93,6 +95,7 @@ export const figmaSecondaryButtonStyles = {
 export const figmaEmergencyButtonStyles = {
   backgroundColor: 'dangerStrong',
   borderWidth: 0,
+  borderRadius: 14,
   minHeight: 50,
   _text: {
     color: 'textInverse',

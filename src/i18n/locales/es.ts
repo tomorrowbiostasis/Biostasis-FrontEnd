@@ -3,20 +3,36 @@ import {ITranslation} from '../interfaces/Translation.interface';
 const translations: ITranslation = {
   appName: 'Biostasis',
   onboarding: {
-    title: 'Aplicación de emergencia Biostasis',
-    // eslogan: `Consigue la mejor${'\n'}biostasis médica posible`,
-    alreadyUser: '¿Ya eres usuario de Biostasis?',
-    slogan:
-      'Prestación de cuidados biostáticos avanzados y apoyo para un futuro seguro',
+    next: 'Siguiente',
+    getStarted: 'Comenzar',
+    skipIntro: 'Omitir intro',
     slide1: {
-      label: 'Garantizar la seguridad de su viaje de biostasis',
-      text: 'Con esta aplicación se puede notificar rápidamente a otras personas si necesita criopreservación, lo que permite una respuesta más rápida en espera',
+      badge: 'SEGURIDAD BIOSTASIS',
+      title: 'Tu emergencia, nuestra prioridad.',
+      body: 'Si alguna vez necesitas atención de criopreservación, esta aplicación garantiza que las personas adecuadas sean notificadas al instante — logrando una respuesta más rápida.',
     },
     slide2: {
-      label:
-        'Construya su sistema personalizado de notificación de emergencias',
-      text: 'Crea contactos de emergencia, personaliza tu mensaje de emergencia, sube documentos, configura un sistema de emergencia automatizado y mucho más',
+      badge: 'ALERTAS DE EMERGENCIA',
+      title: 'Construye tu red de notificaciones.',
+      body: 'Añade contactos de emergencia, define mensajes personalizados, sube documentos y configura activadores automáticos — todo en un solo lugar.',
     },
+    slide3: {
+      badge: 'RESPUESTA RÁPIDA',
+      title: 'Atención avanzada, lista cuando importa.',
+      body: 'Biostasis te conecta con equipos de respuesta de emergencia capacitados para un soporte de criopreservación más rápido y coordinado.',
+    },
+  },
+  welcome: {
+    eyebrow: 'BIOSTASIS',
+    title: 'Atención de emergencia, al alcance de tu mano.',
+    tagline:
+      'Alertas instantáneas. Sistemas automatizados. Tranquilidad cuando más importa.',
+    createAccount: 'Crear una cuenta',
+    logIn: 'Iniciar sesión',
+    termsPrefix: 'Al continuar, aceptas nuestros',
+    terms: 'Términos del Servicio',
+    and: '&',
+    privacy: 'Política de Privacidad',
   },
   common: {
     or: 'o',

@@ -3,20 +3,36 @@ import {ITranslation} from '../interfaces/Translation.interface';
 const translations: ITranslation = {
   appName: 'Biostasis',
   onboarding: {
-    title: 'App di emergenza Biostasi',
-    // slogan: "Ottieni la migliore biostasi medica possibile",
-    alreadyUser: 'Sei già un utente Biostasis?',
-    slogan:
-      'Fornire assistenza e supporto avanzati alla biostasi per un futuro sicuro',
+    next: 'Avanti',
+    getStarted: 'Inizia',
+    skipIntro: "Salta l'intro",
     slide1: {
-      label: 'Garantire la sicurezza del vostro viaggio nella biostasi',
-      text: 'Con questa app gli altri possono essere avvisati rapidamente se si ha bisogno di crioconservazione, con una risposta più rapida in standby',
+      badge: 'SICUREZZA BIOSTASIS',
+      title: 'La tua emergenza, la nostra priorità.',
+      body: 'Se mai dovessi aver bisogno di assistenza per la crioconservazione, questa app garantisce che le persone giuste vengano avvisate immediatamente — per una risposta più rapida.',
     },
     slide2: {
-      label:
-        'Costruite il vostro sistema di notifica di emergenza personalizzato',
-      text: 'Crea contatti di emergenza, personalizza il tuo messaggio di emergenza, carica documenti, configura un sistema di emergenza automatico e altro ancora',
+      badge: 'AVVISI DI EMERGENZA',
+      title: 'Costruisci la tua rete di notifiche.',
+      body: 'Aggiungi contatti di emergenza, imposta messaggi personalizzati, carica documenti e configura attivazioni automatiche — tutto in un unico posto.',
     },
+    slide3: {
+      badge: 'RISPOSTA RAPIDA',
+      title: 'Assistenza avanzata, pronta quando conta.',
+      body: 'Biostasis ti mette in contatto con team di pronto intervento qualificati per un supporto alla crioconservazione più rapido e coordinato.',
+    },
+  },
+  welcome: {
+    eyebrow: 'BIOSTASIS',
+    title: 'Assistenza di emergenza, a portata di mano.',
+    tagline:
+      'Avvisi istantanei. Sistemi automatizzati. Tranquillità quando conta di più.',
+    createAccount: 'Crea un account',
+    logIn: 'Accedi',
+    termsPrefix: 'Continuando accetti i nostri',
+    terms: 'Termini di Servizio',
+    and: '&',
+    privacy: 'Informativa sulla Privacy',
   },
   common: {
     or: 'o',

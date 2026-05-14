@@ -3,19 +3,36 @@ import {ITranslation} from '../interfaces/Translation.interface';
 const translations: ITranslation = {
   appName: 'Biostasis',
   onboarding: {
-    title: 'Aplicación Biostasis Emergency',
-    // slogan : `Get the best${'\n'}medical biostasis possible`,
-    alreadyUser: 'Déjà utilisateur de Biostasis ?',
-    slogan:
-      'Fournir des soins et un soutien avancés en matière de biostase pour un avenir sûr',
+    next: 'Suivant',
+    getStarted: 'Commencer',
+    skipIntro: "Passer l'intro",
     slide1: {
-      label: 'Assurer la sécurité de votre voyage en biostase',
-      text: "Grâce à cette application, d'autres personnes peuvent être rapidement informées si vous avez besoin d'une cryogénisation, ce qui permet une intervention plus rapide",
+      badge: 'SÉCURITÉ BIOSTASIS',
+      title: 'Votre urgence, notre priorité.',
+      body: "Si vous avez un jour besoin d'une cryopréservation, cette application garantit que les bonnes personnes sont prévenues immédiatement — pour une intervention plus rapide.",
     },
     slide2: {
-      label: "Créez votre système de notification d'urgence personnalisé",
-      text: "Créez des contacts d'urgence, personnalisez votre message d'urgence, téléchargez des documents, configurez un système d'urgence automatisé, et plus encore",
+      badge: "ALERTES D'URGENCE",
+      title: 'Construisez votre réseau de notifications.',
+      body: "Ajoutez des contacts d'urgence, définissez des messages personnalisés, téléversez des documents et configurez des déclencheurs automatiques — le tout au même endroit.",
     },
+    slide3: {
+      badge: 'RÉPONSE RAPIDE',
+      title: 'Soins avancés, prêts quand cela compte.',
+      body: "Biostasis vous met en relation avec des équipes d'intervention d'urgence formées pour un soutien à la cryopréservation plus rapide et mieux coordonné.",
+    },
+  },
+  welcome: {
+    eyebrow: 'BIOSTASIS',
+    title: "Soins d'urgence, à portée de main.",
+    tagline:
+      "Alertes instantanées. Systèmes automatisés. Tranquillité d'esprit quand cela compte le plus.",
+    createAccount: 'Créer un compte',
+    logIn: 'Se connecter',
+    termsPrefix: 'En continuant, vous acceptez nos',
+    terms: "Conditions d'utilisation",
+    and: '&',
+    privacy: 'Politique de confidentialité',
   },
   common: {
     or: 'ou',

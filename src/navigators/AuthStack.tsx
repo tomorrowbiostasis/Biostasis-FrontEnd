@@ -6,6 +6,7 @@ import {
 import {AuthStackNavigatorParamList, Screens} from '~/models/Navigation.model';
 import AuthScreen from '~/screens/AuthScreen';
 import OnboardingScreen from '~/screens/OnboardingScreen';
+import WelcomeScreen from '~/screens/WelcomeScreen';
 import {homeScreenOptions, headerStyle} from '~/theme/navigators';
 import ForgotPasswordScreen from '~/screens/ForgotPasswordScreen';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
@@ -65,11 +66,18 @@ export const AuthStack = () => {
   return (
     <Stack.Navigator screenOptions={homeScreenOptions}>
       {!hasSeenOnboarding && (
-        <Stack.Screen
-          name={Screens.onboarding as never}
-          component={OnboardingScreen}
-          options={{headerShown: false}}
-        />
+        <>
+          <Stack.Screen
+            name={Screens.onboarding as never}
+            component={OnboardingScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={Screens.Welcome as never}
+            component={WelcomeScreen}
+            options={{headerShown: false}}
+          />
+        </>
       )}
       <Stack.Screen
         name={Screens.Auth as never}

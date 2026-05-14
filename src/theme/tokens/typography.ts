@@ -8,6 +8,7 @@ import type {TextStyle} from 'react-native';
 
 export const typography: Record<
   | 'display'
+  | 'displayLg'
   | 'bodyLg'
   | 'body'
   | 'bodyMedium'
@@ -24,6 +25,11 @@ export const typography: Record<
     fontFamily: 'DMSerifDisplay-Regular',
     fontSize: 28,
     lineHeight: 36,
+  },
+  displayLg: {
+    fontFamily: 'DMSerifDisplay-Regular',
+    fontSize: 32,
+    lineHeight: 40,
   },
   bodyLg: {
     fontFamily: 'DMSans-Bold',

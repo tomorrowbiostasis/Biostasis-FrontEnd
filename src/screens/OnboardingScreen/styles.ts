@@ -1,45 +1,62 @@
-import {Dimensions, StyleSheet} from 'react-native';
-import colors from '~/theme/colors';
-
-const screenWidth = Dimensions.get('window').width;
+import {StyleSheet} from 'react-native';
+import {semanticColors, spacing, typography} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: semanticColors.surface,
   },
-  safeAreaContainer: {
-    flexGrow: 1,
+  safeArea: {
+    flex: 1,
   },
-  slideImage: {
-    width: screenWidth - 120,
-    alignSelf: 'center',
-  },
-  paginationDot: {
-    width: 10,
-    height: 10,
-    backgroundColor: colors.blue[700],
-    opacity: 0.5,
-  },
-  activePaginationDot: {
-    width: 12,
-    height: 12,
-    backgroundColor: colors.blue[700],
-  },
-  alreadyUserBox: {
-    flexDirection: 'row',
+  header: {
+    paddingTop: spacing.lg,
+    paddingHorizontal: spacing['2xl'],
     alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 20,
-    minHeight: 50,
   },
-  logInBox: {
-    margin: 10,
+  slide: {
+    flex: 1,
+    paddingHorizontal: spacing['2xl'],
+    paddingTop: spacing['2xl'],
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
-  logInText: {
-    color: colors.blue[800],
-    fontWeight: '600',
+  illustrationWrap: {
+    alignSelf: 'center',
+    marginTop: spacing.lg,
+    marginBottom: spacing['2xl'],
+  },
+  badgeSpacing: {
+    alignSelf: 'flex-start',
+    marginTop: spacing.lg,
+  },
+  title: {
+    ...typography.displayLg,
+    color: semanticColors.textPrimary,
+    textAlign: 'left',
+    marginTop: spacing.sm,
+  },
+  body: {
+    ...typography.body,
+    color: semanticColors.textSecondary,
+    textAlign: 'left',
+    marginTop: spacing.md,
+  },
+  footer: {
+    paddingHorizontal: spacing['2xl'],
+    paddingBottom: spacing.lg,
+  },
+  skipButton: {
+    alignSelf: 'center',
+    marginTop: spacing.lg,
+    paddingVertical: spacing.sm,
+  },
+  skipText: {
+    ...typography.bodyMedium,
+    color: semanticColors.textSecondary,
+  },
+  skipTextHidden: {
+    opacity: 0,
   },
 });
 

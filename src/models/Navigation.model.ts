@@ -18,6 +18,7 @@ export type RootStackParamList = {
 
 export type AuthStackNavigatorParamList = {
   Onboarding: undefined;
+  Welcome: undefined;
   Auth: undefined;
   AuthSample: undefined;
   ForgotPassword: undefined;
@@ -121,6 +122,7 @@ export enum Screens {
   ForgotPassword = 'ForgotPassword',
   NewPassword = 'NewPassword',
   onboarding = 'onboarding',
+  Welcome = 'Welcome',
   Auth = 'Auth',
   DevLogs = 'DevLogs',
   DevHistoryLogs = 'DevHistoryLogs',
