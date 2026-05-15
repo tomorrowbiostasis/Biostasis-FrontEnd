@@ -115,9 +115,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: semanticColors.danger,
   },
-  logoutWrap: {
-    marginTop: 8,
-  },
 });
 
 export default styles;

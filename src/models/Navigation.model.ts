@@ -54,6 +54,8 @@ export type MainStackNavigatorParamList = {
   GDPR: undefined;
   DeleteAccount: undefined;
   SignUpForCryopreservation: undefined;
+  Settings: undefined;
+  WebView: undefined;
 };
 
 export type NavigationRouteName =
@@ -92,6 +94,10 @@ export type ScreensNavigationParamsList = {
   EditEmergencyContact: {
     contactId: string;
   };
+  WebView: {
+    url: string;
+    title: string;
+  };
   AccountSettings: {
     showSuccessMessage: boolean;
   };
@@ -110,6 +116,8 @@ export enum Screens {
   UserName = 'UserName',
   SetupComplete = 'SetupComplete',
   AccountSettings = 'AccountSettings',
+  Settings = 'Settings',
+  WebView = 'WebView',
   EditEmergencyContact = 'EditEmergencyContact',
   AutomatedEmergencySettings = 'Automated Emergency Settings',
   SignUpForCryopreservation = 'Sign up for cryopreservation',

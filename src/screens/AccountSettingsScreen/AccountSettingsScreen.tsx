@@ -29,7 +29,6 @@ import ScreenHeader from '~/components/ScreenHeader';
 import IconChip from '~/components/IconChip';
 import Toggle from '~/components/Toggle';
 import FormInput from '~/components/FormInput';
-import LogoutTrigger from '~/components/LogoutTrigger/LogoutTrigger';
 import {
   BellIcon,
   LightbulbIcon,
@@ -271,10 +270,6 @@ const AccountSettingsScreen = () => {
               {t('accountSettingsScreen.deleteAction')}
             </Text>
           </TouchableOpacity>
-        </View>
-
-        <View style={styles.logoutWrap}>
-          <LogoutTrigger />
         </View>
       </ScrollView>
     </View>

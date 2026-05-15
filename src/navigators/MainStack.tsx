@@ -18,6 +18,8 @@ import ProfileEditScreen from '~/screens/ProfileEditScreen';
 import ProfileAddMedicalInfoScreen from '~/screens/MedicalInfoScreen';
 import SignUpForCryopreservation from '~/screens/SignUpForCryopreservation';
 import EmergencyContactsSettingsScreen from '~/screens/EmergencyContactsSettingsScreen';
+import SettingsScreen from '~/screens/SettingsScreen';
+import WebViewScreen from '~/screens/WebViewScreen';
 import CurrentHealthLogScreen from '~/screens/CurrentHealthLogScreen';
 import HistoryLogsScreen from '~/screens/HistoryLogsScreen';
 import EmergencyConfirmationScreen from '~/screens/EmergencyConfirmationScreen';
@@ -74,6 +76,14 @@ export const MainStack = () => {
       <Stack.Screen
         name={Screens.AccountSettings as never}
         component={AccountSettingsScreen}
+      />
+      <Stack.Screen
+        name={Screens.Settings as never}
+        component={SettingsScreen}
+      />
+      <Stack.Screen
+        name={Screens.WebView as never}
+        component={WebViewScreen}
       />
       <Stack.Screen
         name={Screens.SignUpForCryopreservation as never}

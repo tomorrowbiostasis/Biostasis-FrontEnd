@@ -241,7 +241,7 @@ const Dashboard = () => {
 
   /* ----- navigation ----- */
   const goSettings = useCallback(
-    () => navigate(Screens.AccountSettings as never),
+    () => navigate(Screens.Settings as never),
     [navigate],
   );
   const goHealthLogs = useCallback(

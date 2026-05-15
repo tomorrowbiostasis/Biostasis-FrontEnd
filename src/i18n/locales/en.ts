@@ -125,6 +125,17 @@ const translations = {
     restingHrEndDate: 'Resting heart end date',
     empty: 'No history logs yet.',
   },
+  settings: {
+    title: 'Settings',
+    emergencyContact: 'Emergency Contact Settings',
+    emergencySystem: 'Emergency System Settings',
+    tomorrowBio: 'Sign up with Tomorrow Bio',
+    termsOfService: 'Terms of Service',
+    privacyStatements: 'Privacy Statements',
+    logOut: 'Log out',
+    termsUrl: 'https://tomorrowbiostasis.com/terms-conditions/',
+    privacyUrl: 'https://tomorrowbiostasis.com/privacy/',
+  },
   onboarding: {
     next: 'Next',
     getStarted: 'Get Started',
