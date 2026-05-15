@@ -1,16 +1,15 @@
 import React, {FC, useCallback, useMemo} from 'react';
-import {View} from 'native-base';
+import {StyleSheet, View} from 'react-native';
 
+import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {DayOfTheWeekPickerItem} from './DayOfTheWeekPickerItem';
 import {
   DaysOfTheWeekEnum,
   parseDaysOfTheWeekEnumToString,
 } from '../../../../util';
 
-import styles from './styles';
-import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-
 const initialDaysSelected: DaysOfTheWeekEnum[] = [0, 1, 2, 3, 4, 5, 6];
+
 interface IDayOfTheWeekPickerProps {
   days: DaysOfTheWeekEnum[];
   onChangeDays: (days: DaysOfTheWeekEnum[]) => void;
@@ -50,24 +49,17 @@ export const DayOfTheWeekPicker: FC<IDayOfTheWeekPickerProps> = ({
   );
 
   const checkIfActive = useCallback(
-    (day: DaysOfTheWeekEnum) => {
-      const index = days.findIndex(i => i === day);
-      if (index === -1) {
-        return false;
-      }
-      return true;
-    },
+    (day: DaysOfTheWeekEnum) => days.findIndex(i => i === day) !== -1,
     [days],
   );
 
   const getLabel = useCallback(
-    (day: DaysOfTheWeekEnum) => {
-      return t(
+    (day: DaysOfTheWeekEnum) =>
+      t(
         `specificTimesScreen.specificTimes.daysShortName.${parseDaysOfTheWeekEnumToString(
           [day],
         ).toLocaleLowerCase()}`,
-      );
-    },
+      ),
     [t],
   );
 
@@ -89,3 +81,10 @@ export const DayOfTheWeekPicker: FC<IDayOfTheWeekPickerProps> = ({
 
   return <View style={styles.container}>{items}</View>;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});

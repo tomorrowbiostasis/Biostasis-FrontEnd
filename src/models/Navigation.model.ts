@@ -46,6 +46,7 @@ export type MainStackNavigatorParamList = {
   EmergencyContactSettings: undefined;
   SelectSmartDevice: undefined;
   SpecificTimePaused: undefined;
+  AddTimeBlock: undefined;
   Documents: undefined;
   ProfileDefault: undefined;
   AccountSettings: undefined;
@@ -97,6 +98,10 @@ export type ScreensNavigationParamsList = {
   WebView: {
     url: string;
     title: string;
+    injectedJavaScript?: string;
+  };
+  AddTimeBlock: {
+    id?: number;
   };
   AccountSettings: {
     showSuccessMessage: boolean;
@@ -130,6 +135,7 @@ export enum Screens {
   EmergencyContactExplanations = 'EmergencyContactExplanations',
   EmergencyContactSettings = 'EmergencyContactSettings',
   SpecificTimePaused = 'SpecificTimePaused',
+  AddTimeBlock = 'AddTimeBlock',
   ProfileDefault = 'Profile&MedicalInformation',
   ProfileEdit = 'EditProfile',
   ProfileMedicalInfo = 'MedicalInformation',

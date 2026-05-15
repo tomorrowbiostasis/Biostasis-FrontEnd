@@ -387,9 +387,11 @@ const translations: ITranslation = {
       title: 'Impostazioni di emergenza',
       enableSystemTitle: 'Impostazioni automatiche di emergenza',
       compatibleSmartDeviceConnected: 'Smartdevice compatibile connesso',
-      confirmReadManual: 'Capisco come funziona',
+      confirmReadManual: 'Capisco come funziona questo sistema',
       howItWorks: {
         title: 'Come funziona',
+        intro:
+          'Il sistema monitora i tuoi dati sulla salute e avvisa i contatti se non rispondi più.',
         step1Title: 'Connetti',
         step1Desc:
           'Associa il tuo wearable o usa i sensori integrati del telefono (passi, frequenza cardiaca).',
@@ -400,7 +402,7 @@ const translations: ITranslation = {
         step3Desc:
           'Se non c\'è ancora risposta, il sistema invia un avviso ai tuoi contatti di emergenza.',
       },
-      enableAutomatedEmergency: "Abilita l'emergenza automatica",
+      enableAutomatedEmergency: 'Abilita il monitoraggio automatico delle emergenze',
       setUpSmartDevice: 'Imposta dispositivo intelligente',
       connectedSmartDevice: 'Connesso con {{device}}',
       pauseAutomatedEmergency: 'Pause Automated Emergency',
@@ -625,21 +627,26 @@ const translations: ITranslation = {
     pauseNow: {
       title: 'Pausa sistema di emergenza',
       description:
-        "Metti temporaneamente in pausa il sistema di emergenza automatico fino all'ora che preferisci.",
+        "Disattiva temporaneamente il monitoraggio fino a un orario specifico che scegli.",
       cancelMessage: 'Pausa annullata. Il sistema è di nuovo attivo.',
       pauseConfirmed: 'Sistema in pausa fino a {{time}}',
       startDisclaimer: 'Metti in pausa',
+      choosePauseDuration: 'Scegli la durata della pausa',
       systemPaused: 'Sistema in pausa',
-      pausedUntil: "Il sistema di emergenza è in pausa fino a {{time}}.",
+      pausedUntil: 'In pausa fino a {{time}}',
       cancelPause: 'Annulla pausa',
+    },
+    addTimeBlock: {
+      title: 'Aggiungi blocco orario',
+      save: 'Salva blocco orario',
     },
     specificTimes: {
       title: 'Impostazione di orari specifici',
       description:
-        'Disattivare ripetutamente il sistema automatico in determinati periodi della settimana/giorni',
-      start: 'Inizio:',
-      end: 'Fine:',
-      addAdditionalTime: 'Aggiungi tempo supplementare',
+        'Disattiva automaticamente il monitoraggio durante fasce orarie ricorrenti.',
+      start: 'Inizio',
+      end: 'Fine',
+      addAdditionalTime: 'Aggiungi un blocco orario',
       startSection: {
         pickDay: 'Scegliere il giorno o i giorni di inizio',
         pickTime: "Imposta l'ora di inizio",

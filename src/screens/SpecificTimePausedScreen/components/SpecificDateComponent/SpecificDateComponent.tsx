@@ -1,14 +1,13 @@
 import React, {FC, useCallback, useMemo} from 'react';
-import {Text, View} from 'native-base';
-import SwitchButton from '~/components/SwitchButton';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
+import {semanticColors} from '~/theme/tokens';
+import Toggle from '~/components/Toggle';
+import {PencilIcon, TrashIcon} from '~/assets/icons/AppIcons';
 import {DaysOfTheWeekEnum, parseDaysOfTheWeekEnumToString} from '../../util';
-import styles from './styles';
-import {TouchableOpacity} from 'react-native';
 import {useTimeFormat} from '../../hooks/UseTimeFormat.hook';
 import {TimeFormatService} from '../../services/TimeFormat.service';
-import IconFeather from 'react-native-vector-icons/Feather';
-import colors from '~/theme/colors';
 
 export type SpecificDateComponentItemIdType = number;
 
@@ -20,6 +19,7 @@ export interface ISpecificDateComponentItem {
   endTime: Date | null;
   isActive: boolean;
 }
+
 interface ISpecificDateComponentProps {
   item: ISpecificDateComponentItem;
   onEdit: (id: SpecificDateComponentItemIdType) => void;
@@ -77,67 +77,130 @@ export const SpecificDateComponent: FC<ISpecificDateComponentProps> = ({
   return (
     <View style={[styles.card, !isActive && styles.cardInactive]}>
       <View style={styles.headerRow}>
-        <View
-          style={[
-            styles.statusBadge,
-            isActive ? styles.statusActive : styles.statusInactive,
-          ]}>
+        <View style={styles.badge}>
           <View
             style={[
-              styles.statusDot,
-              isActive ? styles.statusDotActive : styles.statusDotInactive,
+              styles.dot,
+              {
+                backgroundColor: isActive
+                  ? semanticColors.success
+                  : semanticColors.textMuted,
+              },
             ]}
           />
           <Text
             style={[
-              styles.statusText,
-              isActive ? styles.statusTextActive : styles.statusTextInactive,
+              styles.badgeText,
+              {
+                color: isActive
+                  ? semanticColors.success
+                  : semanticColors.textMuted,
+              },
             ]}>
             {isActive
               ? t('specificTimesScreen.specificTimes.active')
               : t('specificTimesScreen.specificTimes.inactive')}
           </Text>
         </View>
-
-        <View style={styles.actionsRow}>
-          <TouchableOpacity style={styles.actionButton} onPress={handleEdit}>
-            <IconFeather name="edit-2" size={14} color={colors.blue[700]} />
+        <View style={styles.actions}>
+          <TouchableOpacity hitSlop={8} onPress={handleEdit}>
+            <PencilIcon size={18} color="#343330" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={handleDelete}>
-            <IconFeather name="trash-2" size={14} color={colors.red[200]} />
+          <TouchableOpacity hitSlop={8} onPress={handleDelete}>
+            <TrashIcon size={18} color="#343330" />
           </TouchableOpacity>
         </View>
       </View>
 
       <View style={styles.timeRow}>
         <View style={styles.timeBlock}>
-          <Text style={styles.timeLabel}>
+          <Text style={styles.timeBlockLabel}>
             {t('specificTimesScreen.specificTimes.start')}
           </Text>
-          <View style={styles.timeDayRow}>
-            <Text style={styles.timeDay}>{startDayName}</Text>
-            <Text style={styles.timeHour}>{startTimeFormatted}</Text>
-          </View>
+          <Text style={styles.timeBlockValue}>
+            {`${startDayName} ${startTimeFormatted}`}
+          </Text>
         </View>
-
-        <View style={styles.arrowContainer}>
-          <IconFeather name="arrow-right" size={16} color={colors.gray[400]} />
-        </View>
-
+        <Text style={styles.arrow}>→</Text>
         <View style={styles.timeBlock}>
-          <Text style={styles.timeLabel}>
+          <Text style={styles.timeBlockLabel}>
             {t('specificTimesScreen.specificTimes.end')}
           </Text>
-          <View style={styles.timeDayRow}>
-            <Text style={styles.timeDay}>{endDayName}</Text>
-            <Text style={styles.timeHour}>{endTimeFormatted}</Text>
-          </View>
+          <Text style={styles.timeBlockValue}>
+            {`${endDayName} ${endTimeFormatted}`}
+          </Text>
         </View>
       </View>
 
       <View style={styles.footerRow}>
-        <SwitchButton value={isActive} onSwitchPress={handleToggle} />
+        <Toggle value={isActive} onChange={handleToggle} />
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: semanticColors.surfaceMuted,
+    borderRadius: 12,
+    padding: 12,
+    gap: 10,
+  },
+  cardInactive: {
+    opacity: 0.6,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  dot: {
+    width: 7,
+    height: 7,
+    borderRadius: 3.5,
+  },
+  badgeText: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 12,
+  },
+  actions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  timeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  timeBlock: {
+    flex: 1,
+    gap: 2,
+  },
+  timeBlockLabel: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 10,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    color: semanticColors.textMuted,
+  },
+  timeBlockValue: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 14,
+    color: semanticColors.primary,
+  },
+  arrow: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 16,
+    color: semanticColors.textMuted,
+  },
+  footerRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+});

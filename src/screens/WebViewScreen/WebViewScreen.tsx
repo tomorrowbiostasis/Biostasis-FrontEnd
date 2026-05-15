@@ -21,6 +21,7 @@ const WebViewScreen = () => {
         <WebView
           source={{uri: params.url}}
           startInLoadingState
+          injectedJavaScript={params.injectedJavaScript}
           onLoadEnd={() => setIsLoading(false)}
           style={styles.webview}
         />

@@ -1,16 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {
-  View,
   Modal,
+  Platform,
+  StyleSheet,
+  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  StyleSheet,
-  Platform,
+  View,
 } from 'react-native';
-import {Text} from 'native-base';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
-import IconFeather from 'react-native-vector-icons/Feather';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {
@@ -19,7 +17,7 @@ import {
   formatTime,
   SleepSchedule,
 } from '~/services/SleepSchedule.service';
-import colors from '~/theme/colors';
+import {semanticColors} from '~/theme/tokens';
 
 interface Props {
   visible: boolean;
@@ -82,7 +80,6 @@ const SleepScheduleBottomSheet = ({visible, onDismiss}: Props) => {
 
   const bedtimeDate = new Date();
   bedtimeDate.setHours(schedule.bedtimeHour, schedule.bedtimeMinute, 0, 0);
-
   const wakeDate = new Date();
   wakeDate.setHours(schedule.wakeHour, schedule.wakeMinute, 0, 0);
 
@@ -93,79 +90,75 @@ const SleepScheduleBottomSheet = ({visible, onDismiss}: Props) => {
       animationType="slide"
       onRequestClose={onDismiss}>
       <TouchableWithoutFeedback onPress={onDismiss}>
-        <View style={bsStyles.overlay} />
+        <View style={styles.overlay} />
       </TouchableWithoutFeedback>
 
-      <View style={bsStyles.sheet}>
-        <View style={bsStyles.handle} />
+      <View style={styles.sheet}>
+        <View style={styles.handle} />
 
-        <View style={bsStyles.headerRow}>
-          <View style={bsStyles.iconCircle}>
-            <IconIonicons name="moon" size={22} color="#4682B4" />
-          </View>
-          <Text style={bsStyles.title}>
-            {t(
-              'emergencyContactsSettings.automatedEmergencySettings.sleepScheduleSheet.title',
-            )}
-          </Text>
-        </View>
-
-        <Text style={bsStyles.description}>
+        <Text style={styles.title}>
+          {t(
+            'emergencyContactsSettings.automatedEmergencySettings.sleepScheduleSheet.title',
+          )}
+        </Text>
+        <Text style={styles.description}>
           {t(
             'emergencyContactsSettings.automatedEmergencySettings.sleepScheduleSheet.description',
           )}
         </Text>
 
-        <View style={bsStyles.timeRow}>
+        <View style={styles.timeCards}>
           <TouchableOpacity
-            onPress={() => setShowBedtimePicker(true)}
-            style={bsStyles.timeCard}>
-            <IconIonicons name="moon" size={20} color="#4682B4" />
-            <Text style={bsStyles.timeLabel}>
+            activeOpacity={0.7}
+            style={styles.timeCard}
+            onPress={() => setShowBedtimePicker(true)}>
+            <Text style={styles.timeEmoji}>🌙</Text>
+            <Text style={styles.timeCardLabel}>
               {t(
                 'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.bedtime',
               )}
             </Text>
-            <Text style={bsStyles.timeValue}>
+            <Text style={styles.timeCardValue}>
               {formatTime(schedule.bedtimeHour, schedule.bedtimeMinute)}
             </Text>
           </TouchableOpacity>
-
-          <View style={bsStyles.arrowContainer}>
-            <IconFeather name="arrow-right" size={18} color={colors.gray[400]} />
-          </View>
-
           <TouchableOpacity
-            onPress={() => setShowWakePicker(true)}
-            style={bsStyles.timeCard}>
-            <IconIonicons name="sunny" size={20} color="#F4BB44" />
-            <Text style={bsStyles.timeLabel}>
+            activeOpacity={0.7}
+            style={styles.timeCard}
+            onPress={() => setShowWakePicker(true)}>
+            <Text style={styles.timeEmoji}>☀️</Text>
+            <Text style={styles.timeCardLabel}>
               {t(
                 'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.wakeTime',
               )}
             </Text>
-            <Text style={bsStyles.timeValue}>
+            <Text style={styles.timeCardValue}>
               {formatTime(schedule.wakeHour, schedule.wakeMinute)}
             </Text>
           </TouchableOpacity>
         </View>
 
-        <Text style={bsStyles.hint}>
+        <Text style={styles.hint}>
           {t(
             'emergencyContactsSettings.automatedEmergencySettings.sleepScheduleSheet.hint',
           )}
         </Text>
 
-        <TouchableOpacity style={bsStyles.saveButton} onPress={handleSave}>
-          <Text style={bsStyles.saveButtonText}>
+        <TouchableOpacity
+          activeOpacity={0.85}
+          style={styles.saveButton}
+          onPress={handleSave}>
+          <Text style={styles.saveButtonText}>
             {t(
               'emergencyContactsSettings.automatedEmergencySettings.sleepScheduleSheet.save',
             )}
           </Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={bsStyles.skipButton} onPress={onDismiss}>
-          <Text style={bsStyles.skipButtonText}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.cancelButton}
+          onPress={onDismiss}>
+          <Text style={styles.cancelButtonText}>
             {t(
               'emergencyContactsSettings.automatedEmergencySettings.sleepScheduleSheet.skip',
             )}
@@ -193,13 +186,13 @@ const SleepScheduleBottomSheet = ({visible, onDismiss}: Props) => {
   );
 };
 
-const bsStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.45)',
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
   },
   sheet: {
-    backgroundColor: colors.white,
+    backgroundColor: semanticColors.surface,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     paddingHorizontal: 24,
@@ -210,91 +203,82 @@ const bsStyles = StyleSheet.create({
     width: 40,
     height: 4,
     borderRadius: 2,
-    backgroundColor: colors.gray[300],
+    backgroundColor: semanticColors.borderStrong,
     alignSelf: 'center',
     marginBottom: 20,
   },
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  iconCircle: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#4682B418',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
   title: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: colors.black,
-    flex: 1,
+    fontFamily: 'DMSerifDisplay-Regular',
+    fontSize: 22,
+    color: semanticColors.primary,
+    textAlign: 'center',
   },
   description: {
-    fontSize: 15,
-    lineHeight: 22,
-    color: colors.gray[700],
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    lineHeight: 20,
+    color: semanticColors.textSecondary,
+    textAlign: 'center',
+    marginTop: 8,
     marginBottom: 24,
   },
-  timeRow: {
+  timeCards: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
+    gap: 12,
   },
   timeCard: {
     flex: 1,
-    backgroundColor: colors.gray[50],
+    backgroundColor: semanticColors.surfaceMuted,
     borderRadius: 14,
     paddingVertical: 16,
-    paddingHorizontal: 14,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: colors.gray[300],
+    gap: 4,
   },
-  arrowContainer: {
-    paddingHorizontal: 8,
+  timeEmoji: {
+    fontSize: 20,
   },
-  timeLabel: {
-    fontSize: 13,
-    color: colors.gray[600],
-    marginTop: 6,
+  timeCardLabel: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 11,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    color: semanticColors.textSecondary,
   },
-  timeValue: {
+  timeCardValue: {
+    fontFamily: 'DMSans-Bold',
     fontSize: 17,
-    fontWeight: '700',
-    color: colors.black,
-    marginTop: 4,
+    color: semanticColors.primary,
   },
   hint: {
+    fontFamily: 'DMSans-Regular',
     fontSize: 13,
-    color: colors.gray[600],
+    color: semanticColors.textMuted,
     textAlign: 'center',
-    marginBottom: 24,
+    marginTop: 12,
+    marginBottom: 20,
   },
   saveButton: {
-    backgroundColor: '#4682B4',
+    height: 48,
     borderRadius: 14,
-    paddingVertical: 16,
+    backgroundColor: semanticColors.primary,
     alignItems: 'center',
-    marginBottom: 12,
+    justifyContent: 'center',
   },
   saveButtonText: {
-    color: colors.white,
+    fontFamily: 'DMSans-SemiBold',
     fontSize: 16,
-    fontWeight: '700',
+    color: semanticColors.textInverse,
   },
-  skipButton: {
+  cancelButton: {
     alignItems: 'center',
-    paddingVertical: 8,
+    justifyContent: 'center',
+    paddingVertical: 12,
+    marginTop: 8,
   },
-  skipButtonText: {
-    color: colors.gray[600],
-    fontSize: 14,
-    fontWeight: '500',
+  cancelButtonText: {
+    fontFamily: 'DMSans-Medium',
+    fontSize: 16,
+    color: semanticColors.danger,
   },
 });
 

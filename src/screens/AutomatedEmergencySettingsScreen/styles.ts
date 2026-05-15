@@ -1,206 +1,104 @@
 import {StyleSheet} from 'react-native';
-import boxShadow from '~/theme/boxShadow';
-import colors from '~/theme/colors';
-import { globalTextStyles } from '~/theme/globalTextStyles';
+import {semanticColors} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
+    flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
+  },
+  scroll: {
     flex: 1,
   },
-  contentContainer: {
-    paddingTop: 80,
+  content: {
+    paddingHorizontal: 34,
+    paddingTop: 24,
+    paddingBottom: 32,
+    gap: 22,
   },
-  scrollContent: {
-    flex: 1,
-    width: '100%',
-    paddingTop: 20,
+  dimmed: {
+    opacity: 0.5,
   },
-  scrollContentContainer: {
-    paddingVertical: 10,
-    paddingHorizontal: 24,
+
+  /* How it works card */
+  howCard: {
+    backgroundColor: semanticColors.surface,
+    borderRadius: 14,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    gap: 12,
   },
-  curveElement: {
-    position: 'absolute',
-    zIndex: 1,
-    top: 50,
-    height: 50,
-    backgroundColor: colors.gray[50],
-    // backgroundColor: 'red',
-    width: '100%',
-    borderBottomLeftRadius: 100,
-    borderBottomRightRadius: 100,
-  },
-  connectedDevice: {
-    marginTop: 15,
-    marginBottom: 10,
-  },
-  buttonsContainer: {
-    marginTop: 40,
-  },
-  warningText: {
-    color: colors.red[200],
-  },
-  descriptionText: {
-    color: colors.gray[800],
-    marginVertical: 10,
-  },
-  switchButton: {
-    marginTop: 8,
+  howHeader: {
+    flexDirection: 'row',
     alignItems: 'center',
+    gap: 12,
   },
-  infoText: {
-    color: colors.gray[700],
-    marginBottom: 8,
-    lineHeight: 22,
+  howTitle: {
+    fontFamily: 'DMSans-SemiBold',
     fontSize: 14,
+    color: semanticColors.primary,
   },
-  howItWorksContainer: {
-    marginTop: 16,
-    borderRadius: 10,
-    backgroundColor: colors.gray[50],
-    padding: 16,
-  },
-  howItWorksTitle: {
+  howDescription: {
+    fontFamily: 'DMSans-Regular',
     fontSize: 14,
-    fontWeight: '600',
-    color: colors.gray[800],
-    marginBottom: 12,
+    lineHeight: 19.5,
+    color: '#3D5470',
+  },
+  steps: {
+    gap: 12,
   },
   stepRow: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 12,
+    alignItems: 'center',
+    gap: 12,
   },
-  stepNumberCircle: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+  stepNum: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
   },
-  stepTextContainer: {
+  stepNumText: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 12,
+  },
+  stepText: {
     flex: 1,
-    paddingTop: 2,
+    gap: 2,
   },
   stepTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: colors.black,
-    marginBottom: 2,
-  },
-  stepDescription: {
+    fontFamily: 'DMSans-SemiBold',
     fontSize: 13,
-    lineHeight: 18,
-    color: colors.gray[700],
+    color: semanticColors.primary,
   },
-  panel: {
-    flex: 1,
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    padding: 20,
-    marginBottom: 16,
-    justifyContent: 'space-evenly',
-    ...boxShadow,
+  stepDesc: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 12,
+    lineHeight: 16.8,
+    color: '#3D5470',
   },
-  panelHeader: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+
+  /* Enable toggles card */
+  togglesCard: {
+    backgroundColor: semanticColors.surfaceCanvas,
+    borderWidth: 1,
+    borderColor: '#E2E6EA',
+    borderRadius: 14,
+    overflow: 'hidden',
   },
-  panelTitle: {
-    ...globalTextStyles.titleMedium,
-  },
-  panelInfoText: {
-    ...globalTextStyles.textMedium
-  },
-  panelBody: {
-    flex: 1,
-    marginVertical: 10,
-    paddingHorizontal: 4,
-  },
-  panelFooter: {
-    flex: 1,
-    width: '100%',
-    paddingHorizontal: 4,
-  },
-  triggerPanelHeader: {
-    width: '100%',
+  toggleRow: {
+    height: 48,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    gap: 8,
+    paddingHorizontal: 10,
   },
-  lineStyle: {
+  toggleLabel: {
     flex: 1,
-    width: '100%',
-    borderBottomColor: colors.gray[300],
-    borderBottomWidth: 2,
-    height: 2,
-    paddingTop: 10,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  triggerTitle: {
-    fontSize: 17,
-    fontWeight: '600',
-  },
-  readText: {
-    fontSize: 12,
-    color: colors.blue[800],
-  },
-  activeButton: {
-    flexDirection: 'row',
-    paddingVertical: 5,
-    marginVertical: 10,
-    padding: 15,
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: colors.gray[300],
-    backgroundColor: colors.white,
-    alignItems: 'center',
-  },
-  isActive: {
-    backgroundColor: colors.green[75],
-  },
-  buttonText: {
-    fontSize: 12,
-    color: colors.black,
-    fontWeight: '500',
-  },
-  buttonIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 15,
-    padding: 5,
-    borderRadius: 20,
-    backgroundColor: colors.gray[50],
-  },
-  settingsTouchText: {
-    paddingTop: 10,
-    color: colors.blue[800],
-    alignSelf: 'flex-end',
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  opacity: {
-    opacity: 0.5,
-    backgroundColor: colors.white,
-  },
-  circle: {
-    width: 36,
-    height: 36,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 18,
-    backgroundColor: colors.gray[50],
-  },
-  message: {
-    flex: 1,
-    marginTop: 10,
+    paddingRight: 12,
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    color: semanticColors.primary,
   },
 });
 

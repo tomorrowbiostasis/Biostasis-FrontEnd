@@ -1,14 +1,7 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
-import {View, ScrollView, SafeAreaView} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 
-import {Text} from 'native-base';
-import Container from '~/components/Container';
-import {useTimeSlotPauseStatus} from '~/hooks/UseTimeSlotPauseStatus.hook';
-import styles from './styles';
-import SwitchButton from '~/components/SwitchButton';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {automatedEmergencyPausedDateSelector} from '~/redux/automatedEmergency/selectors';
 import {setAutomatedEmergencyPause} from '~/redux/automatedEmergency/automatedEmergency.slice';
@@ -16,49 +9,49 @@ import {
   automatedEmergencySettingsSelector,
   AutomatedEmergencySettings,
   userSelector,
-  userLoading,
 } from '~/redux/user/selectors';
 import {getUser, updateUser} from '~/redux/user/thunks';
 import {deleteTimeSlot} from '~/redux/automatedEmergency/thunks';
-
-import ToastService from '~/services/Toast.service';
+import {useTimeSlotPauseStatus} from '~/hooks/UseTimeSlotPauseStatus.hook';
+import {getSleepSchedule} from '~/services/SleepSchedule.service';
+import {resetRecommendationSystem} from '~/services/Recommendation.service';
 import isBatteryOptimizationOn from '~/services/Battery.service';
-import IconFeather from 'react-native-vector-icons/Feather';
-import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ToastService from '~/services/Toast.service';
+import {isAndroid} from '~/utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import ScreenHeader from '~/components/ScreenHeader';
+import IconChip from '~/components/IconChip';
+import Toggle from '~/components/Toggle';
+import {HelpCircleIcon} from '~/assets/icons/AppIcons';
 import AutomatedEmergency from './components/AutomatedEmergency';
 import SleepSchedulePanel from './components/SleepSchedulePanel/SleepSchedulePanel';
 import SleepScheduleBottomSheet from './components/SleepSchedulePanel/SleepScheduleBottomSheet';
-import {getSleepSchedule} from '~/services/SleepSchedule.service';
 import PauseEmergencyPanel from '~/screens/SpecificTimePausedScreen/components/PauseEmergencyPanel/PauseEmergencyPanel';
 import SpecificTimesPanel from '~/screens/SpecificTimePausedScreen/components/SpecificTimesPanel/SpecificTimesPanel';
 import {useTimeFormat} from '~/screens/SpecificTimePausedScreen/hooks/UseTimeFormat.hook';
-import {isAndroid} from '~/utils';
-import {resetRecommendationSystem} from '~/services/Recommendation.service';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from './styles';
 
 const STEPS = [
   {
-    icon: 'watch' as const,
-    iconLib: 'feather' as const,
-    color: '#4CAF50',
+    chipBg: 'rgba(39, 174, 114, 0.06)',
+    numColor: '#2ABFA0',
     titleKey:
       'emergencyContactsSettings.automatedEmergencySettings.howItWorks.step1Title',
     descKey:
       'emergencyContactsSettings.automatedEmergencySettings.howItWorks.step1Desc',
   },
   {
-    icon: 'shield-check' as const,
-    iconLib: 'mci' as const,
-    color: '#2196F3',
+    chipBg: 'rgba(45, 107, 228, 0.06)',
+    numColor: '#2D6BE4',
     titleKey:
       'emergencyContactsSettings.automatedEmergencySettings.howItWorks.step2Title',
     descKey:
       'emergencyContactsSettings.automatedEmergencySettings.howItWorks.step2Desc',
   },
   {
-    icon: 'alert-circle' as const,
-    iconLib: 'feather' as const,
-    color: '#F44336',
+    chipBg: 'rgba(229, 55, 58, 0.06)',
+    numColor: '#E5373A',
     titleKey:
       'emergencyContactsSettings.automatedEmergencySettings.howItWorks.step3Title',
     descKey:
@@ -70,6 +63,7 @@ const AutomatedEmergencySettingsScreen = () => {
   const {t} = useAppTranslation();
   const dispatch = useAppDispatch();
   useTimeFormat();
+
   const pausedDate = useAppSelector(automatedEmergencyPausedDateSelector);
   const {isSlotPause} = useTimeSlotPauseStatus();
   const {user} = useAppSelector(userSelector);
@@ -77,10 +71,11 @@ const AutomatedEmergencySettingsScreen = () => {
     automatedEmergencySettingsSelector,
   );
 
-  const loading = useAppSelector(userLoading);
   const [showSleepSheet, setShowSleepSheet] = useState(false);
   const [sleepScheduleKey, setSleepScheduleKey] = useState(0);
   const prevAutomatedEmergency = useRef(automatedEmergency);
+
+  const isPaused = !!pausedDate || !!isSlotPause;
 
   useLayoutEffect(() => {
     dispatch(getUser());
@@ -97,6 +92,20 @@ const AutomatedEmergencySettingsScreen = () => {
     prevAutomatedEmergency.current = automatedEmergency;
   }, [automatedEmergency]);
 
+  useEffect(() => {
+    if (pausedDate && pausedDate.timestamp < Date.now()) {
+      dispatch(deleteTimeSlot(pausedDate.id));
+      dispatch(setAutomatedEmergencyPause(null));
+    }
+  }, [dispatch, pausedDate]);
+
+  useEffect(() => {
+    isAndroid &&
+      automatedEmergency &&
+      user.pulseBasedTriggerBackgroundModesEnabled &&
+      isBatteryOptimizationOn();
+  }, [automatedEmergency, user.pulseBasedTriggerBackgroundModesEnabled]);
+
   const handleUpdateUser = useCallback(
     (updateData: AutomatedEmergencySettings, touched?: boolean) => {
       if (touched) {
@@ -107,145 +116,105 @@ const AutomatedEmergencySettingsScreen = () => {
   );
 
   const handleManualEmergencySwitch = async (value: boolean) => {
-    const updateData: AutomatedEmergencySettings = {
-      automatedEmergency: value,
-    };
-    handleUpdateUser(updateData, true);
+    handleUpdateUser({automatedEmergency: value}, true);
     if (!value) {
       await resetRecommendationSystem(AsyncStorage);
       ToastService.success(
-        t(
-          'emergencyContactsSettings.automatedEmergencySettings.systemOffMessage',
-        ),
+        t('emergencyContactsSettings.automatedEmergencySettings.systemOffMessage'),
       );
     }
   };
 
-  useEffect(() => {
-    if (pausedDate && pausedDate.timestamp < Date.now()) {
-      dispatch(deleteTimeSlot(pausedDate.id));
-      dispatch(setAutomatedEmergencyPause(null));
-    }
-  }, [dispatch, pausedDate]);
-
   const handleReadManualSwitchPress = (value: boolean) => {
-    const updateData: AutomatedEmergencySettings = {
-      readManual: value,
-    };
+    const updateData: AutomatedEmergencySettings = {readManual: value};
     if (!value) {
       updateData.automatedEmergency = false;
     }
     handleUpdateUser(updateData, true);
   };
 
-  useEffect(() => {
-    isAndroid &&
-      automatedEmergency &&
-      user.pulseBasedTriggerBackgroundModesEnabled &&
-      isBatteryOptimizationOn();
-  }, [automatedEmergency, user.pulseBasedTriggerBackgroundModesEnabled]);
-
   return (
-    <Container
-      loading={loading}
-      title={t('emergencyContactsSettings.automatedEmergencySettings.title')}
-      type={'static'}
-      containerStyle={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      disableWrapper
-      showBackIcon
-      showDrawerIcon>
-      {/* <View style={styles.curveElement} /> */}
-      {/* Solve problem with scrollView IOS */}
-      <SafeAreaView style={{flex: 1}}>
-        <ScrollView
-          bounces={false}
-          style={styles.scrollContent}
-          contentContainerStyle={styles.scrollContentContainer}>
-          <View style={styles.panel}>
-            <View style={styles.panelHeader}>
-              <IconFeather name={'settings'} size={26} style={styles.icon} />
-              <Text style={styles.panelTitle} fontWeight={700}>
-                {t(
-                  'emergencyContactsSettings.automatedEmergencySettings.enableSystemTitle',
-                )}
-              </Text>
-            </View>
-            <View style={styles.lineStyle} />
-
-            <View style={styles.howItWorksContainer}>
-              <Text style={styles.howItWorksTitle}>
-                {t(
-                  'emergencyContactsSettings.automatedEmergencySettings.howItWorks.title',
-                )}
-              </Text>
-              {STEPS.map((step, index) => (
-                <View key={index} style={styles.stepRow}>
-                  <View
-                    style={[
-                      styles.stepNumberCircle,
-                      {backgroundColor: step.color + '18'},
-                    ]}>
-                    {step.iconLib === 'feather' ? (
-                      <IconFeather
-                        name={step.icon}
-                        size={18}
-                        color={step.color}
-                      />
-                    ) : (
-                      <IconMaterialCommunityIcons
-                        name={step.icon}
-                        size={18}
-                        color={step.color}
-                      />
-                    )}
-                  </View>
-                  <View style={styles.stepTextContainer}>
-                    <Text style={styles.stepTitle}>{t(step.titleKey)}</Text>
-                    <Text style={styles.stepDescription}>
-                      {t(step.descKey)}
-                    </Text>
-                  </View>
-                </View>
-              ))}
-            </View>
-
-            <View style={styles.panelBody}>
-              <SwitchButton
-                value={readManual}
-                title={t(
-                  'emergencyContactsSettings.automatedEmergencySettings.confirmReadManual',
-                )}
-                containerStyle={styles.switchButton}
-                onSwitchPress={handleReadManualSwitchPress}
-              />
-              <SwitchButton
-                value={automatedEmergency}
-                disabled={!readManual}
-                title={t(
-                  'emergencyContactsSettings.automatedEmergencySettings.enableAutomatedEmergency',
-                )}
-                containerStyle={styles.switchButton}
-                onSwitchPress={handleManualEmergencySwitch}
-                paused={!!pausedDate || !!isSlotPause}
-              />
-            </View>
+    <View style={styles.root}>
+      <ScreenHeader
+        title={t('emergencyContactsSettings.automatedEmergencySettings.title')}
+      />
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+        bounces={false}>
+        {/* How it works */}
+        <View style={styles.howCard}>
+          <View style={styles.howHeader}>
+            <IconChip background="rgba(243, 222, 199, 0.6)" size={36} radius={8}>
+              <HelpCircleIcon size={18} color="#B86E2D" />
+            </IconChip>
+            <Text style={styles.howTitle}>
+              {t('emergencyContactsSettings.automatedEmergencySettings.howItWorks.title')}
+            </Text>
           </View>
+          <Text style={styles.howDescription}>
+            {t(
+              'emergencyContactsSettings.automatedEmergencySettings.howItWorks.intro',
+            )}
+          </Text>
+          <View style={styles.steps}>
+            {STEPS.map((step, index) => (
+              <View key={step.titleKey} style={styles.stepRow}>
+                <View style={[styles.stepNum, {backgroundColor: step.chipBg}]}>
+                  <Text style={[styles.stepNumText, {color: step.numColor}]}>
+                    {index + 1}
+                  </Text>
+                </View>
+                <View style={styles.stepText}>
+                  <Text style={styles.stepTitle}>{t(step.titleKey)}</Text>
+                  <Text style={styles.stepDesc}>{t(step.descKey)}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </View>
 
-          {automatedEmergency && (
-            <View
-              style={isSlotPause || pausedDate ? styles.opacity : null}
-              pointerEvents={isSlotPause || pausedDate ? 'none' : 'auto'}>
-              <AutomatedEmergency />
-            </View>
-          )}
+        {/* Enable toggles */}
+        <View style={styles.togglesCard}>
+          <View style={styles.toggleRow}>
+            <Text style={styles.toggleLabel}>
+              {t(
+                'emergencyContactsSettings.automatedEmergencySettings.confirmReadManual',
+              )}
+            </Text>
+            <Toggle value={!!readManual} onChange={handleReadManualSwitchPress} />
+          </View>
+          <View style={styles.toggleRow}>
+            <Text style={styles.toggleLabel}>
+              {t(
+                'emergencyContactsSettings.automatedEmergencySettings.enableAutomatedEmergency',
+              )}
+            </Text>
+            <Toggle
+              value={!!automatedEmergency}
+              disabled={!readManual}
+              onChange={handleManualEmergencySwitch}
+            />
+          </View>
+        </View>
 
-          {automatedEmergency && <SleepSchedulePanel refreshKey={sleepScheduleKey} />}
+        {automatedEmergency ? (
+          <View
+            style={isPaused ? styles.dimmed : undefined}
+            pointerEvents={isPaused ? 'none' : 'auto'}>
+            <AutomatedEmergency />
+          </View>
+        ) : null}
 
-          <PauseEmergencyPanel />
-          <SpecificTimesPanel />
-        </ScrollView>
-      </SafeAreaView>
+        {automatedEmergency ? (
+          <SleepSchedulePanel refreshKey={sleepScheduleKey} />
+        ) : null}
+
+        <PauseEmergencyPanel />
+        <SpecificTimesPanel />
+      </ScrollView>
+
       <SleepScheduleBottomSheet
         visible={showSleepSheet}
         onDismiss={() => {
@@ -253,7 +222,7 @@ const AutomatedEmergencySettingsScreen = () => {
           setSleepScheduleKey(k => k + 1);
         }}
       />
-    </Container>
+    </View>
   );
 };
 

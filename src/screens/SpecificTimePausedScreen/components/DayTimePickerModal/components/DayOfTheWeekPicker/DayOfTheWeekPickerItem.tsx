@@ -1,9 +1,8 @@
 import React, {FC} from 'react';
-import {Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 import {DaysOfTheWeekEnum} from '~/screens/SpecificTimePausedScreen/util';
-
-import styles from './styles';
+import {semanticColors} from '~/theme/tokens';
 
 interface IDayOfTheWeekPickerItemProps {
   isActive: boolean;
@@ -20,12 +19,39 @@ export const DayOfTheWeekPickerItem: FC<IDayOfTheWeekPickerItemProps> = ({
 }) => {
   return (
     <TouchableOpacity
-      style={[styles.item, isActive ? styles.itemActive : null]}
+      activeOpacity={0.7}
+      style={[styles.item, isActive ? styles.itemActive : styles.itemInactive]}
       onPress={() => onSelectDay(day)}>
-      <Text
-        style={[isActive ? styles.itemActiveText : styles.itemInactiveText]}>
+      <Text style={[styles.label, isActive && styles.labelActive]}>
         {label}
       </Text>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  item: {
+    width: 37,
+    height: 37,
+    borderRadius: 8,
+    borderWidth: 1.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  itemActive: {
+    backgroundColor: semanticColors.primaryDeep,
+    borderColor: semanticColors.primaryDeep,
+  },
+  itemInactive: {
+    backgroundColor: semanticColors.surface,
+    borderColor: '#E2E9F0',
+  },
+  label: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 11,
+    color: '#3D5470',
+  },
+  labelActive: {
+    color: semanticColors.textInverse,
+  },
+});

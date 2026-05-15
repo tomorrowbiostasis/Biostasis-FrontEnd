@@ -20,6 +20,14 @@ import styles from './styles';
 
 const ICON_SIZE = 18;
 
+/* Blends the embedded Tomorrow Bio page background into the redesigned screen. */
+const TOMORROW_BIO_INJECTED_JS = `(function() {
+  var style = document.createElement('style');
+  style.innerHTML = '.light-gray{background-color:#F5F6F8 !important;}.html-embed-23{background-color:#F5F6F8 !important;}';
+  document.head.appendChild(style);
+})();
+true;`;
+
 const SettingsScreen = () => {
   const {t} = useAppTranslation();
   const {navigate} = useNavigation();
@@ -31,10 +39,10 @@ const SettingsScreen = () => {
   );
 
   const openWebView = useCallback(
-    (url: string, title: string) => () =>
+    (url: string, title: string, injectedJavaScript?: string) => () =>
       navigate(
         Screens.WebView as never,
-        {url, title} as never,
+        {url, title, injectedJavaScript} as never,
       ),
     [navigate],
   );
@@ -68,7 +76,11 @@ const SettingsScreen = () => {
             icon={<UserCheckIcon size={ICON_SIZE} color="#3B5BDB" />}
             iconBackground="#F5F7FD"
             label={t('settings.tomorrowBio')}
-            onPress={go(Screens.SignUpForCryopreservation)}
+            onPress={openWebView(
+              t('signUpForTomorrow.signUpUrl'),
+              t('settings.tomorrowBio'),
+              TOMORROW_BIO_INJECTED_JS,
+            )}
           />
         </View>
 

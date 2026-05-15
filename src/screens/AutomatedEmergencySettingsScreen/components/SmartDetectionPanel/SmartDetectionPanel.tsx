@@ -14,7 +14,7 @@ import {
 } from '~/services/DeviceSignals.service';
 import {formatTime, getSleepSchedule} from '~/services/SleepSchedule.service';
 import colors from '~/theme/colors';
-import styles from '../../styles';
+import styles from './styles';
 
 const SmartDetectionPanel = () => {
   const {t} = useAppTranslation();

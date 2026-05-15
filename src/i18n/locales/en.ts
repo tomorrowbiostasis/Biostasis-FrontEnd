@@ -502,9 +502,11 @@ const translations = {
       title: 'Emergency Settings',
       enableSystemTitle: 'Automated Emergency Settings',
       compatibleSmartDeviceConnected: 'Compatible smartdevice connected',
-      confirmReadManual: 'I understand how it works',
+      confirmReadManual: 'I understand how this system works',
       howItWorks: {
         title: 'How it works',
+        intro:
+          'The system monitors your health data and alerts contacts if you become unresponsive.',
         step1Title: 'Connect',
         step1Desc:
           'Pair your wearable or use your phone\'s built-in sensors (steps, heart rate).',
@@ -515,7 +517,7 @@ const translations = {
         step3Desc:
           'If there\'s still no response, the system triggers an alert to your emergency contacts.',
       },
-      enableAutomatedEmergency: 'Enable automated emergency',
+      enableAutomatedEmergency: 'Enable automated emergency monitoring',
       setUpSmartDevice: 'Set up Smart device',
       connectedSmartDevice: 'Connected with {{device}}',
       pauseAutomatedEmergency: 'Pause Automated Emergency',
@@ -755,21 +757,26 @@ const translations = {
     pauseNow: {
       title: 'Pause Emergency System',
       description:
-        'Temporarily pause the automated emergency system until a specific time of your choice.',
+        'Temporarily disable monitoring until a specific time you choose.',
       cancelMessage: 'Pause has been cancelled. The system is active again.',
       pauseConfirmed: 'System paused until {{time}}',
       startDisclaimer: 'Pause the system',
+      choosePauseDuration: 'Choose pause duration',
       systemPaused: 'System is paused',
-      pausedUntil: 'The emergency system is paused until {{time}}.',
+      pausedUntil: 'Paused until {{time}}',
       cancelPause: 'Cancel pause',
+    },
+    addTimeBlock: {
+      title: 'Add Time Block',
+      save: 'Save Time Block',
     },
     specificTimes: {
       title: 'Set-up Specific Times',
       description:
-        'Disable the automated system repeatedly during specific times of the week/days.',
-      start: 'Start:',
-      end: 'End:',
-      addAdditionalTime: 'Add additional time',
+        'Automatically disable monitoring during recurring time slots.',
+      start: 'Start',
+      end: 'End',
+      addAdditionalTime: 'Add a time block',
       startSection: {
         pickDay: 'Pick start day(days)',
         pickTime: 'Set start time',

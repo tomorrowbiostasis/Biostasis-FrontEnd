@@ -390,9 +390,11 @@ const translations: ITranslation = {
       enableSystemTitle: 'Ajustes automáticos de emergencia',
       compatibleSmartDeviceConnected:
         'Appareil intelligent compatible connecté',
-      confirmReadManual: 'Je comprends comment ça fonctionne',
+      confirmReadManual: 'Je comprends comment ce système fonctionne',
       howItWorks: {
         title: 'Comment ça fonctionne',
+        intro:
+          'Le système surveille vos données de santé et alerte vos contacts si vous ne répondez plus.',
         step1Title: 'Connecter',
         step1Desc:
           'Associez votre wearable ou utilisez les capteurs intégrés de votre téléphone (pas, fréquence cardiaque).',
@@ -403,7 +405,7 @@ const translations: ITranslation = {
         step3Desc:
           "S'il n'y a toujours pas de réponse, le système déclenche une alerte à vos contacts d'urgence.",
       },
-      enableAutomatedEmergency: "Activer l'urgence automatisée",
+      enableAutomatedEmergency: "Activer la surveillance d'urgence automatisée",
       setUpSmartDevice: 'Configurer un appareil intelligent',
       connectedSmartDevice: 'Connecté avec {{appareil}}',
       pauseAutomatedEmergency: "Mettre en pause l'urgence automatisée",
@@ -631,21 +633,26 @@ const translations: ITranslation = {
     pauseNow: {
       title: "Pause du système d'urgence",
       description:
-        "Mettez temporairement en pause le système d'urgence automatisé jusqu'à l'heure de votre choix.",
+        "Désactivez temporairement la surveillance jusqu'à une heure que vous choisissez.",
       cancelMessage: 'Pause annulée. Le système est de nouveau actif.',
       pauseConfirmed: "Système en pause jusqu'à {{time}}",
       startDisclaimer: 'Mettre en pause',
+      choosePauseDuration: 'Choisir la durée de pause',
       systemPaused: 'Système en pause',
-      pausedUntil: "Le système d'urgence est en pause jusqu'à {{time}}.",
+      pausedUntil: "En pause jusqu'à {{time}}",
       cancelPause: 'Annuler la pause',
+    },
+    addTimeBlock: {
+      title: 'Ajouter un créneau',
+      save: 'Enregistrer le créneau',
     },
     specificTimes: {
       title: 'Establecer horarios específicos',
       description:
-        "Désactiver l'automatisme de manière répétée à certains moments de la semaine ou de la journée",
-      start: 'Début:',
-      end: 'Fin:',
-      addAdditionalTime: 'Ajouter du temps supplémentaire',
+        'Désactive automatiquement la surveillance pendant des créneaux récurrents.',
+      start: 'Début',
+      end: 'Fin',
+      addAdditionalTime: 'Ajouter un créneau',
       startSection: {
         pickDay: 'Choisir le(s) jour(s) de départ',
         pickTime: "Fixer l'heure de début",

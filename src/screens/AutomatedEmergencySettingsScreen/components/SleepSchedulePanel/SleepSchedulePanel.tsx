@@ -1,10 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, TouchableOpacity, Platform} from 'react-native';
-import {Text} from 'native-base';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
 
-import SwitchButton from '~/components/SwitchButton';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {
   getSleepSchedule,
@@ -12,8 +9,10 @@ import {
   formatTime,
   SleepSchedule,
 } from '~/services/SleepSchedule.service';
-import colors from '~/theme/colors';
-import styles from '../../styles';
+import {semanticColors} from '~/theme/tokens';
+import IconChip from '~/components/IconChip';
+import Toggle from '~/components/Toggle';
+import {MoonIcon} from '~/assets/icons/AppIcons';
 
 interface Props {
   refreshKey?: number;
@@ -73,108 +72,68 @@ const SleepSchedulePanel = ({refreshKey}: Props) => {
 
   const bedtimeDate = new Date();
   bedtimeDate.setHours(schedule.bedtimeHour, schedule.bedtimeMinute, 0, 0);
-
   const wakeDate = new Date();
   wakeDate.setHours(schedule.wakeHour, schedule.wakeMinute, 0, 0);
 
   return (
-    <View style={styles.panel}>
-      <View style={styles.panelHeader}>
-        <View style={[styles.circle, styles.icon]}>
-          <IconIonicons name="moon" size={20} color="#4682B4" />
-        </View>
-        <Text style={styles.panelTitle} fontWeight={700}>
+    <View style={styles.card}>
+      <View style={styles.header}>
+        <IconChip background="rgba(220, 228, 247, 0.6)" size={36} radius={8}>
+          <MoonIcon size={18} color="#5A6FD6" />
+        </IconChip>
+        <Text style={styles.title}>
           {t(
             'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.title',
           )}
         </Text>
       </View>
-      <View style={styles.lineStyle} />
+      <Text style={styles.description}>
+        {t(
+          'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.description',
+        )}
+      </Text>
 
-      <View style={styles.panelBody}>
-        <Text style={styles.panelInfoText}>
+      <View style={styles.toggleRow}>
+        <Text style={styles.toggleLabel}>
           {t(
-            'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.description',
-          )}
-        </Text>
-
-        <SwitchButton
-          value={schedule.enabled}
-          title={t(
             'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.enableSchedule',
           )}
-          containerStyle={styles.switchButton}
-          onSwitchPress={handleToggle}
-        />
+        </Text>
+        <Toggle value={schedule.enabled} onChange={handleToggle} />
+      </View>
 
-        {schedule.enabled && (
-          <View style={{marginTop: 16}}>
-            <TouchableOpacity
-              onPress={() => setShowBedtimePicker(true)}
-              style={[styles.activeButton, {justifyContent: 'space-between'}]}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <IconIonicons
-                  name="moon"
-                  size={18}
-                  color="#4682B4"
-                  style={{marginRight: 12}}
-                />
-                <Text style={styles.buttonText}>
-                  {t(
-                    'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.bedtime',
-                  )}
-                </Text>
-              </View>
-              <Text style={[styles.buttonText, {color: colors.blue[800]}]}>
-                {formatTime(schedule.bedtimeHour, schedule.bedtimeMinute)}
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => setShowWakePicker(true)}
-              style={[styles.activeButton, {justifyContent: 'space-between'}]}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <IconIonicons
-                  name="sunny"
-                  size={18}
-                  color="#F4BB44"
-                  style={{marginRight: 12}}
-                />
-                <Text style={styles.buttonText}>
-                  {t(
-                    'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.wakeTime',
-                  )}
-                </Text>
-              </View>
-              <Text style={[styles.buttonText, {color: colors.blue[800]}]}>
-                {formatTime(schedule.wakeHour, schedule.wakeMinute)}
-              </Text>
-            </TouchableOpacity>
-
-            <Text
-              fontSize="xs"
-              style={{
-                color: colors.gray[600],
-                textAlign: 'center',
-                marginTop: 8,
-              }}>
+      {schedule.enabled ? (
+        <View style={styles.timeCards}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.timeCard}
+            onPress={() => setShowBedtimePicker(true)}>
+            <Text style={styles.timeEmoji}>🌙</Text>
+            <Text style={styles.timeCardLabel}>
               {t(
-                'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.sleepWindow',
-                {
-                  bedtime: formatTime(
-                    schedule.bedtimeHour,
-                    schedule.bedtimeMinute,
-                  ),
-                  wakeTime: formatTime(
-                    schedule.wakeHour,
-                    schedule.wakeMinute,
-                  ),
-                },
+                'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.bedtime',
               )}
             </Text>
-          </View>
-        )}
-      </View>
+            <Text style={styles.timeCardValue}>
+              {formatTime(schedule.bedtimeHour, schedule.bedtimeMinute)}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.timeCard}
+            onPress={() => setShowWakePicker(true)}>
+            <Text style={styles.timeEmoji}>☀️</Text>
+            <Text style={styles.timeCardLabel}>
+              {t(
+                'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.wakeTime',
+              )}
+            </Text>
+            <Text style={styles.timeCardValue}>
+              {formatTime(schedule.wakeHour, schedule.wakeMinute)}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
 
       <DateTimePickerModal
         isVisible={showBedtimePicker}
@@ -195,5 +154,71 @@ const SleepSchedulePanel = ({refreshKey}: Props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: semanticColors.surface,
+    borderRadius: 14,
+    paddingHorizontal: 15,
+    paddingVertical: 14,
+    gap: 12,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  title: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 14,
+    color: semanticColors.primary,
+  },
+  description: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    lineHeight: 19.5,
+    color: '#3D5470',
+  },
+  toggleRow: {
+    minHeight: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  toggleLabel: {
+    flex: 1,
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    color: semanticColors.primary,
+  },
+  timeCards: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  timeCard: {
+    flex: 1,
+    backgroundColor: semanticColors.surfaceMuted,
+    borderRadius: 12,
+    paddingVertical: 12,
+    alignItems: 'center',
+    gap: 2,
+  },
+  timeEmoji: {
+    fontSize: 18,
+  },
+  timeCardLabel: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 11,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    color: semanticColors.textSecondary,
+  },
+  timeCardValue: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 16,
+    color: semanticColors.primary,
+  },
+});
 
 export default SleepSchedulePanel;

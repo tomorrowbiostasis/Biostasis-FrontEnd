@@ -393,9 +393,11 @@ const translations: ITranslation = {
       title: 'Notfall-Einstellungen',
       enableSystemTitle: 'Automatisierte Notfalleinstellungen',
       compatibleSmartDeviceConnected: 'Kompatibles Smartdevice angeschlossen',
-      confirmReadManual: 'Ich verstehe, wie es funktioniert',
+      confirmReadManual: 'Ich verstehe, wie dieses System funktioniert',
       howItWorks: {
         title: 'So funktioniert es',
+        intro:
+          'Das System überwacht Ihre Gesundheitsdaten und alarmiert Ihre Kontakte, wenn Sie nicht mehr reagieren.',
         step1Title: 'Verbinden',
         step1Desc:
           'Koppeln Sie Ihr Wearable oder nutzen Sie die integrierten Sensoren Ihres Telefons (Schritte, Herzfrequenz).',
@@ -406,7 +408,7 @@ const translations: ITranslation = {
         step3Desc:
           'Wenn weiterhin keine Reaktion erfolgt, löst das System einen Alarm an Ihre Notfallkontakte aus.',
       },
-      enableAutomatedEmergency: 'Automatisierten Notfall aktivieren',
+      enableAutomatedEmergency: 'Automatisierte Notfallüberwachung aktivieren',
       setUpSmartDevice: 'Smart-Gerät einrichten',
       connectedSmartDevice: 'Verbunden mit {{device}}',
       pauseAutomatedEmergency: 'Automatisierten Notfall anhalten',
@@ -632,21 +634,26 @@ const translations: ITranslation = {
     pauseNow: {
       title: 'Notfallsystem pausieren',
       description:
-        'Pausieren Sie das automatische Notfallsystem vorübergehend bis zu einem Zeitpunkt Ihrer Wahl.',
+        'Deaktivieren Sie die Überwachung vorübergehend bis zu einem von Ihnen gewählten Zeitpunkt.',
       cancelMessage: 'Pause wurde aufgehoben. Das System ist wieder aktiv.',
       pauseConfirmed: 'System pausiert bis {{time}}',
       startDisclaimer: 'System pausieren',
+      choosePauseDuration: 'Pausendauer wählen',
       systemPaused: 'System ist pausiert',
-      pausedUntil: 'Das Notfallsystem ist pausiert bis {{time}}.',
+      pausedUntil: 'Pausiert bis {{time}}',
       cancelPause: 'Pause aufheben',
+    },
+    addTimeBlock: {
+      title: 'Zeitblock hinzufügen',
+      save: 'Zeitblock speichern',
     },
     specificTimes: {
       title: 'Besondere Zeiten einrichten',
       description:
-        'Deaktivieren Sie das automatische System wiederholt zu bestimmten Zeiten der Woche/Tage',
-      start: 'Start:',
-      end: 'Ende:',
-      addAdditionalTime: 'Zusätzliche Zeit hinzufügen',
+        'Deaktiviert die Überwachung automatisch während wiederkehrender Zeitfenster.',
+      start: 'Start',
+      end: 'Ende',
+      addAdditionalTime: 'Zeitblock hinzufügen',
       startSection: {
         pickDay: 'Starttag(e) auswählen',
         pickTime: 'Startzeit einstellen',

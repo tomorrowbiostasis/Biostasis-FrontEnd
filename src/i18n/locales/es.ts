@@ -391,9 +391,11 @@ const translations: ITranslation = {
       enableSystemTitle: 'Ajustes de emergencia automatizados',
       compatibleSmartDeviceConnected:
         'Dispositivo inteligente compatible conectado',
-      confirmReadManual: 'Entiendo cómo funciona',
+      confirmReadManual: 'Entiendo cómo funciona este sistema',
       howItWorks: {
         title: 'Cómo funciona',
+        intro:
+          'El sistema monitorea tus datos de salud y alerta a tus contactos si dejas de responder.',
         step1Title: 'Conectar',
         step1Desc:
           'Vincula tu wearable o usa los sensores integrados de tu teléfono (pasos, frecuencia cardíaca).',
@@ -404,7 +406,7 @@ const translations: ITranslation = {
         step3Desc:
           'Si aún no hay respuesta, el sistema activa una alerta a tus contactos de emergencia.',
       },
-      enableAutomatedEmergency: 'Activar emergencia automatizada',
+      enableAutomatedEmergency: 'Activar la monitorización automática de emergencias',
       setUpSmartDevice: 'Configurar dispositivo inteligente',
       connectedSmartDevice: 'Conectado con {{device}}',
       pauseAutomatedEmergency: 'Pausar Emergencia Automatizada',
@@ -628,21 +630,26 @@ const translations: ITranslation = {
     pauseNow: {
       title: 'Pausar sistema de emergencia',
       description:
-        'Pausa temporalmente el sistema de emergencia automatizado hasta la hora que elijas.',
+        'Desactiva temporalmente la monitorización hasta una hora específica que elijas.',
       cancelMessage: 'Pausa cancelada. El sistema está activo de nuevo.',
       pauseConfirmed: 'Sistema pausado hasta {{time}}',
       startDisclaimer: 'Pausar el sistema',
+      choosePauseDuration: 'Elegir duración de la pausa',
       systemPaused: 'Sistema en pausa',
-      pausedUntil: 'El sistema de emergencia está pausado hasta {{time}}.',
+      pausedUntil: 'Pausado hasta {{time}}',
       cancelPause: 'Cancelar pausa',
+    },
+    addTimeBlock: {
+      title: 'Añadir bloque de tiempo',
+      save: 'Guardar bloque de tiempo',
     },
     specificTimes: {
       title: 'Establecer tiempos específicos',
       description:
-        'Desactivar el automatismo repetidamente en determinados momentos de la semana/días',
-      start: 'Inicio:',
-      end: 'Fin:',
-      addAdditionalTime: 'Añadir tiempo adicional',
+        'Desactiva automáticamente la monitorización durante franjas horarias recurrentes.',
+      start: 'Inicio',
+      end: 'Fin',
+      addAdditionalTime: 'Añadir un bloque de tiempo',
       startSection: {
         pickDay: 'Elegir día(s) de inicio',
         pickTime: 'Establecer hora de inicio',

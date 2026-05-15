@@ -1,20 +1,20 @@
-import React, {useCallback, useState, useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
+import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {setAutomatedEmergencyPause} from '~/redux/automatedEmergency/automatedEmergency.slice';
 import {automatedEmergencyPausedDateSelector} from '~/redux/automatedEmergency/selectors';
-import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {
-  addPauseFromNow,
-  deleteTimeSlot,
-} from '~/redux/automatedEmergency/thunks';
-import {styles} from './styles';
-import IconFeather from 'react-native-vector-icons/Feather';
-import {TouchableOpacity, View} from 'react-native';
-import {Text} from 'native-base';
-import ToastService from '~/services/Toast.service';
+import {addPauseFromNow, deleteTimeSlot} from '~/redux/automatedEmergency/thunks';
 import {isPausedTime} from '~/services/Time.service';
-import colors from '~/theme/colors';
+import ToastService from '~/services/Toast.service';
+import IconChip from '~/components/IconChip';
+import {PauseCircleIcon} from '~/assets/icons/AppIcons';
+
+const AMBER_TITLE = '#92400E';
+const AMBER_BODY = '#B45309';
+const AMBER_ACTION = '#D97706';
 
 const formatPauseUntil = (timestamp: number): string => {
   const date = new Date(timestamp);
@@ -29,8 +29,12 @@ const formatPauseUntil = (timestamp: number): string => {
     minute: '2-digit',
   });
 
-  if (isToday) return `today at ${timeStr}`;
-  if (isTomorrow) return `tomorrow at ${timeStr}`;
+  if (isToday) {
+    return `today at ${timeStr}`;
+  }
+  if (isTomorrow) {
+    return `tomorrow at ${timeStr}`;
+  }
   return date.toLocaleDateString(undefined, {
     weekday: 'short',
     month: 'short',
@@ -52,13 +56,11 @@ const PauseEmergencyPanel = () => {
   );
 
   const pauseUntilLabel = useMemo(() => {
-    if (!pausedDate?.timestamp) return '';
+    if (!pausedDate?.timestamp) {
+      return '';
+    }
     return formatPauseUntil(pausedDate.timestamp);
   }, [pausedDate]);
-
-  const showDatePicker = useCallback(() => {
-    setDatePickerVisibility(true);
-  }, []);
 
   const hideDatePicker = useCallback(() => {
     setDatePickerVisibility(false);
@@ -70,12 +72,9 @@ const PauseEmergencyPanel = () => {
       if (Date.now() + 6000 > date.valueOf()) {
         return;
       }
-
-      const value = {
-        timestamp: date.valueOf(),
-        id: new Date().valueOf(),
-      };
-      dispatch(addPauseFromNow(value));
+      dispatch(
+        addPauseFromNow({timestamp: date.valueOf(), id: new Date().valueOf()}),
+      );
       ToastService.success(
         t('specificTimesScreen.pauseNow.pauseConfirmed', {
           time: formatPauseUntil(date.valueOf()),
@@ -86,7 +85,7 @@ const PauseEmergencyPanel = () => {
     [dispatch, hideDatePicker, t],
   );
 
-  const handlePauseButtonPress = useCallback(async () => {
+  const handlePauseButtonPress = useCallback(() => {
     if (pausedDate) {
       dispatch(deleteTimeSlot(pausedDate.id));
       dispatch(setAutomatedEmergencyPause(null));
@@ -94,72 +93,50 @@ const PauseEmergencyPanel = () => {
         visibilityTime: 2000,
       });
     } else {
-      showDatePicker();
+      setDatePickerVisibility(true);
     }
-  }, [dispatch, pausedDate, showDatePicker, t]);
+  }, [dispatch, pausedDate, t]);
 
   return (
     <>
-      <View style={styles.panel}>
-        <View style={styles.panelHeader}>
-          <IconFeather name="pause-circle" size={26} style={styles.icon} />
-          <Text style={styles.panelTitle} fontWeight={700}>
-            {t('specificTimesScreen.pauseNow.title')}
+      <View style={styles.card}>
+        <View style={styles.header}>
+          <IconChip background="rgba(217, 119, 6, 0.15)" size={36} radius={8}>
+            <PauseCircleIcon size={18} color={AMBER_ACTION} />
+          </IconChip>
+          <View style={styles.headerText}>
+            <Text style={styles.title}>
+              {t('specificTimesScreen.pauseNow.title')}
+            </Text>
+            <Text style={styles.description}>
+              {t('specificTimesScreen.pauseNow.description')}
+            </Text>
+          </View>
+        </View>
+
+        {isNowPaused ? (
+          <Text style={styles.pausedUntil}>
+            {t('specificTimesScreen.pauseNow.pausedUntil', {
+              time: pauseUntilLabel,
+            })}
           </Text>
-        </View>
-        <View style={styles.lineStyle} />
-        <View style={styles.panelBody}>
-          <Text style={styles.panelInfoText}>
-            {t('specificTimesScreen.pauseNow.description')}
+        ) : null}
+
+        <TouchableOpacity
+          activeOpacity={0.85}
+          style={styles.button}
+          onPress={handlePauseButtonPress}>
+          <Text style={styles.buttonText}>
+            {isNowPaused
+              ? t('specificTimesScreen.pauseNow.cancelPause')
+              : t('specificTimesScreen.pauseNow.choosePauseDuration')}
           </Text>
-        </View>
-        <View style={styles.panelFooter}>
-          {isNowPaused ? (
-            <View style={styles.pausedStatusContainer}>
-              <View style={styles.pausedStatusHeader}>
-                <IconFeather
-                  name="pause-circle"
-                  size={18}
-                  color={colors.yellow[600]}
-                />
-                <Text style={styles.pausedStatusTitle}>
-                  {t('specificTimesScreen.pauseNow.systemPaused')}
-                </Text>
-              </View>
-              <Text style={styles.pausedUntilText}>
-                {t('specificTimesScreen.pauseNow.pausedUntil', {
-                  time: pauseUntilLabel,
-                })}
-              </Text>
-              <TouchableOpacity
-                onPress={handlePauseButtonPress}
-                style={styles.cancelButton}>
-                <IconFeather name="x" size={14} color={colors.red[400]} />
-                <Text style={styles.cancelButtonText}>
-                  {t('specificTimesScreen.pauseNow.cancelPause')}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <TouchableOpacity
-              onPress={handlePauseButtonPress}
-              style={styles.activeButton}>
-              <IconFeather
-                name="pause-circle"
-                size={16}
-                color={colors.white}
-                style={{marginRight: 6}}
-              />
-              <Text style={styles.buttonText}>
-                {t('specificTimesScreen.pauseNow.startDisclaimer')}
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
+        </TouchableOpacity>
       </View>
+
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
-        mode={'datetime'}
+        mode="datetime"
         cancelTextIOS={t('common.cancel')}
         confirmTextIOS={t('common.confirm')}
         onConfirm={handleConfirm}
@@ -169,5 +146,54 @@ const PauseEmergencyPanel = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: '#FEF3E2',
+    borderWidth: 1,
+    borderColor: '#F5D68A',
+    borderRadius: 14,
+    paddingHorizontal: 17,
+    paddingVertical: 14,
+    gap: 14,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 14,
+  },
+  headerText: {
+    flex: 1,
+    gap: 4,
+  },
+  title: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 14,
+    color: AMBER_TITLE,
+  },
+  description: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 13,
+    lineHeight: 18.2,
+    color: AMBER_BODY,
+  },
+  pausedUntil: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 13,
+    color: AMBER_TITLE,
+  },
+  button: {
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: AMBER_ACTION,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 16,
+    color: '#FFFFFF',
+  },
+});
 
 export default PauseEmergencyPanel;

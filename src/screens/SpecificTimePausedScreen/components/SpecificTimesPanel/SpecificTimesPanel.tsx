@@ -1,155 +1,136 @@
-import React, {useCallback, useLayoutEffect, useState} from 'react';
-import {Text, View} from 'native-base';
-import {Text as RNText, TouchableOpacity} from 'react-native';
+import React, {useCallback, useLayoutEffect} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
-import {
-  addTimeSlot,
-  deleteTimeSlot,
-  updateTimeSlot,
-} from '~/redux/automatedEmergency/thunks';
+import {deleteTimeSlot} from '~/redux/automatedEmergency/thunks';
 import {automatedEmergencyPausedTimesSelector} from '~/redux/automatedEmergency/selectors';
 import {setAutomatedEmergencyPauseTimes} from '~/redux/automatedEmergency/automatedEmergency.slice';
-
-import {styles} from './styles';
-import ToastService from '~/services/Toast.service';
 import {getUser} from '~/redux/user/thunks';
-import {
-  ISpecificDateComponentItem,
-  SpecificDateComponentItemIdType,
-} from '../SpecificDateComponent/SpecificDateComponent';
-import {DayTimePicker} from '../DayTimePickerModal/DayTimePickerModal';
+import {Screens} from '~/models/Navigation.model';
+import {semanticColors} from '~/theme/tokens';
+import IconChip from '~/components/IconChip';
+import {CalendarClockIcon, CirclePlusIcon} from '~/assets/icons/AppIcons';
+
+import {SpecificDateComponentItemIdType} from '../SpecificDateComponent/SpecificDateComponent';
 import {SpecificDateList} from '../SpecificDateComponent/SpecificDateList';
 import {useTimeFormat} from '../../hooks/UseTimeFormat.hook';
+import {useSavePausedTime} from '../../hooks/UseSavePausedTime.hook';
 import {serializePausedTimes} from '../../util';
-import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import IconFeather from 'react-native-vector-icons/Feather';
-import colors from '~/theme/colors';
 
 const SpecificTimesPanel = () => {
   useTimeFormat();
   const {t} = useAppTranslation();
   const dispatch = useAppDispatch();
+  const {navigate} = useNavigation();
   const pausedTimes = useAppSelector(automatedEmergencyPausedTimesSelector);
-  const [isAddNewModalOpen, setIsAddNewModalOpen] = useState(false);
-
-  const [editedId, setEditedId] =
-    useState<SpecificDateComponentItemIdType | null>(null);
+  const savePausedTime = useSavePausedTime();
 
   useLayoutEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
 
-  const setPausedTimes = useCallback(
-    (times: ISpecificDateComponentItem[]) => {
-      dispatch(setAutomatedEmergencyPauseTimes(serializePausedTimes(times)));
-    },
-    [dispatch],
-  );
-
   const handleDelete = useCallback(
     (id: SpecificDateComponentItemIdType) => {
       dispatch(deleteTimeSlot(id));
-      setPausedTimes(pausedTimes.filter(i => i.id !== id));
-    },
-    [dispatch, pausedTimes, setPausedTimes],
-  );
-
-  const handleEdit = useCallback((id: SpecificDateComponentItemIdType) => {
-    setEditedId(id);
-    setIsAddNewModalOpen(true);
-  }, []);
-
-  const handleSave = useCallback(
-    (item: ISpecificDateComponentItem) => {
-      const isSlotExists = pausedTimes.find(i => i.id === item.id);
-      if (isSlotExists) {
-        const tempItems = pausedTimes.map(i => i);
-        let itemToUpdate = tempItems.find(i => i.id === item.id);
-        if (itemToUpdate) {
-          const {startDay, endDay, startTime, endTime, isActive} = item;
-          itemToUpdate.startDay = startDay;
-          itemToUpdate.endDay = endDay;
-          itemToUpdate.startTime = startTime;
-          itemToUpdate.endTime = endTime;
-          itemToUpdate.isActive = isActive;
-
-          const serialized = serializePausedTimes([itemToUpdate]);
-          dispatch(updateTimeSlot({id: itemToUpdate.id, data: serialized[0]}));
-        }
-
-        setPausedTimes(tempItems);
-      } else {
-        const serialized = serializePausedTimes([item]);
-        dispatch(addTimeSlot(serialized[0]));
-        setPausedTimes([...pausedTimes, item]);
-      }
-      setIsAddNewModalOpen(false);
-
-      ToastService.success(
-        t('specificTimesScreen.specificTimes.changeSettings'),
-        {
-          visibilityTime: 1000,
-        },
+      dispatch(
+        setAutomatedEmergencyPauseTimes(
+          serializePausedTimes(pausedTimes.filter(i => i.id !== id)),
+        ),
       );
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, pausedTimes, setPausedTimes],
+    [dispatch, pausedTimes],
+  );
+
+  const handleEdit = useCallback(
+    (id: SpecificDateComponentItemIdType) => {
+      // @ts-ignore — loose route params, matches existing call sites
+      navigate(Screens.AddTimeBlock, {id});
+    },
+    [navigate],
   );
 
   const handleAddNew = useCallback(() => {
-    setEditedId(null);
-    setIsAddNewModalOpen(true);
-  }, []);
-
-  const handleModalClose = useCallback(() => {
-    setIsAddNewModalOpen(false);
-  }, []);
+    navigate(Screens.AddTimeBlock as never);
+  }, [navigate]);
 
   return (
-    <View style={styles.panel}>
-      <View style={styles.panelHeader}>
-        <IconMaterialCommunityIcons
-          style={styles.icon}
-          name="calendar-clock"
-          size={26}
-        />
-        <Text style={styles.panelTitle} fontWeight={700}>
+    <View style={styles.card}>
+      <View style={styles.header}>
+        <IconChip background="rgba(228, 219, 247, 0.6)" size={36} radius={8}>
+          <CalendarClockIcon size={18} color="#6D4CCB" />
+        </IconChip>
+        <Text style={styles.title}>
           {t('specificTimesScreen.specificTimes.title')}
         </Text>
       </View>
-      <View style={styles.lineStyle} />
+      <Text style={styles.description}>
+        {t('specificTimesScreen.specificTimes.description')}
+      </Text>
 
-      <View style={styles.panelBody}>
-        <RNText style={styles.panelDescription}>
-          {t('specificTimesScreen.specificTimes.description')}
-        </RNText>
+      <SpecificDateList
+        items={pausedTimes}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+        onSave={savePausedTime}
+      />
 
-        <SpecificDateList
-          items={pausedTimes}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-          onSave={handleSave}
-        />
-
-        {isAddNewModalOpen && (
-          <DayTimePicker
-            item={pausedTimes.find(i => i.id === editedId)}
-            onSave={handleSave}
-            onClose={handleModalClose}
-          />
-        )}
-
-        <TouchableOpacity style={styles.addButton} onPress={handleAddNew}>
-          <IconFeather name="plus" size={18} color={colors.gray[700]} />
-          <Text style={styles.addButtonText}>
-            {t('specificTimesScreen.specificTimes.addAdditionalTime')}
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={styles.addButton}
+        onPress={handleAddNew}>
+        <CirclePlusIcon size={16} color="#3D5470" />
+        <Text style={styles.addButtonText}>
+          {t('specificTimesScreen.specificTimes.addAdditionalTime')}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: semanticColors.surface,
+    borderWidth: 1,
+    borderColor: '#E2E9F0',
+    borderRadius: 14,
+    paddingHorizontal: 15,
+    paddingVertical: 13,
+    gap: 12,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  title: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 15,
+    color: semanticColors.primary,
+  },
+  description: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 13,
+    lineHeight: 19.5,
+    color: '#3D5470',
+  },
+  addButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 13,
+    height: 44,
+    borderRadius: 14,
+    borderWidth: 1.5,
+    borderStyle: 'dashed',
+    borderColor: '#C8D5E2',
+  },
+  addButtonText: {
+    fontFamily: 'DMSans-Medium',
+    fontSize: 16,
+    color: '#3D5470',
+  },
+});
 
 export default SpecificTimesPanel;

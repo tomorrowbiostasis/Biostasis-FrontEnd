@@ -13,6 +13,7 @@ import EmergencyContactExplanationsScreen from '~/screens/EmergencyContactExplan
 import AddNewEmergencyContactScreen from '~/screens/AddNewEmergencyContactScreen/AddNewEmergencyContactScreen';
 import AutomatedEmergencySettingsScreen from '~/screens/AutomatedEmergencySettingsScreen';
 import SpecificTimePaused from '~/screens/SpecificTimePausedScreen/SpecificTimePausedScreen';
+import AddTimeBlockScreen from '~/screens/AddTimeBlockScreen';
 import AccountSettingsScreen from '~/screens/AccountSettingsScreen';
 import ProfileEditScreen from '~/screens/ProfileEditScreen';
 import ProfileAddMedicalInfoScreen from '~/screens/MedicalInfoScreen';
@@ -72,6 +73,10 @@ export const MainStack = () => {
       <Stack.Screen
         name={Screens.SpecificTimePaused as never}
         component={SpecificTimePaused}
+      />
+      <Stack.Screen
+        name={Screens.AddTimeBlock as never}
+        component={AddTimeBlockScreen}
       />
       <Stack.Screen
         name={Screens.AccountSettings as never}
