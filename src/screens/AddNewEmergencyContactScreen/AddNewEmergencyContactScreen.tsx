@@ -1,4 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react';
+import {View} from 'react-native';
+import {useRoute} from '@react-navigation/core';
+import {RouteProp, useNavigation, CommonActions} from '@react-navigation/native';
+
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {
@@ -9,17 +13,13 @@ import {
   IEmergencyContact,
   IEmergencyContactResponse,
 } from '~/redux/emergencyContacts/emergencyContacts.slice';
-
-import Container from '~/components/Container';
 import {selectEmergencyContacts} from '~/redux/emergencyContacts/selectors';
-import {useRoute} from '@react-navigation/core';
-import {RouteProp, useNavigation, CommonActions} from '@react-navigation/native';
 import {Screens, ScreensNavigationParamsList} from '~/models/Navigation.model';
+import ScreenHeader from '~/components/ScreenHeader';
 
 import styles from './styles';
 import {AddNewContact} from './components/AddNewContact';
 import {EditContact} from './components/EditContact';
-import {View} from 'react-native';
 
 export type AddNewEmergencyContactFormFields = {
   firstName: string;
@@ -39,11 +39,17 @@ export const AddNewEmergencyContactScreen = () => {
     useRoute<RouteProp<ScreensNavigationParamsList, 'EditEmergencyContact'>>();
 
   const handleGoToContactsList = useCallback(() => {
-    navigate.dispatch(CommonActions.reset({
-      index:0,
-      routes:[{name:Screens.Home},{name:Screens.EmergencyContactSettings}],
-    }));
+    navigate.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {name: Screens.Home},
+          {name: Screens.EmergencyContactSettings},
+        ],
+      }),
+    );
   }, [navigate]);
+
   const handleAddContact = useCallback(
     (newContact: IEmergencyContact) => {
       dispatch(AddNewEmergencyContact(newContact));
@@ -78,26 +84,20 @@ export const AddNewEmergencyContactScreen = () => {
   }, []);
 
   return (
-    <Container
-      title={t('emergencyContactsSettings.AddNewEmergencyContact')}
-      containerStyle={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      type={'keyboardAvoidingScrollView'}
-      showDrawerIcon
-      showBackIcon>
-      <View style={styles.panel}>
-        <View style={styles.panelBody}>
-          {editedContact ? (
-            <EditContact
-              contact={editedContact}
-              onSavePress={handleEditContact}
-            />
-          ) : (
-            <AddNewContact onSavePress={handleAddContact} />
-          )}
-        </View>
-      </View>
-    </Container>
+    <View style={styles.root}>
+      <ScreenHeader
+        title={
+          editedContact
+            ? t('emergencyContactsSettings.editEmergencyContact')
+            : t('emergencyContactsSettings.AddNewEmergencyContact')
+        }
+      />
+      {editedContact ? (
+        <EditContact contact={editedContact} onSavePress={handleEditContact} />
+      ) : (
+        <AddNewContact onSavePress={handleAddContact} />
+      )}
+    </View>
   );
 };
 

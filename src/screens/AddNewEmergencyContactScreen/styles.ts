@@ -1,51 +1,23 @@
 import {StyleSheet} from 'react-native';
-import colors from '~/theme/colors';
+import {semanticColors} from '~/theme/tokens';
+
 const styles = StyleSheet.create({
-  contentContainer: {
-    paddingHorizontal: 0,
-  },
-  inputWrapper: {
-    marginTop: 20,
-  },
-  container: {
-    padding: 20,
-  },
-  content: {
-    marginBottom: 3,
-    justifyContent: 'flex-end',
+  root: {
     flex: 1,
-    paddingHorizontal: '5%',
-    width: '100%',
+    backgroundColor: semanticColors.surfaceCanvas,
   },
-  saveButton: {
-    backgroundColor: colors.blue[700],
-    borderColor: colors.gray[200],
-  },
-  panel: {
-    width: '100%',
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    marginVertical: 10,
-    padding: 20,
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
-  },
-  panelHeader: {
+  scroll: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginVertical: 10,
   },
-  panelBody: {
-    flex: 1,
-    width: '100%',
-    marginVertical: 10,
+  scrollContent: {
+    flexGrow: 1,
+    paddingHorizontal: 34,
+    paddingTop: 24,
+    paddingBottom: 24,
   },
-  panelFooter: {
-    flexDirection: 'row',
-    width: '100%',
-    alignItems: 'flex-start',
-    marginTop: 10,
+  buttonWrap: {
+    marginTop: 'auto',
+    paddingTop: 24,
   },
 });
 

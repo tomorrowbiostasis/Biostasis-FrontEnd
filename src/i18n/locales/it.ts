@@ -2,6 +2,17 @@ import {ITranslation} from '../interfaces/Translation.interface';
 
 const translations: ITranslation = {
   appName: 'Biostasis',
+  settings: {
+    title: 'Impostazioni',
+    emergencyContact: 'Impostazioni dei contatti di emergenza',
+    emergencySystem: 'Impostazioni del sistema di emergenza',
+    tomorrowBio: 'Registrati con Tomorrow Bio',
+    termsOfService: 'Termini di servizio',
+    privacyStatements: 'Informativa sulla privacy',
+    logOut: 'Esci',
+    termsUrl: 'https://tomorrowbiostasis.com/terms-conditions/',
+    privacyUrl: 'https://tomorrowbiostasis.com/privacy/',
+  },
   onboarding: {
     next: 'Avanti',
     getStarted: 'Inizia',
@@ -274,19 +285,30 @@ const translations: ITranslation = {
       "Indirizzo errato, assicurarsi di inserire l'indirizzo esistente",
   },
   emergencyContactsSettings: {
-    title: 'Impostazioni dei contatti di emergenza',
+    title: 'Contatti di emergenza',
     emergencyList: 'Elenco contatti di emergenza',
     emergencyAndSettings: 'Contatti di emergenza e impostazioni',
     makeSureToTestEmergencyContact:
-      "Assicuratevi di testare l'attivazione di emergenza con il vostro nuovo contatto, in modo che impari come funziona",
+      "Prova l'attivazione di emergenza con ogni contatto in modo che sappiano come funziona.",
     AddNewEmergencyContact: 'Aggiungi contatto di emergenza',
+    editEmergencyContact: 'Modifica contatto di emergenza',
     emergencyButtonSettings: 'Impostazioni dei messaggi di emergenza',
+    yourContacts: 'I tuoi contatti',
+    includeWithMessage: 'Includi nel messaggio',
+    emergencyMessageLabel: 'Messaggio di emergenza',
+    emergencyMessageHelper:
+      "Questo messaggio viene inviato via e-mail e SMS a tutti i contatti quando scatta un'emergenza.",
+    saveChanges: 'Salva modifiche',
+    sendTestMessage: 'Invia messaggio di prova',
     addNewEdit: {
       title: 'Informazioni di contatto:',
-      firstName: 'Nome (contatto di emergenza)',
-      lastName: 'Cognome (contatto di emergenza)',
-      email: 'Email (contatto di emergenza)',
-      phoneNumber: 'Numero di telefono (contatto di emergenza)',
+      firstName: 'Nome',
+      lastName: 'Cognome',
+      email: 'Email',
+      phoneNumber: 'Numero di telefono',
+      firstNamePlaceholder: 'es. Petar',
+      lastNamePlaceholder: 'es. Petrov',
+      emailPlaceholder: 'es. mail@gmail.com',
       errorDuringUpdate:
         "C'è un problema con i dati del modulo. Si prega di controllare la correttezza dei dati e di salvarli nuovamente",
       activateContact: 'Il contatto è stato attivato con successo',
@@ -327,12 +349,13 @@ const translations: ITranslation = {
     documents: {
       title: 'Documenti',
       topInfo:
-        "Questi documenti saranno inviati ai vostri contatti di emergenza quando scatterà un'emergenza",
+        "Inviati automaticamente a tutti i contatti quando viene attivata un'emergenza.",
+      tapToUpload: 'Tocca per caricare',
       addDocument: 'Aggiungi documento',
       headers: {
         directive: 'direttiva medica',
         lastWill: 'Ultime volontà',
-        other: 'Altro',
+        other: 'Altro documento',
       },
       upload: {
         directive: 'Carica direttiva medica',

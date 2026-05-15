@@ -410,6 +410,7 @@ const translations = {
     makeSureToTestEmergencyContact:
       'Test your emergency trigger with each contact so they know how it works.',
     AddNewEmergencyContact: 'Add Emergency Contact',
+    editEmergencyContact: 'Edit Emergency Contact',
     emergencyButtonSettings: 'Emergency Message Settings',
     yourContacts: 'Your Contacts',
     includeWithMessage: 'Include with message',
@@ -420,10 +421,13 @@ const translations = {
     sendTestMessage: 'Send test message',
     addNewEdit: {
       title: 'Contact Information:',
-      firstName: 'First Name (Emergency Contact)',
-      lastName: 'Last Name (Emergency Contact)',
-      email: 'Email (Emergency Contact)',
-      phoneNumber: 'Phone Number (Emergency Contact)',
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      email: 'Email',
+      phoneNumber: 'Phone Number',
+      firstNamePlaceholder: 'e.g. Petar',
+      lastNamePlaceholder: 'e.g. Petrov',
+      emailPlaceholder: 'e.g. mail@gmail.com',
       errorDuringUpdate:
         'There is a problem with the data in the form. Please check the correctness of the data and save it again.',
       activateContact: 'Contact has been activated successfully',

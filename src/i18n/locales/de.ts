@@ -2,6 +2,17 @@ import {ITranslation} from '../interfaces/Translation.interface';
 
 const translations: ITranslation = {
   appName: 'Biostasis',
+  settings: {
+    title: 'Einstellungen',
+    emergencyContact: 'Einstellungen für Notfallkontakte',
+    emergencySystem: 'Einstellungen des Notfallsystems',
+    tomorrowBio: 'Bei Tomorrow Bio anmelden',
+    termsOfService: 'Nutzungsbedingungen',
+    privacyStatements: 'Datenschutzerklärung',
+    logOut: 'Abmelden',
+    termsUrl: 'https://tomorrowbiostasis.com/terms-conditions/',
+    privacyUrl: 'https://tomorrowbiostasis.com/privacy/',
+  },
   onboarding: {
     next: 'Weiter',
     getStarted: 'Loslegen',
@@ -278,20 +289,31 @@ const translations: ITranslation = {
       'Falsche Adresse, bitte geben Sie eine vorhandene Adresse ein',
   },
   emergencyContactsSettings: {
-    title: 'Einstellungen für Notfallkontakte',
+    title: 'Notfallkontakte',
     emergencyList: 'Notfallkontaktliste',
     emergencyAndSettings:
       'Einstellungen für Notfallkontakte\nand Einstellungen',
     makeSureToTestEmergencyContact:
-      'Stellen Sie sicher, dass Sie Ihren Notfallauslöser mit Ihrem neuen Kontakt testen, damit er lernt, wie er funktioniert.',
+      'Testen Sie Ihren Notfallauslöser mit jedem Kontakt, damit er weiß, wie er funktioniert.',
     AddNewEmergencyContact: 'Notfallkontakt hinzufügen',
+    editEmergencyContact: 'Notfallkontakt bearbeiten',
     emergencyButtonSettings: 'Einstellungen für Notfallnachrichten',
+    yourContacts: 'Ihre Kontakte',
+    includeWithMessage: 'In Nachricht einschließen',
+    emergencyMessageLabel: 'Notfallnachricht',
+    emergencyMessageHelper:
+      'Diese Nachricht wird bei einem Notfall per E-Mail und SMS an alle Kontakte gesendet.',
+    saveChanges: 'Änderungen speichern',
+    sendTestMessage: 'Testnachricht senden',
     addNewEdit: {
       title: 'Kontaktinformationen:',
-      firstName: 'Vorname (Notfallkontakt)',
-      lastName: 'Nachname (Notfallkontakt)',
-      email: 'E-Mail (Notfallkontakt)',
-      phoneNumber: 'Telefonnummer (Notfallkontakt)',
+      firstName: 'Vorname',
+      lastName: 'Nachname',
+      email: 'E-Mail',
+      phoneNumber: 'Telefonnummer',
+      firstNamePlaceholder: 'z. B. Petar',
+      lastNamePlaceholder: 'z. B. Petrov',
+      emailPlaceholder: 'z. B. mail@gmail.com',
       errorDuringUpdate:
         'Es gibt ein Problem mit den Daten im Formular. Bitte überprüfen Sie die Korrektheit der Daten und speichern Sie sie erneut.',
       activateContact: 'Der Kontakt wurde erfolgreich aktiviert',
@@ -332,12 +354,13 @@ const translations: ITranslation = {
     documents: {
       title: 'Dokumente',
       topInfo:
-        'Diese Dokumente werden an Ihre Notfallkontakte gesendet, wenn Sie einen Notfall auslösen ',
+        'Wird bei einem Notfall automatisch an alle Kontakte gesendet.',
+      tapToUpload: 'Zum Hochladen tippen',
       addDocument: 'Dokument hinzufügen',
       headers: {
         directive: 'Medizinische Anweisung',
         lastWill: 'Letzter Wille',
-        other: 'Sonstiges',
+        other: 'Anderes Dokument',
       },
       upload: {
         directive: 'Medizinische Anweisung hochladen',

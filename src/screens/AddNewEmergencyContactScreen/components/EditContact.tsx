@@ -1,23 +1,23 @@
 import React, {FC, useCallback, useState} from 'react';
-import {Button, Text, View} from 'native-base';
+import {View} from 'react-native';
+import {Button} from 'native-base';
 import {Formik} from 'formik';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {useAddNewEmergencyContactValidationSchema} from '~/services/Validation.service';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-
-import Input from '~/components/Input';
-
-import styles from '../styles';
-import {AddNewEmergencyContactFormFields} from '../AddNewEmergencyContactScreen';
-import {
-  IEmergencyContact,
-  IEmergencyContactResponse,
-} from '~/redux/emergencyContacts/emergencyContacts.slice';
+import FormInput from '~/components/FormInput';
 import {
   IPhoneNumber,
   PhoneNumberPicker,
 } from '~/components/PhoneNumberPicker/PhoneNumberPicker';
-import colors from '~/theme/colors';
+import {
+  IEmergencyContact,
+  IEmergencyContactResponse,
+} from '~/redux/emergencyContacts/emergencyContacts.slice';
+
+import styles from '../styles';
+import {AddNewEmergencyContactFormFields} from '../AddNewEmergencyContactScreen';
 
 interface IEditContactProps {
   contact: IEmergencyContactResponse;
@@ -66,102 +66,98 @@ export const EditContact: FC<IEditContactProps> = ({contact, onSavePress}) => {
   }, []);
 
   return (
-    <View style={styles.content}>
-      <Formik<AddNewEmergencyContactFormFields>
-        initialValues={{
-          firstName: contact.name,
-          lastName: contact.surname,
-          email: contact.email,
-        }}
-        onSubmit={handleEditPress}
-        validationSchema={AddNewEmergencyContactValidationSchema}
-        validateOnChange={true}>
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-          touched,
-          errors,
-          isValid,
-          dirty,
-        }) => (
-          <>
-            <View style={styles.inputWrapper}>
-              <Input
-                type="firstName"
-                label={t('emergencyContactsSettings.addNewEdit.firstName', {
-                  number: contact.id,
-                })}
-                onChangeText={handleChange('firstName')}
-                onBlur={handleBlur('firstName')}
-                value={values.firstName}
-                errorMessage={
-                  errors.firstName && touched.firstName
-                    ? errors.firstName
-                    : undefined
-                }
-                isValid={!errors.firstName}
-              />
-            </View>
-            <View style={styles.inputWrapper}>
-              <Input
-                type="lastName"
-                label={t('emergencyContactsSettings.addNewEdit.lastName', {
-                  number: contact.id,
-                })}
-                onChangeText={handleChange('lastName')}
-                onBlur={handleBlur('lastName')}
-                value={values.lastName}
-                isValid={!errors.lastName}
-                errorMessage={
-                  errors.lastName && touched.lastName
-                    ? errors.lastName
-                    : undefined
-                }
-              />
-            </View>
-            <View style={styles.inputWrapper}>
-              <Input
-                type="email"
-                label={t('emergencyContactsSettings.addNewEdit.email', {
-                  number: contact.id,
-                })}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                isValid={!errors.email}
-                errorMessage={
-                  errors.email && touched.email ? errors.email : undefined
-                }
-              />
-            </View>
-            <View style={styles.inputWrapper}>
-              <PhoneNumberPicker
-                label={t('emergencyContactsSettings.addNewEdit.phoneNumber', {
-                  number: contact.id,
-                })}
-                initialPhone={contact.phone}
-                initialPrefix={contact.prefix}
-                onCheckIfValid={setIsPhoneValid}
-                onChangePhoneNumber={setPhoneData}
-                onTouched={handlePhoneInputTouched}
-              />
-            </View>
+    <Formik<AddNewEmergencyContactFormFields>
+      initialValues={{
+        firstName: contact.name,
+        lastName: contact.surname,
+        email: contact.email,
+      }}
+      onSubmit={handleEditPress}
+      validationSchema={AddNewEmergencyContactValidationSchema}
+      validateOnChange>
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        touched,
+        errors,
+        isValid,
+        dirty,
+      }) => (
+        <KeyboardAwareScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.scrollContent}
+          enableOnAndroid
+          extraScrollHeight={20}
+          keyboardOpeningTime={0}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          bounces={false}>
+          <FormInput
+            label={t('emergencyContactsSettings.addNewEdit.firstName')}
+            placeholder={t(
+              'emergencyContactsSettings.addNewEdit.firstNamePlaceholder',
+            )}
+            value={values.firstName}
+            onChangeText={handleChange('firstName')}
+            onBlur={handleBlur('firstName')}
+            errorMessage={
+              errors.firstName && touched.firstName
+                ? errors.firstName
+                : undefined
+            }
+          />
+          <FormInput
+            label={t('emergencyContactsSettings.addNewEdit.lastName')}
+            placeholder={t(
+              'emergencyContactsSettings.addNewEdit.lastNamePlaceholder',
+            )}
+            value={values.lastName}
+            onChangeText={handleChange('lastName')}
+            onBlur={handleBlur('lastName')}
+            errorMessage={
+              errors.lastName && touched.lastName ? errors.lastName : undefined
+            }
+          />
+          <FormInput
+            label={t('emergencyContactsSettings.addNewEdit.email')}
+            placeholder={t(
+              'emergencyContactsSettings.addNewEdit.emailPlaceholder',
+            )}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoComplete="email"
+            value={values.email}
+            onChangeText={handleChange('email')}
+            onBlur={handleBlur('email')}
+            errorMessage={
+              errors.email && touched.email ? errors.email : undefined
+            }
+          />
+          <PhoneNumberPicker
+            variant="figma"
+            label={t('emergencyContactsSettings.addNewEdit.phoneNumber')}
+            initialPhone={contact.phone}
+            initialPrefix={contact.prefix}
+            onCheckIfValid={setIsPhoneValid}
+            onChangePhoneNumber={setPhoneData}
+            onTouched={handlePhoneInputTouched}
+          />
 
+          <View style={styles.buttonWrap}>
             <Button
-              variant={'solid'}
-              _disabled={{opacity: 1}}
-              disabled={!(isValid && isPhoneValid && (dirty || isPhoneTouched))}
-              style={styles.saveButton}
+              variant={'figmaPrimary' as never}
+              h={44}
+              isDisabled={
+                !(isValid && isPhoneValid && (dirty || isPhoneTouched))
+              }
               onPress={() => handleSubmit()}>
-              <Text color={colors.white} fontSize={'md'} fontWeight={700}>
-                {t('common.save')}
-              </Text>
+              {t('emergencyContactsSettings.saveChanges')}
             </Button>
-          </>
-        )}
-      </Formik>
-    </View>
+          </View>
+        </KeyboardAwareScrollView>
+      )}
+    </Formik>
   );
 };
