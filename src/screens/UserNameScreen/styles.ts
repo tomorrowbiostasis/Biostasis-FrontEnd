@@ -1,65 +1,67 @@
 import {StyleSheet} from 'react-native';
-import colors from '~/theme/colors';
+import {semanticColors, spacing} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
+  },
+  safeTop: {
+    alignItems: 'center',
+    paddingTop: spacing.sm,
+    paddingBottom: spacing['2xl'],
+  },
+  scrollView: {
+    flex: 1,
+  },
   contentContainer: {
-    paddingHorizontal: 0,
+    paddingHorizontal: 24,
+    paddingBottom: spacing['3xl'],
   },
-  text: {
-    alignItems: 'flex-end',
-    paddingBottom: 30,
+  eyebrow: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 13,
+    letterSpacing: 1.5,
+    color: semanticColors.textSecondary,
+    textTransform: 'uppercase',
+    marginBottom: spacing.sm,
   },
-  space: {
-    marginBottom: 20,
-    marginTop: 20,
+  title: {
+    fontFamily: 'DMSerifDisplay',
+    fontSize: 28,
+    lineHeight: 34,
+    color: semanticColors.primary,
+    marginBottom: spacing.sm,
   },
-  submitButton: {
-    marginTop: 40,
+  subtitle: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    lineHeight: 20,
+    color: semanticColors.textSecondary,
+    marginBottom: spacing['2xl'],
   },
-  content: {
-    marginBottom: 3,
-    justifyContent: 'flex-end',
-    flex: 1,
-    paddingHorizontal: '10%',
-    width: '100%',
+  fieldsWrap: {
+    marginBottom: spacing.lg,
   },
-  container: {
-    padding: 20,
-  },
-  panel: {
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    marginVertical: 10,
-    padding: 20,
-    alignItems: 'flex-start',
-  },
-  panelHeader: {
-    flex: 1,
-    width: '100%',
+  footerRow: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginVertical: 10,
+    alignItems: 'center',
+    marginTop: spacing.lg,
   },
-  panelBody: {
-    flex: 1,
-    width: '100%',
-    marginVertical: 10,
+  backChip: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: semanticColors.surfaceMuted,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.lg,
   },
-  panelFooter: {
-    flexDirection: 'row',
-    width: '100%',
-    alignItems: 'flex-start',
-    marginTop: 10,
-  },
-  lineStyle: {
-    flex: 1,
-    width: '95%',
-    borderBottomColor: colors.gray[300],
-    borderBottomWidth: 2,
-    height: 2,
-  },
-  icon: {
-    marginRight: 10,
+  backGlyph: {
+    fontSize: 22,
+    lineHeight: 24,
+    color: semanticColors.primary,
+    marginTop: -2,
   },
 });
 

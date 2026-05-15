@@ -28,8 +28,8 @@ export type AuthStackNavigatorParamList = {
 export type SignUpStackNavigatorParamList = {
   UserName: undefined;
   UserPhone: undefined;
-  UserDateOfBirth: undefined;
   UserAddress: undefined;
+  SetupComplete: undefined;
   Void: undefined;
 };
 
@@ -101,10 +101,10 @@ export enum Screens {
   LostConnection = 'LostConnection',
   HealthConditionError = 'HealthConditionError',
   UserSelectAction = 'UserSelectAction',
-  UserDateOfBirth = 'UserDateOfBirth',
   UserAddress = 'UserAddress',
   UserPhone = 'UserPhone',
   UserName = 'UserName',
+  SetupComplete = 'SetupComplete',
   AccountSettings = 'AccountSettings',
   EditEmergencyContact = 'EditEmergencyContact',
   AutomatedEmergencySettings = 'Automated Emergency Settings',

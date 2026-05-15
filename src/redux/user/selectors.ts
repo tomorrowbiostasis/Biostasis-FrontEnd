@@ -27,7 +27,10 @@ export type AutomatedEmergencySettings = Pick<
 export const userSelector = (state: RootState): IUserState => state.user;
 
 export const userInitializedSelector = (state: RootState): boolean =>
-  checkIfInitialized(state.user);
+  checkIfInitialized(state.user) && !state.user.setupCompletePending;
+
+export const setupCompletePendingSelector = (state: RootState): boolean =>
+  state.user.setupCompletePending;
 
 const checkIfInitialized = (userState: IUserState): boolean => {
   const {

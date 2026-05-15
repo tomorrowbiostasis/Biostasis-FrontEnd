@@ -111,6 +111,12 @@ const translations: ITranslation = {
     apple: 'Regístrate con Apple',
     google: 'Regístrate con Google',
     signUp: 'Regístrate',
+    steps: {
+      eyebrow: 'PASO {{current}} DE {{total}}',
+    },
+    common: {
+      next: 'Siguiente',
+    },
     createAccount: 'Crear una nueva cuenta',
   },
   signOut: {
@@ -212,11 +218,18 @@ const translations: ITranslation = {
   },
   userName: {
     title: '¿Cuál es su nombre completo?',
+    subtitle:
+      'Aparecerá en las notificaciones de emergencia enviadas a sus contactos.',
     firstName: 'Nombre',
     lastName: 'Apellido',
+    firstNamePlaceholder: 'p. ej. Pedro',
+    lastNamePlaceholder: 'p. ej. García',
   },
   userPhone: {
     title: '¿Cuál es su número de teléfono?',
+    combinedTitle: 'Teléfono y nacimiento',
+    combinedSubtitle:
+      'Se usa para la seguridad de la cuenta y verificar la edad.',
     phoneNumber: 'Número de teléfono',
     invalidPhoneNumber: 'Número de teléfono no válido',
   },
@@ -244,15 +257,22 @@ const translations: ITranslation = {
     invalidDate: 'Fecha no válida',
     invalidUserAge: 'Debes tener al menos 18 años',
     selectDate: 'Seleccionar fecha',
-    label: 'Cumpleaños:',
+    label: 'Fecha de nacimiento',
+    placeholder: 'dd/mm/aa',
+  },
+  setupComplete: {
+    welcome: 'Bienvenido',
+    title: 'Configuración completada',
   },
   userAddress: {
-    title: '¿Cuál es su dirección completa?',
-    street: 'Calle:',
-    city: 'Ciudad:',
-    country: 'País:',
-    zipCode: 'Código Postal:',
-    currentLocation: 'Ubicación actual',
+    title: 'Su dirección',
+    subtitle:
+      'Se usa cuando los equipos de emergencia deben localizarle rápidamente.',
+    street: 'Calle',
+    city: 'Ciudad',
+    country: 'País',
+    zipCode: 'CP',
+    currentLocation: 'Usar mi ubicación actual',
     wrongAddress:
       'Dirección incorrecta, por favor asegúrese de introducir la dirección existente',
   },

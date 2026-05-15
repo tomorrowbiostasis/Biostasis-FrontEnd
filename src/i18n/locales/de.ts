@@ -112,6 +112,12 @@ const translations: ITranslation = {
     google: 'Bei Google anmelden',
     signUp: 'Registrieren',
     createAccount: 'Erstellen Sie ein neues Konto',
+    steps: {
+      eyebrow: 'SCHRITT {{current}} VON {{total}}',
+    },
+    common: {
+      next: 'Weiter',
+    },
   },
   signOut: {
     disabledAutomatedEmergencyContinue: 'Möchten Sie fortfahren?',
@@ -214,11 +220,17 @@ const translations: ITranslation = {
   },
   userName: {
     title: 'Wie lautet Ihr vollständiger Name?',
+    subtitle:
+      'Erscheint in Notfallbenachrichtigungen, die an Ihre Kontakte gesendet werden.',
     firstName: 'Vorname',
     lastName: 'Nachname',
+    firstNamePlaceholder: 'z. B. Peter',
+    lastNamePlaceholder: 'z. B. Müller',
   },
   userPhone: {
     title: 'Wie lautet Ihre Telefonnummer?',
+    combinedTitle: 'Telefon & Geburtstag',
+    combinedSubtitle: 'Wird zur Kontosicherheit und Altersprüfung verwendet.',
     phoneNumber: 'Telefonnummer',
     invalidPhoneNumber: 'Ungültige Telefonnummer',
   },
@@ -246,15 +258,22 @@ const translations: ITranslation = {
     invalidDate: 'Ungültiges Datum',
     invalidUserAge: 'Sie müssen mindestens 18 Jahre alt sein',
     selectDate: 'Datum auswählen',
-    label: 'Geburtstag:',
+    label: 'Geburtsdatum',
+    placeholder: 'TT/MM/JJ',
+  },
+  setupComplete: {
+    welcome: 'Willkommen',
+    title: 'Einrichtung abgeschlossen',
   },
   userAddress: {
-    title: 'Wie lautet Ihre vollständige Adresse?',
-    street: 'Straße:',
-    city: 'Stadt:',
-    country: 'Land:',
-    zipCode: 'Postleitzahl:',
-    currentLocation: 'Aktueller Standort',
+    title: 'Ihre Heimatadresse',
+    subtitle:
+      'Wird verwendet, wenn Rettungsteams Sie schnell finden müssen.',
+    street: 'Straße',
+    city: 'Stadt',
+    country: 'Land',
+    zipCode: 'PLZ',
+    currentLocation: 'Aktuellen Standort verwenden',
     wrongAddress:
       'Falsche Adresse, bitte geben Sie eine vorhandene Adresse ein',
   },

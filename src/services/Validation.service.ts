@@ -1,5 +1,12 @@
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import * as Yup from 'yup';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
+
+const DOB_FORMAT = 'DD/MM/YYYY';
+const MIN_AGE = 18;
 
 export const regex = {
   password: /^[\S]+.*[\S]+$/,
@@ -99,6 +106,34 @@ export const useUserNameValidationSchema = () => {
   return Yup.object().shape({
     firstName: userName,
     lastName: test,
+  });
+};
+
+export const useUserPhoneAndDOBValidationSchema = () => {
+  const {t} = useAppTranslation();
+
+  return Yup.object().shape({
+    phone: Yup.string()
+      .required(t('validation.fieldRequired'))
+      .test('phone-valid', t('userPhone.invalidPhoneNumber'), value =>
+        Boolean(value && value.length > 0),
+      ),
+    phoneValid: Yup.boolean().oneOf(
+      [true],
+      t('userPhone.invalidPhoneNumber'),
+    ),
+    dateOfBirth: Yup.string()
+      .required(t('validation.fieldRequired'))
+      .test('dob-format', t('userDateOfBirth.invalidDate'), value => {
+        if (!value) return false;
+        return dayjs(value, DOB_FORMAT, true).isValid();
+      })
+      .test('dob-age', t('userDateOfBirth.invalidUserAge'), value => {
+        if (!value) return false;
+        const parsed = dayjs(value, DOB_FORMAT, true);
+        if (!parsed.isValid()) return false;
+        return dayjs().diff(parsed, 'year') >= MIN_AGE;
+      }),
   });
 };
 

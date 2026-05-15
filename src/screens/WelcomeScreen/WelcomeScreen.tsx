@@ -9,7 +9,6 @@ import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {Screens} from '~/models/Navigation.model';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
-import {semanticColors} from '~/theme/tokens';
 
 import styles from './styles';
 
@@ -60,8 +59,6 @@ const WelcomeScreen: FC = () => {
         <Button
           variant={'figmaPrimary' as never}
           h={44}
-          bg={semanticColors.primaryDeep}
-          _pressed={{bg: semanticColors.primary}}
           onPress={handleCreateAccount}>
           {t('welcome.createAccount')}
         </Button>

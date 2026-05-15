@@ -1,64 +1,89 @@
 import {StyleSheet} from 'react-native';
-import colors from '~/theme/colors';
-import { globalTextStyles } from '~/theme/globalTextStyles';
+import {semanticColors, spacing} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
+  },
+  safeTop: {
+    alignItems: 'center',
+    paddingTop: spacing.sm,
+    paddingBottom: spacing['2xl'],
+  },
+  scrollView: {
+    flex: 1,
+  },
   contentContainer: {
-    paddingTop: 0,
+    paddingHorizontal: 24,
+    paddingBottom: spacing['3xl'],
   },
-  submitButton: {
-    marginTop: 10,
+  eyebrow: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 13,
+    letterSpacing: 1.5,
+    color: semanticColors.textSecondary,
+    textTransform: 'uppercase',
+    marginBottom: spacing.sm,
   },
-  container: {
-    padding: 20,
-    width: '100%',
+  title: {
+    fontFamily: 'DMSerifDisplay',
+    fontSize: 28,
+    lineHeight: 34,
+    color: semanticColors.primary,
+    marginBottom: spacing.sm,
   },
-  panelHeader: {
-    flex: 1,
-    flexDirection: 'row',
+  subtitle: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    lineHeight: 20,
+    color: semanticColors.textSecondary,
+    marginBottom: spacing['2xl'],
+  },
+  locationPill: {
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: semanticColors.surfaceAlt,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
-  },
-  panelBody: {
-    flex: 1,
-    width: '100%',
-    marginVertical: 20,
-  },
-  panelTitle: {
-    ...globalTextStyles.titleMedium,
-  },
-  panelFooter: {
-    marginVertical: 10,
-  },
-  lineStyle: {
-    flex: 1,
-    width: '95%',
-    borderBottomColor: colors.gray[300],
-    borderBottomWidth: 2,
-    height: 2,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  userName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    paddingVertical: 20,
-    color: colors.magenta[200],
-  },
-  getLocationBox: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignSelf: 'center',
+    marginBottom: spacing['2xl'],
+  },
+  locationPillText: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 15,
+    color: semanticColors.info,
+    marginLeft: spacing.sm,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  rowCityCol: {
+    flex: 7,
+    marginRight: spacing.md,
+  },
+  rowZipCol: {
+    flex: 3,
+  },
+  footerRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.blue[700],
-    borderColor: colors.gray[50],
-    marginTop: 20,
-    borderRadius: 10,
-    borderWidth: 0.5,
-    padding: 10,
+    marginTop: spacing.lg,
+  },
+  backChip: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: semanticColors.surfaceMuted,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.lg,
+  },
+  backGlyph: {
+    fontSize: 22,
+    lineHeight: 24,
+    color: semanticColors.primary,
+    marginTop: -2,
   },
 });
 

@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   inner: {
     paddingHorizontal: 34,
-    paddingTop: 14,
+    paddingTop: spacing.lg,
     paddingBottom: spacing.lg,
   },
   topRow: {

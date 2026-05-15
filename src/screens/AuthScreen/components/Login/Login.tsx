@@ -13,7 +13,6 @@ import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {signIn} from '~/redux/auth/thunks';
 import {getSignInParams} from '~/redux/auth/selectors';
 import {Screens} from '~/models/Navigation.model';
-import {semanticColors} from '~/theme/tokens';
 
 import styles from './styles';
 
@@ -104,10 +103,7 @@ const Login: FC = () => {
               </View>
               <Button
                 variant={'figmaPrimary' as never}
-                bg={semanticColors.primaryDeep}
-                _pressed={{bg: semanticColors.primary}}
                 h={44}
-                opacity={canSubmit ? 1 : 0.4}
                 isDisabled={!canSubmit}
                 isLoading={pending}
                 onPress={() => handleSubmit()}

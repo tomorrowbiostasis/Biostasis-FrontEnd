@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import colors from '~/theme/colors';
+import {semanticColors} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -34,6 +35,48 @@ const styles = StyleSheet.create({
     color: colors.gray[800],
     opacity: 0.8,
     fontSize: 14,
+  },
+  // Figma redesign variant
+  figmaLabel: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 14,
+    letterSpacing: 0.8,
+    color: semanticColors.textSecondary,
+    textTransform: 'uppercase',
+    marginBottom: 7,
+  },
+  figmaInputContainer: {
+    height: 44,
+    borderWidth: 1,
+    borderColor: semanticColors.border,
+    borderRadius: 14,
+    backgroundColor: semanticColors.surface,
+    paddingHorizontal: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 0,
+    marginBottom: 0,
+    paddingBottom: 0,
+  },
+  figmaInput: {
+    flex: 1,
+    height: 42,
+  },
+  figmaInputContainerText: {
+    color: semanticColors.textPrimary,
+    fontSize: 15,
+    fontFamily: 'DMSans-Regular',
+  },
+  figmaInvalid: {
+    borderColor: semanticColors.danger,
+    backgroundColor: semanticColors.dangerSurface,
+  },
+  figmaErrorMessage: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 12,
+    color: semanticColors.danger,
+    marginTop: 4,
   },
 });
 

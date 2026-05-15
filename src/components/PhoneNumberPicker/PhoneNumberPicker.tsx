@@ -24,6 +24,7 @@ interface IPhoneNumberPickerProps {
   initialPhone?: string;
   initialPrefix?: number;
   label?: string;
+  variant?: 'default' | 'figma';
   onChangePhoneNumber?: (obj: IPhoneNumber) => void;
   onCheckIfValid?: (isValid: boolean) => void;
   onTouched?: () => void;
@@ -34,11 +35,13 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
   initialPhone,
   initialPrefix,
   label,
+  variant = 'default',
   onChangePhoneNumber,
   onCheckIfValid,
   onTouched,
   onSubmit,
 }) => {
+  const isFigma = variant === 'figma';
   const {t} = useAppTranslation();
   const [isTouched, setIsTouched] = useState(false);
   const phoneNumberPickerRef = useRef<PhoneInput>(null);
@@ -82,11 +85,15 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
   }, [initialPhone, initialPrefix]);
 
   const inputStyles = useMemo(() => {
+    if (isFigma) {
+      if (isTouched && !isNumberValid) return styles.figmaInvalid;
+      return null;
+    }
     if (isTouched || (initialPhone && !isTouched)) {
       return isNumberValid ? styles.valid : styles.invalid;
     }
     return null;
-  }, [isTouched, initialPhone, isNumberValid]);
+  }, [isFigma, isTouched, initialPhone, isNumberValid]);
 
   const handleInputBlur = useCallback(() => {
     setIsTouched(true);
@@ -102,10 +109,16 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
   return (
     <TouchableWithoutFeedback onPress={focusInput}>
       <View>
-        <Text style={styles.label}>{label || t('userPhone.phoneNumber')}</Text>
-        <View style={[styles.inputContainer, inputStyles]}>
+        <Text style={isFigma ? styles.figmaLabel : styles.label}>
+          {label || t('userPhone.phoneNumber')}
+        </Text>
+        <View
+          style={[
+            isFigma ? styles.figmaInputContainer : styles.inputContainer,
+            inputStyles,
+          ]}>
           <PhoneInput
-            style={styles.input}
+            style={isFigma ? styles.figmaInput : styles.input}
             ref={phoneNumberPickerRef}
             initialCountry={'de'}
             // @ts-ignore
@@ -129,13 +142,16 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
                 }
               },
             }}
-            textStyle={styles.inputContainerText}
+            textStyle={
+              isFigma ? styles.figmaInputContainerText : styles.inputContainerText
+            }
           />
-          {isCurrentNumberValid && <CheckMarkIcon />}
+          {!isFigma && isCurrentNumberValid && <CheckMarkIcon />}
         </View>
-        <View style={styles.errorMessageContainer}>
+        <View style={isFigma ? undefined : styles.errorMessageContainer}>
           {!isNumberValid && isTouched && (
-            <Text style={styles.errorMessage}>
+            <Text
+              style={isFigma ? styles.figmaErrorMessage : styles.errorMessage}>
               {t('userPhone.invalidPhoneNumber')}
             </Text>
           )}

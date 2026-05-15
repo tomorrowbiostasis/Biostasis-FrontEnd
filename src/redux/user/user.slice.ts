@@ -49,6 +49,7 @@ export interface IUserState {
   isOffline: boolean;
   emergencyButtonSettingsToastMessage?: IToastMessage;
   emergencyButtonSettingsUpdated: boolean;
+  setupCompletePending: boolean;
   testMessage: {
     pending: boolean;
     sentMessage: IToastMessage | null;
@@ -61,6 +62,7 @@ export const initialState: IUserState = {
   isOffline: false,
   emergencyButtonSettingsToastMessage: undefined,
   emergencyButtonSettingsUpdated: false,
+  setupCompletePending: false,
   testMessage: {
     pending: false,
     sentMessage: null,
@@ -89,6 +91,12 @@ export const userSlice = createSlice({
     ) => {
       state.testMessage.sentMessage = payload;
     },
+    setSetupCompletePending: (
+      state: IUserState,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.setupCompletePending = action.payload;
+    },
   },
   extraReducers: extraReducersBuilder,
 });
@@ -98,6 +106,7 @@ export const {
   clearUser,
   setEmergencyButtonSettingsUpdated,
   setTestMessageSentMessage,
+  setSetupCompletePending,
 } = userSlice.actions;
 
 export default userSlice.reducer;

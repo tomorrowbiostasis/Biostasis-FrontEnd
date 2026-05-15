@@ -11,7 +11,6 @@ import {useSignUpValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {getSignUpParams} from '~/redux/auth/selectors';
 import {signUp} from '~/redux/auth/thunks';
-import {semanticColors} from '~/theme/tokens';
 
 import styles from './styles';
 
@@ -127,14 +126,7 @@ const Register: FC = () => {
               </View>
               <Button
                 variant={'figmaPrimary' as never}
-                bg={
-                  canSubmit
-                    ? semanticColors.primaryDeep
-                    : semanticColors.primary
-                }
-                _pressed={{bg: semanticColors.primary}}
                 h={44}
-                opacity={canSubmit ? 1 : 0.4}
                 isDisabled={!canSubmit}
                 isLoading={pending}
                 onPress={() => handleSubmit()}

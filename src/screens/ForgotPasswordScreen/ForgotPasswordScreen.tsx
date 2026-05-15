@@ -12,7 +12,6 @@ import {useEmailValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {forgotPassword} from '~/redux/auth/thunks';
 import {getForgotPasswordParams} from '~/redux/auth/selectors';
-import {semanticColors} from '~/theme/tokens';
 
 import styles from './styles';
 
@@ -88,10 +87,7 @@ const ForgotPasswordScreen = () => {
                 />
                 <Button
                   variant={'figmaPrimary' as never}
-                  bg={semanticColors.primaryDeep}
-                  _pressed={{bg: semanticColors.primary}}
                   h={44}
-                  opacity={canSubmit ? 1 : 0.4}
                   isDisabled={!canSubmit}
                   isLoading={pending}
                   onPress={() => handleSubmit()}

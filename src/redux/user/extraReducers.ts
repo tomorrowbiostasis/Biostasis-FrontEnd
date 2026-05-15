@@ -68,6 +68,7 @@ const pendingLogOutUser = (state: IUserState) => {
 
 const fulfilledLogOutUser = (state: IUserState) => {
   state.pending = false;
+  state.setupCompletePending = false;
 };
 
 const rejectedLogOutUser = (state: IUserState) => {

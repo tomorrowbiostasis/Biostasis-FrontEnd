@@ -109,6 +109,12 @@ const translations = {
     google: 'Sign up with Google',
     signUp: 'Sign up',
     createAccount: 'Create a new Account',
+    steps: {
+      eyebrow: 'STEP {{current}} OF {{total}}',
+    },
+    common: {
+      next: 'Next',
+    },
   },
   signOut: {
     disabledAutomatedEmergencyContinue: 'Do you want to continue?',
@@ -206,12 +212,18 @@ const translations = {
     },
   },
   userName: {
-    title: 'What is your full name?',
+    title: "What's your full name?",
+    subtitle:
+      'This appears in emergency notifications sent to your contacts.',
     firstName: 'First name',
     lastName: 'Last name',
+    firstNamePlaceholder: 'e.g. Petar',
+    lastNamePlaceholder: 'e.g. Petrov',
   },
   userPhone: {
     title: 'What is your phone number?',
+    combinedTitle: 'Phone & birthday',
+    combinedSubtitle: 'Used for account security and age verification.',
     phoneNumber: 'Phone number',
     invalidPhoneNumber: 'Invalid phone number',
   },
@@ -238,15 +250,21 @@ const translations = {
     invalidDate: 'Invalid date',
     invalidUserAge: 'You need to be at least 18 year old',
     selectDate: 'Select date',
-    label: 'Birthday:',
+    label: 'Date of birth',
+    placeholder: 'dd/mm/yy',
+  },
+  setupComplete: {
+    welcome: 'Welcome',
+    title: 'Setup complete',
   },
   userAddress: {
-    title: 'What is your complete address?',
-    street: 'Street:',
-    city: 'City:',
-    country: 'Country:',
-    zipCode: 'Zip/Postal Code:',
-    currentLocation: 'Current Location',
+    title: 'Your home address',
+    subtitle: 'Used when emergency teams need to locate you quickly.',
+    street: 'Street',
+    city: 'City',
+    country: 'Country',
+    zipCode: 'ZIP',
+    currentLocation: 'Use my current location',
     wrongAddress: 'Wrong Address, Please make sure to enter existing address',
   },
   emergencyContactsSettings: {

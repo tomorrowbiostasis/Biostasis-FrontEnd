@@ -67,8 +67,21 @@ export const figmaPrimaryButtonStyles = {
     backgroundColor: 'primaryPressed',
   },
   _disabled: {
-    backgroundColor: 'primaryDisabled',
+    backgroundColor: 'primary',
+    opacity: 0.4,
+    _text: {
+      color: 'textInverse',
+    },
+  },
+  _loading: {
+    backgroundColor: '#2A3647',
     opacity: 1,
+    _text: {
+      color: 'textInverse',
+    },
+    _spinner: {
+      color: 'textInverse',
+    },
   },
 };
 

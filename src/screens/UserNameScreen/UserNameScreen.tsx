@@ -1,18 +1,21 @@
-import {Button, Text, View} from 'native-base';
 import React, {useCallback} from 'react';
+import {Keyboard, Platform, Pressable, Text, View} from 'react-native';
+import {Button} from 'native-base';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {Formik} from 'formik';
+import {useNavigation} from '@react-navigation/native';
+
+import FormInput from '~/components/FormInput';
+import StepIndicator from '~/components/StepIndicator';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-import Container from '~/components/Container';
-import Input from '~/components/Input';
 import {useUserNameValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
-import {useNavigation} from '@react-navigation/native';
 import {updateUser} from '~/redux/user/thunks';
-import styles from './styles';
-import {Screens} from '~/models/Navigation.model';
-import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Keyboard} from 'react-native';
 import {userLoading} from '~/redux/user/selectors';
+import {Screens} from '~/models/Navigation.model';
+
+import styles from './styles';
 
 type NameFormFields = {
   firstName: string;
@@ -21,10 +24,16 @@ type NameFormFields = {
 
 export const UserNameScreen = () => {
   const {t} = useAppTranslation();
-  const {navigate} = useNavigation();
+  const {navigate, goBack, canGoBack} = useNavigation();
   const dispatch = useAppDispatch();
   const userNameValidationSchema = useUserNameValidationSchema();
   const pending = useAppSelector(userLoading);
+
+  const handleBack = useCallback(() => {
+    if (canGoBack()) {
+      goBack();
+    }
+  }, [canGoBack, goBack]);
 
   const handleContinuePress = useCallback(
     async ({firstName, lastName}: NameFormFields) => {
@@ -40,42 +49,48 @@ export const UserNameScreen = () => {
   );
 
   return (
-    <Container
-      containerStyle={styles.container}
-      type={'keyboardAvoidingScrollView'}>
-      <View style={styles.panel}>
-        <View style={styles.panelHeader}>
-          <IconMaterialCommunityIcons
-            name={'pencil-outline'}
-            size={26}
-            style={styles.icon}
-          />
-          <Text fontSize={'md'} fontWeight={700}>
-            {t('userName.title')}
-          </Text>
-        </View>
-        <View style={styles.lineStyle} />
-        <View style={styles.panelBody}>
-          <Formik<NameFormFields>
-            initialValues={{firstName: '', lastName: ''}}
-            onSubmit={handleContinuePress}
-            validationSchema={userNameValidationSchema}
-            validateOnChange={true}>
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              isValid,
-              dirty,
-              touched,
-              errors,
-            }) => (
+    <View style={styles.root}>
+      <SafeAreaView edges={['top']} style={styles.safeTop}>
+        <StepIndicator total={3} currentIndex={0} />
+      </SafeAreaView>
+      <KeyboardAwareScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
+        enableOnAndroid
+        extraScrollHeight={Platform.OS === 'ios' ? 20 : 80}
+        keyboardOpeningTime={0}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        bounces={false}>
+        <Text style={styles.eyebrow}>
+          {t('signUp.steps.eyebrow', {current: 1, total: 3})}
+        </Text>
+        <Text style={styles.title}>{t('userName.title')}</Text>
+        <Text style={styles.subtitle}>{t('userName.subtitle')}</Text>
+
+        <Formik<NameFormFields>
+          initialValues={{firstName: '', lastName: ''}}
+          onSubmit={handleContinuePress}
+          validationSchema={userNameValidationSchema}
+          validateOnChange>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            isValid,
+            dirty,
+            touched,
+            errors,
+          }) => {
+            const canSubmit = isValid && dirty && !pending;
+            return (
               <>
-                <View style={styles.space}>
-                  <Input
-                    type="firstName"
+                <View style={styles.fieldsWrap}>
+                  <FormInput
                     label={t('userName.firstName')}
+                    placeholder={t('userName.firstNamePlaceholder')}
+                    autoCapitalize="words"
                     onChangeText={handleChange('firstName')}
                     onBlur={handleBlur('firstName')}
                     value={values.firstName}
@@ -84,51 +99,54 @@ export const UserNameScreen = () => {
                         ? errors.firstName
                         : undefined
                     }
-                    isValid={!errors.firstName && touched.firstName}
+                  />
+                  <FormInput
+                    label={t('userName.lastName')}
+                    placeholder={t('userName.lastNamePlaceholder')}
+                    autoCapitalize="words"
+                    onChangeText={handleChange('lastName')}
+                    onBlur={handleBlur('lastName')}
+                    value={values.lastName}
+                    errorMessage={
+                      errors.lastName && touched.lastName
+                        ? errors.lastName
+                        : undefined
+                    }
+                    onSubmitEditing={() => {
+                      if (canSubmit) {
+                        Keyboard.dismiss();
+                        handleSubmit();
+                      }
+                    }}
                   />
                 </View>
-                <Input
-                  type="lastName"
-                  label={t('userName.lastName')}
-                  onChangeText={handleChange('lastName')}
-                  onBlur={handleBlur('lastName')}
-                  value={values.lastName}
-                  isValid={!errors.lastName && touched.lastName}
-                  errorMessage={
-                    errors.lastName && touched.lastName
-                      ? errors.lastName
-                      : undefined
-                  }
-                  onSubmitEditing={() => {
-                    if (
-                      !errors.firstName &&
-                      !errors.lastName &&
-                      isValid &&
-                      dirty
-                    ) {
-                      Keyboard.dismiss();
-                      handleSubmit();
-                    }
-                  }}
-                />
-                <Button
-                  variant={'solid'}
-                  disabled={
-                    !!errors.firstName ||
-                    !!errors.lastName ||
-                    !(isValid && dirty)
-                  }
-                  isLoading={pending}
-                  style={styles.submitButton}
-                  onPress={() => handleSubmit()}>
-                  {t('common.continue')}
-                </Button>
+
+                <View style={styles.footerRow}>
+                  <Pressable
+                    onPress={handleBack}
+                    style={styles.backChip}
+                    hitSlop={10}
+                    accessibilityRole="button"
+                    accessibilityLabel="Back">
+                    <Text style={styles.backGlyph}>{'‹'}</Text>
+                  </Pressable>
+                  <Button
+                    variant={'figmaPrimary' as never}
+                    h={44}
+                    flex={1}
+                    isDisabled={!canSubmit}
+                    isLoading={pending}
+                    onPress={() => handleSubmit()}>
+                    {`${t('signUp.common.next')}  →`}
+                  </Button>
+                </View>
               </>
-            )}
-          </Formik>
-        </View>
-      </View>
-    </Container>
+            );
+          }}
+        </Formik>
+      </KeyboardAwareScrollView>
+    </View>
   );
 };
+
 export default UserNameScreen;

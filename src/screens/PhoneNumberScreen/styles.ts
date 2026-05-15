@@ -1,52 +1,107 @@
 import {StyleSheet} from 'react-native';
-import colors from '~/theme/colors';
+import {semanticColors, spacing} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    width: '100%',
-  },
-  submitButton: {
-    marginTop: 20,
-  },
-  inputContainer: {
-    height: 60,
-  },
-  panel: {
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    marginVertical: 10,
-    padding: 20,
-    alignItems: 'flex-start',
-  },
-  panelHeader: {
+  root: {
     flex: 1,
-    width: '100%',
+    backgroundColor: semanticColors.surfaceCanvas,
+  },
+  safeTop: {
+    alignItems: 'center',
+    paddingTop: spacing.sm,
+    paddingBottom: spacing['2xl'],
+  },
+  scrollView: {
+    flex: 1,
+  },
+  contentContainer: {
+    paddingHorizontal: 24,
+    paddingBottom: spacing['3xl'],
+  },
+  eyebrow: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 13,
+    letterSpacing: 1.5,
+    color: semanticColors.textSecondary,
+    textTransform: 'uppercase',
+    marginBottom: spacing.sm,
+  },
+  title: {
+    fontFamily: 'DMSerifDisplay',
+    fontSize: 28,
+    lineHeight: 34,
+    color: semanticColors.primary,
+    marginBottom: spacing.sm,
+  },
+  subtitle: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    lineHeight: 20,
+    color: semanticColors.textSecondary,
+    marginBottom: spacing['2xl'],
+  },
+  fieldsWrap: {
+    marginBottom: spacing.lg,
+  },
+  dobBlock: {
+    marginTop: spacing.lg,
+  },
+  dobLabel: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 14,
+    letterSpacing: 0.8,
+    color: semanticColors.textSecondary,
+    textTransform: 'uppercase',
+    marginBottom: 7,
+  },
+  dobField: {
+    height: 44,
+    borderWidth: 1,
+    borderColor: semanticColors.border,
+    borderRadius: 14,
+    backgroundColor: semanticColors.surface,
+    paddingHorizontal: 12,
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  panelBody: {
-    flex: 1,
-    width: '100%',
-    marginVertical: 40,
+  dobFieldError: {
+    borderColor: semanticColors.danger,
+    backgroundColor: semanticColors.dangerSurface,
   },
-  lineStyle: {
-    flex: 1,
-    width: '95%',
-    borderBottomColor: colors.gray[300],
-    borderBottomWidth: 2,
-    height: 2,
+  dobValue: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 15,
+    color: semanticColors.textPrimary,
   },
-  icon: {
-    marginRight: 10,
+  dobPlaceholder: {
+    color: semanticColors.textMuted,
   },
-  userName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    paddingVertical: 20,
-    color: colors.magenta[200],
+  dobErrorText: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 12,
+    color: semanticColors.danger,
+    marginTop: 4,
+  },
+  footerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: spacing.lg,
+  },
+  backChip: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: semanticColors.surfaceMuted,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.lg,
+  },
+  backGlyph: {
+    fontSize: 22,
+    lineHeight: 24,
+    color: semanticColors.primary,
+    marginTop: -2,
   },
 });
 

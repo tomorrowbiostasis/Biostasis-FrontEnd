@@ -112,6 +112,12 @@ const translations: ITranslation = {
     google: "S'inscrire avec Google",
     signUp: "S'inscrire",
     createAccount: 'Créer un nouveau compte',
+    steps: {
+      eyebrow: 'ÉTAPE {{current}} SUR {{total}}',
+    },
+    common: {
+      next: 'Suivant',
+    },
   },
   signOut: {
     disabledAutomatedEmergencyContinue: 'Voulez-vous continuer ?',
@@ -212,11 +218,18 @@ const translations: ITranslation = {
   },
   userName: {
     title: 'Quel est votre nom complet ?',
+    subtitle:
+      "Apparaît dans les notifications d'urgence envoyées à vos contacts.",
     firstName: 'Prénom',
     lastName: 'Nom de famille',
+    firstNamePlaceholder: 'p. ex. Pierre',
+    lastNamePlaceholder: 'p. ex. Dupont',
   },
   userPhone: {
     title: 'Quel est votre numéro de téléphone ?',
+    combinedTitle: 'Téléphone & naissance',
+    combinedSubtitle:
+      "Utilisé pour la sécurité du compte et la vérification de l'âge.",
     phoneNumber: 'Numéro de téléphone',
     invalidPhoneNumber: 'Numéro de téléphone non valide',
   },
@@ -244,15 +257,22 @@ const translations: ITranslation = {
     invalidDate: 'Date non valide',
     invalidUserAge: 'Vous devez avoir au moins 18 ans',
     selectDate: 'Sélectionner une date',
-    label: 'Birthday:',
+    label: 'Date de naissance',
+    placeholder: 'jj/mm/aa',
+  },
+  setupComplete: {
+    welcome: 'Bienvenue',
+    title: 'Configuration terminée',
   },
   userAddress: {
-    title: 'Quelle est votre adresse complète ?',
-    street: 'Rue :',
-    city: 'Ville :',
-    country: 'Pays :',
-    zipCode: 'Code postal:',
-    currentLocation: 'Lieu actuel',
+    title: 'Votre adresse',
+    subtitle:
+      'Utilisée lorsque les secours doivent vous localiser rapidement.',
+    street: 'Rue',
+    city: 'Ville',
+    country: 'Pays',
+    zipCode: 'CP',
+    currentLocation: 'Utiliser ma position actuelle',
     wrongAddress: "Adresse erronée, veillez à saisir l'adresse existante",
   },
   emergencyContactsSettings: {
