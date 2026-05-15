@@ -6,33 +6,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
-    borderRadius: radius.md,
-    minHeight: 50,
+    paddingHorizontal: spacing.md,
+    borderRadius: 14,
+    borderWidth: 1,
+    minHeight: 48,
   },
   dot: {
-    width: 8,
-    height: 8,
+    width: 10,
+    height: 10,
     borderRadius: radius.pill,
-    marginRight: spacing.md,
+    marginRight: spacing.sm,
   },
   textBlock: {
     flex: 1,
   },
   title: {
-    ...typography.bodySemibold,
-    color: semanticColors.textPrimary,
-  },
-  titleMuted: {
-    color: semanticColors.textMuted,
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 15,
+    lineHeight: 20,
   },
   subtitle: {
     ...typography.caption,
     color: semanticColors.textSecondary,
     marginTop: spacing.xxs,
-  },
-  subtitleMuted: {
-    color: semanticColors.textMuted,
   },
   timestamp: {
     ...typography.captionMedium,

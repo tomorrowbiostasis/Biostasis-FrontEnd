@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
 import AuthStack from './AuthStack';
-import Drawer from './Drawer';
+import MainStack from './MainStack';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useAppSelector} from '~/redux/store/hooks';
 import {
@@ -80,7 +80,7 @@ const Container = () => {
         {showAuthenticatedShell ? (
           isInitialized ? (
             <>
-              <Stack.Screen name="MainStack" component={Drawer} />
+              <Stack.Screen name="MainStack" component={MainStack} />
               <Stack.Screen
                 options={{gestureEnabled: false}}
                 name="HealthConditionError"

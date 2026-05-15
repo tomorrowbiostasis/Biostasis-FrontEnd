@@ -14,7 +14,6 @@ import Loader from '~/components/Loader';
 
 import styles from './styles';
 import {useCallback} from 'react';
-import DrawerTrigger from '../DrawerTrigger';
 import BackButtonTrigger from '../BackButtonTrigger';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -97,7 +96,6 @@ const Container: FC<ContainerProps> = ({
     <View style={styles.header}>
         {showBackIcon && <BackButtonTrigger />}
         {title && <Heading style={titleText}>{title}</Heading>}
-        {showDrawerIcon && <DrawerTrigger />}
       </View>
       <Wrapper edges={safeAreaEdges} style={styles.container}>
         <ContentContainer>

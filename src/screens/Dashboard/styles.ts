@@ -1,143 +1,109 @@
 import {StyleSheet} from 'react-native';
-import boxShadow from '~/theme/boxShadow';
-import colors from '~/theme/colors';
-import {fontConfig} from '~/theme/fonts';
-import { globalTextStyles } from '~/theme/globalTextStyles';
+import {semanticColors} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
   },
-  contentContainer: {
-    ...boxShadow,
+  header: {
+    backgroundColor: semanticColors.primary,
+    borderBottomLeftRadius: 26,
+    borderBottomRightRadius: 26,
   },
-  curveElement: {
-    position: 'absolute',
-    zIndex: 1,
-    top: 100,
-    // borderWidth: 2,
-    // borderColor: 'red',
-    height: 50,
-    backgroundColor: colors.gray[50],
-    width: '100%',
-    borderBottomLeftRadius: 100,
-    borderBottomRightRadius: 100,
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 34,
+    paddingTop: 12,
+    paddingBottom: 24,
+  },
+  eyebrow: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 13,
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+    color: 'rgba(255, 255, 255, 0.5)',
+  },
+  greeting: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 18,
+    letterSpacing: -0.36,
+    color: '#F1F3F6',
+    marginTop: 12,
+  },
+  name: {
+    fontFamily: 'DMSerifDisplay-Regular',
+    fontSize: 26,
+    color: '#F1F3F6',
+    marginTop: 2,
+  },
+  menuButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: semanticColors.surfaceCanvas,
+    borderWidth: 1,
+    borderColor: 'rgba(11, 31, 58, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 5,
+  },
+  menuLine: {
+    height: 2,
+    borderRadius: 1,
+    backgroundColor: semanticColors.primary,
+  },
+  menuLineLong: {
+    width: 17,
+  },
+  menuLineShort: {
+    width: 12,
+  },
+  scroll: {
+    flex: 1,
   },
   scrollContent: {
-    flex: 1,
-    width: '100%',
+    paddingHorizontal: 34,
+    paddingTop: 16,
+    paddingBottom: 28,
+    gap: 18,
   },
-  scrollContentContainer: {
-    paddingTop: 10,
-    paddingBottom: 90,
-    justifyContent: 'center',
-    alignItems: 'center',
+  metricsCard: {
+    backgroundColor: semanticColors.surface,
+    borderRadius: 14,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    gap: 10,
   },
-  titleText: {
-    fontSize: 32,
-    fontFamily: fontConfig.Poppins[700].normal,
-    color: colors.blueDark[200],
+  collectedAt: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    color: '#1D1617',
   },
-  section: {
-    flex: 1,
-    width: '90%',
-    marginTop: 20,
-  },
-  sectionTitle: {
-    ...globalTextStyles.titleMedium,
-    fontFamily: fontConfig.Poppins[600].normal,
-    color: colors.blueDark[200],
-  },
-  panel: {
-    flex: 1,
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    padding: 20,
-    marginVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    ...boxShadow,
-  },
-  panelHeader: {
-    alignSelf: 'flex-end',
-    marginVertical: 10,
-  },
-  panelBody: {
-    flex: 1,
-    marginVertical: 10,
-  },
-  panelFooter: {
-    flex: 1,
-    width: '100%',
-    alignSelf: 'flex-start',
-    marginTop: 10,
-  },
-  message: {
-    flex: 1,
-    marginTop: 10,
-  },
-  learnMoreBox: {
-    flex: 1,
-    width: '100%',
+  metricsRow: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    gap: 10,
   },
-  learnMoreText: {
-    fontSize: 10,
-    color: colors.blue[800],
+  sectionLabel: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 13,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
+    color: '#6B7A8E',
   },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 12,
+  cards: {
+    gap: 16,
   },
-  emergencyButton: {
-    position: 'absolute',
-    justifyContent: 'center',
-    bottom: 0,
-    alignSelf: 'center',
-    marginBottom: 10,
-    borderRadius: 20,
-    minHeight: 80,
-    width: '90%',
-    backgroundColor: colors.pink[600],
-  },
-  activeButton: {
-    flexDirection: 'row',
+  badge: {
+    paddingHorizontal: 12,
     paddingVertical: 5,
-    marginVertical: 5,
-    marginLeft: '25%',
-    padding: 10,
-    alignItems: 'center',
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: colors.gray[300],
-    backgroundColor: colors.white,
+    borderRadius: 24,
   },
-  isActive: {
-    backgroundColor: colors.green[75],
-  },
-  buttonText: {
-    flex: 1,
-    color: colors.black,
-    fontWeight: '500',
-  },
-  buttonIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
-    padding: 5,
-    borderRadius: 20,
-    backgroundColor: colors.gray[50],
-  },
-  emergencyCaption: {
-    color: colors.white,
-    fontFamily: fontConfig.Poppins[700].normal,
-    fontSize: 16,
-  },
-  emergencySubCaption: {
-    color: colors.white,
-    fontFamily: fontConfig.Poppins[400].normal,
+  badgeText: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 13,
   },
 });
 

@@ -1,21 +1,14 @@
-import React, {useCallback, useEffect, useLayoutEffect, useState, useRef} from 'react';
-import {
-  Image,
-  ScrollView,
-  Settings,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  Vibration,
-} from 'react-native';
-import {Text, Box} from 'native-base';
+import React, {useCallback, useEffect, useLayoutEffect} from 'react';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {useDispatch} from 'react-redux';
 
-import Container from '~/components/Container';
 import {UseAppState} from '~/hooks/UseAppState.hook';
 import {Screens} from '~/models/Navigation.model';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
-import IconWithText from './components/IconWithText';
-
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppSelector} from '~/redux/store/hooks';
 import {
@@ -23,139 +16,115 @@ import {
   automatedEmergencySettingsSelector,
   userSelector,
 } from '~/redux/user/selectors';
-import {useNavigation} from '@react-navigation/native';
-import {useEmergencyValue} from '~/services/Emergency.service';
-import colors from '~/theme/colors';
-import styles from './styles';
-import {useNavigateToAddNewEmergencyContactScreenName} from '~/hooks/UseNavigateWithLogic.hook';
 import {selectContactsInfo} from '~/redux/emergencyContacts/selectors';
 import {
   getGoogleMapsUrl,
   getLocation,
   requestLocationPermission,
 } from '~/services/Location.service';
-import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
-import IconFontisto from 'react-native-vector-icons/Fontisto';
-import {useDispatch} from 'react-redux';
 import {
   getUser,
   updateEmergencyButtonSettings,
   updateUser,
 } from '~/redux/user/thunks';
-import {isIOS, updateDataCollectionStatus} from '~/utils';
-// import IconFeather from 'react-native-vector-icons/Feather';
+import {isIOS, updateDataCollectionStatus, getHealthDataEmitter} from '~/utils';
 import {IUser} from '~/redux/user/user.slice';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
-import {getHealthDataEmitter} from '~/utils';
 import {setHealthData, setAllHealthData} from '~/redux/health/health.slice';
+
+import StatusBanner from '~/components/StatusBanner';
+import MetricCard from '~/components/MetricCard';
+import SystemCard from '~/components/SystemCard';
+import IconChip from '~/components/IconChip';
+import Toggle from '~/components/Toggle';
+import {
+  HeartPulseIcon,
+  FootprintsIcon,
+  EmergencySystemIcon,
+  ClipboardListIcon,
+  BroadcastIcon,
+  CircleCheckIcon,
+} from '~/assets/icons/AppIcons';
+import styles from './styles';
+
+const formatCollectedAt = (timestamp?: number | null): string | null => {
+  if (!timestamp) {
+    return null;
+  }
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) {
+    return null;
+  }
+  let hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const suffix = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12 || 12;
+  return `${hours.toString().padStart(2, '0')}:${minutes}${suffix}`;
+};
 
 const Dashboard = () => {
   const {t} = useAppTranslation();
   const {navigate} = useNavigation();
-  const {startEmergency, stopEmergency} = useEmergencyValue();
+  const dispatch = useDispatch();
+  const tabBarHeight = useBottomTabBarHeight();
+
   const {user} = useAppSelector(userSelector);
   const {hasContacts, areContactsEnabled} = useAppSelector(selectContactsInfo);
-  const dispatch = useDispatch();
+  const {automatedEmergency} = useAppSelector(automatedEmergencySettingsSelector);
+  const health = useAppSelector(state => state.health.data);
   const {isActive} = UseAppState();
-  const AddNewEmergencyContactScreenName =
-    useNavigateToAddNewEmergencyContactScreenName();
-  const {automatedEmergency, regularPushNotification} = useAppSelector(
-    automatedEmergencySettingsSelector,
-  );
-  const [recommendedPeriod, setRecommendedPeriod] = useState<string | null>(
-    null,
-  );
-  const pressTimeOutRef = useRef<NodeJS.Timeout | null>(null);
+
+  /* ----- preserved side-effects (data fetching, triggers, location) ----- */
   useEffect(() => {
-    const abortController = new AbortController();
+    const subscription = getHealthDataEmitter()?.addListener(
+      'HealthDataEvent',
+      (data: any) => {
+        let cumulativeSteps = 0;
+        let lastEntryKey: string | null = null;
+        let lastStepsEndDate: string | null = null;
 
-    const handleRecommendedPeriod = async () => {
-      try {
-        const period = isIOS
-          ? await Settings.get(AsyncStorageEnum.RecommendedPeriod)
-          : await AsyncStorageService.getItem(
-              AsyncStorageEnum.RecommendedPeriod,
-            );
-        setRecommendedPeriod(period);
-      } catch (error) {
-        console.error('Error retrieving recommended period:', error);
-        setRecommendedPeriod(null);
-      }
-    };
-
-    handleRecommendedPeriod();
-    return () => {
-      abortController.abort();
-    };
-  }, []);
-
-
-useEffect(() => {
-  const subscription = getHealthDataEmitter()?.addListener('HealthDataEvent', (data) => {
-    let cumulativeSteps = 0;
-
-    // Keep track of previous entry's key to filter duplicates
-    let lastEntryKey: string | null = null;
-    let lastStepsEndDate: string | null = null;
-
-    if (Array.isArray(data.allHealthData)) {
-      const normalizedArray = [...data.allHealthData]
-        .filter((entry: any) => {
-          const heartRateEndDate = entry.heartRateEndDate || null;
-          const restingHeartRateEndDate = entry.restingHeartRateEndDate || null;
-          const stepsEndDate = entry.stepsEndDate || null;
-
-          const currentKey = `${heartRateEndDate}|${restingHeartRateEndDate}|${stepsEndDate}`;
-
-          if (currentKey === lastEntryKey) {
-            // Duplicate of previous — filter out
-            return false;
-          }
-
-          lastEntryKey = currentKey;
-          return true;
-        })
-        .map((entry: any) => {
-          const stepsEndDate = entry.stepsEndDate || null;
-          const steps = typeof entry.steps === 'number' ? entry.steps : 0;
-
-          if (stepsEndDate !== lastStepsEndDate) {
-            cumulativeSteps += steps;
-            lastStepsEndDate = stepsEndDate;
-          }
-
-          return {
-            ...entry,
-            heartRateEndDate: entry.heartRateEndDate || null,
-            restingHeartRateEndDate: entry.restingHeartRateEndDate || null,
-            stepsEndDate,
-            totalSteps: cumulativeSteps,
-          };
-        });
-
-      dispatch(setAllHealthData(normalizedArray));
-    } else {
-      const normalizedData = {
-        ...data,
-        heartRateEndDate: data.heartRateEndDate || null,
-        restingHeartRateEndDate: data.restingHeartRateEndDate || null,
-        stepsEndDate: data.stepsEndDate || null,
-      };
-
-      dispatch(setHealthData(normalizedData));
-      console.log("📥 Received current health data:", normalizedData);
-    }
-  });
-
-  return () => {
-    subscription?.remove();
-  };
-}, []);
-
-
-
-
-
+        if (Array.isArray(data.allHealthData)) {
+          const normalizedArray = [...data.allHealthData]
+            .filter((entry: any) => {
+              const currentKey = `${entry.heartRateEndDate || null}|${
+                entry.restingHeartRateEndDate || null
+              }|${entry.stepsEndDate || null}`;
+              if (currentKey === lastEntryKey) {
+                return false;
+              }
+              lastEntryKey = currentKey;
+              return true;
+            })
+            .map((entry: any) => {
+              const stepsEndDate = entry.stepsEndDate || null;
+              const steps = typeof entry.steps === 'number' ? entry.steps : 0;
+              if (stepsEndDate !== lastStepsEndDate) {
+                cumulativeSteps += steps;
+                lastStepsEndDate = stepsEndDate;
+              }
+              return {
+                ...entry,
+                heartRateEndDate: entry.heartRateEndDate || null,
+                restingHeartRateEndDate: entry.restingHeartRateEndDate || null,
+                stepsEndDate,
+                totalSteps: cumulativeSteps,
+              };
+            });
+          dispatch(setAllHealthData(normalizedArray));
+        } else {
+          dispatch(
+            setHealthData({
+              ...data,
+              heartRateEndDate: data.heartRateEndDate || null,
+              restingHeartRateEndDate: data.restingHeartRateEndDate || null,
+              stepsEndDate: data.stepsEndDate || null,
+            }),
+          );
+        }
+      },
+    );
+    return () => subscription?.remove();
+  }, [dispatch]);
 
   useLayoutEffect(() => {
     dispatch(getUser());
@@ -187,8 +156,6 @@ useEffect(() => {
     };
     const location = await getLocation(5000);
     payload.location = getGoogleMapsUrl(location);
-    console.log('LOCATION WILL BE UPDATED');
-
     dispatch(updateUser(payload));
   }, [dispatch]);
 
@@ -200,9 +167,7 @@ useEffect(() => {
   useEffect(() => {
     requestLocationPermission(false)
       .then(isGranted => {
-        const values: EmergencyButtonSettings = {
-          locationAccess: isGranted,
-        };
+        const values: EmergencyButtonSettings = {locationAccess: isGranted};
         dispatch(updateEmergencyButtonSettings(values));
         isGranted && handleLocationChange();
         updateDataCollectionStatus();
@@ -222,377 +187,232 @@ useEffect(() => {
       })();
   }, [isActive, navigate]);
 
-  const handleContacts = useCallback(() => {
-    navigate(Screens.EmergencyContactSettings as never);
-  }, [navigate]);
+  /* ----- derived state ----- */
+  const contactsReady = hasContacts && areContactsEnabled;
+  const fullySetUp = contactsReady && !!automatedEmergency;
 
-  const handleAutomatedEmergency = useCallback(() => {
-    navigate(Screens.AutomatedEmergencySettings as never);
-  }, [navigate]);
+  const bannerVariant = fullySetUp ? 'active' : 'degraded';
+  const bannerText = fullySetUp
+    ? t('dashboardHome.banner.active')
+    : !contactsReady
+    ? t('dashboardHome.banner.noContacts')
+    : t('dashboardHome.banner.systemOff');
 
-  const handleSignUpTomorrowBio = useCallback(
-    () => navigate(Screens.SignUpForCryopreservation as never),
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12
+      ? t('dashboardHome.greeting.morning')
+      : hour < 18
+      ? t('dashboardHome.greeting.afternoon')
+      : t('dashboardHome.greeting.evening');
+
+  const collectedAt = formatCollectedAt(
+    health?.heartRateEndDate || health?.stepsEndDate,
+  );
+
+  const heartRate = health?.heartRate;
+  const steps = health?.totalSteps ?? health?.steps;
+
+  const hrCaption = (() => {
+    if (heartRate == null) {
+      return t('dashboardHome.metrics.noData');
+    }
+    if (heartRate < 60) {
+      return `bpm · ${t('dashboardHome.metrics.low')}`;
+    }
+    if (heartRate > 100) {
+      return `bpm · ${t('dashboardHome.metrics.high')}`;
+    }
+    return `bpm · ${t('dashboardHome.metrics.normal')}`;
+  })();
+
+  const stepsCaption = (() => {
+    if (steps == null) {
+      return t('dashboardHome.metrics.noData');
+    }
+    const level =
+      steps < 5000
+        ? t('dashboardHome.metrics.low')
+        : steps < 10000
+        ? t('dashboardHome.metrics.moderate')
+        : t('dashboardHome.metrics.high');
+    return `${t('dashboardHome.metrics.today')} · ${level}`;
+  })();
+
+  /* ----- navigation ----- */
+  const goSettings = useCallback(
+    () => navigate(Screens.AccountSettings as never),
+    [navigate],
+  );
+  const goHealthLogs = useCallback(
+    () => navigate(Screens.CurrentHealthLog as never),
+    [navigate],
+  );
+  const goEmergencyContacts = useCallback(
+    () => navigate(Screens.EmergencyContactSettings as never),
+    [navigate],
+  );
+  const goAutomatedEmergency = useCallback(
+    () => navigate(Screens.AutomatedEmergencySettings as never),
     [navigate],
   );
 
-  // const openAlcorWebsite = () => {
-  //   Linking.openURL(t('cryopreservationCompaniesUrls.alcor'));
-  // };
-
-  // const openCryonicsInstituteWebsite = () => {
-  //   Linking.openURL(t('cryopreservationCompaniesUrls.cryonicsInstitute'));
-  // };
-
-  // const openSouthernCryonicsWebsite = () => {
-  //   Linking.openURL(t('cryopreservationCompaniesUrls.southernCryonics'));
-  // };
-
-  const handleEmergencyStart = useCallback(() => {
-    pressTimeOutRef.current = setTimeout(()=>{
-      if (hasContacts && areContactsEnabled) {
-        Vibration.vibrate();
-        startEmergency();
-      } else {
-        navigate(AddNewEmergencyContactScreenName as never);
-      }
-    },500);
-    }, [
-    AddNewEmergencyContactScreenName,
-    areContactsEnabled,
-    hasContacts,
-    navigate,
-    startEmergency,
-  ]);
-
-  const handleEmergencyStop = useCallback(() => {
-    if (hasContacts && areContactsEnabled) {
-      stopEmergency();
-    }
-    if(pressTimeOutRef.current){
-      clearTimeout(pressTimeOutRef.current);
-    }
-  }, [areContactsEnabled, hasContacts, stopEmergency]);
-
-  const getEmergencyButtonLabel = useCallback(() => {
-    if (hasContacts && areContactsEnabled) {
-      return t('dashboard.emergency.countdown');
-    } else if (hasContacts && !areContactsEnabled) {
-      return t('dashboard.emergency.enableContacts');
-    }
-    return t('dashboard.emergency.setUpContacts');
-  }, [areContactsEnabled, hasContacts, t]);
-
   return (
-    <>
-      <Container
-        title={t('headers.welcomeUsername', {username: user.name})}
-        disableWrapper
-        containerStyle={styles.container}
-        contentContainerStyle={styles.contentContainer}
-        titleText={styles.titleText}
-        showDrawerIcon>
-        <Box style={styles.curveElement} />
-        <ScrollView
-          bounces={false}
-          style={styles.scrollContent}
-          contentContainerStyle={styles.scrollContentContainer}>
-          <Box style={styles.section}>
-            <Text style={styles.sectionTitle}>
-              {t('dashboard.sections.emergencySystem')}
+    <View style={styles.root}>
+      <SafeAreaView edges={['top']} style={styles.header}>
+        <View style={styles.headerRow}>
+          <View>
+            <Text style={styles.eyebrow}>{t('welcome.eyebrow')}</Text>
+            <Text style={styles.greeting}>{greeting}</Text>
+            <Text style={styles.name} numberOfLines={1}>
+              {user.name || ''}
             </Text>
-            <TouchableOpacity onPress={handleContacts} style={styles.panel}>
-              <IconFontAwesome
-                name={'sliders'}
-                size={24}
-                style={styles.panelHeader}
-                color={colors.gray[600]}
-              />
-              <IconWithText
-                icon={
-                  <Image
-                    style={styles.image}
-                    source={require('~/assets/images/dashboard/emergencyContacts.png')}
-                  />
-                }
-                title={t('dashboard.contacts.title')}
-                description={t('dashboard.contacts.description')}
-                style={styles.panelBody}
-              />
-              <Box style={styles.panelFooter}>
-                {hasContacts && areContactsEnabled ? (
-                  <Box style={[styles.activeButton, styles.isActive]}>
-                    <Box style={styles.buttonIcon}>
-                      <IconFontAwesome
-                        name={'check'}
-                        size={14}
-                        color={colors.green[75]}
-                      />
-                    </Box>
-                    <Text
-                      fontSize={'xs'}
-                      style={[styles.buttonText, {color: colors.white}]}>
-                      {t('dashboard.contacts.active')}
-                    </Text>
-                  </Box>
-                ) : (
-                  <Box style={[styles.activeButton]}>
-                    <Box style={styles.buttonIcon}>
-                      <IconFontAwesome
-                        name={'warning'}
-                        size={14}
-                        color={colors.yellow[600]}
-                      />
-                    </Box>
-                    <Text fontSize={'xs'} style={styles.buttonText}>
-                      {t('dashboard.contacts.notActive')}
-                    </Text>
-                  </Box>
-                )}
-              </Box>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={handleAutomatedEmergency}
-              style={styles.panel}>
-              <IconFontAwesome
-                name={'sliders'}
-                size={24}
-                style={styles.panelHeader}
-                color={colors.gray[600]}
-              />
-              <IconWithText
-                icon={
-                  <Image
-                    style={styles.image}
-                    source={require('~/assets/images/dashboard/sirenAlert.png')}
-                  />
-                }
-                title={t('dashboard.automatedEmergency.title')}
-                description={t('dashboard.automatedEmergency.description')}
-                style={styles.panelBody}
-              />
-              <Box style={styles.panelFooter}>
-                {automatedEmergency ? (
-                  <>
-                    <Box
-                      style={[
-                        styles.activeButton,
-                        !regularPushNotification && styles.isActive,
-                      ]}>
-                      <Box style={styles.buttonIcon}>
-                        <IconFontisto
-                          name={'heartbeat'}
-                          size={14}
-                          color={colors.pink[600]}
-                        />
-                      </Box>
-                      <Text
-                        fontSize={'xs'}
-                        style={[
-                          styles.buttonText,
-                          !regularPushNotification && {color: colors.white},
-                        ]}>
-                        {t('dashboard.automatedEmergency.active.bioTrigger')}
-                      </Text>
-                    </Box>
-                    <Box
-                      style={[
-                        styles.activeButton,
-                        regularPushNotification && styles.isActive,
-                      ]}>
-                      <Box style={styles.buttonIcon}>
-                        <IconFontisto
-                          name={'clock'}
-                          size={13}
-                          color={colors.blue[800]}
-                        />
-                      </Box>
-                      <Text
-                        fontSize={'xs'}
-                        style={[
-                          styles.buttonText,
-                          regularPushNotification && {color: colors.white},
-                        ]}>
-                        {t('dashboard.automatedEmergency.active.timeTrigger')}
-                      </Text>
-                    </Box>
-                  </>
-                ) : (
-                  <Box style={[styles.activeButton]}>
-                    <Box style={styles.buttonIcon}>
-                      <IconFontAwesome
-                        name={'warning'}
-                        size={14}
-                        color={colors.yellow[600]}
-                      />
-                    </Box>
-                    <Text fontSize={'xs'} style={styles.buttonText}>
-                      {t('dashboard.automatedEmergency.notActive')}
-                    </Text>
-                  </Box>
-                )}
-              </Box>
-              {automatedEmergency &&
-                !regularPushNotification &&
-                recommendedPeriod && (
-                  <Box style={styles.message}>
-                    <Text
-                      fontSize={12}
-                      color={colors.red[600]}
-                      textAlign={'center'}>
-                      {t('dashboard.automatedEmergency.recommendationMessage', {
-                        recommendedPeriod,
-                      })}
-                    </Text>
-                  </Box>
-                )}
-            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={styles.menuButton}
+            onPress={goSettings}
+            hitSlop={10}
+            accessibilityRole="button"
+            accessibilityLabel={t('headers.accountSettings')}>
+            <View style={[styles.menuLine, styles.menuLineLong]} />
+            <View style={[styles.menuLine, styles.menuLineShort]} />
+            <View style={[styles.menuLine, styles.menuLineLong]} />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
 
-          </Box>
-          <Box style={styles.section}>
-            <Text style={styles.sectionTitle}>
-              {t('dashboard.sections.signUp')}
-            </Text>
-            <TouchableOpacity
-              onPress={handleSignUpTomorrowBio}
-              style={styles.panel}>
-              <IconWithText
-                icon={
-                  <Image
-                    style={styles.image}
-                    source={require('~/assets/images/dashboard/tomorrowBioLogo.png')}
-                  />
-                }
-                title={t(
-                  'dashboard.signUpForCryopreservation.tomorrowBio.title',
-                )}
-                description={t(
-                  'dashboard.signUpForCryopreservation.tomorrowBio.description',
-                )}
-                style={styles.panelBody}
-              />
-              <Box style={styles.panelFooter}>
-                <Box style={styles.learnMoreBox}>
-                  <Text style={styles.learnMoreText}>
-                    {t(
-                      'dashboard.signUpForCryopreservation.tomorrowBio.footer',
-                    )}
-                  </Text>
-                </Box>
-              </Box>
-            </TouchableOpacity>
-            {/* <TouchableOpacity onPress={openAlcorWebsite} style={styles.panel}>
-              <IconWithText
-                icon={
-                  <Image
-                    style={styles.image}
-                    source={require('~/assets/images/dashboard/alcorLogo.png')}
-                  />
-                }
-                title={t('dashboard.signUpForCryopreservation.alcor.title')}
-                description={t(
-                  'dashboard.signUpForCryopreservation.alcor.description',
-                )}
-                style={styles.panelBody}
-              />
-              <Box style={styles.panelFooter}>
-                <Box style={styles.learnMoreBox}>
-                  <Text style={styles.learnMoreText}>
-                    {t('dashboard.signUpForCryopreservation.alcor.footer')}
-                  </Text>
-                  <IconFeather
-                    name="external-link"
-                    size={15}
-                    color={colors.blue[800]}
-                  />
-                </Box>
-              </Box>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={openCryonicsInstituteWebsite}
-              style={styles.panel}>
-              <IconWithText
-                icon={
-                  <Image
-                    style={styles.image}
-                    source={require('~/assets/images/dashboard/cryonicsInstituteLogo.png')}
-                  />
-                }
-                title={t(
-                  'dashboard.signUpForCryopreservation.cryonicsInstitute.title',
-                )}
-                description={t(
-                  'dashboard.signUpForCryopreservation.cryonicsInstitute.description',
-                )}
-                style={styles.panelBody}
-              />
-              <Box style={styles.panelFooter}>
-                <Box style={styles.learnMoreBox}>
-                  <Text style={styles.learnMoreText}>
-                    {t('dashboard.signUpForCryopreservation.alcor.footer')}
-                  </Text>
-                  <IconFeather
-                    name="external-link"
-                    size={15}
-                    color={colors.blue[800]}
-                  />
-                </Box>
-              </Box>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={openSouthernCryonicsWebsite}
-              style={styles.panel}>
-              <IconWithText
-                icon={
-                  <Image
-                    style={styles.image}
-                    source={require('~/assets/images/dashboard/southernCryonicsLogo.png')}
-                  />
-                }
-                title={t(
-                  'dashboard.signUpForCryopreservation.southernCryonics.title',
-                )}
-                description={t(
-                  'dashboard.signUpForCryopreservation.southernCryonics.description',
-                )}
-                style={styles.panelBody}
-              />
-              <Box style={styles.panelFooter}>
-                <Box style={styles.learnMoreBox}>
-                  <Text style={styles.learnMoreText}>
-                    {t('dashboard.signUpForCryopreservation.alcor.footer')}
-                  </Text>
-                  <IconFeather
-                    name="external-link"
-                    size={15}
-                    color={colors.blue[800]}
-                  />
-                </Box>
-              </Box>
-            </TouchableOpacity> */}
-          </Box>
-        </ScrollView>
-      </Container>
-      <TouchableWithoutFeedback
-        onPressIn={handleEmergencyStart}
-        onPressOut={handleEmergencyStop}>
-        <Box style={styles.emergencyButton}>
-          <Text
-            textAlign="center"
-            fontSize="xl"
-            style={styles.emergencyCaption}>
-            {getEmergencyButtonLabel()}
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={[
+          styles.scrollContent,
+          {paddingBottom: tabBarHeight + 12},
+        ]}
+        showsVerticalScrollIndicator={false}>
+        <StatusBanner variant={bannerVariant} title={bannerText} />
+
+        <View style={styles.metricsCard}>
+          <Text style={styles.collectedAt}>
+            {collectedAt
+              ? t('dashboardHome.collectedAt', {time: collectedAt})
+              : t('dashboardHome.collectedAtNone')}
           </Text>
-          {hasContacts && areContactsEnabled && (
-            <Text
-              textAlign="center"
-              fontSize="md"
-              style={styles.emergencySubCaption}>
-              {t('dashboard.emergency.countdownSubtitleHold')}
-            </Text>
-          )}
-        </Box>
-      </TouchableWithoutFeedback>
-    </>
+          <View style={styles.metricsRow}>
+            <MetricCard
+              icon={<HeartPulseIcon size={14} color="#D6455D" />}
+              label={t('dashboardHome.metrics.heartRate')}
+              value={heartRate != null ? String(heartRate) : '—'}
+              caption={hrCaption}
+            />
+            <MetricCard
+              icon={<FootprintsIcon size={14} color="#2B6E99" />}
+              label={t('dashboardHome.metrics.steps')}
+              value={steps != null ? String(steps) : '—'}
+              caption={stepsCaption}
+            />
+          </View>
+        </View>
+
+        <Text style={styles.sectionLabel}>
+          {t('dashboardHome.sectionEmergencySystem')}
+        </Text>
+
+        <View style={styles.cards}>
+          <SystemCard
+            chip={
+              <IconChip background="rgba(207, 233, 223, 0.5)">
+                <EmergencySystemIcon size={18} color="#2F9E7A" />
+              </IconChip>
+            }
+            title={t('dashboardHome.cards.emergencySystem.title')}
+            subtitle={
+              automatedEmergency
+                ? t('dashboardHome.cards.emergencySystem.active')
+                : t('dashboardHome.cards.emergencySystem.inactive')
+            }
+            onPress={goAutomatedEmergency}
+            right={
+              <Toggle
+                value={!!automatedEmergency}
+                onChange={goAutomatedEmergency}
+              />
+            }
+          />
+          <SystemCard
+            chip={
+              <IconChip background="rgba(243, 222, 199, 0.6)">
+                <ClipboardListIcon size={18} color="#B7791F" />
+              </IconChip>
+            }
+            title={t('dashboardHome.cards.healthLogs.title')}
+            subtitle={t('dashboardHome.cards.healthLogs.subtitle')}
+            right="chevron"
+            onPress={goHealthLogs}
+          />
+          <SystemCard
+            chip={
+              <IconChip background="rgba(251, 188, 5, 0.15)">
+                <BroadcastIcon size={18} color="#B7791F" />
+              </IconChip>
+            }
+            title={t('dashboardHome.cards.manageSettings.title')}
+            subtitle={
+              contactsReady
+                ? t('dashboardHome.cards.manageSettings.subtitle')
+                : t('dashboardHome.cards.manageSettings.subtitleEmpty')
+            }
+            right="chevron"
+            onPress={goEmergencyContacts}
+          />
+          <SystemCard
+            chip={
+              <IconChip background="rgba(217, 239, 230, 0.6)">
+                <CircleCheckIcon size={18} color="#1E9B6B" />
+              </IconChip>
+            }
+            title={t('dashboardHome.cards.emergencySetup.title')}
+            subtitle={
+              fullySetUp
+                ? t('dashboardHome.cards.emergencySetup.done')
+                : t('dashboardHome.cards.emergencySetup.todo')
+            }
+            highlighted={fullySetUp}
+            onPress={goAutomatedEmergency}
+            right={
+              <Badge
+                label={
+                  fullySetUp
+                    ? t('dashboardHome.cards.emergencySetup.badgeDone')
+                    : t('dashboardHome.cards.emergencySetup.badgeTodo')
+                }
+                tone={fullySetUp ? 'success' : 'warning'}
+              />
+            }
+          />
+        </View>
+      </ScrollView>
+    </View>
   );
 };
+
+const Badge = ({label, tone}: {label: string; tone: 'success' | 'warning'}) => (
+  <View
+    style={[
+      styles.badge,
+      {
+        backgroundColor:
+          tone === 'success'
+            ? 'rgba(30, 155, 107, 0.2)'
+            : 'rgba(245, 166, 35, 0.2)',
+      },
+    ]}>
+    <Text
+      style={[
+        styles.badgeText,
+        {color: tone === 'success' ? '#1E9B6B' : '#D4820A'},
+      ]}>
+      {label}
+    </Text>
+  </View>
+);
+
 export default Dashboard;

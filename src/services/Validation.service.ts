@@ -178,6 +178,19 @@ export const useEditProfileValidationSchema = () => {
   });
 };
 
+export const useEditProfileWithAddressValidationSchema = () => {
+  const {userName, street, city, country, zipCode} = useCommonValidators();
+
+  return Yup.object().shape({
+    firstName: userName,
+    lastName: userName,
+    street,
+    city,
+    country,
+    zipCode,
+  });
+};
+
 export const useProfileMedicalInfoValidationSchema = () => {
   const {
     userName: primaryPhysician,

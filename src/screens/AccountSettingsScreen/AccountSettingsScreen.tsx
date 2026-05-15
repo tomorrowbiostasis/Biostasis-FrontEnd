@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useCallback, useLayoutEffect, useMemo, useState} from 'react';
-import {LayoutAnimation, View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import React, {useCallback, useEffect, useLayoutEffect, useMemo, useState} from 'react';
+import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {Button} from 'native-base';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
@@ -10,61 +10,65 @@ import {
   userLoading,
   userSelector,
 } from '~/redux/user/selectors';
-import {getUser, updateUser} from '~/redux/user/thunks';
-import Container from '~/components/Container';
-import SwitchButton from '~/components/SwitchButton';
-import styles from './styles';
+import {getUser, updateUser, deleteUser} from '~/redux/user/thunks';
 import {isIOS} from '~/utils';
 import {isPausedTime} from '~/services/Time.service';
 import {
   automatedEmergencyPausedDateSelector,
   automatedEmergencyPausedTimesSelector,
 } from '~/redux/automatedEmergency/selectors';
+import {sendGDPR} from '~/redux/gdpr/thunks';
+import {gdprSelector} from '~/redux/gdpr/selectors';
+import {clearGdprStatus} from '~/redux/gdpr/gdpr.slice';
+import {clearDataAndSignOut} from '~/redux/store/utils';
+import {ClearDataTypes} from '~/services/ClearData.types';
 import ToastService from '~/services/Toast.service';
 import i18n from '~/i18n/i18n';
-import colors from '~/theme/colors';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Text} from 'native-base';
-import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import GDPR from './components/GDPR/GDPR';
-import DeleteAccount from './components/DeleteAccount';
+
+import ScreenHeader from '~/components/ScreenHeader';
+import IconChip from '~/components/IconChip';
+import Toggle from '~/components/Toggle';
+import FormInput from '~/components/FormInput';
 import LogoutTrigger from '~/components/LogoutTrigger/LogoutTrigger';
-// import LanguageSelector from './components/LanguageSelection/LanguageSelector';
+import {
+  BellIcon,
+  LightbulbIcon,
+  FileTextIcon,
+  AlertTriangleIcon,
+  ChevronRightIcon,
+} from '~/assets/icons/AppIcons';
+import styles from './styles';
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const AccountSettingsScreen = () => {
   const {t} = useAppTranslation();
-  const accountSettings = useAppSelector(accountSettingsSelector);
   const dispatch = useAppDispatch();
+
+  const accountSettings = useAppSelector(accountSettingsSelector);
   const {user} = useAppSelector(userSelector);
+  const loading = useAppSelector(userLoading);
   const pausedDate = useAppSelector(automatedEmergencyPausedDateSelector);
   const specificPausedTimes = useAppSelector(
     automatedEmergencyPausedTimesSelector,
   );
+  const {gdprStatus} = useAppSelector(gdprSelector);
+
   const isNowPaused = useMemo(
     () => isPausedTime(new Date(), pausedDate, specificPausedTimes),
     [pausedDate, specificPausedTimes],
   );
-  const loading = useAppSelector(userLoading);
-  const [isGDPRShown, setIsGDPRShown] = useState(false);
-  const [isDeleteAccountShown, setIsDeleteAccountShown] = useState(false);
+
+  const [gdprOpen, setGdprOpen] = useState(false);
+  const [gdprEmail, setGdprEmail] = useState('');
+  const [gdprSubmitting, setGdprSubmitting] = useState(false);
 
   useLayoutEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
 
-  const handleAllowNotificationsSwitchPress = useCallback(
-    async (value: boolean) => {
-      if (value) {
-        await handleTurnOnNotifications();
-      } else {
-        await handleTurnOffNotifications();
-      }
-      dispatch(updateUser({allowNotifications: value}));
-    },
-    [dispatch, accountSettings],
-  );
-
-  const handleTurnOnNotifications = async () => {
+  /* ----- notifications ----- */
+  const handleTurnOnNotifications = () => {
     const validatePlatformConditions = isIOS
       ? user.automatedEmergency && user.pulseBasedTriggerIOSAppleWatchPaired
       : user.automatedEmergency &&
@@ -83,127 +87,197 @@ const AccountSettingsScreen = () => {
     }
   };
 
-  const handleTurnOffNotifications = async () => {
-    ToastService.success(i18n.t('accountSettings.notificationOff'), {
-      visibilityTime: 3000,
-    });
-  };
+  const handleAllowNotificationsSwitchPress = useCallback(
+    (value: boolean) => {
+      if (value) {
+        handleTurnOnNotifications();
+      } else {
+        ToastService.success(i18n.t('accountSettings.notificationOff'), {
+          visibilityTime: 3000,
+        });
+      }
+      dispatch(updateUser({allowNotifications: value}));
+    },
+    [dispatch, user, isNowPaused],
+  );
 
   const handleReceiveTipsAndTricksSwitchPress = useCallback(
     (value: boolean) => {
       dispatch(updateUser({tipsAndTricks: value}));
     },
-    [dispatch, accountSettings],
+    [dispatch],
   );
 
-  return (
-    <Container
-      title={t('accountSettings.title')}
-      loading={loading}
-      titleText={{fontSize: 16}}
-      type={'static'}
-      containerStyle={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      showBackIcon
-      showDrawerIcon>
-      <KeyboardAwareScrollView
-        bounces={false}
-        enableOnAndroid
-        extraScrollHeight={20}
-        keyboardOpeningTime={0}
-        style={styles.scrollContent}
-        contentContainerStyle={styles.scrollContentContainer}>
-        <View style={styles.panel}>
-          <View style={styles.panelHeader}>
-            <SwitchButton
-              containerStyle={styles.switchContainer}
-              value={accountSettings.allowNotifications}
-              title={t('accountSettings.allowNotifications')}
-              onSwitchPress={handleAllowNotificationsSwitchPress}
-            />
-            <SwitchButton
-              containerStyle={styles.switchContainer}
-              value={accountSettings.tipsAndTricks}
-              title={t('accountSettings.receiveTipsAndTricks')}
-              onSwitchPress={handleReceiveTipsAndTricksSwitchPress}
-            />
-            {/* Removed until creating a responsive design */}
-            {/* <LanguageSelector /> */}
-          </View>
-          <View style={styles.panelBody}>
-            <View
-              style={[styles.expandableSectionWrapper, {borderTopWidth: 1}]}>
-              <TouchableOpacity
-                onPress={() => {
-                  LayoutAnimation.easeInEaseOut();
-                  setIsGDPRShown(!isGDPRShown);
-                }}>
-                <View style={styles.expandableHeader}>
-                  <Text fontSize={'md'}>{t('accountSettings.GDPR.title')}</Text>
-                  <View
-                    style={{
-                      transform: [
-                        {translateX: -5},
-                        {rotate: isGDPRShown ? '-180deg' : '0deg'},
-                      ],
-                    }}>
-                    <IconMaterialIcons
-                      name={'arrow-drop-down'}
-                      size={24}
-                      color={colors.gray[700]}
-                    />
-                  </View>
-                </View>
-              </TouchableOpacity>
-              {isGDPRShown && (
-                <View style={styles.sectionBody}>
-                  <GDPR />
-                </View>
-              )}
-            </View>
+  /* ----- GDPR ----- */
+  const isGdprEmailValid = EMAIL_REGEX.test(gdprEmail);
 
-            <View
-              style={[
-                styles.expandableSectionWrapper,
-                {borderStartColor: colors.red[800]},
-              ]}>
-              <TouchableOpacity
-                onPress={() => {
-                  LayoutAnimation.easeInEaseOut();
-                  setIsDeleteAccountShown(!isDeleteAccountShown);
-                }}>
-                <View style={styles.expandableHeader}>
-                  <Text fontSize={'md'}>
-                    {t('accountSettings.deleteAccount.title')}
-                  </Text>
-                  <View
-                    style={{
-                      transform: [
-                        {translateX: -5},
-                        {rotate: isDeleteAccountShown ? '-180deg' : '0deg'},
-                      ],
-                    }}>
-                    <IconMaterialIcons
-                      name={'arrow-drop-down'}
-                      size={24}
-                      color={colors.gray[700]}
-                    />
-                  </View>
-                </View>
-              </TouchableOpacity>
-              {isDeleteAccountShown && (
-                <View style={styles.sectionBody}>
-                  <DeleteAccount />
-                </View>
-              )}
-            </View>
-            <View style={styles.panelFooter}>
-              <LogoutTrigger />
-            </View>
+  const handleGdprSubmit = useCallback(() => {
+    setGdprSubmitting(true);
+    dispatch(sendGDPR(gdprEmail));
+  }, [dispatch, gdprEmail]);
+
+  useEffect(() => {
+    if (gdprStatus === 'success') {
+      dispatch(clearGdprStatus());
+      setGdprSubmitting(false);
+      setGdprEmail('');
+      setGdprOpen(false);
+      ToastService.success(t('accountSettings.GDPR.notification'));
+    } else if (gdprStatus === 'error') {
+      dispatch(clearGdprStatus());
+      setGdprSubmitting(false);
+    }
+  }, [gdprStatus, dispatch, t]);
+
+  /* ----- delete account ----- */
+  const handleDelete = useCallback(() => {
+    Alert.alert(
+      t('accountSettings.deleteAccount.title'),
+      t('accountSettings.deleteAccount.confirmMessage'),
+      [
+        {text: t('common.no')},
+        {
+          text: t('common.yes'),
+          onPress: () => {
+            dispatch(deleteUser()).then(async () => {
+              try {
+                await clearDataAndSignOut(ClearDataTypes.DELETE);
+                ToastService.success(
+                  t('accountSettings.deleteAccount.successMessage'),
+                );
+              } catch (error: any) {
+                console.log(error.message);
+              }
+            });
+          },
+        },
+      ],
+    );
+  }, [dispatch, t]);
+
+  return (
+    <View style={styles.root}>
+      <ScreenHeader title={t('accountSettingsScreen.title')} />
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}>
+        {/* Allow Notifications */}
+        <View style={styles.card}>
+          <IconChip background="#D5EFE7" size={40} radius={12}>
+            <BellIcon size={20} color="#1E9B6B" />
+          </IconChip>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardTitle}>
+              {t('accountSettings.allowNotifications')}
+            </Text>
+            <Text style={styles.cardSubtitle}>
+              {t('accountSettingsScreen.notificationsSub')}
+            </Text>
           </View>
+          <Toggle
+            value={!!accountSettings.allowNotifications}
+            onChange={handleAllowNotificationsSwitchPress}
+          />
         </View>
-      </KeyboardAwareScrollView>
-    </Container>
+
+        {/* Tips & Tricks */}
+        <View style={styles.card}>
+          <IconChip background="#F6EDC9" size={40} radius={12}>
+            <LightbulbIcon size={20} color="#B7791F" />
+          </IconChip>
+          <View style={styles.cardInfo}>
+            <Text style={styles.cardTitle}>
+              {t('accountSettingsScreen.tipsTitle')}
+            </Text>
+            <Text style={styles.cardSubtitle}>
+              {t('accountSettingsScreen.tipsSub')}
+            </Text>
+          </View>
+          <Toggle
+            value={!!accountSettings.tipsAndTricks}
+            onChange={handleReceiveTipsAndTricksSwitchPress}
+          />
+        </View>
+
+        {/* Request My Data (GDPR) */}
+        <View style={styles.cardColumn}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.cardRow}
+            onPress={() => setGdprOpen(o => !o)}>
+            <IconChip background="#0D1B2A" size={40} radius={12}>
+              <FileTextIcon size={20} color="#FFFFFF" />
+            </IconChip>
+            <View style={styles.cardInfo}>
+              <Text style={styles.cardTitle}>
+                {t('accountSettingsScreen.gdprTitle')}
+              </Text>
+              <Text style={styles.cardSubtitle}>
+                {t('accountSettingsScreen.gdprSub')}
+              </Text>
+            </View>
+            <View style={gdprOpen ? styles.chevronOpen : undefined}>
+              <ChevronRightIcon size={18} color="#5A6A7E" />
+            </View>
+          </TouchableOpacity>
+
+          {gdprOpen ? (
+            <View style={styles.gdprBody}>
+              <Text style={styles.gdprText}>
+                {t('accountSettings.GDPR.description')}
+              </Text>
+              <Text style={styles.gdprText}>
+                {t('accountSettings.GDPR.label')}
+              </Text>
+              <FormInput
+                type="email"
+                label={t('profileEdit.email')}
+                placeholder={t('placeholder.email')}
+                value={gdprEmail}
+                onChangeText={setGdprEmail}
+              />
+              <Button
+                variant={'figmaPrimary' as never}
+                h={50}
+                isDisabled={!isGdprEmailValid || gdprSubmitting}
+                isLoading={gdprSubmitting}
+                onPress={handleGdprSubmit}>
+                {t('common.submit')}
+              </Button>
+            </View>
+          ) : null}
+        </View>
+
+        {/* Danger Zone */}
+        <View style={styles.dangerCard}>
+          <View style={styles.dangerHeader}>
+            <AlertTriangleIcon size={20} color="#E5373A" />
+            <Text style={styles.dangerHeading}>
+              {t('accountSettingsScreen.dangerZone')}
+            </Text>
+          </View>
+          <Text style={styles.dangerTitle}>
+            {t('accountSettings.deleteAccount.title')}
+          </Text>
+          <Text style={styles.dangerDescription}>
+            {t('accountSettings.deleteAccount.description')}
+          </Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.deleteButton}
+            onPress={handleDelete}>
+            <Text style={styles.deleteButtonText}>
+              {t('accountSettingsScreen.deleteAction')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.logoutWrap}>
+          <LogoutTrigger />
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 

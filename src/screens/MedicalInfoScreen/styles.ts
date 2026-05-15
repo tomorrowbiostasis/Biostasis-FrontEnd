@@ -1,51 +1,58 @@
 import {StyleSheet} from 'react-native';
-import colors from '~/theme/colors';
-
-const height = 80;
+import {semanticColors, spacing} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    paddingHorizontal: 0,
-  },
-  container: {
-    padding: 20,
-  },
-  inputWrapper: {
-    marginVertical: 10,
-    height: height,
-  },
-
-  saveButton: {
-    marginTop: 20,
-    backgroundColor: colors.blue[700],
-    borderColor: colors.gray[200],
-  },
-  textDescription: {
-    color: colors.gray[400],
-    marginBottom: 15,
-  },
-  switchContainer: {
-    flexDirection: 'row',
-    maxWidth: '80%',
-    height: height,
-    alignItems: 'center',
-  },
-  switchButton: {
-    marginRight: 30,
-  },
-  panel: {
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    padding: 20,
-    marginBottom: 20,
-    justifyContent: 'space-evenly',
-  },
-  panelHeader: {
-    alignSelf: 'center',
-  },
-  panelBody: {
+  root: {
     flex: 1,
-    marginVertical: 10,
+    backgroundColor: semanticColors.surfaceCanvas,
+  },
+  scroll: {
+    flex: 1,
+  },
+  content: {
+    paddingHorizontal: 34,
+    paddingTop: spacing.xl,
+    paddingBottom: spacing['4xl'],
+    gap: spacing.md,
+  },
+  intro: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    lineHeight: 20,
+    color: semanticColors.textSecondary,
+  },
+  sectionLabel: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 12,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    color: semanticColors.textSecondary,
+    marginTop: spacing.xs,
+  },
+  toggleCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: semanticColors.surface,
+    borderWidth: 1,
+    borderColor: 'rgba(11, 31, 58, 0.1)',
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    gap: 12,
+  },
+  toggleInfo: {
+    flex: 1,
+    gap: 2,
+  },
+  toggleTitle: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 14,
+    color: semanticColors.primary,
+  },
+  toggleHint: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 12,
+    color: semanticColors.textMuted,
   },
 });
 

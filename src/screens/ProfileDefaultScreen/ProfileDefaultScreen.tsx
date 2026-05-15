@@ -1,113 +1,102 @@
 import React, {useCallback} from 'react';
-import {useTranslation} from 'react-i18next';
-import {ScrollView, Text, View} from 'native-base';
+import {ScrollView, View} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
-import Container from '~/components/Container';
-import styles from './styles';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+
+import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {Screens} from '~/models/Navigation.model';
-import IconAntDesign from 'react-native-vector-icons/AntDesign';
-import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import ScreenHeader from '~/components/ScreenHeader';
+import SystemCard from '~/components/SystemCard';
+import IconChip from '~/components/IconChip';
+import {
+  UserIcon,
+  BroadcastIcon,
+  ShieldIcon,
+  HeartPulseIcon,
+  HeartHalfIcon,
+} from '~/assets/icons/AppIcons';
+import styles from './styles';
 
 const ProfileDefaultScreen = () => {
-  const {t} = useTranslation();
+  const {t} = useAppTranslation();
   const {navigate} = useNavigation();
+  const tabBarHeight = useBottomTabBarHeight();
 
-  const handleEditProfile = useCallback(() => {
-    navigate(Screens.ProfileEdit as never);
-  }, [navigate]);
-
-  const handleAddEditMedicalInfo = useCallback(() => {
-    navigate(Screens.ProfileMedicalInfo as never);
-  }, [navigate]);
-
-  const handleAccountSettings = useCallback(() => {
-    navigate(Screens.AccountSettings as never);
-  }, [navigate]);
+  const go = useCallback(
+    (screen: Screens) => () => navigate(screen as never),
+    [navigate],
+  );
 
   return (
-    <Container
-      title={t('profileDefault.title')}
-      containerStyle={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      disableWrapper
-      showBackIcon
-      showDrawerIcon>
+    <View style={styles.root}>
+      <ScreenHeader title={t('profileHub.title')} showBack={false} />
       <ScrollView
-        bounces={false}
-        style={styles.scrollContent}
-        contentContainerStyle={styles.scrollContentContainer}>
-        <TouchableOpacity style={styles.panel} onPress={handleEditProfile}>
-          <View style={styles.panelHeader}>
-            <IconAntDesign name={'profile'} size={26} style={styles.icon} />
-            <Text style={styles.panelTitle} fontWeight={700}>
-              {t('profileDefault.editProfile.title')}
-            </Text>
-          </View>
-          <View style={styles.lineStyle} />
-          <View style={styles.panelBody}>
-            <Text style={styles.panelInfoText}>
-              {t('profileDefault.editProfile.description')}
-            </Text>
-          </View>
-          <View style={styles.panelFooter}>
-            <Text style={styles.footerText}>
-              {t('profileDefault.editProfile.footer')}
-            </Text>
-          </View>
-        </TouchableOpacity>
+        style={styles.scroll}
+        contentContainerStyle={[
+          styles.content,
+          {paddingBottom: tabBarHeight + 12},
+        ]}
+        showsVerticalScrollIndicator={false}>
+        <View style={styles.group}>
+          <SystemCard
+            chip={
+              <IconChip background="#0D1B2A" size={40} radius={12}>
+                <UserIcon size={20} color="#FFFFFF" />
+              </IconChip>
+            }
+            title={t('profileHub.userData')}
+            right="chevron"
+            onPress={go(Screens.ProfileEdit)}
+          />
+          <SystemCard
+            chip={
+              <IconChip background="rgba(251, 188, 5, 0.15)" size={40} radius={12}>
+                <BroadcastIcon size={20} color="#B7791F" />
+              </IconChip>
+            }
+            title={t('profileHub.accountSettings')}
+            right="chevron"
+            onPress={go(Screens.AccountSettings)}
+          />
+          <SystemCard
+            chip={
+              <IconChip background="#EFF3FE" size={40} radius={12}>
+                <ShieldIcon size={20} color="#2D6BE4" />
+              </IconChip>
+            }
+            title={t('profileHub.medicalInfo')}
+            right="chevron"
+            onPress={go(Screens.ProfileMedicalInfo)}
+          />
+        </View>
 
-        <TouchableOpacity style={styles.panel} onPress={handleAccountSettings}>
-          <View style={styles.panelHeader}>
-            <IconMaterialCommunityIcons
-              name={'account-settings-outline'}
-              size={26}
-              style={styles.icon}
-            />
-            <Text style={styles.panelTitle} fontWeight={700}>
-              {t('profileDefault.accountSettings.title')}
-            </Text>
-          </View>
-          <View style={styles.lineStyle} />
-          <View style={styles.panelBody}>
-            <Text style={styles.panelInfoText}>
-              {t('profileDefault.accountSettings.description')}
-            </Text>
-          </View>
-          <View style={styles.panelFooter}>
-            <Text style={styles.footerText}>
-              {t('profileDefault.accountSettings.footer')}
-            </Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.panel}
-          onPress={handleAddEditMedicalInfo}>
-          <View style={styles.panelHeader}>
-            <IconMaterialCommunityIcons
-              name={'medical-bag'}
-              size={26}
-              style={styles.icon}
-            />
-            <Text style={styles.panelTitle} fontWeight={700}>
-              {t('profileDefault.medicalInfo.title')}
-            </Text>
-          </View>
-          <View style={styles.lineStyle} />
-          <View style={styles.panelBody}>
-            <Text style={styles.panelInfoText}>
-              {t('profileDefault.medicalInfo.description')}
-            </Text>
-          </View>
-          <View style={styles.panelFooter}>
-            <Text style={styles.footerText}>
-              {t('profileDefault.medicalInfo.footer')}
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.group}>
+          <SystemCard
+            chip={
+              <IconChip background="#D6F5EA" size={40} radius={12}>
+                <HeartPulseIcon size={20} color="#1E9B6B" />
+              </IconChip>
+            }
+            title={t('profileHub.currentHealthLog')}
+            right="chevron"
+            onPress={go(Screens.CurrentHealthLog)}
+          />
+          <SystemCard
+            chip={
+              <IconChip
+                background="rgba(245, 166, 35, 0.25)"
+                size={40}
+                radius={12}>
+                <HeartHalfIcon size={20} color="#B7791F" />
+              </IconChip>
+            }
+            title={t('profileHub.historyLogs')}
+            right="chevron"
+            onPress={go(Screens.HistoryLogs)}
+          />
+        </View>
       </ScrollView>
-    </Container>
+    </View>
   );
 };
 

@@ -1,63 +1,122 @@
 import {StyleSheet} from 'react-native';
-import colors from '~/theme/colors';
+import {semanticColors} from '~/theme/tokens';
+
+const CARD_BORDER = 'rgba(11, 31, 58, 0.1)';
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
+    flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
+  },
+  scroll: {
     flex: 1,
   },
-  contentContainer: {
-    paddingTop: 80,
+  content: {
+    paddingHorizontal: 34,
+    paddingTop: 20,
+    paddingBottom: 32,
+    gap: 16,
   },
-  scrollContent: {
-    flex: 1,
-    width: '100%',
-  },
-  scrollContentContainer: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  switchContainer: {
-    alignItems: 'center',
-    paddingBottom: 8,
-  },
-  expandableSectionWrapper: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderColor: colors.gray[300],
-    paddingVertical: 10,
-  },
-  expandableHeader: {
+  card: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    backgroundColor: semanticColors.surface,
+    borderWidth: 1,
+    borderColor: CARD_BORDER,
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 13,
+    gap: 12,
   },
-  panel: {
-    flex: 1,
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    marginVertical: 10,
-    alignItems: 'flex-start',
+  cardColumn: {
+    backgroundColor: semanticColors.surface,
+    borderWidth: 1,
+    borderColor: CARD_BORDER,
+    borderRadius: 14,
+    overflow: 'hidden',
   },
-  panelHeader: {
-    flex: 1,
+  cardRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 10,
-    padding: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 13,
+    gap: 12,
   },
-  panelBody: {
+  cardInfo: {
     flex: 1,
-    justifyContent: 'flex-end',
-    width: '100%',
-    padding: 10,
+    gap: 2,
   },
-  panelFooter: {
-    alignItems: 'flex-start',
-    padding: 10,
-    marginVertical: 5,
+  cardTitle: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 16,
+    color: semanticColors.primary,
   },
-  sectionBody: {
-    marginVertical: 5,
+  cardSubtitle: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    color: '#96A3B3',
+  },
+  chevronOpen: {
+    transform: [{rotate: '90deg'}],
+  },
+  gdprBody: {
+    paddingHorizontal: 14,
+    paddingTop: 8,
+    paddingBottom: 16,
+    gap: 12,
+    borderTopWidth: 1,
+    borderTopColor: semanticColors.border,
+  },
+  gdprText: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 13,
+    lineHeight: 19,
+    color: semanticColors.textSecondary,
+  },
+  dangerCard: {
+    backgroundColor: semanticColors.surface,
+    borderWidth: 1,
+    borderColor: CARD_BORDER,
+    borderRadius: 14,
+    padding: 16,
+    gap: 8,
+  },
+  dangerHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  dangerHeading: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 16,
+    color: semanticColors.primary,
+  },
+  dangerTitle: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 14,
+    color: semanticColors.primary,
+    marginTop: 4,
+  },
+  dangerDescription: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 13,
+    lineHeight: 19,
+    color: semanticColors.textSecondary,
+  },
+  deleteButton: {
+    backgroundColor: '#FFF0F0',
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  deleteButtonText: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 16,
+    color: semanticColors.danger,
+  },
+  logoutWrap: {
+    marginTop: 8,
   },
 });
 

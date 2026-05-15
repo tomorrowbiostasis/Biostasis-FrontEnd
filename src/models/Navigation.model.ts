@@ -34,7 +34,11 @@ export type SignUpStackNavigatorParamList = {
 };
 
 export type MainStackNavigatorParamList = {
+  Tabs: undefined;
   Home: undefined;
+  EmergencyConfirmation: undefined;
+  CurrentHealthLog: undefined;
+  HistoryLogs: undefined;
   EmergencyContactList: undefined;
   EmergencyContactExplanations: undefined;
   AddNewEmergencyContact: undefined;
@@ -110,6 +114,10 @@ export enum Screens {
   AutomatedEmergencySettings = 'Automated Emergency Settings',
   SignUpForCryopreservation = 'Sign up for cryopreservation',
   Home = 'Home',
+  Tabs = 'Tabs',
+  EmergencyConfirmation = 'EmergencyConfirmation',
+  CurrentHealthLog = 'CurrentHealthLog',
+  HistoryLogs = 'HistoryLogs',
   AddNewEmergencyContact = 'EmergencyContact',
   EmergencyContactExplanations = 'EmergencyContactExplanations',
   EmergencyContactSettings = 'EmergencyContactSettings',

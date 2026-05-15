@@ -26,10 +26,24 @@ const dotColor: Record<StatusBannerVariant, string> = {
 };
 
 const surfaceColor: Record<StatusBannerVariant, string> = {
-  active: semanticColors.successSurface,
+  active: '#E6F6F0',
   degraded: semanticColors.warningSurface,
   offline: semanticColors.dangerSurface,
   noInternet: semanticColors.surfaceSubtle,
+};
+
+const borderColor: Record<StatusBannerVariant, string> = {
+  active: 'rgba(30, 155, 107, 0.2)',
+  degraded: 'rgba(245, 166, 35, 0.25)',
+  offline: 'rgba(229, 55, 58, 0.25)',
+  noInternet: semanticColors.border,
+};
+
+const titleColor: Record<StatusBannerVariant, string> = {
+  active: semanticColors.success,
+  degraded: semanticColors.warningStrong,
+  offline: semanticColors.danger,
+  noInternet: semanticColors.textMuted,
 };
 
 const StatusBanner: FC<StatusBannerProps> = ({
@@ -43,25 +57,20 @@ const StatusBanner: FC<StatusBannerProps> = ({
   return (
     <View
       testID={testID}
-      style={[styles.container, {backgroundColor: surfaceColor[variant]}, style]}>
+      style={[
+        styles.container,
+        {
+          backgroundColor: surfaceColor[variant],
+          borderColor: borderColor[variant],
+        },
+        style,
+      ]}>
       <View style={[styles.dot, {backgroundColor: dotColor[variant]}]} />
       <View style={styles.textBlock}>
-        <Text
-          style={[
-            styles.title,
-            variant === 'noInternet' && styles.titleMuted,
-          ]}>
+        <Text style={[styles.title, {color: titleColor[variant]}]}>
           {title}
         </Text>
-        {subtitle ? (
-          <Text
-            style={[
-              styles.subtitle,
-              variant === 'noInternet' && styles.subtitleMuted,
-            ]}>
-            {subtitle}
-          </Text>
-        ) : null}
+        {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
       </View>
       {timestamp ? <Text style={styles.timestamp}>{timestamp}</Text> : null}
     </View>
