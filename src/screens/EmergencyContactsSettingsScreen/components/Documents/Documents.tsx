@@ -1,9 +1,7 @@
-import {View, Text} from 'native-base';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Alert} from 'react-native';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
+import {Alert, StyleSheet, View} from 'react-native';
+
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-import styles from '../../styles';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {documentsSelector} from '~/redux/documents/selectors';
 import {
@@ -16,11 +14,13 @@ import {
   IFile,
   UploadFileCategoryType,
 } from '~/services/API.types';
-import DocumentsHeader from './components/DocumentsHeader';
-import DocumentItem, {DocumentTypes} from './components/DocumentItem';
 import {regex} from '~/services/Validation.service';
 import DocumentPicker from 'react-native-document-picker';
+import SectionHeader from '../SectionHeader';
+import DocumentItem from './components/DocumentItem';
 import {getFileType, getUri} from './util';
+
+const MAX_OTHER_DOCUMENTS = 5;
 
 const Documents = () => {
   const {t} = useAppTranslation();
@@ -32,21 +32,9 @@ const Documents = () => {
   const [documentIdToDelete, setDocumentIdToDelete] =
     useState<DocumentIdType | null>(null);
 
-  const maxNumberOfOtherDocuments = 5;
-
   useEffect(() => {
     dispatch(getDocuments());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (documents?.length) {
-      setLastWill(documents.find(i => i.code === 'lastWill')?.files[0] || null);
-      setMedicalDirective(
-        documents.find(i => i.code === 'medicalDirective')?.files[0] || null,
-      );
-      setOtherDocuments(documents.find(i => i.code === 'other')?.files || []);
-    }
-  }, [documents]);
 
   useEffect(() => {
     if (documents?.length) {
@@ -71,14 +59,16 @@ const Documents = () => {
           copyTo: 'cachesDirectory',
         });
 
+        const filename = (file.name ?? 'document').replace(
+          regex.fileName,
+          '_',
+        );
         dispatch(
           uploadDocument({
             file: {
-              filename: file.name.replace(regex.fileName, '_'),
-              filepath: getUri(file.fileCopyUri),
-              filetype:
-                file.type ||
-                getFileType(file.name.replace(regex.fileName, '_')),
+              filename,
+              filepath: getUri(file.fileCopyUri ?? ''),
+              filetype: file.type || getFileType(filename),
             },
             category,
           }),
@@ -94,99 +84,71 @@ const Documents = () => {
     [dispatch],
   );
 
-  const handleDeleteDocument = useCallback(async () => {
-    if (documentIdToDelete) {
-      dispatch(deleteDocument(documentIdToDelete));
-      setDocumentIdToDelete(null);
-    }
-  }, [dispatch, documentIdToDelete]);
-
   const handleDeleteDocumentClick = useCallback((id: string) => {
     setDocumentIdToDelete(Number.parseInt(id, 10));
   }, []);
 
+  useEffect(() => {
+    if (!documentIdToDelete) {
+      return;
+    }
+    Alert.alert(
+      t('emergencyContactsSettings.documents.alert.title'),
+      t('emergencyContactsSettings.documents.alert.description'),
+      [
+        {text: 'No', onPress: () => setDocumentIdToDelete(null)},
+        {
+          text: 'Yes',
+          onPress: () => {
+            dispatch(deleteDocument(documentIdToDelete));
+            setDocumentIdToDelete(null);
+          },
+        },
+      ],
+    );
+  }, [documentIdToDelete, dispatch, t]);
+
   const areOtherItemsLimited = useMemo(
-    () => otherDocuments.length >= maxNumberOfOtherDocuments,
+    () => otherDocuments.length >= MAX_OTHER_DOCUMENTS,
     [otherDocuments.length],
   );
 
+  const otherTitle = t('emergencyContactsSettings.documents.headers.other');
+
   return (
-    <View style={styles.panel}>
-      <View style={styles.panelHeader}>
-        <IconIonicons
-          name={'documents-outline'}
-          size={26}
-          style={styles.icon}
+    <View style={styles.section}>
+      <SectionHeader
+        label={t('emergencyContactsSettings.documents.title')}
+        description={t('emergencyContactsSettings.documents.topInfo')}
+      />
+      <View style={styles.rows}>
+        <DocumentItem
+          id={medicalDirective?.id}
+          name={medicalDirective?.name}
+          title={t('emergencyContactsSettings.documents.headers.directive')}
+          onAdd={() => handleAddDocument('medicalDirective')}
+          onDelete={handleDeleteDocumentClick}
         />
-        <Text style={styles.panelTitle} fontWeight={700}>
-          {t('emergencyContactsSettings.documents.title')}
-        </Text>
-      </View>
-      <View style={styles.lineStyle} />
-      <View style={styles.panelBody}>
-        <Text style={styles.panelInfoText} mb={4}>
-          {t('emergencyContactsSettings.documents.topInfo')}
-        </Text>
-        <View flex={1}>
-          <DocumentsHeader
-            caption={t('emergencyContactsSettings.documents.headers.directive')}
-          />
+        <DocumentItem
+          id={lastWill?.id}
+          name={lastWill?.name}
+          title={t('emergencyContactsSettings.documents.headers.lastWill')}
+          onAdd={() => handleAddDocument('lastWill')}
+          onDelete={handleDeleteDocumentClick}
+        />
+        {otherDocuments.map(doc => (
           <DocumentItem
-            id={medicalDirective?.id}
-            name={medicalDirective?.name}
-            type={DocumentTypes.medicalDirective}
-            onAdd={() => handleAddDocument('medicalDirective')}
+            key={doc.id}
+            id={doc.id}
+            name={doc.name}
+            title={otherTitle}
+            onAdd={() => handleAddDocument('other')}
             onDelete={handleDeleteDocumentClick}
           />
-          <DocumentsHeader
-            caption={t('emergencyContactsSettings.documents.headers.lastWill')}
-          />
-          <DocumentItem
-            id={lastWill?.id}
-            name={lastWill?.name}
-            type={DocumentTypes.lastWill}
-            onAdd={() => handleAddDocument('lastWill')}
-            onDelete={handleDeleteDocumentClick}
-          />
-          {otherDocuments?.length ? (
-            <>
-              <DocumentsHeader
-                caption={t('emergencyContactsSettings.documents.headers.other')}
-              />
-              {otherDocuments.map(doc => (
-                <DocumentItem
-                  key={doc.id}
-                  name={doc.name}
-                  id={doc.id}
-                  onAdd={() => handleAddDocument('other')}
-                  onDelete={handleDeleteDocumentClick}
-                />
-              ))}
-            </>
-          ) : null}
-        </View>
-        {!!documentIdToDelete &&
-          Alert.alert(
-            t('emergencyContactsSettings.documents.alert.title'),
-            t('emergencyContactsSettings.documents.alert.description'),
-            [
-              {
-                text: 'No',
-              },
-              {
-                text: 'Yes',
-                onPress: () => {
-                  setDocumentIdToDelete(null);
-                  handleDeleteDocument();
-                },
-              },
-            ],
-          )}
-      </View>
-      <View style={styles.lineStyle} />
-      <View style={styles.panelFooter}>
+        ))}
         {!areOtherItemsLimited && (
           <DocumentItem
+            title={otherTitle}
             onAdd={() => handleAddDocument('other')}
             onDelete={handleDeleteDocumentClick}
           />
@@ -195,5 +157,14 @@ const Documents = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  section: {
+    gap: 14,
+  },
+  rows: {
+    gap: 6,
+  },
+});
 
 export default Documents;

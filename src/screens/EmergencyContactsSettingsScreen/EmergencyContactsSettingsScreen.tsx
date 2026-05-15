@@ -1,38 +1,33 @@
 import React from 'react';
-import Container from '~/components/Container';
-import EmergencyContactsList from './components/EmergencyContactsList';
+import {View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-import styles from './styles';
+import ScreenHeader from '~/components/ScreenHeader';
+import EmergencyContactsList from './components/EmergencyContactsList';
 import Documents from './components/Documents';
 import EmergencyMessage from './components/EmergencyMessage/EmergencyMessage';
-import {Box} from 'native-base';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import styles from './styles';
 
 const EmergencyContactsSettingsScreen = () => {
   const {t} = useAppTranslation();
 
   return (
-    <Container
-      title={t('emergencyContactsSettings.title')}
-      containerStyle={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      disableWrapper
-      showBackIcon
-      showDrawerIcon>
-      <Box style={styles.curveElement} />
-      
+    <View style={styles.root}>
+      <ScreenHeader title={t('emergencyContactsSettings.title')} />
       <KeyboardAwareScrollView
         bounces={false}
         enableOnAndroid
         extraScrollHeight={20}
         keyboardOpeningTime={0}
-        style={styles.scrollContent}
-        contentContainerStyle={styles.scrollContentContainer}>
+        style={styles.scroll}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}>
         <EmergencyContactsList />
         <Documents />
         <EmergencyMessage />
       </KeyboardAwareScrollView>
-    </Container>
+    </View>
   );
 };
 

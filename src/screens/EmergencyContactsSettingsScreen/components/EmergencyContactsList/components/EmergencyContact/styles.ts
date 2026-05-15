@@ -1,22 +1,29 @@
 import {StyleSheet} from 'react-native';
+import {semanticColors} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
-  container: {
+  card: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginVertical: 10,
-    paddingHorizontal: 5,
+    gap: 10,
+    minHeight: 48,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: semanticColors.surface,
+    borderWidth: 1,
+    borderColor: '#E2E9F0',
+    borderRadius: 14,
   },
-  text: {
+  name: {
     flex: 1,
-    marginLeft: 10,
-    marginRight: 40,
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 13,
+    color: semanticColors.primary,
   },
   icons: {
-    width: '25%',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    alignItems: 'center',
+    gap: 8,
   },
 });
 

@@ -1,8 +1,17 @@
 import {Formik, FormikProps} from 'formik';
-import {Button, Text, View} from 'native-base';
-import React, {useCallback, useEffect} from 'react';
+import React, {FC, ReactNode, useCallback, useEffect, useMemo} from 'react';
+import {
+  ActivityIndicator,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
 import Loader from '~/components/Loader';
-import TextArea from '~/components/TextArea';
+import IconChip from '~/components/IconChip';
+import Toggle from '~/components/Toggle';
+import {MapPinIcon, CopyIcon} from '~/assets/icons/AppIcons';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {
@@ -11,30 +20,48 @@ import {
   testMessageSelector,
   userSelector,
 } from '~/redux/user/selectors';
-
-import {
-  IUser,
-  setEmergencyButtonSettingsUpdated,
-} from '~/redux/user/user.slice';
+import {IUser, setEmergencyButtonSettingsUpdated} from '~/redux/user/user.slice';
 import {
   sendTestMessage,
   updateEmergencyButtonSettings,
   updateUser,
 } from '~/redux/user/thunks';
 import {useEmergencyContactSettingsValidationSchema} from '~/services/Validation.service';
-import SwitchButton from '~/components/SwitchButton';
 import {updateDataCollectionStatus} from '~/utils';
-import mainStyles from '../../styles';
-import styles from './styles';
-
 import {
   getGoogleMapsUrl,
   getLocation,
   requestLocationPermission,
 } from '~/services/Location.service';
-import {useMemo} from 'react';
-import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
+import SectionHeader from '../SectionHeader';
+import styles from './styles';
+
+const MESSAGE_MAX_LENGTH = 300;
+
+interface ToggleCardProps {
+  icon: ReactNode;
+  iconBackground: string;
+  title: string;
+  value?: boolean;
+  onChange: (next: boolean) => void;
+}
+
+const ToggleCard: FC<ToggleCardProps> = ({
+  icon,
+  iconBackground,
+  title,
+  value,
+  onChange,
+}) => (
+  <View style={styles.toggleCard}>
+    <IconChip background={iconBackground} size={36} radius={8}>
+      {icon}
+    </IconChip>
+    <Text style={styles.toggleTitle}>{title}</Text>
+    <Toggle value={!!value} onChange={onChange} />
+  </View>
+);
 
 const EmergencyMessage = () => {
   const {t} = useAppTranslation();
@@ -59,9 +86,7 @@ const EmergencyMessage = () => {
     if (!init.emergencyMessage) {
       init.emergencyMessage = t(
         'emergencyContactsSettings.settings.defaultMessage',
-        {
-          username: user.name,
-        },
+        {username: user.name},
       );
     }
     return init;
@@ -105,7 +130,7 @@ const EmergencyMessage = () => {
     [dispatch],
   );
 
-  const handleSendTestEmailPress = useCallback(async () => {
+  const handleSendTestEmailPress = useCallback(() => {
     dispatch(sendTestMessage());
   }, [dispatch]);
 
@@ -125,112 +150,126 @@ const EmergencyMessage = () => {
     [initialFormValues],
   );
 
+  if (emergencyButtonSettings.emergencyEmailAndSms == null) {
+    return <Loader />;
+  }
+
   return (
-  <View style={mainStyles.panel}>
-      <View style={mainStyles.panelHeader}>
-        <IconMaterialCommunityIcons
-          name={'message-cog-outline'}
-          size={26}
-          style={mainStyles.icon}
-        />
-        <Text fontWeight={700} px={2} style={mainStyles.panelTitle}>
-          {t('emergencyContactsSettings.emergencyButtonSettings')}
-        </Text>
-      </View>
-      <View style={mainStyles.lineStyle} />
-      {emergencyButtonSettings.emergencyEmailAndSms == null ? (
-        <Loader />
-      ) : (
-        <View style={mainStyles.panelBody}>
-          <Formik<EmergencyButtonSettings>
-            initialValues={initialFormValues}
-            onSubmit={handleConfirm}
-            validationSchema={emergencyContactSettingsValidationSchema}
-            validateOnBlur={true}
-            validateOnChange={true}
-          >
-            {({
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              values,
-              touched,
-              errors,
-              setFieldValue,
-              isValid,
-            }) => {
-              return (
-                <>
-                  <Text style={mainStyles.panelInfoText}>
-                    {t('emergencyContactsSettings.settings.disclaimer')}
+    <Formik<EmergencyButtonSettings>
+      initialValues={initialFormValues}
+      onSubmit={handleConfirm}
+      validationSchema={emergencyContactSettingsValidationSchema}
+      validateOnBlur
+      validateOnChange>
+      {({
+        handleBlur,
+        handleChange,
+        handleSubmit,
+        values,
+        touched,
+        errors,
+        setFieldValue,
+        isValid,
+      }) => {
+        const messageLength = (values.emergencyMessage || '').length;
+        const changed = hasInitialStateChanged(values);
+        const saveDisabled = !isValid || pending || !changed;
+        const testDisabled = !isValid || testMessage.pending || changed;
+
+        return (
+          <View style={styles.container}>
+            <View style={styles.section}>
+              <SectionHeader
+                label={t('emergencyContactsSettings.includeWithMessage')}
+              />
+              <View style={styles.toggleCards}>
+                <ToggleCard
+                  icon={<MapPinIcon size={18} color="#2C8F86" />}
+                  iconBackground="rgba(212, 236, 230, 0.6)"
+                  title={t('emergencyContactsSettings.settings.location')}
+                  value={values.locationAccess}
+                  onChange={value =>
+                    handleLocationSettingsChange(value, setFieldValue)
+                  }
+                />
+                <ToggleCard
+                  icon={<CopyIcon size={18} color="#4A6FA5" />}
+                  iconBackground="rgba(217, 228, 240, 0.6)"
+                  title={t(
+                    'emergencyContactsSettings.settings.uploadedDocuments',
+                  )}
+                  value={values.uploadedDocumentsAccess}
+                  onChange={value =>
+                    setFieldValue('uploadedDocumentsAccess', value)
+                  }
+                />
+              </View>
+            </View>
+
+            <View style={styles.section}>
+              <SectionHeader
+                label={t('emergencyContactsSettings.emergencyMessageLabel')}
+                right={
+                  <Text style={styles.counter}>
+                    {`${messageLength}/${MESSAGE_MAX_LENGTH}`}
                   </Text>
-                  <Text
-                    style={[styles.headerText, styles.includeInfoHeaderText]}
-                  >
-                    {t('emergencyContactsSettings.settings.includeInfo')}
+                }
+              />
+              <TextInput
+                style={styles.messageInput}
+                multiline
+                textAlignVertical="top"
+                maxLength={MESSAGE_MAX_LENGTH}
+                value={values.emergencyMessage}
+                onChangeText={handleChange('emergencyMessage')}
+                onBlur={handleBlur('emergencyMessage')}
+                placeholder={t(
+                  'emergencyContactsSettings.settings.defaultMessage',
+                  {username: user.name},
+                )}
+                placeholderTextColor="#9BA8B5"
+              />
+              {errors.emergencyMessage && touched.emergencyMessage ? (
+                <Text style={styles.error}>{errors.emergencyMessage}</Text>
+              ) : (
+                <Text style={styles.helper}>
+                  {t('emergencyContactsSettings.emergencyMessageHelper')}
+                </Text>
+              )}
+            </View>
+
+            <View style={styles.footer}>
+              <TouchableOpacity
+                activeOpacity={0.85}
+                disabled={saveDisabled}
+                onPress={() => handleSubmit()}
+                style={[styles.saveButton, saveDisabled && styles.disabled]}>
+                {pending ? (
+                  <ActivityIndicator color="#FFFFFF" />
+                ) : (
+                  <Text style={styles.saveText}>
+                    {t('emergencyContactsSettings.saveChanges')}
                   </Text>
-                  <SwitchButton
-                    value={values.locationAccess}
-                    onSwitchPress={value =>
-                      handleLocationSettingsChange(value, setFieldValue)
-                    }
-                    containerStyle={styles.switchButton}
-                    title={t('emergencyContactsSettings.settings.location')}
-                  />
-                  <SwitchButton
-                    value={values.uploadedDocumentsAccess}
-                    onSwitchPress={value =>
-                      setFieldValue('uploadedDocumentsAccess', value)
-                    }
-                    containerStyle={styles.switchButton}
-                    title={t(
-                      'emergencyContactsSettings.settings.uploadedDocuments',
-                    )}
-                  />
-                  <TextArea
-                    label={t('common.message')}
-                    inputStyle={{fontSize:mainStyles.panelInfoText.fontSize, lineHeight:mainStyles.panelInfoText.lineHeight}}
-                    onChangeText={handleChange('emergencyMessage')}
-                    onBlur={handleBlur('emergencyMessage')}
-                    value={values.emergencyMessage}
-                    errorMessage={errors.emergencyMessage}
-                    containerStyle={styles.messageAreaContainer}
-                    isValid={
-                      !errors.emergencyMessage && touched.emergencyMessage
-                    }
-                  />
-                  <View>
-                    <Button
-                      style={styles.button}
-                      disabled={
-                        !isValid || pending || !hasInitialStateChanged(values)
-                      }
-                      isLoading={pending}
-                      onPress={() => handleSubmit()}
-                    >
-                      {t('common.confirm')}
-                    </Button>
-                    <Button
-                      variant={'outline'}
-                      style={styles.button}
-                      disabled={
-                        !isValid ||
-                        testMessage.pending ||
-                        hasInitialStateChanged(values)
-                      }
-                      isLoading={testMessage.pending}
-                      onPress={handleSendTestEmailPress}
-                    >
-                      {t('emergencyContactsSettings.settings.sendTestEmail')}
-                    </Button>
-                  </View>
-                </>
-              );
-            }}
-          </Formik>
-        </View>
-      )}
-    </View>
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.85}
+                disabled={testDisabled}
+                onPress={handleSendTestEmailPress}
+                style={[styles.testButton, testDisabled && styles.disabled]}>
+                {testMessage.pending ? (
+                  <ActivityIndicator color="#0B1F3A" />
+                ) : (
+                  <Text style={styles.testText}>
+                    {t('emergencyContactsSettings.sendTestMessage')}
+                  </Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+        );
+      }}
+    </Formik>
   );
 };
 

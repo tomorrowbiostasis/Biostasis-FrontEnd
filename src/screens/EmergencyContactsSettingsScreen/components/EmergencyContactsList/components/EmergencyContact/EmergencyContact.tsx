@@ -1,13 +1,11 @@
 import React, {VFC} from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import {Text} from 'native-base';
-import Switch from '~/components/Switch';
+import {Text, TouchableOpacity, View} from 'react-native';
 
 import {IEmergencyContactResponse} from '~/redux/emergencyContacts/emergencyContacts.slice';
-
+import Toggle from '~/components/Toggle';
+import {PencilIcon, TrashIcon} from '~/assets/icons/AppIcons';
 import styles from './styles';
-import IconEntypo from 'react-native-vector-icons/Entypo';
-import colors from '~/theme/colors';
+
 export type IEmergencyContactProps = {
   contact: IEmergencyContactResponse;
   onSwitchPress: (value: boolean) => void;
@@ -22,17 +20,17 @@ const EmergencyContact: VFC<IEmergencyContactProps> = ({
   onDeletePress,
 }) => {
   return (
-    <View style={styles.container}>
-      <Switch value={contact.active} onValueChange={onSwitchPress} />
-      <Text fontSize={'lg'} style={styles.text} noOfLines={1}>
+    <View style={styles.card}>
+      <Toggle value={contact.active} onChange={onSwitchPress} />
+      <Text style={styles.name} numberOfLines={1}>
         {`${contact.name} ${contact.surname}`}
       </Text>
       <View style={styles.icons}>
-        <TouchableOpacity onPress={() => onEditPress(contact)}>
-          <IconEntypo name="edit" size={24} color={colors.blue[700]} />
+        <TouchableOpacity hitSlop={8} onPress={() => onEditPress(contact)}>
+          <PencilIcon size={20} color="#343330" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => onDeletePress(contact)}>
-          <IconEntypo name="trash" size={24} color={colors.red[600]} />
+        <TouchableOpacity hitSlop={8} onPress={() => onDeletePress(contact)}>
+          <TrashIcon size={20} color="#343330" />
         </TouchableOpacity>
       </View>
     </View>

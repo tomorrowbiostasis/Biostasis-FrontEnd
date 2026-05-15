@@ -404,13 +404,20 @@ const translations = {
     wrongAddress: 'Wrong Address, Please make sure to enter existing address',
   },
   emergencyContactsSettings: {
-    title: 'Emergency Contacts Settings',
+    title: 'Emergency Contacts',
     emergencyList: 'Emergency Contact List',
     emergencyAndSettings: 'Emergency Contacts\nand Settings',
     makeSureToTestEmergencyContact:
-      'Make sure to test your emergency trigger with your new contact so they learn how it works.',
+      'Test your emergency trigger with each contact so they know how it works.',
     AddNewEmergencyContact: 'Add Emergency Contact',
     emergencyButtonSettings: 'Emergency Message Settings',
+    yourContacts: 'Your Contacts',
+    includeWithMessage: 'Include with message',
+    emergencyMessageLabel: 'Emergency Message',
+    emergencyMessageHelper:
+      'This message is emailed and texted to all contacts when your emergency triggers.',
+    saveChanges: 'Save changes',
+    sendTestMessage: 'Send test message',
     addNewEdit: {
       title: 'Contact Information:',
       firstName: 'First Name (Emergency Contact)',
@@ -453,13 +460,13 @@ const translations = {
     },
     documents: {
       title: 'Documents',
-      topInfo:
-        'These documents will be sent to your emergency contacts when you trigger an emergency ',
+      topInfo: 'Sent automatically to all contacts when emergency is triggered.',
+      tapToUpload: 'Tap to upload',
       addDocument: 'Add document',
       headers: {
         directive: 'Medical directive',
         lastWill: 'Last will',
-        other: 'Other',
+        other: 'Other document',
       },
       upload: {
         directive: 'Upload medical directive',
