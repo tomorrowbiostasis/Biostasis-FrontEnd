@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
+import SplashScreen from 'react-native-splash-screen';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -11,7 +12,7 @@ import {
 } from '~/models/Navigation.model';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from '~/theme/toast';
-import {isAuthed} from '~/redux/auth/selectors';
+import {isAuthed, isAuthSessionResolved} from '~/redux/auth/selectors';
 import {configSelector} from '~/redux/config/config.slice';
 import CancelEmergencyPopup from '~/screens/CancelEmergencyPopup';
 import LostConnectionScreen from '~/screens/LostConnectionScreen';
@@ -54,12 +55,26 @@ export function navigate(
 
 const Container = () => {
   const isLogged = useAppSelector(isAuthed);
+  const authSessionResolved = useAppSelector(isAuthSessionResolved);
   const {loadingInitData} = useAppSelector(configSelector);
   const [isReady, setIsReady] = useState(false);
   const isInitialized = useAppSelector(userInitializedSelector);
+  const splashHiddenRef = useRef(false);
 
   const showAuthenticatedShell =
     isReady && isLogged && !loadingInitData;
+
+  useEffect(() => {
+    if (splashHiddenRef.current || !isReady || !authSessionResolved) {
+      return;
+    }
+    const loggedInReady = isLogged && !loadingInitData;
+    const loggedOutReady = !isLogged;
+    if (loggedInReady || loggedOutReady) {
+      SplashScreen.hide();
+      splashHiddenRef.current = true;
+    }
+  }, [isReady, authSessionResolved, isLogged, loadingInitData]);
 
   return (
     <NavigationContainer

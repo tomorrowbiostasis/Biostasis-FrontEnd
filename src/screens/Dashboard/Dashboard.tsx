@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useLayoutEffect} from 'react';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StatusBar, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
@@ -259,6 +259,7 @@ const Dashboard = () => {
 
   return (
     <View style={styles.root}>
+      <StatusBar barStyle="light-content" />
       <SafeAreaView edges={['top']} style={styles.header}>
         <View style={styles.headerRow}>
           <View>

@@ -9,7 +9,10 @@ interface IConfigState {
 
 export const initialState: IConfigState = {
   language: 'en',
-  loadingInitData: false,
+  // Defaults to true so the native splash stays visible during the initial
+  // auth probe + bootstrap fetches. AuthListener flips it to false once
+  // initData() completes or the session resolves to not-logged-in.
+  loadingInitData: true,
 };
 
 export const configSlice = createSlice({

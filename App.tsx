@@ -3,7 +3,6 @@ import {LogBox, UIManager} from 'react-native';
 import {StatusBar} from 'native-base';
 import NavigationContainer from '~/navigators';
 import Providers from '~/providers/Providers';
-import SplashScreen from 'react-native-splash-screen';
 import SoundService from '~/services/Alert.service';
 import messaging from '@react-native-firebase/messaging';
 import { logPushEvent } from '~/services/PushLogger.service';
@@ -32,8 +31,6 @@ const App = () => {
 
     UIManager.setLayoutAnimationEnabledExperimental &&
       UIManager.setLayoutAnimationEnabledExperimental(true);
-
-    SplashScreen.hide();
   }, []);
 
   useEffect(() => {

@@ -85,7 +85,11 @@ const AuthListener = () => {
           };
           updateFcmToken();
         }
-        const userResult = await dispatch(getUser());
+        const userPromise = dispatch(getUser());
+        const contactsPromise = dispatch(getEmergencyContacts());
+        const timeSlotPromise = dispatch(getTimeSlot());
+
+        const userResult = await userPromise;
         if (userResult.meta.requestStatus === 'rejected') {
           console.log(
             '[AuthListener] getUser failed, retrying in 1s...',
@@ -93,8 +97,7 @@ const AuthListener = () => {
           await new Promise(resolve => setTimeout(resolve, 1000));
           await dispatch(getUser());
         }
-        await dispatch(getEmergencyContacts());
-        await dispatch(getTimeSlot());
+        await Promise.allSettled([contactsPromise, timeSlotPromise]);
       } catch (e) {
         console.log('[AuthListener] initData error:', e);
       } finally {
