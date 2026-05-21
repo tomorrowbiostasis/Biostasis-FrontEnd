@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {View} from 'react-native';
 import {Button, Text} from 'native-base';
-import Container from '~/components/Container';
+import ScreenHeader from '~/components/ScreenHeader';
 
 import styles from './styles';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
@@ -27,21 +27,20 @@ const EmergencyContactExplanationsScreen = () => {
   }, [dispatch]);
 
   return (
-    <Container
-      title={t('emergencyContactsSettings.title')}
-      contentContainerStyle={styles.container}
-      showBackIcon
-      showDrawerIcon>
-      <View>
-        <Text style={styles.text}>
-          {t('emergencyContactsSettings.explanations.description1')}
-        </Text>
-        <Text style={styles.text}>
-          {t('emergencyContactsSettings.explanations.description2')}
-        </Text>
+    <View style={styles.root}>
+      <ScreenHeader title={t('emergencyContactsSettings.title')} />
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.text}>
+            {t('emergencyContactsSettings.explanations.description1')}
+          </Text>
+          <Text style={styles.text}>
+            {t('emergencyContactsSettings.explanations.description2')}
+          </Text>
+        </View>
+        <Button onPress={handleSetUpPress}>{t('common.setUp')}</Button>
       </View>
-      <Button onPress={handleSetUpPress}>{t('common.setUp')}</Button>
-    </Container>
+    </View>
   );
 };
 

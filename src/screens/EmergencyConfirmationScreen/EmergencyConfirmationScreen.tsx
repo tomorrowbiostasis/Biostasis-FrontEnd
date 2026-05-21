@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useNavigation} from '@react-navigation/native';
+import {StackActions, useNavigation} from '@react-navigation/native';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppSelector} from '~/redux/store/hooks';
@@ -48,8 +48,7 @@ const EmergencyConfirmationScreen = () => {
 
   const handlePressIn = useCallback(() => {
     if (!contactsReady) {
-      dismiss();
-      navigation.navigate(addContactScreen as never);
+      navigation.dispatch(StackActions.replace(addContactScreen));
       return;
     }
     setCountdown(HOLD_SECONDS);

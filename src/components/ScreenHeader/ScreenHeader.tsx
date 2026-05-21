@@ -35,7 +35,11 @@ const ScreenHeader: FC<ScreenHeaderProps> = ({
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={semanticColors.primary} />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={semanticColors.primary}
+        animated={false}
+      />
       <View style={styles.row}>
         <View style={styles.side}>
           {showBack ? (

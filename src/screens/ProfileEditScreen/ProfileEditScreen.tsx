@@ -159,6 +159,12 @@ const ProfileEditScreen = () => {
                 errorMessage={fieldError('lastName')}
               />
               <FormInput
+                label={t('profileEdit.email')}
+                value={user.email || ''}
+                isDisabled
+                editable={false}
+              />
+              <FormInput
                 label={t('userAddress.street')}
                 value={values.street}
                 onChangeText={handleChange('street')}
