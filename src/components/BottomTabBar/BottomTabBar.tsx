@@ -73,7 +73,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({state, navigation}) => {
         accessibilityLabel={t('bottomTab.activateA11y')}>
         <View style={styles.halo}>
           <View style={styles.circle}>
-            <PlusIcon width={22} height={22} color="#FFFFFF" />
+            <PlusIcon width={16} height={16} color="#FFFFFF" />
           </View>
         </View>
         <Text style={styles.centerLabel}>
