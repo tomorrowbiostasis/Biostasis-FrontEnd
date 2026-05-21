@@ -760,6 +760,7 @@ const translations: ITranslation = {
     text1:
       'Il sistema di emergenza automatico monitora regolarmente il vostro benessere in base alla frequenza da voi scelta',
     text3: 'Stai bene?',
+    confirmOk: 'Sì, sto bene',
     startEmergency: "No, avviare l'emergenza",
     success:
       'Il segnale positivo che indica che siete ancora vivi è stato inviato con successo',

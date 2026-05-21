@@ -390,3 +390,23 @@ export const HeartHalfIcon = makeIcon(
     <Path d="M12 5v16" />
   </>,
 );
+
+export const WifiOffIcon = makeIcon(
+  <>
+    <Path d="M12 20h.01" />
+    <Path d="M8.5 16.429a5 5 0 0 1 7 0" />
+    <Path d="M5 12.859a10 10 0 0 1 5.17-2.69" />
+    <Path d="M19 12.859a10 10 0 0 0-2.007-1.523" />
+    <Path d="M2 8.82a15 15 0 0 1 4.177-2.643" />
+    <Path d="M22 8.82a15 15 0 0 0-11.288-3.764" />
+    <Path d="m2 2 20 20" />
+  </>,
+);
+
+export const PlaneOffIcon = makeIcon(
+  <>
+    <Path d="M16 16.76V17a2 2 0 0 1-2 2h-1.93a.97.97 0 0 1-.83-.42L9 14H5l-2 2-1-1 2.46-3.69L2 10v-1l3-1 .85.85" />
+    <Path d="M10.5 6.5 13 4l3.79 3.79a1.92 1.92 0 0 0 1.42.71h.79c.93 0 2-.69 2-2a2 2 0 0 0-2-2h-1.5L14 1l-2.5 2.5" />
+    <Path d="m2 2 20 20" />
+  </>,
+);

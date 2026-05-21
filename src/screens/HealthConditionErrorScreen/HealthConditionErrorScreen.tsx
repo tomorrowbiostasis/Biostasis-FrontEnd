@@ -1,7 +1,5 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {Button, Text, View, Spinner} from 'native-base';
 import React, {useCallback, useMemo, VFC} from 'react';
-// import {Notifications} from 'react-native-notifications';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {Screens, ScreensNavigationParamsList} from '~/models/Navigation.model';
 import {automatedEmergencyLoading} from '~/redux/automatedEmergency/selectors';
@@ -15,19 +13,14 @@ import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import {stopBackgroundFetch} from '~/services/Background.service';
 import {isAndroid, updateDataCollectionStatus} from '~/utils';
-import styles from './styles';
 import SoundService from '~/services/Alert.service';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
-import Container from '~/components/Container';
 import ToastService from '~/services/Toast.service';
 import {updateNotification} from '~/services/Notification.service';
-// import {
-//   isForegroundFetchRunning,
-//   stopForegroundFetch,
-// } from '~/services/Notification.service';
+import AlertScreen from '~/components/AlertScreen';
+import {HeartPulseIcon} from '~/assets/icons/AppIcons';
+import {semanticColors} from '~/theme/tokens';
 
 const resetSoundAndNotificationsHandler = () => {
-  // Notifications.removeAllDeliveredNotifications();
   SoundService.resetAllSounds();
 };
 
@@ -42,10 +35,6 @@ const HealthConditionErrorScreen: VFC = () => {
   const dispatch = useAppDispatch();
 
   const resetPersistentTriggers = useCallback(async () => {
-    // const isForegroundActive = await isForegroundFetchRunning();
-    // if (isForegroundActive) {
-    // await stopForegroundFetch();
-    // }
     await AsyncStorageService.setItem(AsyncStorageEnum.TimeTrigger, 'false');
     await AsyncStorageService.setItem(AsyncStorageEnum.HealthTrigger, 'false');
   }, []);
@@ -92,7 +81,7 @@ const HealthConditionErrorScreen: VFC = () => {
     handleCloseAndRedirect();
   }, [dispatch, handleCloseAndRedirect, resetPersistentTriggers]);
 
-  const firstLineOfText: string = useMemo(() => {
+  const description: string = useMemo(() => {
     if (params?.regularCheck) {
       return t('healthConditionError.text1');
     }
@@ -101,39 +90,24 @@ const HealthConditionErrorScreen: VFC = () => {
   }, []);
 
   return (
-    <Container
-      loading={loading}
-      type={'static'}
-      contentContainerStyle={styles.contentContainer}>
-      <View style={styles.panel}>
-        <View style={styles.panelHeader}>
-          <IconIonicons name={'pulse-outline'} size={26} style={styles.icon} />
-          <Text fontSize={'md'} fontWeight={700}>
-            {t('healthConditionError.title')}
-          </Text>
-        </View>
-        <View style={styles.lineStyle} />
-        <View style={styles.panelBody}>
-          <Text fontSize={'md'}>{firstLineOfText}</Text>
-          <Text fontSize={'2xl'} fontWeight={700} m={10}>
-            {t('healthConditionError.text3')}
-          </Text>
-          <View style={styles.panelFooter}>
-            <Button variant={'solid'} onPress={handleCancelEmergency}>
-              {t('common.yes')}
-            </Button>
-            <Button
-              spinner={<Spinner color={'white'} size={'small'} />}
-              isLoading={loading}
-              style={styles.emergencyButton}
-              variant={'solid'}
-              onPress={handleTriggerEmergency}>
-              {t('healthConditionError.startEmergency')}
-            </Button>
-          </View>
-        </View>
-      </View>
-    </Container>
+    <AlertScreen
+      tone="critical"
+      icon={<HeartPulseIcon size={44} color={semanticColors.danger} />}
+      title={t('healthConditionError.title')}
+      description={description}
+      headline={t('healthConditionError.text3')}
+      primary={{
+        label: t('healthConditionError.confirmOk'),
+        onPress: handleCancelEmergency,
+        variant: 'figmaPrimary',
+      }}
+      secondary={{
+        label: t('healthConditionError.startEmergency'),
+        onPress: handleTriggerEmergency,
+        isLoading: loading,
+        variant: 'figmaEmergency',
+      }}
+    />
   );
 };
 export default HealthConditionErrorScreen;

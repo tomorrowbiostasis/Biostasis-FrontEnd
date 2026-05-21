@@ -889,6 +889,7 @@ const translations = {
     text1:
       'The automated emergency system regularly monitors your well-being according to the frequency you have chosen.',
     text3: 'Are you OK?',
+    confirmOk: "Yes, I'm OK",
     startEmergency: 'No, Start emergency',
     success:
       'Positive signal indicates that you are still alive has been sent successfully.',

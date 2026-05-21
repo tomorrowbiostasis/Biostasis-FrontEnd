@@ -767,6 +767,7 @@ const translations: ITranslation = {
     text1:
       'Das automatische Notfallsystem überwacht regelmäßig Ihr Wohlbefinden entsprechend der von Ihnen gewählten Frequenz',
     text3: 'Alles in Ordnung?',
+    confirmOk: 'Ja, mir geht es gut',
     startEmergency: 'Nein, Notfall starten',
     success:
       'Das positive Signal, dass Sie noch am Leben sind, wurde erfolgreich gesendet',
