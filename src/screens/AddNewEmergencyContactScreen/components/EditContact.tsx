@@ -148,7 +148,6 @@ export const EditContact: FC<IEditContactProps> = ({contact, onSavePress}) => {
           <View style={styles.buttonWrap}>
             <Button
               variant={'figmaPrimary' as never}
-              h={44}
               isDisabled={
                 !(isValid && isPhoneValid && (dirty || isPhoneTouched))
               }

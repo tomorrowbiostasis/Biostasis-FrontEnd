@@ -1,78 +1,123 @@
 import React from 'react';
-import Toast, {BaseToast} from 'react-native-toast-message';
-import colors from './colors';
-import {StyleSheet} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+import Toast from 'react-native-toast-message';
+
+import {semanticColors, shadow} from './tokens';
+import {
+  AlertTriangleIcon,
+  CheckIcon,
+  XIcon,
+} from '~/assets/icons/AppIcons';
+
+type ToastVariant = {
+  bg: string;
+  accent: string;
+  Icon: React.ComponentType<{size?: number; color?: string}>;
+};
+
+const VARIANTS: Record<'success' | 'error' | 'warning', ToastVariant> = {
+  success: {
+    bg: semanticColors.successSurface,
+    accent: semanticColors.success,
+    Icon: CheckIcon,
+  },
+  error: {
+    bg: semanticColors.dangerSurface,
+    accent: semanticColors.danger,
+    Icon: XIcon,
+  },
+  warning: {
+    bg: semanticColors.warningSurface,
+    accent: semanticColors.warningStrong,
+    Icon: AlertTriangleIcon,
+  },
+};
+
+interface ToastBodyProps {
+  variant: ToastVariant;
+  title?: string;
+  body?: string;
+}
+
+const ToastBody: React.FC<ToastBodyProps> = ({variant, title, body}) => {
+  const {bg, accent, Icon} = variant;
+  return (
+    <Pressable
+      onPress={() => Toast.hide()}
+      accessibilityRole="button"
+      accessibilityLabel="Dismiss notification"
+      style={[styles.container, {backgroundColor: bg}]}>
+      <View style={[styles.accentBar, {backgroundColor: accent}]} />
+      <View style={styles.iconChip}>
+        <Icon size={20} color={accent} />
+      </View>
+      <View style={styles.textCol}>
+        {title ? (
+          <Text style={styles.title} numberOfLines={2}>
+            {title}
+          </Text>
+        ) : null}
+        {body ? (
+          <Text style={styles.body} numberOfLines={4}>
+            {body}
+          </Text>
+        ) : null}
+      </View>
+    </Pressable>
+  );
+};
 
 export const toastConfig = {
-  biostasis_success: ({text1}: {text1: string}) => (
-    <BaseToast
-      text1={text1}
-      style={{
-        ...styles.main,
-        borderLeftColor: colors.green[200],
-        backgroundColor: colors.green[200],
-      }}
-      contentContainerStyle={styles.container}
-      onPress={() => Toast.hide()}
-      text1Style={styles.text1}
-      text1NumberOfLines={4}
-      text2NumberOfLines={0}
-    />
+  biostasis_success: ({text1, text2}: {text1?: string; text2?: string}) => (
+    <ToastBody variant={VARIANTS.success} title={text1} body={text2} />
   ),
-  biostasis_error: ({text1}: {text1: string}) => (
-    <BaseToast
-      text1={text1}
-      style={{
-        ...styles.main,
-        borderLeftColor: colors.red[200],
-        backgroundColor: colors.red[200],
-      }}
-      contentContainerStyle={styles.container}
-      onPress={() => Toast.hide()}
-      text1Style={styles.text1}
-      text1NumberOfLines={4}
-      text2NumberOfLines={0}
-    />
+  biostasis_error: ({text1, text2}: {text1?: string; text2?: string}) => (
+    <ToastBody variant={VARIANTS.error} title={text1} body={text2} />
   ),
-  biostasis_warning: ({text1}: {text1: string}) => (
-    <BaseToast
-      text1="Warning"
-      text2={text1}
-      style={{
-        ...styles.main,
-        borderLeftColor: colors.yellow[600],
-        backgroundColor: colors.yellow[600],
-      }}
-      contentContainerStyle={styles.container}
-      onPress={() => Toast.hide()}
-      text2Style={styles.text1}
-      text1Style={styles.text2}
-      text1NumberOfLines={1}
-      text2NumberOfLines={4}
-    />
+  biostasis_warning: ({text1, text2}: {text1?: string; text2?: string}) => (
+    <ToastBody variant={VARIANTS.warning} title={text1} body={text2} />
   ),
 };
 
 const styles = StyleSheet.create({
-  main: {
-    height: undefined,
-    padding: 5,
-    marginTop:30,
-  },
   container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    marginHorizontal: 16,
+    borderRadius: 14,
+    overflow: 'hidden',
+    ...shadow.md,
+  },
+  accentBar: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 4,
+  },
+  iconChip: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    backgroundColor: semanticColors.surface,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text1: {
-    fontSize: 15,
-    fontWeight: '400',
-    color: colors.white,
-    textAlign: 'center',
+  textCol: {
+    flex: 1,
+    gap: 2,
   },
-  text2: {
-    fontSize: 17,
-    fontWeight: 'bold',
-    color: colors.white,
-    textAlign: 'center',
+  title: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 14,
+    color: semanticColors.textPrimary,
+  },
+  body: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 13,
+    color: semanticColors.textSecondary,
   },
 });

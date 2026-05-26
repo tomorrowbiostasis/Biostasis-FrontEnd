@@ -68,12 +68,12 @@ const BottomTabBar: FC<BottomTabBarProps> = ({state, navigation}) => {
       <TouchableOpacity
         activeOpacity={0.85}
         onPress={handleActivate}
-        style={[styles.centerButton, {bottom: insets.bottom + 18}]}
+        style={[styles.centerButton, {bottom: insets.bottom + 5}]}
         accessibilityRole="button"
         accessibilityLabel={t('bottomTab.activateA11y')}>
         <View style={styles.halo}>
           <View style={styles.circle}>
-            <PlusIcon width={16} height={16} color="#FFFFFF" />
+            <PlusIcon width={14} height={14} color="#FFFFFF" />
           </View>
         </View>
         <Text style={styles.centerLabel}>
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
   bar: {
     flexDirection: 'row',
     height: 64,
+    paddingHorizontal: 16,
     borderTopWidth: 1,
     borderTopColor: 'rgba(11, 31, 58, 0.1)',
     backgroundColor: '#FFFFFF',

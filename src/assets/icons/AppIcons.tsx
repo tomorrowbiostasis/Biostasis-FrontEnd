@@ -111,6 +111,13 @@ export const ShieldCheckIcon = makeIcon(
 
 export const CheckIcon = makeIcon(<Path d="M20 6 9 17l-5-5" />);
 
+export const XIcon = makeIcon(
+  <>
+    <Path d="M18 6 6 18" />
+    <Path d="m6 6 12 12" />
+  </>,
+);
+
 export const BellIcon = makeIcon(
   <>
     <Path d="M10.268 21a2 2 0 0 0 3.464 0" />

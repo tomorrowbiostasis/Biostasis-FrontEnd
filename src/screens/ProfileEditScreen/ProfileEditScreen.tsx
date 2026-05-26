@@ -249,7 +249,6 @@ const ProfileEditScreen = () => {
 
               <Button
                 variant={'figmaPrimary' as never}
-                h={50}
                 mt={4}
                 isDisabled={!canSave}
                 isLoading={isSubmitted}

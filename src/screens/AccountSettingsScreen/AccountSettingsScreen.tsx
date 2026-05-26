@@ -36,6 +36,7 @@ import {
   AlertTriangleIcon,
   ChevronRightIcon,
 } from '~/assets/icons/AppIcons';
+import {semanticColors} from '~/theme/tokens';
 import styles from './styles';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -217,7 +218,7 @@ const AccountSettingsScreen = () => {
               </Text>
             </View>
             <View style={gdprOpen ? styles.chevronOpen : undefined}>
-              <ChevronRightIcon size={18} color="#5A6A7E" />
+              <ChevronRightIcon size={18} color={semanticColors.iconChevron} />
             </View>
           </TouchableOpacity>
 
@@ -238,7 +239,6 @@ const AccountSettingsScreen = () => {
               />
               <Button
                 variant={'figmaPrimary' as never}
-                h={50}
                 isDisabled={!isGdprEmailValid || gdprSubmitting}
                 isLoading={gdprSubmitting}
                 onPress={handleGdprSubmit}>

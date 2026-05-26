@@ -34,8 +34,6 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     backgroundColor: semanticColors.surface,
-    borderWidth: 1,
-    borderColor: 'rgba(11, 31, 58, 0.1)',
     borderRadius: 14,
     padding: 15,
   },

@@ -43,6 +43,8 @@ export const semanticColors = {
   infoSurface: '#EAF0F5',
 
   overlay: 'rgba(0, 0, 0, 0.2)',
+
+  iconChevron: '#5A6A7E',
 } as const;
 
 export type SemanticColor = keyof typeof semanticColors;

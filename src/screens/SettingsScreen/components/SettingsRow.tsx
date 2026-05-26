@@ -33,7 +33,7 @@ const SettingsRow: FC<SettingsRowProps> = ({
       <Text style={styles.label} numberOfLines={1}>
         {label}
       </Text>
-      <ChevronRightIcon size={18} color={semanticColors.textSecondary} />
+      <ChevronRightIcon size={18} color={semanticColors.iconChevron} />
     </TouchableOpacity>
   );
 };

@@ -145,7 +145,6 @@ const NewPasswordScreen = () => {
                 />
                 <Button
                   variant={'figmaPrimary' as never}
-                  h={44}
                   isDisabled={!canSubmit}
                   isLoading={pending}
                   onPress={() => handleSubmit()}

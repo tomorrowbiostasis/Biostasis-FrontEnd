@@ -120,7 +120,6 @@ export const AddNewContact: FC<IAddNewContactProps> = ({onSavePress}) => {
           <View style={styles.buttonWrap}>
             <Button
               variant={'figmaPrimary' as never}
-              h={44}
               isDisabled={!isValid || !dirty || !isPhoneValid}
               onPress={() => handleSubmit()}>
               {t('emergencyContactsSettings.saveChanges')}

@@ -132,7 +132,6 @@ export const UserNameScreen = () => {
                   </Pressable>
                   <Button
                     variant={'figmaPrimary' as never}
-                    h={44}
                     flex={1}
                     isDisabled={!canSubmit}
                     isLoading={pending}

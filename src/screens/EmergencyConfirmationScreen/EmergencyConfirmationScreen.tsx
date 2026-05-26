@@ -96,13 +96,19 @@ const EmergencyConfirmationScreen = () => {
           <View style={styles.steps}>
             {steps.map((step, index) => (
               <View key={step} style={styles.stepRow}>
-                <View style={styles.stepMarker}>
-                  <Text style={styles.stepNumber}>
-                    {String(index + 1).padStart(2, '0')}
-                  </Text>
-                  <View style={styles.stepDot} />
+                <Text style={styles.stepNumber}>
+                  {String(index + 1).padStart(2, '0')}
+                </Text>
+                <View style={styles.stepMarkerColumn}>
+                  <View style={styles.stepDot}>
+                    <View style={styles.stepDotInner} />
+                  </View>
                   {index < steps.length - 1 ? (
-                    <View style={styles.stepLine} />
+                    <View style={styles.stepLine}>
+                      {Array.from({length: 5}).map((_, dotIndex) => (
+                        <View key={dotIndex} style={styles.stepLineDot} />
+                      ))}
+                    </View>
                   ) : null}
                 </View>
                 <Text style={styles.stepText}>{step}</Text>

@@ -46,7 +46,7 @@ const SystemCard: FC<SystemCardProps> = ({
         ) : null}
       </View>
       {right === 'chevron' ? (
-        <ChevronRightIcon size={18} color="#5A6A7E" />
+        <ChevronRightIcon size={18} color={semanticColors.iconChevron} />
       ) : (
         right ?? null
       )}
@@ -76,16 +76,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: semanticColors.surface,
-    borderWidth: 1,
-    borderColor: 'rgba(11, 31, 58, 0.1)',
     borderRadius: 14,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    minHeight: 56,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
     gap: 12,
   },
   highlighted: {
     backgroundColor: '#F5FBF9',
-    borderColor: 'rgba(30, 155, 107, 0.25)',
   },
   info: {
     flex: 1,

@@ -126,7 +126,6 @@ const Register: FC = () => {
               </View>
               <Button
                 variant={'figmaPrimary' as never}
-                h={44}
                 isDisabled={!canSubmit}
                 isLoading={pending}
                 onPress={() => handleSubmit()}

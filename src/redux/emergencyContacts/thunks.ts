@@ -18,6 +18,11 @@ export type IUpdateEmergencyContact = {
   onSuccess: () => void;
 };
 
+export type IAddEmergencyContact = {
+  contact: IEmergencyContact;
+  onSuccess: () => void;
+};
+
 export const getEmergencyContacts = createAsyncThunk(
   'emergencyContacts/get',
   async () => {
@@ -53,7 +58,7 @@ export const updateActiveEmergencyContactStatus = createAsyncThunk(
 );
 export const AddNewEmergencyContact = createAsyncThunk(
   'emergencyContacts/add',
-  async (contact: IEmergencyContact, thunkApi) => {
+  async ({contact, onSuccess}: IAddEmergencyContact, thunkApi) => {
     return await API.AddNewEmergencyContact(contact)
       .then(async response => {
         await thunkApi
@@ -68,6 +73,7 @@ export const AddNewEmergencyContact = createAsyncThunk(
               i18n.t('emergencyContactsSettings.addNewEdit.errorAddContact'),
             ),
           );
+        onSuccess();
         return response.data;
       })
       .catch(error => {

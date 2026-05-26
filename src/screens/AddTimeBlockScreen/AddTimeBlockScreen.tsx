@@ -43,7 +43,7 @@ const TimeField: FC<TimeFieldProps> = ({value, filled, onPress}) => (
       </Text>
     </View>
     <View style={styles.chevron}>
-      <ChevronRightIcon size={16} color={semanticColors.textMuted} />
+      <ChevronRightIcon size={16} color={semanticColors.iconChevron} />
     </View>
   </TouchableOpacity>
 );

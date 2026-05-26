@@ -194,7 +194,6 @@ const ProfileAddMedicalInfoScreen = () => {
 
             <Button
               variant={'figmaPrimary' as never}
-              h={50}
               mt={4}
               isDisabled={checkIfDisabled(values, errors)}
               isLoading={isSubmitted}
