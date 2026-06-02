@@ -106,6 +106,72 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#FFFFFF',
   },
+  statusBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 12,
+    backgroundColor: '#D6455D',
+    paddingVertical: 19,
+    paddingHorizontal: 24,
+  },
+  cancelButton: {
+    marginLeft: 'auto',
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
+  },
+  cancelButtonText: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 13,
+    color: '#FFFFFF',
+  },
+  resultContent: {
+    paddingHorizontal: 37,
+    paddingTop: 8,
+    paddingBottom: 36,
+    alignItems: 'center',
+    gap: 14,
+  },
+  resultIcon: {
+    marginBottom: 4,
+  },
+  resultButtonRow: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 8,
+  },
+  primaryButton: {
+    backgroundColor: '#D6455D',
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 8,
+  },
+  primaryButtonText: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 14,
+    color: '#FFFFFF',
+  },
+  secondaryButton: {
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#D6455D',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 8,
+  },
+  secondaryButtonText: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 14,
+    color: '#D6455D',
+  },
 });
 
 export default styles;

@@ -5,7 +5,6 @@ import {Provider} from 'react-redux';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {PersistGate} from 'redux-persist/integration/react';
 import AuthListener from './AuthListener';
-import EmergencyButton from './EmergencyCountdown';
 
 import {store, persistor} from '~/redux/store';
 import {customAppTheme} from '~/theme';
@@ -31,7 +30,6 @@ const Providers: FC<ProvidersProps> = ({children}) => (
             },
           }}>
           {children}
-          <EmergencyButton />
         </NativeBaseProvider>
       </SafeAreaProvider>
     </PersistGate>

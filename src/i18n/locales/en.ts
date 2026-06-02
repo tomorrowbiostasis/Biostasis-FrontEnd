@@ -63,6 +63,14 @@ const translations = {
     step2:
       'They will reach out to you and the cryopreservation team to coordinate the emergency response',
     hold: 'HOLD TO TRIGGER EMERGENCY',
+    sending: 'Sending emergency…',
+    cancel: 'Cancel',
+    sentTitle: 'Emergency sent',
+    sentSubtitle: 'Your emergency contacts have been notified.',
+    done: 'Done',
+    failedTitle: 'Emergency not sent',
+    failedSubtitle: 'Something went wrong. Please try again.',
+    retry: 'Retry',
   },
   profileHub: {
     title: 'Profile',
