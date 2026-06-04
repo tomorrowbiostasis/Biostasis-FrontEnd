@@ -1,14 +1,14 @@
 import React, {FC, ReactNode} from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {semanticColors} from '~/theme/tokens';
+import {iconSizes, layout, semanticColors, typography} from '~/theme/tokens';
 import IconChip from '~/components/IconChip';
 import {ChevronRightIcon} from '~/assets/icons/AppIcons';
 
 interface SettingsRowProps {
-  /** Line icon rendered inside the tinted chip. */
+  /** Icon rendered as a framed asset, or a glyph when iconBackground is provided. */
   icon: ReactNode;
-  /** Chip background tint (from Figma icon set 382-18912). */
-  iconBackground: string;
+  /** Optional chip background tint for glyph-only icons. */
+  iconBackground?: string;
   label: string;
   onPress: () => void;
 }
@@ -27,13 +27,18 @@ const SettingsRow: FC<SettingsRowProps> = ({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label}>
-      <IconChip background={iconBackground} size={36} radius={8}>
-        {icon}
-      </IconChip>
-      <Text style={styles.label} numberOfLines={1}>
+      {iconBackground ? (
+        <IconChip background={iconBackground}>{icon}</IconChip>
+      ) : (
+        icon
+      )}
+      <Text style={styles.label} numberOfLines={2}>
         {label}
       </Text>
-      <ChevronRightIcon size={18} color={semanticColors.iconChevron} />
+      <ChevronRightIcon
+        size={iconSizes.chevron}
+        color={semanticColors.iconChevron}
+      />
     </TouchableOpacity>
   );
 };
@@ -42,16 +47,16 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 56,
-    paddingHorizontal: 10,
-    gap: 12,
+    minHeight: 64,
+    paddingHorizontal: layout.cardPaddingHorizontal,
+    paddingVertical: 10,
+    gap: 14,
     backgroundColor: semanticColors.surface,
     borderRadius: 14,
   },
   label: {
     flex: 1,
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 14,
+    ...typography.rowTitle,
     color: semanticColors.textPrimary,
   },
 });

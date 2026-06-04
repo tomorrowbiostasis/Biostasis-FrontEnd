@@ -1,16 +1,16 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors} from '~/theme/tokens';
+import {layout, semanticColors, typography} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: semanticColors.surfaceCanvas,
+    backgroundColor: semanticColors.primary,
   },
   emptyHeader: {
     alignItems: 'center',
     paddingTop: 8,
     paddingBottom: 28,
-    paddingHorizontal: 34,
+    paddingHorizontal: layout.screenGutter,
     gap: 8,
   },
   emptyTitle: {
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   metricGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingHorizontal: 34,
+    paddingHorizontal: layout.screenGutter,
     paddingBottom: 24,
     gap: 12,
   },
@@ -59,9 +59,10 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
   },
   content: {
-    paddingHorizontal: 34,
+    paddingHorizontal: layout.screenGutter,
     paddingTop: 12,
     paddingBottom: 16,
   },
@@ -92,16 +93,18 @@ const styles = StyleSheet.create({
     color: semanticColors.primaryAccent,
   },
   footer: {
-    paddingHorizontal: 34,
+    backgroundColor: semanticColors.surfaceCanvas,
+    paddingHorizontal: layout.screenGutter,
     paddingTop: 12,
     paddingBottom: 28,
   },
   historyButton: {
-    height: 50,
-    borderRadius: 14,
+    height: layout.ctaHeight,
+    borderRadius: layout.ctaRadius,
     backgroundColor: semanticColors.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: layout.ctaPaddingHorizontal,
   },
   historyButtonDisabled: {
     backgroundColor: semanticColors.surfaceSubtle,
@@ -109,9 +112,8 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(11, 31, 58, 0.1)',
   },
   historyButtonText: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 16,
-    color: '#FFFFFF',
+    ...typography.buttonLabel,
+    color: semanticColors.textInverse,
   },
   historyButtonTextDisabled: {
     color: '#ACACAC',

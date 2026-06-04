@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    minHeight: 56,
     paddingVertical: spacing.md,
   },
   textBlock: {

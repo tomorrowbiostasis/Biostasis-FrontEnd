@@ -70,6 +70,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: spacing.lg,
   },
+  submitButton: {
+    flex: 1,
+  },
   backChip: {
     width: 40,
     height: 40,
@@ -78,12 +81,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: spacing.lg,
-  },
-  backGlyph: {
-    fontSize: 22,
-    lineHeight: 24,
-    color: semanticColors.primary,
-    marginTop: -2,
   },
 });
 

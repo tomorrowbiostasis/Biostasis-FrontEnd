@@ -1,17 +1,16 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import {Platform, Pressable, Text, View} from 'react-native';
-import {Button} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/core';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {parsePhoneNumber} from 'react-phone-number-input';
 
 import ScreenHeader from '~/components/ScreenHeader';
 import FormInput from '~/components/FormInput';
 import InlineCalendar from '~/components/InlineCalendar';
+import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
 import {
   IPhoneNumber,
   PhoneNumberPicker,
@@ -22,9 +21,8 @@ import {userSelector} from '~/redux/user/selectors';
 import {updateUser} from '~/redux/user/thunks';
 import {IUser} from '~/redux/user/user.slice';
 import {useEditProfileWithAddressValidationSchema} from '~/services/Validation.service';
-import {Screens} from '~/models/Navigation.model';
 import ToastService from '~/services/Toast.service';
-import {semanticColors} from '~/theme/tokens';
+import {BioLogInSignUpCalendarDots} from '~/assets/icons/BiostasisIcons';
 import styles from './styles';
 
 dayjs.extend(customParseFormat);
@@ -223,11 +221,7 @@ const ProfileEditScreen = () => {
                     ]}>
                     {dateOfBirth || t('userDateOfBirth.placeholder')}
                   </Text>
-                  <IconMaterialCommunityIcons
-                    name="calendar-blank-outline"
-                    size={22}
-                    color={semanticColors.info}
-                  />
+                  <BioLogInSignUpCalendarDots size={22} />
                 </Pressable>
                 {calendarOpen ? (
                   <InlineCalendar
@@ -247,14 +241,13 @@ const ProfileEditScreen = () => {
                 ) : null}
               </View>
 
-              <Button
-                variant={'figmaPrimary' as never}
+              <AnimatedSubmitButton
                 mt={4}
-                isDisabled={!canSave}
+                disabled={!canSave}
                 isLoading={isSubmitted}
                 onPress={() => handleSubmit()}>
                 {t('profileUserData.save')}
-              </Button>
+              </AnimatedSubmitButton>
             </KeyboardAwareScrollView>
           );
         }}

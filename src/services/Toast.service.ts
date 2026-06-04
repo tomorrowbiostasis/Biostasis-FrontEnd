@@ -22,5 +22,12 @@ const ToastService = {
       ...additionalPayload,
     });
   },
+  info: (message: string, additionalPayload?: Partial<ToastProps>) => {
+    Toast.show({
+      text1: message,
+      type: 'biostasis_info',
+      ...additionalPayload,
+    });
+  },
 };
 export default ToastService;

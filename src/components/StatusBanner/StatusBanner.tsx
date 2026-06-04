@@ -1,5 +1,11 @@
 import React, {FC} from 'react';
-import {StyleProp, Text, View, ViewStyle} from 'react-native';
+import {
+  StyleProp,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {semanticColors} from '~/theme/tokens';
 import styles from './styles';
 
@@ -14,6 +20,8 @@ interface StatusBannerProps {
   title: string;
   subtitle?: string;
   timestamp?: string;
+  actionLabel?: string;
+  onActionPress?: () => void;
   style?: StyleProp<ViewStyle>;
   testID?: string;
 }
@@ -51,6 +59,8 @@ const StatusBanner: FC<StatusBannerProps> = ({
   title,
   subtitle,
   timestamp,
+  actionLabel,
+  onActionPress,
   style,
   testID,
 }) => {
@@ -72,7 +82,17 @@ const StatusBanner: FC<StatusBannerProps> = ({
         </Text>
         {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
       </View>
-      {timestamp ? <Text style={styles.timestamp}>{timestamp}</Text> : null}
+      {actionLabel && onActionPress ? (
+        <TouchableOpacity
+          accessibilityRole="button"
+          hitSlop={8}
+          onPress={onActionPress}
+          style={styles.actionButton}>
+          <Text style={styles.actionText}>{actionLabel}</Text>
+        </TouchableOpacity>
+      ) : timestamp ? (
+        <Text style={styles.timestamp}>{timestamp}</Text>
+      ) : null}
     </View>
   );
 };

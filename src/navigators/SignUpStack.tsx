@@ -5,23 +5,23 @@ import PhoneNumberScreen from '~/screens/PhoneNumberScreen';
 import AddressScreen from '~/screens/AddressScreen/AddressScreen';
 import SetupCompleteScreen from '~/screens/SetupCompleteScreen';
 import {View} from 'react-native';
-import {logoutScreenOptions} from '~/theme/navigators';
+import {homeScreenOptions, logoutScreenOptions} from '~/theme/navigators';
 import {useAppSelector} from '~/redux/store/hooks';
 import {
   Screens,
   SignUpStackNavigatorParamList,
 } from '~/models/Navigation.model';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import colors from '~/theme/colors';
 import {configInitData} from '~/redux/config/config.slice';
 
-const Stack = createStackNavigator<SignUpStackNavigatorParamList>();
+const Stack = createNativeStackNavigator<SignUpStackNavigatorParamList>();
 
 export const SignUpStack = () => {
   const loading = useAppSelector(configInitData);
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={homeScreenOptions}>
       {loading && (
         /*
          *This one is used to get rid of showing unnecessary

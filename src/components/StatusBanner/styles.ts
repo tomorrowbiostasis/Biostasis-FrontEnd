@@ -6,14 +6,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: spacing.md,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     borderRadius: 14,
     borderWidth: 1,
-    minHeight: 48,
+    minHeight: 56,
   },
   dot: {
-    width: 10,
-    height: 10,
+    width: 11,
+    height: 11,
     borderRadius: radius.pill,
     marginRight: spacing.sm,
   },
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'DMSans-SemiBold',
-    fontSize: 15,
-    lineHeight: 20,
+    fontSize: 16,
+    lineHeight: 21,
   },
   subtitle: {
     ...typography.caption,
@@ -34,6 +34,19 @@ const styles = StyleSheet.create({
     ...typography.captionMedium,
     color: semanticColors.textSecondary,
     marginLeft: spacing.md,
+  },
+  actionButton: {
+    marginLeft: spacing.md,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.pill,
+    backgroundColor: 'rgba(11, 31, 58, 0.08)',
+  },
+  actionText: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 13,
+    lineHeight: 16,
+    color: semanticColors.primary,
   },
 });
 

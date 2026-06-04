@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import {Alert, InteractionManager, StyleSheet, View} from 'react-native';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
@@ -33,7 +33,11 @@ const Documents = () => {
     useState<DocumentIdType | null>(null);
 
   useEffect(() => {
-    dispatch(getDocuments());
+    const task = InteractionManager.runAfterInteractions(() => {
+      dispatch(getDocuments());
+    });
+
+    return () => task.cancel();
   }, [dispatch]);
 
   useEffect(() => {
@@ -59,10 +63,7 @@ const Documents = () => {
           copyTo: 'cachesDirectory',
         });
 
-        const filename = (file.name ?? 'document').replace(
-          regex.fileName,
-          '_',
-        );
+        const filename = (file.name ?? 'document').replace(regex.fileName, '_');
         dispatch(
           uploadDocument({
             file: {
@@ -126,6 +127,9 @@ const Documents = () => {
           id={medicalDirective?.id}
           name={medicalDirective?.name}
           title={t('emergencyContactsSettings.documents.headers.directive')}
+          description={t(
+            'emergencyContactsSettings.documents.descriptions.directive',
+          )}
           onAdd={() => handleAddDocument('medicalDirective')}
           onDelete={handleDeleteDocumentClick}
         />
@@ -133,6 +137,9 @@ const Documents = () => {
           id={lastWill?.id}
           name={lastWill?.name}
           title={t('emergencyContactsSettings.documents.headers.lastWill')}
+          description={t(
+            'emergencyContactsSettings.documents.descriptions.lastWill',
+          )}
           onAdd={() => handleAddDocument('lastWill')}
           onDelete={handleDeleteDocumentClick}
         />
@@ -142,6 +149,9 @@ const Documents = () => {
             id={doc.id}
             name={doc.name}
             title={otherTitle}
+            description={t(
+              'emergencyContactsSettings.documents.descriptions.other',
+            )}
             onAdd={() => handleAddDocument('other')}
             onDelete={handleDeleteDocumentClick}
           />
@@ -149,6 +159,9 @@ const Documents = () => {
         {!areOtherItemsLimited && (
           <DocumentItem
             title={otherTitle}
+            description={t(
+              'emergencyContactsSettings.documents.descriptions.other',
+            )}
             onAdd={() => handleAddDocument('other')}
             onDelete={handleDeleteDocumentClick}
           />
@@ -160,10 +173,10 @@ const Documents = () => {
 
 const styles = StyleSheet.create({
   section: {
-    gap: 14,
+    gap: 16,
   },
   rows: {
-    gap: 6,
+    gap: 8,
   },
 });
 

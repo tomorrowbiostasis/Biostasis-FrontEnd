@@ -1,8 +1,10 @@
 import React, {FC} from 'react';
 import {Text, View} from 'react-native';
 import {Input as NBInput, IInputProps} from 'native-base';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import {
+  BioLogInSignUpEmail,
+  BioLogInSignUpLock,
+} from '~/assets/icons/BiostasisIcons';
 
 import styles from './styles';
 
@@ -18,13 +20,13 @@ const renderLeftIcon = (type: FormInputType) => {
   if (type === 'email') {
     return (
       <View style={styles.leftIcon}>
-        <EntypoIcon name="mail" size={18} color="#96A3B3" />
+        <BioLogInSignUpEmail />
       </View>
     );
   }
   return (
     <View style={styles.leftIcon}>
-      <EvilIcons name="lock" size={22} color="#96A3B3" />
+      <BioLogInSignUpLock />
     </View>
   );
 };

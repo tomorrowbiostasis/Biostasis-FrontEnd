@@ -1,16 +1,20 @@
 import React, {useEffect} from 'react';
-import {LogBox, UIManager} from 'react-native';
+import {LogBox, StyleSheet, UIManager} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {enableFreeze} from 'react-native-screens';
 import {StatusBar} from 'native-base';
 import NavigationContainer from '~/navigators';
 import Providers from '~/providers/Providers';
 import SoundService from '~/services/Alert.service';
 import messaging from '@react-native-firebase/messaging';
-import { logPushEvent } from '~/services/PushLogger.service';
+import {logPushEvent} from '~/services/PushLogger.service';
 
 import {awsInit} from '~/services/Amazon.service';
 import '~/i18n/i18n';
 import crashlytics from '@react-native-firebase/crashlytics';
 import {isAndroid} from '~/utils';
+
+enableFreeze(true);
 
 isAndroid && SoundService.setCategory('Playback');
 
@@ -36,7 +40,7 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log('📩 Silent push received in FOREGROUND:', remoteMessage.data);
-      await logPushEvent({ source: 'foreground', ...remoteMessage });
+      await logPushEvent({source: 'foreground', ...remoteMessage});
     });
 
     return unsubscribe;
@@ -52,15 +56,23 @@ const App = () => {
   }, []);
 
   return (
-    <Providers>
-      <StatusBar
-        translucent={true}
-        backgroundColor={'transparent'}
-        barStyle={'dark-content'}
-      />
-      <NavigationContainer />
-    </Providers>
+    <GestureHandlerRootView style={styles.root}>
+      <Providers>
+        <StatusBar
+          translucent={true}
+          backgroundColor={'transparent'}
+          barStyle={'dark-content'}
+        />
+        <NavigationContainer />
+      </Providers>
+    </GestureHandlerRootView>
   );
 };
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+});
 
 export default App;

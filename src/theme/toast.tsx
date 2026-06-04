@@ -6,6 +6,7 @@ import {semanticColors, shadow} from './tokens';
 import {
   AlertTriangleIcon,
   CheckIcon,
+  LightbulbIcon,
   XIcon,
 } from '~/assets/icons/AppIcons';
 
@@ -15,7 +16,7 @@ type ToastVariant = {
   Icon: React.ComponentType<{size?: number; color?: string}>;
 };
 
-const VARIANTS: Record<'success' | 'error' | 'warning', ToastVariant> = {
+const VARIANTS: Record<'success' | 'error' | 'warning' | 'info', ToastVariant> = {
   success: {
     bg: semanticColors.successSurface,
     accent: semanticColors.success,
@@ -30,6 +31,11 @@ const VARIANTS: Record<'success' | 'error' | 'warning', ToastVariant> = {
     bg: semanticColors.warningSurface,
     accent: semanticColors.warningStrong,
     Icon: AlertTriangleIcon,
+  },
+  info: {
+    bg: semanticColors.infoSurface,
+    accent: semanticColors.info,
+    Icon: LightbulbIcon,
   },
 };
 
@@ -53,12 +59,12 @@ const ToastBody: React.FC<ToastBodyProps> = ({variant, title, body}) => {
       </View>
       <View style={styles.textCol}>
         {title ? (
-          <Text style={styles.title} numberOfLines={2}>
+          <Text style={styles.title}>
             {title}
           </Text>
         ) : null}
         {body ? (
-          <Text style={styles.body} numberOfLines={4}>
+          <Text style={styles.body}>
             {body}
           </Text>
         ) : null}
@@ -76,6 +82,9 @@ export const toastConfig = {
   ),
   biostasis_warning: ({text1, text2}: {text1?: string; text2?: string}) => (
     <ToastBody variant={VARIANTS.warning} title={text1} body={text2} />
+  ),
+  biostasis_info: ({text1, text2}: {text1?: string; text2?: string}) => (
+    <ToastBody variant={VARIANTS.info} title={text1} body={text2} />
   ),
 };
 

@@ -1,17 +1,21 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {Platform, View} from 'react-native';
-import {Button} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Formik} from 'formik';
+import {RouteProp, useRoute} from '@react-navigation/native';
 
 import AuthHeader from '~/components/AuthHeader';
 import FormInput from '~/components/FormInput';
 import Alert from '~/components/Alert';
+import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useEmailValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {forgotPassword} from '~/redux/auth/thunks';
 import {getForgotPasswordParams} from '~/redux/auth/selectors';
+import {setForgotPasswordEmailMessage} from '~/redux/auth/auth.slice';
+import {AuthStackNavigatorParamList, Screens} from '~/models/Navigation.model';
+import {getVisibleFormError} from '~/utils';
 
 import styles from './styles';
 
@@ -24,6 +28,18 @@ const ForgotPasswordScreen = () => {
   const emailValidationSchema = useEmailValidationSchema();
   const dispatch = useAppDispatch();
   const {pending, emailMessage} = useAppSelector(getForgotPasswordParams);
+  const {params} =
+    useRoute<
+      RouteProp<AuthStackNavigatorParamList, Screens.ForgotPassword>
+    >();
+  const initialValues = useMemo(
+    () => ({email: params?.email ?? ''}),
+    [params?.email],
+  );
+
+  useEffect(() => {
+    dispatch(setForgotPasswordEmailMessage(undefined));
+  }, [dispatch]);
 
   const handleContinue = useCallback(
     (values: ForgotPasswordFormFields) => {
@@ -57,9 +73,11 @@ const ForgotPasswordScreen = () => {
           </View>
         )}
         <Formik<ForgotPasswordFormFields>
-          initialValues={{email: ''}}
+          initialValues={initialValues}
+          enableReinitialize
           onSubmit={handleContinue}
           validationSchema={emailValidationSchema}
+          validateOnMount
           validateOnChange>
           {({
             handleChange,
@@ -68,10 +86,11 @@ const ForgotPasswordScreen = () => {
             values,
             touched,
             errors,
-            dirty,
             isValid,
+            submitCount,
           }) => {
-            const canSubmit = isValid && dirty && !pending;
+            const canSubmit =
+              isValid && values.email.trim().length > 0 && !pending;
             return (
               <>
                 <FormInput
@@ -81,18 +100,21 @@ const ForgotPasswordScreen = () => {
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   value={values.email}
-                  errorMessage={
-                    errors.email && touched.email ? errors.email : undefined
-                  }
+                  errorMessage={getVisibleFormError({
+                    error: errors.email,
+                    submitCount,
+                    touched: touched.email,
+                    value: values.email,
+                  })}
                 />
-                <Button
-                  variant={'figmaPrimary' as never}
-                  isDisabled={!canSubmit}
+                <AnimatedSubmitButton
+                  variant={'figmaFormPrimary' as never}
+                  disabled={!canSubmit}
                   isLoading={pending}
                   onPress={() => handleSubmit()}
                   style={styles.submitButton}>
                   {t('common.continue')}
-                </Button>
+                </AnimatedSubmitButton>
               </>
             );
           }}

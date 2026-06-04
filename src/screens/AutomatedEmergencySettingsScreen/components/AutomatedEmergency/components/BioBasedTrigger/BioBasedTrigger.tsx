@@ -21,9 +21,8 @@ import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import {Screens} from '~/models/Navigation.model';
 
-import IconChip from '~/components/IconChip';
 import IntervalSelect from '~/components/IntervalSelect';
-import {HeartPulseIcon} from '~/assets/icons/AppIcons';
+import {BioEmergencySettingsFillEcgWave} from '~/assets/icons/BiostasisIcons';
 import StatusBadge from '../../StatusBadge';
 import TriggerToggleRow from '../../TriggerToggleRow';
 import triggerStyles from '../../triggerStyles';
@@ -39,7 +38,7 @@ type BasedTriggerSwitchStepsType = Pick<
 
 const defaultPositiveInfoPeriod = 1440;
 
-const BioBasedTrigger = () => {
+const BioBasedTrigger = ({embedded = false}: {embedded?: boolean}) => {
   const {t} = useAppTranslation();
   const {navigate} = useNavigation();
   const dispatch = useAppDispatch();
@@ -247,7 +246,10 @@ const BioBasedTrigger = () => {
   );
 
   const infoAlert = (titleKey: string, descKey: string) => () =>
-    Alert.alert(t(titleKey), t(descKey));
+    ToastService.info(t(titleKey), {
+      text2: t(descKey),
+      visibilityTime: 6000,
+    });
 
   const description = isIOS
     ? t(
@@ -274,34 +276,48 @@ const BioBasedTrigger = () => {
   ) : null;
 
   return (
-    <View style={triggerStyles.card}>
+    <View style={[triggerStyles.card, embedded && triggerStyles.embeddedCard]}>
       <View style={triggerStyles.header}>
-        <IconChip background="rgba(245, 214, 230, 0.6)" size={36} radius={8}>
-          <HeartPulseIcon size={18} color="#C23A7A" />
-        </IconChip>
+        <BioEmergencySettingsFillEcgWave />
         <Text style={triggerStyles.headerTitle}>
           {t(
-            'emergencyContactsSettings.automatedEmergencySettings.bioTrigger.title',
+            embedded
+              ? 'emergencyContactsSettings.automatedEmergencySettings.bioTrigger.configurationTitle'
+              : 'emergencyContactsSettings.automatedEmergencySettings.bioTrigger.title',
           )}
         </Text>
       </View>
-      <StatusBadge active={!!isPlatformConditionsValid} />
-      <Text style={triggerStyles.description}>{description}</Text>
+      <StatusBadge
+        active={!!isPlatformConditionsValid}
+        activeLabel={t(
+          'emergencyContactsSettings.automatedEmergencySettings.guidance.statusLabels.connected',
+        )}
+        inactiveLabel={t(
+          'emergencyContactsSettings.automatedEmergencySettings.guidance.statusLabels.notConnected',
+        )}
+      />
+      {!embedded ? (
+        <Text style={triggerStyles.description}>{description}</Text>
+      ) : null}
 
       <View>
-        <TriggerToggleRow
-          label={t(
-            'emergencyContactsSettings.automatedEmergencySettings.bioTrigger.turnOn',
-          )}
-          value={!regularPushNotification}
-          onChange={handleBioToggle}
-        />
-        {regularPushNotification ? (
-          <Text style={triggerStyles.warning}>
-            {t(
-              'emergencyContactsSettings.automatedEmergencySettings.bioTrigger.warning',
-            )}
-          </Text>
+        {!embedded ? (
+          <>
+            <TriggerToggleRow
+              label={t(
+                'emergencyContactsSettings.automatedEmergencySettings.bioTrigger.turnOn',
+              )}
+              value={!regularPushNotification}
+              onChange={handleBioToggle}
+            />
+            {regularPushNotification ? (
+              <Text style={triggerStyles.warning}>
+                {t(
+                  'emergencyContactsSettings.automatedEmergencySettings.bioTrigger.warning',
+                )}
+              </Text>
+            ) : null}
+          </>
         ) : null}
 
         {!regularPushNotification && isIOS ? (

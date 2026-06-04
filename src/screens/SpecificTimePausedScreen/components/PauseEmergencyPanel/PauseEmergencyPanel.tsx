@@ -9,8 +9,7 @@ import {automatedEmergencyPausedDateSelector} from '~/redux/automatedEmergency/s
 import {addPauseFromNow, deleteTimeSlot} from '~/redux/automatedEmergency/thunks';
 import {isPausedTime} from '~/services/Time.service';
 import ToastService from '~/services/Toast.service';
-import IconChip from '~/components/IconChip';
-import {PauseCircleIcon} from '~/assets/icons/AppIcons';
+import {BioEmergencySettingsFillClockPause} from '~/assets/icons/BiostasisIcons';
 
 const AMBER_TITLE = '#92400E';
 const AMBER_BODY = '#B45309';
@@ -101,9 +100,7 @@ const PauseEmergencyPanel = () => {
     <>
       <View style={styles.card}>
         <View style={styles.header}>
-          <IconChip background="rgba(217, 119, 6, 0.15)" size={36} radius={8}>
-            <PauseCircleIcon size={18} color={AMBER_ACTION} />
-          </IconChip>
+          <BioEmergencySettingsFillClockPause />
           <View style={styles.headerText}>
             <Text style={styles.title}>
               {t('specificTimesScreen.pauseNow.title')}
@@ -153,8 +150,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#F5D68A',
     borderRadius: 14,
-    paddingHorizontal: 17,
-    paddingVertical: 14,
+    paddingHorizontal: 18,
+    paddingVertical: 16,
     gap: 14,
   },
   header: {
@@ -168,18 +165,20 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'DMSans-Bold',
-    fontSize: 14,
+    fontSize: 16,
+    lineHeight: 21,
     color: AMBER_TITLE,
   },
   description: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 13,
-    lineHeight: 18.2,
+    fontSize: 15,
+    lineHeight: 22,
     color: AMBER_BODY,
   },
   pausedUntil: {
     fontFamily: 'DMSans-Bold',
-    fontSize: 13,
+    fontSize: 15,
+    lineHeight: 20,
     color: AMBER_TITLE,
   },
   button: {

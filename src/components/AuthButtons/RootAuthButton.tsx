@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import {Button} from 'native-base';
 import React from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
@@ -44,18 +43,24 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 14,
     borderWidth: 1,
-    height: 44,
+    height: 52,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 0,
+    paddingBottom: 0,
   },
   textSolid: {
     fontFamily: 'DMSans-Medium',
     fontWeight: '500',
     fontSize: 16,
+    lineHeight: 22,
     color: colors.white,
   },
   textOutline: {
     fontFamily: 'DMSans-Medium',
     fontWeight: '500',
     fontSize: 16,
+    lineHeight: 22,
     color: '#0B1F3A',
   },
   pressed: {

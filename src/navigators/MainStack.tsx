@@ -1,15 +1,13 @@
 import React from 'react';
 import {
-  createStackNavigator,
-  StackNavigationOptions,
-  TransitionPresets,
-} from '@react-navigation/stack';
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
+} from '@react-navigation/native-stack';
 import {MainStackNavigatorParamList, Screens} from '~/models/Navigation.model';
 import {homeScreenOptions} from '~/theme/navigators';
 
 import BottomTabs from './BottomTabs';
 
-import EmergencyContactExplanationsScreen from '~/screens/EmergencyContactExplanationsScreen';
 import AddNewEmergencyContactScreen from '~/screens/AddNewEmergencyContactScreen/AddNewEmergencyContactScreen';
 import AutomatedEmergencySettingsScreen from '~/screens/AutomatedEmergencySettingsScreen';
 import SpecificTimePaused from '~/screens/SpecificTimePausedScreen/SpecificTimePausedScreen';
@@ -27,10 +25,16 @@ import EmergencyConfirmationScreen from '~/screens/EmergencyConfirmationScreen';
 import DevLogsScreen from '~/screens/DevLogs/DevLogsScreen';
 import DevHistoryLogsScreen from '~/screens/DevHistoryLogs/DevHistoryLogsScreen';
 import DevPushLogsScreen from '~/screens/DevPushLogs/DevPushLogsScreen';
+import {semanticColors} from '~/theme/tokens';
 
-const Stack = createStackNavigator<MainStackNavigatorParamList>();
+const Stack = createNativeStackNavigator<MainStackNavigatorParamList>();
 
-const stackOptions = homeScreenOptions as StackNavigationOptions;
+const stackOptions: NativeStackNavigationOptions = {
+  ...homeScreenOptions,
+  contentStyle: {
+    backgroundColor: semanticColors.primary,
+  },
+};
 
 export const MainStack = () => {
   return (
@@ -42,8 +46,10 @@ export const MainStack = () => {
         options={{
           presentation: 'transparentModal',
           headerShown: false,
-          cardOverlayEnabled: false,
-          ...TransitionPresets.ModalFadeTransition,
+          animation: 'none',
+          contentStyle: {
+            backgroundColor: 'transparent',
+          },
         }}
       />
       <Stack.Screen
@@ -61,10 +67,6 @@ export const MainStack = () => {
       <Stack.Screen
         name={Screens.AddNewEmergencyContact as never}
         component={AddNewEmergencyContactScreen}
-      />
-      <Stack.Screen
-        name={Screens.EmergencyContactExplanations as never}
-        component={EmergencyContactExplanationsScreen}
       />
       <Stack.Screen
         name={Screens.AutomatedEmergencySettings as never}

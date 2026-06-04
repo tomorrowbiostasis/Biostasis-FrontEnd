@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {semanticColors} from '~/theme/tokens';
+import {iconSizes, layout, semanticColors} from '~/theme/tokens';
 import {ChevronRightIcon} from '~/assets/icons/AppIcons';
 
 interface SystemCardProps {
@@ -17,6 +17,7 @@ interface SystemCardProps {
   subtitle?: string;
   /** 'chevron' renders the default chevron, or pass a custom node (badge / toggle). */
   right?: 'chevron' | ReactNode;
+  footer?: ReactNode;
   onPress?: () => void;
   highlighted?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -28,28 +29,35 @@ const SystemCard: FC<SystemCardProps> = ({
   title,
   subtitle,
   right,
+  footer,
   onPress,
   highlighted,
   style,
 }) => {
   const body = (
     <>
-      {chip}
-      <View style={styles.info}>
-        <Text style={styles.title} numberOfLines={1}>
-          {title}
-        </Text>
-        {subtitle ? (
-          <Text style={styles.subtitle} numberOfLines={2}>
-            {subtitle}
+      <View style={styles.mainRow}>
+        {chip}
+        <View style={styles.info}>
+          <Text style={styles.title} numberOfLines={1}>
+            {title}
           </Text>
-        ) : null}
+          {subtitle ? (
+            <Text style={styles.subtitle} numberOfLines={footer ? 3 : 2}>
+              {subtitle}
+            </Text>
+          ) : null}
+        </View>
+        {right === 'chevron' ? (
+          <ChevronRightIcon
+            size={iconSizes.chevron}
+            color={semanticColors.iconChevron}
+          />
+        ) : (
+          right ?? null
+        )}
       </View>
-      {right === 'chevron' ? (
-        <ChevronRightIcon size={18} color={semanticColors.iconChevron} />
-      ) : (
-        right ?? null
-      )}
+      {footer ? <View style={styles.footer}>{footer}</View> : null}
     </>
   );
 
@@ -73,14 +81,17 @@ const SystemCard: FC<SystemCardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: semanticColors.surface,
     borderRadius: 14,
-    minHeight: 56,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    minHeight: 64,
+    paddingHorizontal: layout.cardPaddingHorizontal,
+    paddingVertical: 12,
     gap: 12,
+  },
+  mainRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
   },
   highlighted: {
     backgroundColor: '#F5FBF9',
@@ -91,14 +102,21 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'DMSans-SemiBold',
-    fontSize: 16,
+    fontSize: 17,
+    lineHeight: 22,
     color: semanticColors.primary,
   },
   subtitle: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 14,
-    color: '#96A3B3',
+    fontSize: 15,
+    lineHeight: 19,
+    color: '#6B7A8E',
+  },
+  footer: {
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(11, 31, 58, 0.06)',
+    paddingTop: 10,
   },
 });
 
-export default SystemCard;
+export default React.memo(SystemCard);

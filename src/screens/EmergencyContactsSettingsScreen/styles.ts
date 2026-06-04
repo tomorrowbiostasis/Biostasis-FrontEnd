@@ -1,18 +1,20 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors} from '~/theme/tokens';
+import {layout, semanticColors} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: semanticColors.surfaceCanvas,
+    backgroundColor: semanticColors.primary,
   },
   scroll: {
     flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
   },
   content: {
-    paddingHorizontal: 34,
+    paddingHorizontal: layout.screenGutter,
     paddingTop: 18,
-    paddingBottom: 32,
+  },
+  contentInner: {
     gap: 18,
   },
 });

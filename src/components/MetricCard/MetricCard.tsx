@@ -6,7 +6,7 @@ interface MetricCardProps {
   icon: ReactNode;
   label: string;
   value: string;
-  caption: string;
+  caption?: string;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -23,9 +23,11 @@ const MetricCard: FC<MetricCardProps> = ({icon, label, value, caption, style}) =
       <Text style={styles.value} numberOfLines={1}>
         {value}
       </Text>
-      <Text style={styles.caption} numberOfLines={1}>
-        {caption}
-      </Text>
+      {caption ? (
+        <Text style={styles.caption} numberOfLines={1}>
+          {caption}
+        </Text>
+      ) : null}
     </View>
   );
 };
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: semanticColors.surface,
     borderRadius: 14,
-    padding: 15,
+    padding: 16,
   },
   labelRow: {
     flexDirection: 'row',
@@ -44,24 +46,26 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: 'DMSans-Medium',
-    fontSize: 12,
+    fontSize: 13,
+    lineHeight: 17,
     letterSpacing: 0.7,
     textTransform: 'uppercase',
     color: '#96A3B3',
   },
   value: {
     fontFamily: 'DMSerifDisplay-Regular',
-    fontSize: 30,
-    lineHeight: 34,
+    fontSize: 32,
+    lineHeight: 36,
     color: semanticColors.primary,
     marginTop: 4,
   },
   caption: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 12,
+    fontSize: 14,
+    lineHeight: 19,
     color: semanticColors.textSecondary,
     marginTop: 2,
   },
 });
 
-export default MetricCard;
+export default React.memo(MetricCard);

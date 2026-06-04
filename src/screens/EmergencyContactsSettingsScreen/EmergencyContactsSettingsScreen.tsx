@@ -1,6 +1,7 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Keyboard, TouchableWithoutFeedback, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import ScreenHeader from '~/components/ScreenHeader';
@@ -11,6 +12,7 @@ import styles from './styles';
 
 const EmergencyContactsSettingsScreen = () => {
   const {t} = useAppTranslation();
+  const insets = useSafeAreaInsets();
 
   return (
     <View style={styles.root}>
@@ -18,14 +20,26 @@ const EmergencyContactsSettingsScreen = () => {
       <KeyboardAwareScrollView
         bounces={false}
         enableOnAndroid
-        extraScrollHeight={20}
+        extraScrollHeight={76}
+        enableResetScrollToCoords={false}
+        keyboardDismissMode="interactive"
+        keyboardShouldPersistTaps="handled"
         keyboardOpeningTime={0}
         style={styles.scroll}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[
+          styles.content,
+          {paddingBottom: insets.bottom + 40},
+        ]}
         showsVerticalScrollIndicator={false}>
-        <EmergencyContactsList />
-        <Documents />
-        <EmergencyMessage />
+        <TouchableWithoutFeedback
+          accessible={false}
+          onPress={Keyboard.dismiss}>
+          <View style={styles.contentInner}>
+            <EmergencyContactsList />
+            <Documents />
+            <EmergencyMessage />
+          </View>
+        </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>
     </View>
   );

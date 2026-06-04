@@ -10,15 +10,15 @@ import {
   SleepSchedule,
 } from '~/services/SleepSchedule.service';
 import {semanticColors} from '~/theme/tokens';
-import IconChip from '~/components/IconChip';
 import Toggle from '~/components/Toggle';
-import {MoonIcon} from '~/assets/icons/AppIcons';
+import {BioEmergencySettingsFillFlame} from '~/assets/icons/BiostasisIcons';
 
 interface Props {
   refreshKey?: number;
+  required?: boolean;
 }
 
-const SleepSchedulePanel = ({refreshKey}: Props) => {
+const SleepSchedulePanel = ({refreshKey, required = false}: Props) => {
   const {t} = useAppTranslation();
   const [schedule, setSchedule] = useState<SleepSchedule>({
     enabled: false,
@@ -41,9 +41,12 @@ const SleepSchedulePanel = ({refreshKey}: Props) => {
 
   const handleToggle = useCallback(
     (value: boolean) => {
+      if (required && !value) {
+        return;
+      }
       persistSchedule({...schedule, enabled: value});
     },
-    [schedule, persistSchedule],
+    [persistSchedule, required, schedule],
   );
 
   const handleBedtimeConfirm = useCallback(
@@ -51,11 +54,12 @@ const SleepSchedulePanel = ({refreshKey}: Props) => {
       setShowBedtimePicker(false);
       persistSchedule({
         ...schedule,
+        enabled: required ? true : schedule.enabled,
         bedtimeHour: date.getHours(),
         bedtimeMinute: date.getMinutes(),
       });
     },
-    [schedule, persistSchedule],
+    [persistSchedule, required, schedule],
   );
 
   const handleWakeConfirm = useCallback(
@@ -63,11 +67,12 @@ const SleepSchedulePanel = ({refreshKey}: Props) => {
       setShowWakePicker(false);
       persistSchedule({
         ...schedule,
+        enabled: required ? true : schedule.enabled,
         wakeHour: date.getHours(),
         wakeMinute: date.getMinutes(),
       });
     },
-    [schedule, persistSchedule],
+    [persistSchedule, required, schedule],
   );
 
   const bedtimeDate = new Date();
@@ -78,9 +83,7 @@ const SleepSchedulePanel = ({refreshKey}: Props) => {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
-        <IconChip background="rgba(220, 228, 247, 0.6)" size={36} radius={8}>
-          <MoonIcon size={18} color="#5A6FD6" />
-        </IconChip>
+        <BioEmergencySettingsFillFlame />
         <Text style={styles.title}>
           {t(
             'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.title',
@@ -89,20 +92,24 @@ const SleepSchedulePanel = ({refreshKey}: Props) => {
       </View>
       <Text style={styles.description}>
         {t(
-          'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.description',
+          required
+            ? 'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.requiredDescription'
+            : 'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.description',
         )}
       </Text>
 
-      <View style={styles.toggleRow}>
-        <Text style={styles.toggleLabel}>
-          {t(
-            'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.enableSchedule',
-          )}
-        </Text>
-        <Toggle value={schedule.enabled} onChange={handleToggle} />
-      </View>
+      {!required ? (
+        <View style={styles.toggleRow}>
+          <Text style={styles.toggleLabel}>
+            {t(
+              'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.enableSchedule',
+            )}
+          </Text>
+          <Toggle value={schedule.enabled} onChange={handleToggle} />
+        </View>
+      ) : null}
 
-      {schedule.enabled ? (
+      {required || schedule.enabled ? (
         <View style={styles.timeCards}>
           <TouchableOpacity
             activeOpacity={0.7}
@@ -159,8 +166,8 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: semanticColors.surface,
     borderRadius: 14,
-    paddingHorizontal: 15,
-    paddingVertical: 14,
+    paddingHorizontal: 18,
+    paddingVertical: 16,
     gap: 12,
   },
   header: {
@@ -170,17 +177,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'DMSans-SemiBold',
-    fontSize: 14,
+    fontSize: 16,
+    lineHeight: 21,
     color: semanticColors.primary,
   },
   description: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 14,
-    lineHeight: 19.5,
+    fontSize: 15,
+    lineHeight: 22,
     color: '#3D5470',
   },
   toggleRow: {
-    minHeight: 48,
+    minHeight: 56,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -189,7 +197,8 @@ const styles = StyleSheet.create({
   toggleLabel: {
     flex: 1,
     fontFamily: 'DMSans-Regular',
-    fontSize: 14,
+    fontSize: 15,
+    lineHeight: 21,
     color: semanticColors.primary,
   },
   timeCards: {
@@ -209,14 +218,14 @@ const styles = StyleSheet.create({
   },
   timeCardLabel: {
     fontFamily: 'DMSans-SemiBold',
-    fontSize: 11,
+    fontSize: 12,
     letterSpacing: 0.8,
     textTransform: 'uppercase',
     color: semanticColors.textSecondary,
   },
   timeCardValue: {
     fontFamily: 'DMSans-Bold',
-    fontSize: 16,
+    fontSize: 17,
     color: semanticColors.primary,
   },
 });

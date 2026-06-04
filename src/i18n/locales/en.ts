@@ -4,23 +4,116 @@ const translations = {
     home: 'Home',
     profile: 'Profile',
     activate: 'ACTIVATE',
-    emergency: 'EMERGENCY',
+    emergency: 'Emergency',
     activateA11y: 'Activate emergency',
+    setupRequired: 'Setup required',
+    setupRequiredA11y: 'Emergency setup required',
   },
   dashboardHome: {
     banner: {
       active: 'System active · Monitoring',
-      noContacts: 'No emergency contacts',
-      systemOff: 'Emergency system off',
+      noContacts: 'No emergency contacts added',
+      systemOff: 'Emergency system is off',
+      addContact: 'Add contact',
+      openSettings: 'Open settings',
     },
     greeting: {
       morning: 'Good morning,',
       afternoon: 'Good afternoon,',
       evening: 'Good evening,',
     },
-    collectedAt: 'The data was collected at: {{time}}',
+    collectedAt: 'Health data from {{time}}',
     collectedAtNone: 'No health data collected yet',
     sectionEmergencySystem: 'Emergency system',
+    sectionHealthLogs: 'Health logs',
+    sectionQuickActions: 'Quick actions',
+    emergencySetupPrompt: {
+      title: 'Emergency setup required',
+      description:
+        'The emergency button will work once your protection setup is complete.',
+      contacts: {
+        title: 'Emergency setup required',
+        description:
+          'Add an emergency contact before the emergency button can be used.',
+      },
+      monitoring: {
+        title: 'Emergency monitoring required',
+        description:
+          'Enable emergency monitoring before the emergency button can be used.',
+      },
+    },
+    readiness: {
+      eyebrow: 'Protection status',
+      states: {
+        incomplete: {
+          title: 'Add an emergency contact first',
+          subtitle:
+            'Emergency monitoring can only be enabled after you add at least one person who should be notified.',
+        },
+        inactive: {
+          title: 'Emergency monitoring is off',
+          subtitle:
+            'Your contacts are saved. Enable monitoring so the mobile app can detect when help may be needed.',
+        },
+        active: {
+          title: 'Emergency protection active',
+          subtitleTime: 'Time-based check-ins are active.',
+          subtitleBio: 'Bio-based emergency monitoring is active.',
+          subtitleGeneric: 'Emergency monitoring is active.',
+        },
+      },
+      actions: {
+        complete: 'Complete emergency setup',
+        addContact: 'Add emergency contact',
+        enableMonitoring: 'Enable emergency monitoring',
+        activate: 'Enable emergency monitoring',
+        viewSettings: 'View emergency settings',
+      },
+      status: {
+        active: 'Active',
+        needsAttention: 'Needs attention',
+        setupRequired: 'Setup required',
+      },
+      items: {
+        contacts: 'Emergency contacts',
+        monitoring: 'Emergency monitoring',
+      },
+      contacts: {
+        added: 'Added',
+        missing: 'Missing',
+      },
+      monitoring: {
+        active: 'Active',
+        bioActive: 'Active · Bio-based',
+        timeActive: 'Active · Time-based',
+        inactive: 'Not active',
+        off: 'Off',
+        setupRequired: 'Setup required',
+      },
+      modes: {
+        time: 'Time-based',
+        bio: 'Bio-based',
+        both: 'Time + bio',
+        active: 'Active',
+        inactive: 'Not active',
+      },
+    },
+    healthData: {
+      title: 'Health data',
+      emptyTitle: 'No recent health data',
+      emptySubtitle:
+        'We checked for the latest available data. If you use Apple Health, make sure Biostasis is allowed to read it.',
+      checking: 'Checking health data…',
+      checked: 'Checked just now',
+      unavailableHelper:
+        'No recent health data available. Tap refresh to check again.',
+      lastCheckedLabel: 'Last checked:',
+      lastChecked: 'Last checked: {{time}}',
+      latestData: 'Latest data from {{time}}',
+      refresh: 'Refresh',
+      refreshA11y: 'Refresh health data',
+      usedForMonitoring: 'Used only if your emergency system is active.',
+    },
     metrics: {
       heartRate: 'Heart rate',
       steps: 'Steps',
@@ -34,17 +127,72 @@ const translations = {
     cards: {
       emergencySystem: {
         title: 'Emergency System',
+        description:
+          'Set up contacts and health sharing so your emergency contacts will be notified in an emergency.',
         active: 'Active · Receiving data',
         inactive: 'Inactive · Tap to enable',
+        status: {
+          monitoringBio: 'Monitoring via bio-based health data',
+          monitoringTime: 'Monitoring via time-based check-ins',
+          contactsMissing: 'Add emergency contacts to complete setup',
+          inactive: 'Monitoring not active',
+          monitoring: 'Active · Monitoring',
+          waitingForData: 'Active · Waiting for health data',
+          setupNeeded: 'Setup needed · Not fully protected',
+          off: 'Off · Not monitoring',
+        },
+        mode: {
+          bio: 'Bio-based monitoring',
+          time: 'Time-based check-ins',
+          inactive: 'Monitoring not active',
+          setup: 'Setup required',
+        },
+        live: {
+          activeTitle: 'Monitoring active',
+          activeBioDescription: 'Bio-based health data is being checked.',
+          activeTimeDescription: 'Time-based check-ins are enabled.',
+          setupTitle: 'Setup required',
+          setupDescription:
+            'Add contacts and enable monitoring to activate emergency protection.',
+          inactiveTitle: 'Setup required',
+          inactiveDescription: 'Complete setup to activate monitoring.',
+          pausedTitle: 'Monitoring paused',
+          pausedDescription: 'Monitoring will resume in {{time}}.',
+        },
+        badge: {
+          monitoring: 'Monitoring',
+          needsSetup: 'Needs setup',
+          setup: 'Set up',
+          waitingForData: 'Waiting',
+          setupNeeded: 'Set up',
+          off: 'Off',
+        },
+        actions: {
+          complete: 'Complete setup →',
+          enable: 'Enable monitoring →',
+          view: 'View settings →',
+        },
       },
       healthLogs: {
         title: 'Health Logs',
         subtitle: 'Health logs and history logs',
       },
       manageSettings: {
-        title: 'Manage Settings',
-        subtitle: 'Emergency contacts & triggers',
+        title: 'Emergency Settings',
+        subtitle: 'Manage monitoring and emergency preferences',
         subtitleEmpty: 'Add emergency contacts',
+      },
+      contacts: {
+        title: 'Emergency Contacts',
+        ready: 'At least one active contact is available',
+        missing:
+          'Add at least one person who should be notified in an emergency.',
+        badgeReady: 'Ready',
+        badgeMissing: 'Missing',
+        actions: {
+          add: 'Add contact →',
+          manage: 'Manage contacts →',
+        },
       },
       emergencySetup: {
         title: 'Emergency Setup',
@@ -58,15 +206,25 @@ const translations = {
   emergencyConfirm: {
     title: 'You are about to trigger emergency!',
     description:
-      'By holding the button for 3 seconds, you will trigger an emergency. Here is what will happen:',
+      'Hold the button for 3 seconds to trigger an emergency. Here is what will happen:',
+    locationTitle: 'Current location',
+    locationReady: 'This location will be used for the emergency response.',
+    locationLoading: 'Refreshing your current location…',
+    locationUnavailable: 'Current location is unavailable right now.',
+    openMap: 'Open map',
     step1: 'Your emergency contacts will be notified',
     step2:
       'They will reach out to you and the cryopreservation team to coordinate the emergency response',
-    hold: 'HOLD TO TRIGGER EMERGENCY',
+    hold: 'HOLD 3 SECONDS TO TRIGGER EMERGENCY',
+    holdInstruction: 'Hold to trigger emergency',
+    seconds: 'seconds',
     sending: 'Sending emergency…',
     cancel: 'Cancel',
-    sentTitle: 'Emergency sent',
-    sentSubtitle: 'Your emergency contacts have been notified.',
+    sentTitle: 'Emergency signal sent',
+    sentSubtitle: 'This is being handled as an urgent emergency signal.',
+    sentDetailsTitle: 'What happens now',
+    sentDetails:
+      'We have received your location and are contacting the medical on-site team to prepare an emergency response. Your emergency contacts are being contacted at the same time. Keep your phone nearby and stay reachable if you can.',
     done: 'Done',
     failedTitle: 'Emergency not sent',
     failedSubtitle: 'Something went wrong. Please try again.',
@@ -74,6 +232,16 @@ const translations = {
   },
   profileHub: {
     title: 'Profile',
+    sections: {
+      account: {
+        title: 'Account',
+        description: 'Manage your personal details and app preferences.',
+      },
+      health: {
+        title: 'Health records',
+        description: 'Review the data used for emergency monitoring.',
+      },
+    },
     userData: 'Profile & User Data',
     accountSettings: 'Account Settings',
     medicalInfo: 'Medical Information',
@@ -135,6 +303,11 @@ const translations = {
   },
   settings: {
     title: 'Settings',
+    sections: {
+      emergency: 'Emergency system',
+      signUp: 'Sign up',
+      legal: 'Legal',
+    },
     emergencyContact: 'Emergency Contact Settings',
     emergencySystem: 'Emergency System Settings',
     tomorrowBio: 'Sign up with Tomorrow Bio',
@@ -252,7 +425,7 @@ const translations = {
     apple: 'Sign up with Apple',
     google: 'Sign up with Google',
     signUp: 'Sign up',
-    createAccount: 'Create a new Account',
+    createAccount: 'Create a new account',
     steps: {
       eyebrow: 'STEP {{current}} OF {{total}}',
     },
@@ -272,13 +445,13 @@ const translations = {
   },
   forgotPassword: {
     screenName: 'Forgot Password',
-    title: 'Forgot your Password?',
+    title: 'Forgot your password?',
     doNotRememberPassword: "Don't remember your password?",
     enterEmail:
       'Please enter your email address. We will send you an email to reset your password.',
     enterNewPasswordForEmail: 'Enter a new password',
     emailSent:
-      "We've just sent you an email to reset your password. Check your inbox and open the link on a mobile device with the Biostasis app installed.",
+      'Reset link sent. Check your inbox and open the link on your mobile device.',
     passwordChanged: 'Password updated. Please sign in.',
     resetLinkExpired: 'Password reset link expired.\nPlease try again.',
     newPassword: 'New Password',
@@ -290,17 +463,17 @@ const translations = {
     confirmPasswordLabel: 'Confirm password',
   },
   placeholder: {
-    password: 'your password',
-    newPassword: 'your new password',
-    confirmNewPassword: 'confirm your new password',
-    email: 'yours@example.com',
+    password: 'Your password',
+    newPassword: 'Your new password',
+    confirmNewPassword: 'Confirm your new password',
+    email: 'you@example.com',
   },
   auth: {
     welcomeTo: 'Welcome to Biostasis',
     accountWasCreated:
-      'Your account has been created. To activate it, check your inbox and open the link on a mobile device with the Biostasis app installed.',
-    invalidCredentials: 'Incorrect username or password',
-    linkExpired: 'Link has expired. Please try again',
+      'Account created. Check your inbox and open the activation link on your mobile device.',
+    invalidCredentials: 'Incorrect email or password',
+    linkExpired: 'Link expired. Please try again.',
     accountActivated: 'Your account has been activated. You can now sign in.',
   },
   authScreen: {
@@ -309,7 +482,7 @@ const translations = {
     appleCta: 'Continue with Apple',
     googleCta: 'Continue with Google',
     emailLabel: 'Email address',
-    emailPlaceholder: 'yours@example.com',
+    emailPlaceholder: 'you@example.com',
     passwordLabel: 'Password',
     termsAgree: 'I agree to the',
     terms: 'Terms of Service',
@@ -335,7 +508,7 @@ const translations = {
     invalidEmail: 'Invalid email address',
     email: {
       invalid: 'Invalid email address',
-      accountAlreadyExist: 'An account with the given email already exists',
+      accountAlreadyExist: 'An account with this email already exists.',
     },
     password: {
       tooShort: 'Password is too short',
@@ -357,12 +530,11 @@ const translations = {
   },
   userName: {
     title: "What's your full name?",
-    subtitle:
-      'This appears in emergency notifications sent to your contacts.',
+    subtitle: 'This appears in emergency notifications sent to your contacts.',
     firstName: 'First name',
     lastName: 'Last name',
-    firstNamePlaceholder: 'e.g. Petar',
-    lastNamePlaceholder: 'e.g. Petrov',
+    firstNamePlaceholder: 'Enter first name',
+    lastNamePlaceholder: 'Enter last name',
   },
   userPhone: {
     title: 'What is your phone number?',
@@ -421,21 +593,27 @@ const translations = {
     editEmergencyContact: 'Edit Emergency Contact',
     emergencyButtonSettings: 'Emergency Message Settings',
     yourContacts: 'Your Contacts',
+    contactToggleHelper: 'Use this contact for emergency alerts and test messages',
     includeWithMessage: 'Include with message',
     emergencyMessageLabel: 'Emergency Message',
+    emergencyMessageEditHelper:
+      'Edit the message your contacts will receive during an emergency.',
     emergencyMessageHelper:
-      'This message is emailed and texted to all contacts when your emergency triggers.',
+      'This message will be sent by text and email to your emergency contacts when your emergency flow is triggered.',
     saveChanges: 'Save changes',
+    savedChanges: 'Changes saved',
+    saveError: "Couldn't save changes. Try again.",
     sendTestMessage: 'Send test message',
     addNewEdit: {
       title: 'Contact Information:',
-      firstName: 'First Name',
-      lastName: 'Last Name',
-      email: 'Email',
-      phoneNumber: 'Phone Number',
-      firstNamePlaceholder: 'e.g. Petar',
-      lastNamePlaceholder: 'e.g. Petrov',
-      emailPlaceholder: 'e.g. mail@gmail.com',
+      firstName: 'First name',
+      lastName: 'Last name',
+      email: 'Email address',
+      phoneNumber: 'Phone number',
+      firstNamePlaceholder: 'Enter first name',
+      lastNamePlaceholder: 'Enter last name',
+      emailPlaceholder: 'name@example.com',
+      phonePlaceholder: 'Enter phone number',
       errorDuringUpdate:
         'There is a problem with the data in the form. Please check the correctness of the data and save it again.',
       activateContact: 'Contact has been activated successfully',
@@ -469,16 +647,38 @@ const translations = {
       defaultMessage:
         'This is an emergency signal from {{username}}. You are receiving this message because I may be in need of a cryopreservation Additional information here and attached.',
       testMessageSent: 'Test email sent. Please check your inbox.',
+      testMessageLocationError:
+        "Couldn't get your current location. Turn on precise location and try again.",
     },
     documents: {
       title: 'Documents',
-      topInfo: 'Sent automatically to all contacts when emergency is triggered.',
+      topInfo:
+        'Upload important documents your emergency contacts may need. Accepted formats: PDF, DOC, DOCX, JPG, or PNG.',
       tapToUpload: 'Tap to upload',
+      formatsAction: 'PDF, DOC, DOCX, JPG, or PNG · Tap to upload',
+      uploadDocument: 'Upload document',
+      uploadedFile: 'Uploaded · {{fileName}}',
       addDocument: 'Add document',
+      actions: {
+        upload: 'Upload file',
+        remove: 'Remove file',
+      },
+      status: {
+        uploaded: 'Uploaded',
+        acceptedFormats: 'PDF, DOC, DOCX, JPG, PNG',
+      },
       headers: {
         directive: 'Medical directive',
         lastWill: 'Last will',
         other: 'Other document',
+      },
+      descriptions: {
+        directive:
+          'Instructions for your medical care if you cannot speak for yourself.',
+        lastWill:
+          'A document that explains how your belongings and wishes should be handled.',
+        other:
+          'Upload any other important file your emergency contacts may need.',
       },
       upload: {
         directive: 'Upload medical directive',
@@ -511,19 +711,179 @@ const translations = {
       enableSystemTitle: 'Automated Emergency Settings',
       compatibleSmartDeviceConnected: 'Compatible smartdevice connected',
       confirmReadManual: 'I understand how this system works',
+      guidance: {
+        contactsRequired: {
+          title: 'Emergency contact required',
+          subtitle:
+            'Add at least one emergency contact before enabling monitoring.',
+        },
+        status: {
+          eyebrow: 'Setup status',
+          contacts: {
+            title: 'Add an emergency contact first',
+            subtitle:
+              'Emergency monitoring can only be enabled after you add at least one person who should be notified.',
+            action: 'Add emergency contact',
+          },
+          understand: {
+            title: 'Understand emergency monitoring',
+            subtitle:
+              'Before activating monitoring, review how the mobile app detects risk and alerts your contacts.',
+            action: 'Review and confirm',
+          },
+          ready: {
+            title: 'Set up emergency monitoring',
+            subtitle:
+              'Review how monitoring works, then finish the setup to turn it on.',
+            action: 'Start setup',
+          },
+          choose: {
+            title: 'Choose your monitoring type',
+            subtitle:
+              'Select bio-based monitoring if you use a wearable, or time-based monitoring if you prefer regular check-ins.',
+            action: 'Choose monitoring type',
+          },
+          active: {
+            title: 'Emergency monitoring is active',
+            subtitleBio: 'Bio-based monitoring is active.',
+            subtitleTime: 'Time-based check-ins are active.',
+            turnOff: 'Turn off monitoring',
+          },
+        },
+        activeSummary: {
+          sourceLabel: 'Monitoring source',
+          sourceBio: 'Health app',
+          sourceBioIos: 'Apple Health',
+          sourceBioAndroid: 'Google Fit',
+          healthDataLabel: 'Data status',
+          healthDataConnected: 'Receiving recent data',
+          healthDataMissing: 'Waiting for recent data',
+        },
+        activeActions: {
+          switchToTime: 'Switch to time-based check-ins',
+          switchToBio: 'Switch to bio-based monitoring',
+          switchedToTime: 'Switched to time-based check-ins',
+          switchedToBio: 'Switched to bio-based monitoring',
+          bioUnavailableTitle: 'Health app data not available',
+          bioUnavailableMessage:
+            'Bio-based monitoring can be enabled once the app is receiving recent health data.',
+        },
+        howCompleted: 'How emergency monitoring works',
+        howCompletedSubtitle:
+          'You can review the emergency flow again anytime.',
+        readAgain: 'Review',
+        enableHelperContactsLocked:
+          'Add an emergency contact before enabling monitoring.',
+        enableHelperLocked:
+          'Please confirm that you understand the emergency flow before enabling monitoring.',
+        enableHelperReady:
+          'Turn this on when you are ready for the mobile app to monitor for emergency risk.',
+        monitoringCardTitle: 'Emergency monitoring',
+        monitoringCardSubtitle:
+          'Turn monitoring on or off and choose how the mobile app should monitor for emergency risk.',
+        monitoringToggleLabel: 'Monitoring',
+        monitoringOffHelper:
+          'Turn this on to choose a monitoring type. Your selected monitoring type is saved, but it is not currently active.',
+        monitoringTypeTitle: 'Monitoring type',
+        monitoringTypeSubtitle:
+          'Choose one monitoring type. Only one can be active at a time.',
+        monitoringUnavailable: 'Monitoring unavailable',
+        monitoringUnavailableHelper:
+          'Add at least one emergency contact to turn this on.',
+        chooseTitle: 'Choose monitoring type',
+        chooseSubtitle:
+          'Select one way the mobile app should monitor your safety. Only one monitoring type can be active at a time.',
+        bioChoice: {
+          title: 'Bio-based monitoring',
+          subtitle:
+            'Uses available health data from a wearable or HealthKit-connected device.',
+          support:
+            'Choose this if your phone can receive recent health data from your wearable or Health app.',
+          action: 'Select',
+        },
+        timeChoice: {
+          title: 'Time-based check-ins',
+          subtitle: 'Sends regular check-in notifications.',
+          support: 'If you do not respond, your emergency flow can start.',
+          action: 'Select',
+        },
+        statusLabels: {
+          active: 'Active',
+          off: 'Off',
+          selected: 'Selected',
+          select: 'Select',
+          connected: 'Connected',
+          notConnected: 'Not connected',
+          monitoringActive: 'Monitoring active',
+          monitoringInactive: 'Monitoring not active',
+        },
+      },
       howItWorks: {
-        title: 'How it works',
+        title: 'How emergency monitoring works',
         intro:
-          'The system monitors your health data and alerts contacts if you become unresponsive.',
-        step1Title: 'Connect',
-        step1Desc:
-          'Pair your wearable or use your phone\'s built-in sensors (steps, heart rate).',
+          'Before you enable monitoring, choose how the mobile app should check in and what happens if you do not respond.',
+        step1Title: 'Choose monitoring',
+        step1Desc: 'Select bio-based monitoring or time-based check-ins.',
         step2Title: 'Monitor',
         step2Desc:
-          'The app checks your health data regularly. If no signal is detected, you\'ll get a warning notification first.',
-        step3Title: 'Emergency',
+          'The mobile app checks the selected signal or sends check-ins based on your setup.',
+        step3Title: 'Alert',
         step3Desc:
-          'If there\'s still no response, the system triggers an alert to your emergency contacts.',
+          'If you become unresponsive, your emergency contacts will be notified.',
+      },
+      setupFlow: {
+        stepLabel: 'Step {{step}} of 4',
+        back: 'Back',
+        continue: 'Continue',
+        enableMonitoring: 'Enable emergency monitoring',
+        enabledToast: 'Emergency monitoring is active',
+        choose: {
+          title: 'Choose monitoring type',
+          subtitle:
+            'Select how the mobile app should monitor for emergency risk.',
+          bioSubtitle:
+            'Best if your phone already receives recent health data from your wearable or Health app.',
+          timeSubtitle:
+            'Best if you prefer scheduled check-ins or are not using a wearable.',
+        },
+        bio: {
+          title: 'Set up bio-based monitoring',
+          subtitle:
+            'The mobile app uses recent health data from your wearable or Health app to check for emergency risk.',
+          connected: 'Health data connected',
+          notConnected: 'Health data not available',
+          connectedHelper:
+            'Health data is connected and the app is receiving data.',
+          missingHelper:
+            'We are not receiving health data from your device yet.',
+          checkConnection: 'Check connection',
+        },
+        time: {
+          title: 'Set up time-based check-ins',
+          subtitle:
+            'The mobile app will send check-in notifications at your chosen interval. If you do not respond, your emergency flow can start.',
+          helper: 'This interval is saved when monitoring is enabled.',
+          devHelper:
+            'Development builds use minute-based intervals for faster testing.',
+        },
+        sleep: {
+          title: 'Set up your sleep schedule',
+          subtitle:
+            'This is required for both monitoring types and helps prevent false alarms while you sleep.',
+          enable: 'Enable sleep schedule',
+          enableSubtitle:
+            'Use the default 10:00 PM to 7:00 AM schedule. You can adjust it later.',
+          required:
+            'Sleep schedule is required before emergency monitoring can be enabled.',
+        },
+        final: {
+          title: 'Ready to enable monitoring',
+          subtitleBio:
+            'Bio-based monitoring is ready. You can now enable emergency monitoring.',
+          subtitleTime:
+            'Time-based check-ins are ready. You can now enable emergency monitoring.',
+          sleepEnabled: 'Sleep schedule is enabled.',
+        },
       },
       enableAutomatedEmergency: 'Enable automated emergency monitoring',
       setUpSmartDevice: 'Set up Smart device',
@@ -537,19 +897,21 @@ const translations = {
         'Pause is still active. Remember that if you enable automated emergency, it will be paused for {{pauseTime}}',
       frequencySet: 'Frequency set successfully to',
       bioTrigger: {
-        title: 'Bio-based trigger',
+        title: 'Bio-based monitoring',
+        configurationTitle: 'Bio-based configuration',
         permissions: {
           title: 'Give Health permissions',
           alertTitle: 'Health Permissions',
           alertDescription:
             'You will be prompted to allow Biostasis to access your health data. Please confirm.',
         },
-        turnOn: 'Bio-based',
-        warning: 'Turning on bio-based will disable the time-based trigger!',
+        turnOn: 'Use bio-based monitoring',
+        warning:
+          'Only one monitoring type can be active at a time. This will use bio-based monitoring instead of time-based check-ins.',
         appleWatch: {
-          title: 'Wearable Device Connected',
+          title: 'Health data connection',
           description:
-            "We use your wearable device (thanks to HealthKit integration) to retrieve your health data. If you don't use one, please choose the time-based trigger system instead.",
+            'Uses health data from your wearable or HealthKit-connected device.',
           alertTitle: 'Pair Wearable Device',
           alertDescription:
             "Your wearable device should be paired with your iPhone in order to sync your health data. Please make sure it's properly paired. If not, follow the instructions in the device's companion app.",
@@ -557,7 +919,7 @@ const translations = {
         googleFit: {
           title: 'Authenticate Google Fit',
           description:
-            'We use Google Fit to retrieve your health data. Please authenticate and configure the device companion app. Some devices are not able to sync to Google Fit. Please choose the time-based trigger system in such case.',
+            'Uses health data from Google Fit or a connected wearable.',
           connect: 'Connect app to Google Fit',
           alertTitle1: 'Authenticate',
           alertDescription1:
@@ -574,17 +936,19 @@ const translations = {
         },
         frequency: 'Emergency Trigger Time-frame:',
       },
-      systemOff: 'System is off',
-      systemOn: 'System is on',
-      systemOffMessage: 'Automated Emergency System turned off successfully',
+      systemOff: 'Monitoring is off',
+      systemOn: 'Monitoring is on',
+      systemOffMessage: 'Emergency monitoring turned off successfully',
       timeTrigger: {
-        title: 'Time-based trigger',
+        title: 'Time-based check-ins',
+        configurationTitle: 'Time-based configuration',
         description:
-          "We will send notifications every chosen amount of time. If you don't respond to one of them, the emergency system will be triggered. Your sleep schedule hours are automatically excluded.",
-        frequency: 'Emergency Trigger Time-frame:',
+          'We send check-in notifications at your chosen interval. If you do not respond, your emergency flow can start.',
+        frequency: 'Check-in interval',
         systemStart: 'Time-based automated system is running',
-        turnOn: 'Time-based',
-        warning: 'Turning on time-based will disable the bio-based trigger!',
+        turnOn: 'Use time-based check-ins',
+        warning:
+          'Only one monitoring type can be active at a time. This will use time-based check-ins instead of bio-based monitoring.',
       },
       pauseTime: {
         title: 'Set-up System Pause Times',
@@ -593,8 +957,9 @@ const translations = {
       },
       sleepSchedule: {
         title: 'Sleep Schedule',
-        description:
-          'Automatically pause the emergency system during your usual sleep hours to prevent false alarms.',
+        description: 'Set sleep hours to avoid false alarms at night.',
+        requiredDescription:
+          'Adjust the sleep hours used by your active emergency monitoring.',
         enableSchedule: 'Enable sleep schedule',
         bedtime: 'Bedtime',
         wakeTime: 'Wake time',
@@ -617,8 +982,7 @@ const translations = {
         useFocusDescription:
           'Pause emergency system when your phone is in Focus or Do Not Disturb mode.',
         useCharging: 'Use charging detection',
-        useChargingDescription:
-          'Treat nighttime charging as a sleep signal.',
+        useChargingDescription: 'Treat nighttime charging as a sleep signal.',
         useHealthData: 'Use health data recency',
         useHealthDataDescription:
           'Detect when your ring or watch stops sending data as a sleep signal.',

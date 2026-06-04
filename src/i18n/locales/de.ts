@@ -2,8 +2,237 @@ import {ITranslation} from '../interfaces/Translation.interface';
 
 const translations: ITranslation = {
   appName: 'Biostasis',
+  bottomTab: {
+    home: 'Home',
+    profile: 'Profil',
+    activate: 'AKTIVIEREN',
+    emergency: 'Notfall',
+    activateA11y: 'Notfall aktivieren',
+    setupRequired: 'Einrichtung nötig',
+    setupRequiredA11y: 'Notfalleinrichtung erforderlich',
+  },
+  dashboardHome: {
+    banner: {
+      active: 'System aktiv · Überwachung läuft',
+      noContacts: 'Keine Notfallkontakte hinzugefügt',
+      systemOff: 'Notfallsystem ist ausgeschaltet',
+      addContact: 'Kontakt hinzufügen',
+      openSettings: 'Einstellungen öffnen',
+    },
+    greeting: {
+      morning: 'Guten Morgen,',
+      afternoon: 'Guten Tag,',
+      evening: 'Guten Abend,',
+    },
+    collectedAt: 'Gesundheitsdaten von {{time}}',
+    collectedAtNone: 'Noch keine Gesundheitsdaten erfasst',
+    sectionEmergencySystem: 'Notfallsystem',
+    sectionHealthLogs: 'Gesundheitsprotokolle',
+    emergencySetupPrompt: {
+      title: 'Notfalleinrichtung erforderlich',
+      description:
+        'Der Notfallbutton funktioniert, sobald Ihre Schutzeinrichtung abgeschlossen ist.',
+    },
+    readiness: {
+      eyebrow: 'Schutzstatus',
+      states: {
+        incomplete: {
+          title: 'Fügen Sie zuerst einen Notfallkontakt hinzu',
+          subtitle:
+            'Die Notfallüberwachung kann erst aktiviert werden, wenn Sie mindestens eine zu benachrichtigende Person hinzugefügt haben.',
+        },
+        inactive: {
+          title: 'Notfallüberwachung ist aus',
+          subtitle:
+            'Ihre Kontakte sind gespeichert. Aktivieren Sie die Überwachung, damit die mobile App erkennen kann, wann Hilfe benötigt wird.',
+        },
+        active: {
+          title: 'Notfallschutz aktiv',
+          subtitleTime: 'Zeitbasierte Notfallüberwachung ist aktiv.',
+          subtitleBio: 'Biobasierte Notfallüberwachung ist aktiv.',
+          subtitleGeneric: 'Notfallüberwachung ist aktiv.',
+        },
+      },
+      actions: {
+        complete: 'Notfalleinrichtung abschließen',
+        addContact: 'Notfallkontakt hinzufügen',
+        enableMonitoring: 'Notfallüberwachung aktivieren',
+        activate: 'Notfallschutz aktivieren',
+        viewSettings: 'Notfalleinstellungen ansehen',
+      },
+      status: {
+        active: 'Aktiv',
+        needsAttention: 'Aufmerksamkeit nötig',
+        setupRequired: 'Einrichtung nötig',
+      },
+      items: {
+        system: 'Notfallsystem',
+        contacts: 'Notfallkontakte',
+        deathman: 'Notfallüberwachung',
+        monitoring: 'Notfallüberwachung',
+        mode: 'Überwachungsmodus',
+      },
+      system: {
+        active: 'Aktiviert',
+        inactive: 'Nicht aktiviert',
+      },
+      contacts: {
+        added: 'Hinzugefügt',
+        missing: 'Fehlt',
+      },
+      deathman: {
+        active: 'Aktiv',
+        inactive: 'Eingerichtet, aber inaktiv',
+        notSet: 'Nicht eingerichtet',
+      },
+      monitoring: {
+        active: 'Aktiv',
+        bioActive: 'Aktiv · Biobasiert',
+        timeActive: 'Aktiv · Zeitbasiert',
+        inactive: 'Nicht aktiv',
+        off: 'Aus',
+        setupRequired: 'Einrichtung nötig',
+      },
+      modes: {
+        time: 'Zeitbasiert',
+        bio: 'Biobasiert',
+        both: 'Zeit + Bio',
+        active: 'Aktiv',
+        inactive: 'Nicht aktiv',
+      },
+    },
+    healthData: {
+      title: 'Gesundheitsdaten',
+      emptyTitle: 'Keine aktuellen Gesundheitsdaten',
+      emptySubtitle:
+        'Wir haben nach den neuesten verfügbaren Daten gesucht. Wenn Sie Apple Health nutzen, stellen Sie sicher, dass Biostasis die Daten lesen darf.',
+      checking: 'Gesundheitsdaten werden geprüft…',
+      checked: 'Gerade geprüft',
+      unavailableHelper:
+        'Keine aktuellen Gesundheitsdaten verfügbar. Tippen Sie auf Aktualisieren, um erneut zu prüfen.',
+      lastCheckedLabel: 'Zuletzt geprüft:',
+      lastChecked: 'Zuletzt geprüft: {{time}}',
+      latestData: 'Neueste Daten von {{time}}',
+      refresh: 'Aktualisieren',
+      refreshA11y: 'Gesundheitsdaten aktualisieren',
+      usedForMonitoring: 'Wird nur genutzt, wenn Ihr Notfallsystem aktiv ist.',
+    },
+    metrics: {
+      heartRate: 'Herzfrequenz',
+      steps: 'Schritte',
+      noData: 'Noch keine Daten',
+      low: 'Niedrig',
+      moderate: 'Mittel',
+      high: 'Hoch',
+      normal: 'Normal',
+      today: 'heute',
+    },
+    cards: {
+      emergencySystem: {
+        title: 'Notfallsystem',
+        active: 'Aktiv · Daten werden empfangen',
+        inactive: 'Inaktiv · Zum Aktivieren antippen',
+        status: {
+          monitoringBio: 'Überwachung über biobasierte Gesundheitsdaten',
+          monitoringTime: 'Überwachung über zeitbasierte Check-ins',
+          contactsMissing:
+            'Notfallkontakte hinzufügen, um die Einrichtung abzuschließen',
+          inactive: 'Überwachung nicht aktiv',
+          monitoring: 'Aktiv · Überwachung läuft',
+          waitingForData: 'Aktiv · Wartet auf Gesundheitsdaten',
+          setupNeeded: 'Einrichtung erforderlich · Nicht vollständig geschützt',
+          off: 'Aus · Keine Überwachung',
+        },
+        mode: {
+          bio: 'Biobasierte Überwachung',
+          time: 'Zeitbasierte Check-ins',
+          inactive: 'Überwachung nicht aktiv',
+          setup: 'Einrichtung erforderlich',
+        },
+        live: {
+          activeTitle: 'Überwachung aktiv',
+          activeBioDescription: 'Biobasierte Gesundheitsdaten werden geprüft.',
+          activeTimeDescription: 'Zeitbasierte Check-ins sind aktiviert.',
+          setupTitle: 'Einrichtung erforderlich',
+          setupDescription:
+            'Fügen Sie Kontakte hinzu und aktivieren Sie die Überwachung, um den Notfallschutz einzuschalten.',
+          inactiveTitle: 'Einrichtung erforderlich',
+          inactiveDescription:
+            'Schließen Sie die Einrichtung ab, um die Überwachung zu aktivieren.',
+          pausedTitle: 'Überwachung pausiert',
+          pausedDescription: 'Die Überwachung wird in {{time}} fortgesetzt.',
+        },
+        badge: {
+          monitoring: 'Überwachung',
+          needsSetup: 'Einrichtung nötig',
+          setup: 'Einrichten',
+          waitingForData: 'Wartet',
+          setupNeeded: 'Einrichten',
+          off: 'Aus',
+        },
+        actions: {
+          complete: 'Einrichtung abschließen →',
+          enable: 'Überwachung aktivieren →',
+          view: 'Einstellungen ansehen →',
+        },
+      },
+      healthLogs: {
+        title: 'Gesundheitsprotokolle',
+        subtitle: 'Gesundheitsdaten und Verlauf',
+      },
+      manageSettings: {
+        title: 'Notfalleinstellungen',
+        subtitle: 'Notfallkontakte und Auslöser',
+        subtitleEmpty: 'Notfallkontakte hinzufügen',
+      },
+      contacts: {
+        title: 'Notfallkontakte',
+        ready: 'Mindestens ein aktiver Kontakt ist verfügbar',
+        missing: 'Fügen Sie mindestens einen aktiven Notfallkontakt hinzu',
+        badgeReady: 'Bereit',
+        badgeMissing: 'Fehlt',
+      },
+      deathman: {
+        title: 'Notfallüberwachung',
+        badgeActive: 'Aktiv',
+        badgeInactive: 'Inaktiv',
+        badgeMissing: 'Fehlt',
+      },
+      emergencySetup: {
+        title: 'Notfalleinrichtung',
+        done: 'Konfiguration abgeschlossen',
+        todo: 'Schließen Sie die Einrichtung Ihres Notfallsystems ab',
+        badgeDone: 'Fertig',
+        badgeTodo: 'Einrichten',
+      },
+    },
+  },
+  profileHub: {
+    title: 'Profil',
+    sections: {
+      account: {
+        title: 'Konto',
+        description: 'Verwalten Sie persönliche Daten und App-Einstellungen.',
+      },
+      health: {
+        title: 'Gesundheitsdaten',
+        description:
+          'Prüfen Sie die Daten, die für die Notfallüberwachung genutzt werden.',
+      },
+    },
+    userData: 'Profil & Benutzerdaten',
+    accountSettings: 'Kontoeinstellungen',
+    medicalInfo: 'Medizinische Informationen',
+    currentHealthLog: 'Aktuelles Gesundheitsprotokoll',
+    historyLogs: 'Verlauf',
+  },
   settings: {
     title: 'Einstellungen',
+    sections: {
+      emergency: 'Notfallsystem',
+      signUp: 'Anmeldung',
+      legal: 'Rechtliches',
+    },
     emergencyContact: 'Einstellungen für Notfallkontakte',
     emergencySystem: 'Einstellungen des Notfallsystems',
     tomorrowBio: 'Bei Tomorrow Bio anmelden',
@@ -44,6 +273,33 @@ const translations: ITranslation = {
     terms: 'Nutzungsbedingungen',
     and: '&',
     privacy: 'Datenschutzrichtlinie',
+  },
+  emergencyConfirm: {
+    title: 'Sie sind dabei, einen Notfall auszulösen!',
+    description:
+      'Halten Sie die Taste 3 Sekunden lang gedrückt, um einen Notfall auszulösen. Folgendes wird passieren:',
+    locationTitle: 'Aktueller Standort',
+    locationReady: 'Dieser Standort wird für die Notfallreaktion verwendet.',
+    locationLoading: 'Ihr aktueller Standort wird aktualisiert…',
+    locationUnavailable: 'Der aktuelle Standort ist im Moment nicht verfügbar.',
+    openMap: 'Karte öffnen',
+    step1: 'Ihre Notfallkontakte werden benachrichtigt',
+    step2:
+      'Sie werden sich mit Ihnen und dem Kryokonservierungsteam in Verbindung setzen, um die Notfallreaktion zu koordinieren',
+    hold: '3 SEKUNDEN HALTEN, UM NOTFALL AUSZULÖSEN',
+    holdInstruction: 'Halten, um Notfall auszulösen',
+    seconds: 'Sekunden',
+    sending: 'Notfall wird gesendet…',
+    cancel: 'Abbrechen',
+    sentTitle: 'Notfallsignal gesendet',
+    sentSubtitle: 'Dies wird als dringendes Notfallsignal behandelt.',
+    sentDetailsTitle: 'Was jetzt passiert',
+    sentDetails:
+      'Wir haben Ihren Standort erhalten und kontaktieren das medizinische Vor-Ort-Team, damit es sich auf eine Notfallreaktion vorbereitet. Gleichzeitig werden Ihre Notfallkontakte kontaktiert. Halten Sie Ihr Telefon in der Nähe und bleiben Sie erreichbar, wenn Sie können.',
+    done: 'Fertig',
+    failedTitle: 'Notfall nicht gesendet',
+    failedSubtitle: 'Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.',
+    retry: 'Erneut versuchen',
   },
   common: {
     or: 'oder',
@@ -119,8 +375,8 @@ const translations: ITranslation = {
     emailTitleSignUp: 'Melden Sie sich mit Ihrer E-Mail an:',
   },
   signUp: {
-    apple: 'Bei Apple anmelden',
-    google: 'Bei Google anmelden',
+    apple: 'Mit Apple registrieren',
+    google: 'Mit Google registrieren',
     signUp: 'Registrieren',
     createAccount: 'Erstellen Sie ein neues Konto',
     steps: {
@@ -148,10 +404,10 @@ const translations: ITranslation = {
       'Bitte geben Sie Ihre E-Mail-Adresse ein. Wir werden Ihnen eine E-Mail schicken, um Ihr Passwort zurückzusetzen.',
     enterNewPasswordForEmail: 'Geben Sie ein neues Passwort ein',
     emailSent:
-      'Wir haben Ihnen soeben eine E-Mail zum Zurücksetzen Ihres Passworts geschickt. Überprüfen Sie Ihren Posteingang und öffnen Sie den Link auf einem mobilen Gerät, auf dem die Biostasis-App installiert ist.',
+      'Link gesendet. Prüfen Sie Ihren Posteingang und öffnen Sie den Link auf Ihrem mobilen Gerät.',
     passwordChanged: 'Passwort aktualisiert. Bitte melden Sie sich an.',
     resetLinkExpired:
-      'Link zum Zurücksetzen des Passworts ist abgelaufen.Bitte versuchen Sie es erneut.',
+      'Der Link zum Zurücksetzen des Passworts ist abgelaufen. Bitte versuchen Sie es erneut.',
     newPassword: 'Neues Passwort',
     warning:
       'Stellen Sie sicher, dass Sie bereits ein Konto mit Ihrer benutzerdefinierten E-Mail-Adresse registriert haben. Beachten Sie, dass über Apple und Google vorgenommene Registrierungen nicht funktionieren.',
@@ -164,14 +420,14 @@ const translations: ITranslation = {
     password: 'Ihr Passwort',
     newPassword: 'Ihr neues Passwort',
     confirmNewPassword: 'Bestätigen Sie Ihr neues Passwort',
-    email: 'yours@example.com',
+    email: 'name@beispiel.com',
   },
   auth: {
     welcomeTo: 'Willkommen bei Biostasis',
     accountWasCreated:
-      'Ihr Konto wurde erstellt. Um es zu aktivieren, überprüfen Sie Ihren Posteingang und öffnen Sie den Link auf einem mobilen Gerät, auf dem die Biostasis-App installiert ist.',
-    invalidCredentials: 'Falscher Benutzername oder falsches Passwort',
-    linkExpired: 'Link has expired. Bitte versuchen Sie es erneut',
+      'Konto erstellt. Prüfen Sie Ihren Posteingang und öffnen Sie den Aktivierungslink auf Ihrem mobilen Gerät.',
+    invalidCredentials: 'Falsche E-Mail-Adresse oder falsches Passwort',
+    linkExpired: 'Der Link ist abgelaufen. Bitte versuchen Sie es erneut.',
     accountActivated:
       'Ihr Konto wurde aktiviert. Sie können sich jetzt anmelden.',
   },
@@ -195,7 +451,8 @@ const translations: ITranslation = {
     },
     signUp: {
       title: 'Konto erstellen',
-      subtitle: 'Treten Sie Biostasis bei, um Ihre Notfallvorsorge zu verwalten.',
+      subtitle:
+        'Treten Sie Biostasis bei, um Ihre Notfallvorsorge zu verwalten.',
       cta: 'Konto erstellen',
       dividerLabel: 'oder mit E-Mail registrieren',
       passwordPlaceholder: 'Passwort erstellen',
@@ -204,16 +461,16 @@ const translations: ITranslation = {
   defaultError: 'Der Vorgang war nicht erfolgreich',
   validation: {
     fieldRequired: 'Dieses Feld ist erforderlich',
-    invalidEmail: 'Ungültige E-Mail Adresse',
+    invalidEmail: 'Ungültige E-Mail-Adresse',
     email: {
       invalid: 'Ungültige E-Mail-Adresse',
       accountAlreadyExist:
-        'Ein Konto mit der angegebenen E-Mail-Adresse existiert bereits',
+        'Ein Konto mit dieser E-Mail-Adresse existiert bereits.',
     },
     password: {
       tooShort: 'Passwort ist zu kurz',
       whiteSpace: 'Passwort darf keine Leerzeichen enthalten',
-      minLength: 'Das Kennwort muss mindestens 8 Zeichen enthalten',
+      minLength: 'Das Passwort muss mindestens 8 Zeichen enthalten',
     },
     userName: {
       minLength: 'Der Name muss mindestens 2 Zeichen enthalten',
@@ -278,8 +535,7 @@ const translations: ITranslation = {
   },
   userAddress: {
     title: 'Ihre Heimatadresse',
-    subtitle:
-      'Wird verwendet, wenn Rettungsteams Sie schnell finden müssen.',
+    subtitle: 'Wird verwendet, wenn Rettungsteams Sie schnell finden müssen.',
     street: 'Straße',
     city: 'Stadt',
     country: 'Land',
@@ -299,11 +555,18 @@ const translations: ITranslation = {
     editEmergencyContact: 'Notfallkontakt bearbeiten',
     emergencyButtonSettings: 'Einstellungen für Notfallnachrichten',
     yourContacts: 'Ihre Kontakte',
+    contactToggleHelper:
+      'Diesen Kontakt für Notfallmeldungen und Testnachrichten verwenden',
     includeWithMessage: 'In Nachricht einschließen',
     emergencyMessageLabel: 'Notfallnachricht',
+    emergencyMessageEditHelper:
+      'Bearbeiten Sie die Nachricht, die Ihre Kontakte im Notfall erhalten.',
     emergencyMessageHelper:
-      'Diese Nachricht wird bei einem Notfall per E-Mail und SMS an alle Kontakte gesendet.',
+      'Diese Nachricht wird per SMS und E-Mail an Ihre Notfallkontakte gesendet, wenn Ihr Notfallablauf ausgelöst wird.',
     saveChanges: 'Änderungen speichern',
+    savedChanges: 'Änderungen gespeichert',
+    saveError:
+      'Änderungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.',
     sendTestMessage: 'Testnachricht senden',
     addNewEdit: {
       title: 'Kontaktinformationen:',
@@ -311,9 +574,10 @@ const translations: ITranslation = {
       lastName: 'Nachname',
       email: 'E-Mail',
       phoneNumber: 'Telefonnummer',
-      firstNamePlaceholder: 'z. B. Petar',
-      lastNamePlaceholder: 'z. B. Petrov',
-      emailPlaceholder: 'z. B. mail@gmail.com',
+      firstNamePlaceholder: 'Vorname eingeben',
+      lastNamePlaceholder: 'Nachname eingeben',
+      emailPlaceholder: 'name@example.com',
+      phonePlaceholder: 'Telefonnummer eingeben',
       errorDuringUpdate:
         'Es gibt ein Problem mit den Daten im Formular. Bitte überprüfen Sie die Korrektheit der Daten und speichern Sie sie erneut.',
       activateContact: 'Der Kontakt wurde erfolgreich aktiviert',
@@ -350,17 +614,37 @@ const translations: ITranslation = {
         'Dies ist ein Notruf von {{username}}. Sie erhalten diese Nachricht, weil ich möglicherweise eine Kryokonservierung benötige Zusätzliche Informationen hier und im Anhang.',
       testMessageSent:
         'Test-E-Mail gesendet. Bitte prüfen Sie Ihren Posteingang.',
+      testMessageLocationError:
+        'Ihr aktueller Standort konnte nicht ermittelt werden. Aktivieren Sie den genauen Standort und versuchen Sie es erneut.',
     },
     documents: {
       title: 'Dokumente',
       topInfo:
-        'Wird bei einem Notfall automatisch an alle Kontakte gesendet.',
+        'Laden Sie wichtige Dokumente hoch, die Ihre Notfallkontakte benötigen könnten. Akzeptierte Formate: PDF, DOC, DOCX, JPG oder PNG.',
       tapToUpload: 'Zum Hochladen tippen',
+      formatsAction: 'PDF, DOC, DOCX, JPG oder PNG · Zum Hochladen tippen',
+      uploadedFile: 'Hochgeladen · {{fileName}}',
       addDocument: 'Dokument hinzufügen',
+      actions: {
+        upload: 'Datei hochladen',
+        remove: 'Datei entfernen',
+      },
+      status: {
+        uploaded: 'Hochgeladen',
+        acceptedFormats: 'PDF, DOC, DOCX, JPG, PNG',
+      },
       headers: {
         directive: 'Medizinische Anweisung',
         lastWill: 'Letzter Wille',
         other: 'Anderes Dokument',
+      },
+      descriptions: {
+        directive:
+          'Anweisungen für Ihre medizinische Versorgung, falls Sie nicht selbst sprechen können.',
+        lastWill:
+          'Ein Dokument, das erklärt, wie mit Ihren Wünschen und Ihrem Besitz umgegangen werden soll.',
+        other:
+          'Laden Sie andere wichtige Dateien hoch, die Ihre Notfallkontakte benötigen könnten.',
       },
       upload: {
         directive: 'Medizinische Anweisung hochladen',
@@ -394,19 +678,160 @@ const translations: ITranslation = {
       enableSystemTitle: 'Automatisierte Notfalleinstellungen',
       compatibleSmartDeviceConnected: 'Kompatibles Smartdevice angeschlossen',
       confirmReadManual: 'Ich verstehe, wie dieses System funktioniert',
+      guidance: {
+        status: {
+          eyebrow: 'Einrichtungsstatus',
+          contacts: {
+            title: 'Fügen Sie zuerst einen Notfallkontakt hinzu',
+            subtitle:
+              'Die Notfallüberwachung kann erst aktiviert werden, wenn Sie mindestens eine Person hinzufügen, die benachrichtigt werden soll.',
+            action: 'Notfallkontakt hinzufügen',
+          },
+          understand: {
+            title: 'Verstehen Sie zuerst die Notfallüberwachung',
+            subtitle:
+              'Bevor Sie die Überwachung aktivieren, prüfen Sie, wie die mobile App Risiken erkennt und Ihre Kontakte alarmiert.',
+            action: 'Funktionsweise ansehen',
+          },
+          ready: {
+            title: 'Notfallüberwachung einrichten',
+            subtitle:
+              'Prüfen Sie zuerst, wie die Überwachung funktioniert, und schließen Sie dann die Einrichtung ab.',
+            action: 'Einrichtung starten',
+          },
+          choose: {
+            title: 'Wählen Sie den Überwachungstyp',
+            subtitle:
+              'Wählen Sie biobasierte Überwachung mit Wearable oder zeitbasierte Check-ins für regelmäßige Sicherheitsabfragen.',
+            action: 'Überwachungstyp wählen',
+          },
+          active: {
+            title: 'Notfallüberwachung ist aktiv',
+            subtitleBio: 'Biobasierte Überwachung ist aktiv.',
+            subtitleTime: 'Zeitbasierte Check-ins sind aktiv.',
+            turnOff: 'Überwachung ausschalten',
+          },
+        },
+        activeSummary: {
+          sourceLabel: 'Überwachungsquelle',
+          sourceBio: 'Health-App',
+          sourceBioIos: 'Apple Health',
+          sourceBioAndroid: 'Google Fit',
+          healthDataLabel: 'Datenstatus',
+          healthDataConnected: 'Aktuelle Daten werden empfangen',
+          healthDataMissing: 'Wartet auf aktuelle Daten',
+        },
+        activeActions: {
+          switchToTime: 'Zu zeitbasierten Check-ins wechseln',
+          switchToBio: 'Zu biobasierter Überwachung wechseln',
+          switchedToTime: 'Zu zeitbasierten Check-ins gewechselt',
+          switchedToBio: 'Zu biobasierter Überwachung gewechselt',
+          bioUnavailableTitle: 'Health-App-Daten nicht verfügbar',
+          bioUnavailableMessage:
+            'Biobasierte Überwachung kann aktiviert werden, sobald die App aktuelle Gesundheitsdaten empfängt.',
+        },
+        howCompleted: 'Funktionsweise: verstanden',
+        howCompletedSubtitle:
+          'Sie können den Notfallablauf jederzeit erneut ansehen.',
+        readAgain: 'Erneut lesen',
+        enableHelperLocked:
+          'Bitte bestätigen Sie zuerst, dass Sie den Notfallablauf verstehen.',
+        enableHelperReady:
+          'Aktivieren Sie dies, wenn die mobile App Notfallrisiken überwachen soll.',
+        chooseTitle: 'Wählen Sie, wie wir Sie überwachen sollen',
+        chooseSubtitle:
+          'Sie können Gesundheitsdaten eines Wearables oder regelmäßige zeitbasierte Check-ins nutzen. Es kann jeweils nur ein Überwachungstyp aktiv sein.',
+        bioChoice: {
+          title: 'Biobasierte Überwachung',
+          subtitle:
+            'Am besten, wenn Sie ein Wearable oder ein mit HealthKit verbundenes Gerät nutzen.',
+          support:
+            'Die mobile App prüft verfügbare Gesundheitsdaten wie Herzfrequenz, Bewegung oder Gerätesignale.',
+          action: 'Biobasierte Überwachung nutzen',
+        },
+        timeChoice: {
+          title: 'Zeitbasierte Check-ins',
+          subtitle:
+            'Am besten, wenn Sie kein Wearable nutzen oder geplante Sicherheitsabfragen wünschen.',
+          support:
+            'Wir senden Check-in-Benachrichtigungen im gewählten Intervall. Wenn Sie nicht reagieren, kann der Notfallablauf ausgelöst werden.',
+          action: 'Zeitbasierte Überwachung nutzen',
+        },
+        statusLabels: {
+          active: 'Aktiv',
+          off: 'Aus',
+          select: 'Auswählen',
+        },
+        configureBelow: 'Ausgewählt',
+      },
       howItWorks: {
-        title: 'So funktioniert es',
+        title: 'So funktioniert die Notfallüberwachung',
         intro:
-          'Das System überwacht Ihre Gesundheitsdaten und alarmiert Ihre Kontakte, wenn Sie nicht mehr reagieren.',
-        step1Title: 'Verbinden',
+          'Bevor Sie die Überwachung aktivieren, wählen Sie, wie die mobile App prüfen soll und was passiert, wenn Sie nicht reagieren.',
+        step1Title: 'Überwachung wählen',
         step1Desc:
-          'Koppeln Sie Ihr Wearable oder nutzen Sie die integrierten Sensoren Ihres Telefons (Schritte, Herzfrequenz).',
+          'Wählen Sie biobasierte Überwachung oder zeitbasierte Check-ins.',
         step2Title: 'Überwachen',
         step2Desc:
-          'Die App überprüft regelmäßig Ihre Gesundheitsdaten. Wenn kein Signal erkannt wird, erhalten Sie zuerst eine Warnbenachrichtigung.',
-        step3Title: 'Notfall',
+          'Die mobile App prüft das gewählte Signal oder sendet Check-ins entsprechend Ihrer Einrichtung.',
+        step3Title: 'Alarmieren',
         step3Desc:
-          'Wenn weiterhin keine Reaktion erfolgt, löst das System einen Alarm an Ihre Notfallkontakte aus.',
+          'Wenn Sie nicht reagieren, werden Ihre Notfallkontakte benachrichtigt.',
+      },
+      setupFlow: {
+        stepLabel: 'Schritt {{step}} von 4',
+        back: 'Zurück',
+        continue: 'Weiter',
+        enableMonitoring: 'Notfallüberwachung aktivieren',
+        enabledToast: 'Notfallüberwachung ist aktiv',
+        choose: {
+          title: 'Überwachungstyp wählen',
+          subtitle:
+            'Wählen Sie aus, wie die mobile App auf ein Notfallrisiko prüfen soll.',
+          bioSubtitle:
+            'Am besten, wenn Ihr Telefon bereits aktuelle Gesundheitsdaten von Ihrem Wearable oder der Health-App empfängt.',
+          timeSubtitle:
+            'Am besten, wenn Sie geplante Check-ins bevorzugen oder kein Wearable nutzen.',
+        },
+        bio: {
+          title: 'Biobasierte Überwachung einrichten',
+          subtitle:
+            'Die mobile App nutzt aktuelle Gesundheitsdaten von Ihrem Wearable oder der Health-App, um Notfallrisiken zu prüfen.',
+          connected: 'Gesundheitsdaten verbunden',
+          notConnected: 'Gesundheitsdaten nicht verfügbar',
+          connectedHelper:
+            'Gesundheitsdaten sind verbunden und die App empfängt Daten.',
+          missingHelper:
+            'Wir empfangen noch keine Gesundheitsdaten von Ihrem Gerät.',
+          checkConnection: 'Verbindung prüfen',
+        },
+        time: {
+          title: 'Zeitbasierte Check-ins einrichten',
+          subtitle:
+            'Die mobile App sendet Check-in-Benachrichtigungen im gewählten Intervall. Wenn Sie nicht reagieren, kann der Notfallablauf starten.',
+          helper:
+            'Dieses Intervall wird gespeichert, wenn die Überwachung aktiviert wird.',
+          devHelper:
+            'Development-Builds verwenden Minutenintervalle für schnelleres Testen.',
+        },
+        sleep: {
+          title: 'Schlafplan einrichten',
+          subtitle:
+            'Dies ist für beide Überwachungstypen erforderlich und hilft, Fehlalarme während des Schlafs zu vermeiden.',
+          enable: 'Schlafplan aktivieren',
+          enableSubtitle:
+            'Verwendet den Standardplan von 22:00 bis 07:00 Uhr. Sie können ihn später anpassen.',
+          required:
+            'Ein Schlafplan ist erforderlich, bevor die Notfallüberwachung aktiviert werden kann.',
+        },
+        final: {
+          title: 'Bereit zum Aktivieren',
+          subtitleBio:
+            'Biobasierte Überwachung ist bereit. Sie können die Notfallüberwachung jetzt aktivieren.',
+          subtitleTime:
+            'Zeitbasierte Check-ins sind bereit. Sie können die Notfallüberwachung jetzt aktivieren.',
+          sleepEnabled: 'Der Schlafplan ist aktiviert.',
+        },
       },
       enableAutomatedEmergency: 'Automatisierte Notfallüberwachung aktivieren',
       setUpSmartDevice: 'Smart-Gerät einrichten',
@@ -420,23 +845,23 @@ const translations: ITranslation = {
         'Die Pause ist noch aktiv. Denken Sie daran, dass der automatische Notruf, wenn Sie ihn aktivieren, für {{pauseTime}} pausiert wird',
       frequencySet: 'Frequenz erfolgreich eingestellt auf',
       bioTrigger: {
-        title: 'Biobasierter Auslöser',
+        title: 'Biobasierte Überwachung',
         permissions: {
           title: 'Gesundheitsberechtigungen erteilen',
           alertTitle: 'Gesundheitserlaubnisse',
           alertDescription:
             'Sie werden aufgefordert, Biostasis den Zugriff auf Ihre Gesundheitsdaten zu erlauben. Bitte bestätigen Sie.',
         },
-        turnOn: 'Biobasiert',
+        turnOn: 'Biobasierte Überwachung nutzen',
         warning:
-          'Das Einschalten von Biostasis deaktiviert den zeitbasierten Auslöser!',
+          'Es kann jeweils nur ein Überwachungstyp aktiv sein. Der Wechsel zur biobasierten Überwachung deaktiviert zeitbasierte Check-ins.',
         appleWatch: {
           title: 'Wearable-Gerät verbunden',
           description:
-            "Wir verwenden dein Wearable-Gerät (dank HealthKit-Integration), um deine Gesundheitsdaten abzurufen. Wenn du keines verwendest, wähle bitte stattdessen das zeitbasierte Auslösesystem.",
+            'Wir verwenden dein Wearable-Gerät (dank HealthKit-Integration), um deine Gesundheitsdaten abzurufen. Wenn du keines verwendest, wähle bitte stattdessen das zeitbasierte Auslösesystem.',
           alertTitle: 'Wearable-Gerät koppeln',
           alertDescription:
-            "Dein Wearable-Gerät sollte mit deinem iPhone gekoppelt sein, um Gesundheitsdaten zu synchronisieren. Bitte stelle sicher, dass es korrekt gekoppelt ist. Falls nicht, folge den Anweisungen in der Begleit-App des Geräts.",
+            'Dein Wearable-Gerät sollte mit deinem iPhone gekoppelt sein, um Gesundheitsdaten zu synchronisieren. Bitte stelle sicher, dass es korrekt gekoppelt ist. Falls nicht, folge den Anweisungen in der Begleit-App des Geräts.',
         },
         googleFit: {
           title: 'Google Fit authentifizieren',
@@ -463,24 +888,25 @@ const translations: ITranslation = {
       systemOffMessage:
         'Automatisches Notfallsystem wurde erfolgreich ausgeschaltet',
       timeTrigger: {
-        title: 'Zeitbasierter Auslöser',
+        title: 'Zeitbasierte Check-ins',
         description:
           'Wir senden Benachrichtigungen in regelmäßigen Abständen. Wenn Sie auf eine nicht reagieren, wird das Notfallsystem ausgelöst. Ihre Schlafenszeiten werden automatisch ausgenommen.',
         frequency: 'Notfall-Auslöser Zeitrahmen:',
         systemStart: 'Zeitbasiertes automatisches System läuft',
-        turnOn: 'Zeitbasiert',
+        turnOn: 'Zeitbasierte Check-ins nutzen',
         warning:
-          'Das Einschalten des zeitbasierten Systems wird den biobasierten Auslöser deaktivieren!',
+          'Es kann jeweils nur ein Überwachungstyp aktiv sein. Der Wechsel zu zeitbasierten Check-ins deaktiviert die biobasierte Überwachung.',
       },
       sleepSchedule: {
         title: 'Schlafplan',
         description:
           'Pausiert das Notfallsystem automatisch während Ihrer üblichen Schlafenszeiten, um Fehlalarme zu vermeiden.',
+        requiredDescription:
+          'Passen Sie die Schlafzeiten an, die Ihre aktive Notfallüberwachung verwendet.',
         enableSchedule: 'Schlafplan aktivieren',
         bedtime: 'Schlafenszeit',
         wakeTime: 'Aufwachzeit',
-        sleepWindow:
-          'System pausiert nachts von {{bedtime}} bis {{wakeTime}}',
+        sleepWindow: 'System pausiert nachts von {{bedtime}} bis {{wakeTime}}',
       },
       sleepScheduleSheet: {
         title: 'Schlafplan einrichten',
@@ -851,16 +1277,18 @@ const translations: ITranslation = {
     italian: 'Italienisch',
   },
   devLogs: {
-  title: 'Aktuelles Gesundheitsprotokoll',
-  description: 'Dieser Bildschirm ist für Entwickler gedacht, um Probleme zu protokollieren und nachzuverfolgen. Er ist nicht für Endbenutzer vorgesehen.',
-  logs: 'Protokolle',
-  noLogs: 'Keine Protokolle verfügbar',
-  error: 'Fehler beim Laden der Protokolle',
-  retry: 'Protokolle erneut laden',
+    title: 'Aktuelles Gesundheitsprotokoll',
+    description:
+      'Dieser Bildschirm ist für Entwickler gedacht, um Probleme zu protokollieren und nachzuverfolgen. Er ist nicht für Endbenutzer vorgesehen.',
+    logs: 'Protokolle',
+    noLogs: 'Keine Protokolle verfügbar',
+    error: 'Fehler beim Laden der Protokolle',
+    retry: 'Protokolle erneut laden',
   },
   devHistoryLogs: {
     title: 'Entwicklerprotokolle (Verlauf)',
-    description: 'Dieser Bildschirm ist für Entwickler gedacht, um Probleme zu protokollieren und nachzuverfolgen. Er ist nicht für Endbenutzer vorgesehen.',
+    description:
+      'Dieser Bildschirm ist für Entwickler gedacht, um Probleme zu protokollieren und nachzuverfolgen. Er ist nicht für Endbenutzer vorgesehen.',
     logs: 'Protokolle',
     noLogs: 'Keine Protokolle verfügbar',
     error: 'Fehler beim Laden der Protokolle',
@@ -868,7 +1296,8 @@ const translations: ITranslation = {
   },
   devPushLogs: {
     title: 'Entwicklerprotokolle (Push-Benachrichtigungen)',
-    description: 'Dieser Bildschirm ist für Entwickler gedacht, um Probleme mit Push-Benachrichtigungen zu protokollieren und nachzuverfolgen. Er ist nicht für Endbenutzer vorgesehen.',
+    description:
+      'Dieser Bildschirm ist für Entwickler gedacht, um Probleme mit Push-Benachrichtigungen zu protokollieren und nachzuverfolgen. Er ist nicht für Endbenutzer vorgesehen.',
     logs: 'Protokolle',
     noLogs: 'Keine Protokolle verfügbar',
     error: 'Fehler beim Laden der Protokolle',

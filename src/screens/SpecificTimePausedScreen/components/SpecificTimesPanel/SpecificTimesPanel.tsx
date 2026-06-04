@@ -1,5 +1,11 @@
-import React, {useCallback, useLayoutEffect} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useEffect} from 'react';
+import {
+  InteractionManager,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
@@ -9,9 +15,9 @@ import {automatedEmergencyPausedTimesSelector} from '~/redux/automatedEmergency/
 import {setAutomatedEmergencyPauseTimes} from '~/redux/automatedEmergency/automatedEmergency.slice';
 import {getUser} from '~/redux/user/thunks';
 import {Screens} from '~/models/Navigation.model';
-import {semanticColors} from '~/theme/tokens';
-import IconChip from '~/components/IconChip';
-import {CalendarClockIcon, CirclePlusIcon} from '~/assets/icons/AppIcons';
+import {iconSizes, semanticColors} from '~/theme/tokens';
+import {CirclePlusIcon} from '~/assets/icons/AppIcons';
+import {BioEmergencySettingsFillCalendar} from '~/assets/icons/BiostasisIcons';
 
 import {SpecificDateComponentItemIdType} from '../SpecificDateComponent/SpecificDateComponent';
 import {SpecificDateList} from '../SpecificDateComponent/SpecificDateList';
@@ -27,8 +33,12 @@ const SpecificTimesPanel = () => {
   const pausedTimes = useAppSelector(automatedEmergencyPausedTimesSelector);
   const savePausedTime = useSavePausedTime();
 
-  useLayoutEffect(() => {
-    dispatch(getUser());
+  useEffect(() => {
+    const task = InteractionManager.runAfterInteractions(() => {
+      dispatch(getUser());
+    });
+
+    return () => task.cancel();
   }, [dispatch]);
 
   const handleDelete = useCallback(
@@ -58,9 +68,7 @@ const SpecificTimesPanel = () => {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
-        <IconChip background="rgba(228, 219, 247, 0.6)" size={36} radius={8}>
-          <CalendarClockIcon size={18} color="#6D4CCB" />
-        </IconChip>
+        <BioEmergencySettingsFillCalendar />
         <Text style={styles.title}>
           {t('specificTimesScreen.specificTimes.title')}
         </Text>
@@ -80,7 +88,7 @@ const SpecificTimesPanel = () => {
         activeOpacity={0.7}
         style={styles.addButton}
         onPress={handleAddNew}>
-        <CirclePlusIcon size={16} color="#3D5470" />
+        <CirclePlusIcon size={iconSizes.inline} color="#3D5470" />
         <Text style={styles.addButtonText}>
           {t('specificTimesScreen.specificTimes.addAdditionalTime')}
         </Text>
@@ -95,8 +103,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2E9F0',
     borderRadius: 14,
-    paddingHorizontal: 15,
-    paddingVertical: 13,
+    paddingHorizontal: 18,
+    paddingVertical: 16,
     gap: 12,
   },
   header: {
@@ -106,13 +114,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'DMSans-Bold',
-    fontSize: 15,
+    fontSize: 16,
+    lineHeight: 21,
     color: semanticColors.primary,
   },
   description: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 13,
-    lineHeight: 19.5,
+    fontSize: 15,
+    lineHeight: 22,
     color: '#3D5470',
   },
   addButton: {

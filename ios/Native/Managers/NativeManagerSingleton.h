@@ -12,6 +12,7 @@
 + (instancetype)shared;
 
 - (void)updateDataCollectionStatus;
+- (void)requestLatestHealthData;
 - (void)handleSilentPushNotificationWithCompletion:(void(^)(BOOL success))completion;
 
 @end

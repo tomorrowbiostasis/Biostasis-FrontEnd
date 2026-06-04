@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackNavigatorParamList, Screens} from '~/models/Navigation.model';
 import AuthScreen from '~/screens/AuthScreen';
 import OnboardingScreen from '~/screens/OnboardingScreen';
@@ -14,7 +14,7 @@ import {isAuthed, isAuthSessionResolved} from '~/redux/auth/selectors';
 import {configSelector} from '~/redux/config/config.slice';
 import AuthBootstrapLoading from '~/components/AuthBootstrapLoading';
 
-const Stack = createStackNavigator<AuthStackNavigatorParamList>();
+const Stack = createNativeStackNavigator<AuthStackNavigatorParamList>();
 
 export const AuthStack = () => {
   const [loading, setLoading] = useState(true);

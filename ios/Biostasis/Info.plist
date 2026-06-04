@@ -72,6 +72,8 @@
 	<string>${PRODUCT_NAME} sending your location to the emergency contact when you trigger an emergency</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>${PRODUCT_NAME} sending your location to the emergency contact when you trigger an emergency</string>
+	<key>NSMotionUsageDescription</key>
+	<string>${PRODUCT_NAME} uses motion data to show today's steps as they update and help confirm recent movement.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Italic.ttf</string>

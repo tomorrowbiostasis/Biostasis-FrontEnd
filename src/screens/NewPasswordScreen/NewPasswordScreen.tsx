@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
 import {Platform, View} from 'react-native';
-import {Button} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Formik} from 'formik';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -8,16 +7,18 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import AuthHeader from '~/components/AuthHeader';
 import FormInput from '~/components/FormInput';
 import Alert from '~/components/Alert';
+import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useConfirmPasswordValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {forgotPasswordSetNewPassword} from '~/redux/auth/thunks';
-import {Screens, ScreensNavigationParamsList} from '~/models/Navigation.model';
+import {AuthStackNavigatorParamList, Screens} from '~/models/Navigation.model';
 import {getForgotPasswordParams} from '~/redux/auth/selectors';
 import {
   setForgotPasswordEmailMessage,
   setShouldBackToAuthScreen,
 } from '~/redux/auth/auth.slice';
+import {getVisibleFormError} from '~/utils';
 
 import styles from './styles';
 
@@ -33,7 +34,7 @@ const NewPasswordScreen = () => {
   const {reset} = useNavigation();
 
   const {params} =
-    useRoute<RouteProp<ScreensNavigationParamsList, Screens.NewPassword>>();
+    useRoute<RouteProp<AuthStackNavigatorParamList, Screens.NewPassword>>();
 
   const {pending, newPasswordMessage, shouldBackToAuthScreen} = useAppSelector(
     getForgotPasswordParams,
@@ -51,18 +52,23 @@ const NewPasswordScreen = () => {
   useEffect(() => {
     if (shouldBackToAuthScreen) {
       reset({
-        index: 1,
-        routes: [{name: Screens.Auth as never}],
+        index: 0,
+        routes: [
+          {
+            name: Screens.Auth as never,
+            params: params?.email ? {email: params.email} : undefined,
+          },
+        ],
       });
     }
     return () => {
       dispatch(setShouldBackToAuthScreen(false));
     };
-  }, [dispatch, reset, shouldBackToAuthScreen]);
+  }, [dispatch, params?.email, reset, shouldBackToAuthScreen]);
 
   const handleContinue = useCallback(
     ({password}: NewPasswordFormFields) => {
-      if (params.email && params.code) {
+      if (params?.email && params?.code) {
         dispatch(
           forgotPasswordSetNewPassword({
             email: params.email,
@@ -103,6 +109,7 @@ const NewPasswordScreen = () => {
           initialValues={{password: '', confirmPassword: ''}}
           onSubmit={handleContinue}
           validationSchema={confirmPasswordValidationSchema}
+          validateOnMount
           validateOnChange>
           {({
             handleChange,
@@ -111,10 +118,14 @@ const NewPasswordScreen = () => {
             values,
             touched,
             errors,
-            dirty,
             isValid,
+            submitCount,
           }) => {
-            const canSubmit = isValid && dirty && !pending;
+            const canSubmit =
+              isValid &&
+              values.password.length > 0 &&
+              values.confirmPassword.length > 0 &&
+              !pending;
             return (
               <>
                 <FormInput
@@ -124,11 +135,12 @@ const NewPasswordScreen = () => {
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
-                  errorMessage={
-                    errors.password && touched.password
-                      ? errors.password
-                      : undefined
-                  }
+                  errorMessage={getVisibleFormError({
+                    error: errors.password,
+                    submitCount,
+                    touched: touched.password,
+                    value: values.password,
+                  })}
                 />
                 <FormInput
                   label={t('forgotPassword.confirmPasswordLabel')}
@@ -137,20 +149,21 @@ const NewPasswordScreen = () => {
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={handleBlur('confirmPassword')}
                   value={values.confirmPassword}
-                  errorMessage={
-                    errors.confirmPassword && touched.confirmPassword
-                      ? errors.confirmPassword
-                      : undefined
-                  }
+                  errorMessage={getVisibleFormError({
+                    error: errors.confirmPassword,
+                    submitCount,
+                    touched: touched.confirmPassword,
+                    value: values.confirmPassword,
+                  })}
                 />
-                <Button
-                  variant={'figmaPrimary' as never}
-                  isDisabled={!canSubmit}
+                <AnimatedSubmitButton
+                  variant={'figmaFormPrimary' as never}
+                  disabled={!canSubmit}
                   isLoading={pending}
                   onPress={() => handleSubmit()}
                   style={styles.submitButton}>
                   {t('common.continue')}
-                </Button>
+                </AnimatedSubmitButton>
               </>
             );
           }}

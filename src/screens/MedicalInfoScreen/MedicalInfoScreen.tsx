@@ -1,7 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {Platform, Text, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Button} from 'native-base';
 import {Formik, FormikErrors} from 'formik';
 import {useNavigation} from '@react-navigation/native';
 
@@ -17,6 +16,7 @@ import ToastService from '~/services/Toast.service';
 import ScreenHeader from '~/components/ScreenHeader';
 import FormInput from '~/components/FormInput';
 import Toggle from '~/components/Toggle';
+import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
 import {MaskedDateInput} from '~/components/MaskedDateInput';
 import styles from './styles';
 
@@ -60,7 +60,6 @@ const ProfileAddMedicalInfoScreen = () => {
         }
       });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, lastHospitalVisitState.value, goBack, t],
   );
 
@@ -192,14 +191,13 @@ const ProfileAddMedicalInfoScreen = () => {
               </>
             ) : null}
 
-            <Button
-              variant={'figmaPrimary' as never}
+            <AnimatedSubmitButton
               mt={4}
-              isDisabled={checkIfDisabled(values, errors)}
+              disabled={checkIfDisabled(values, errors)}
               isLoading={isSubmitted}
               onPress={() => handleSubmit()}>
               {t('profileUserData.save')}
-            </Button>
+            </AnimatedSubmitButton>
           </KeyboardAwareScrollView>
         )}
       </Formik>

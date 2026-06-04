@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors} from '~/theme/tokens';
+import {layout, semanticColors, typography} from '~/theme/tokens';
 
 const CARD_BORDER = 'rgba(11, 31, 58, 0.1)';
 
@@ -16,66 +16,81 @@ const styles = StyleSheet.create({
   toggleCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    height: 56,
-    padding: 10,
+    gap: 14,
+    minHeight: 64,
+    paddingHorizontal: layout.cardPaddingHorizontal,
+    paddingVertical: 10,
     backgroundColor: semanticColors.surface,
     borderRadius: 14,
   },
   toggleTitle: {
     flex: 1,
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 14,
+    ...typography.rowTitle,
     color: semanticColors.primary,
   },
   counter: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 10,
+    ...typography.counter,
+    color: '#3D5470',
+  },
+  sectionHelper: {
+    ...typography.sectionDescription,
     color: '#3D5470',
   },
   messageInput: {
-    minHeight: 104,
-    padding: 12,
+    height: 170,
+    padding: 14,
     backgroundColor: semanticColors.surface,
-    borderWidth: 1,
-    borderColor: 'rgba(13, 27, 42, 0.12)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(11, 31, 58, 0.2)',
     borderRadius: 14,
-    fontFamily: 'DMSans-Regular',
-    fontSize: 13,
-    lineHeight: 19.5,
+    ...typography.input,
     color: semanticColors.textPrimary,
   },
+  messageInputFocused: {
+    borderColor: '#2E7DAF',
+    backgroundColor: '#F8FBFE',
+    shadowColor: '#2E7DAF',
+    shadowOffset: {width: 0, height: 6},
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 2,
+  },
   helper: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 13,
-    lineHeight: 19.5,
+    ...typography.sectionDescription,
     color: '#3D5470',
   },
   error: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 13,
-    lineHeight: 19.5,
+    ...typography.sectionDescription,
     color: semanticColors.danger,
   },
   footer: {
     gap: 12,
+    paddingTop: 2,
+    paddingBottom: 8,
   },
   saveButton: {
-    height: 44,
-    borderRadius: 14,
+    minHeight: layout.ctaHeight,
+    borderRadius: layout.ctaRadius,
     borderWidth: 1,
     borderColor: CARD_BORDER,
-    backgroundColor: semanticColors.primaryDeep,
+    backgroundColor: semanticColors.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: layout.ctaPaddingHorizontal,
+  },
+  saveButtonSaved: {
+    backgroundColor: '#EAF7F2',
+    borderColor: 'rgba(30, 155, 107, 0.32)',
   },
   saveText: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 16,
+    ...typography.buttonLabel,
     color: semanticColors.textInverse,
   },
+  saveTextSaved: {
+    color: '#1E9B6B',
+  },
   testButton: {
-    height: 44,
+    minHeight: 48,
     borderRadius: 14,
     borderWidth: 1,
     borderColor: CARD_BORDER,
@@ -84,8 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   testText: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 16,
+    ...typography.buttonLabel,
     color: semanticColors.primary,
   },
   disabled: {

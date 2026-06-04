@@ -1,13 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useCallback, useEffect, useLayoutEffect, useMemo, useState} from 'react';
-import {Alert, ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {Button} from 'native-base';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {
+  Alert,
+  InteractionManager,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {
   accountSettingsSelector,
-  userLoading,
   userSelector,
 } from '~/redux/user/selectors';
 import {getUser, updateUser, deleteUser} from '~/redux/user/thunks';
@@ -26,20 +31,21 @@ import ToastService from '~/services/Toast.service';
 import i18n from '~/i18n/i18n';
 
 import ScreenHeader from '~/components/ScreenHeader';
-import IconChip from '~/components/IconChip';
 import Toggle from '~/components/Toggle';
 import FormInput from '~/components/FormInput';
+import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
 import {
-  BellIcon,
-  LightbulbIcon,
-  FileTextIcon,
-  AlertTriangleIcon,
   ChevronRightIcon,
 } from '~/assets/icons/AppIcons';
-import {semanticColors} from '~/theme/tokens';
+import {
+  BioAccountSettingsFillAlertWarning,
+  BioAccountSettingsFillDocumentDark,
+  BioAccountSettingsFillLock,
+  BioAccountSettingsFillSettings,
+} from '~/assets/icons/BiostasisIcons';
+import {regex} from '~/services/Validation.service';
+import {iconSizes, semanticColors} from '~/theme/tokens';
 import styles from './styles';
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const AccountSettingsScreen = () => {
   const {t} = useAppTranslation();
@@ -47,7 +53,6 @@ const AccountSettingsScreen = () => {
 
   const accountSettings = useAppSelector(accountSettingsSelector);
   const {user} = useAppSelector(userSelector);
-  const loading = useAppSelector(userLoading);
   const pausedDate = useAppSelector(automatedEmergencyPausedDateSelector);
   const specificPausedTimes = useAppSelector(
     automatedEmergencyPausedTimesSelector,
@@ -63,8 +68,12 @@ const AccountSettingsScreen = () => {
   const [gdprEmail, setGdprEmail] = useState('');
   const [gdprSubmitting, setGdprSubmitting] = useState(false);
 
-  useLayoutEffect(() => {
-    dispatch(getUser());
+  useEffect(() => {
+    const task = InteractionManager.runAfterInteractions(() => {
+      dispatch(getUser());
+    });
+
+    return () => task.cancel();
   }, [dispatch]);
 
   /* ----- notifications ----- */
@@ -109,7 +118,7 @@ const AccountSettingsScreen = () => {
   );
 
   /* ----- GDPR ----- */
-  const isGdprEmailValid = EMAIL_REGEX.test(gdprEmail);
+  const isGdprEmailValid = regex.email.test(gdprEmail.trim());
 
   const handleGdprSubmit = useCallback(() => {
     setGdprSubmitting(true);
@@ -164,9 +173,7 @@ const AccountSettingsScreen = () => {
         showsVerticalScrollIndicator={false}>
         {/* Allow Notifications */}
         <View style={styles.card}>
-          <IconChip background="#D5EFE7" size={40} radius={12}>
-            <BellIcon size={20} color="#1E9B6B" />
-          </IconChip>
+          <BioAccountSettingsFillLock />
           <View style={styles.cardInfo}>
             <Text style={styles.cardTitle}>
               {t('accountSettings.allowNotifications')}
@@ -183,9 +190,7 @@ const AccountSettingsScreen = () => {
 
         {/* Tips & Tricks */}
         <View style={styles.card}>
-          <IconChip background="#F6EDC9" size={40} radius={12}>
-            <LightbulbIcon size={20} color="#B7791F" />
-          </IconChip>
+          <BioAccountSettingsFillSettings />
           <View style={styles.cardInfo}>
             <Text style={styles.cardTitle}>
               {t('accountSettingsScreen.tipsTitle')}
@@ -206,9 +211,7 @@ const AccountSettingsScreen = () => {
             activeOpacity={0.7}
             style={styles.cardRow}
             onPress={() => setGdprOpen(o => !o)}>
-            <IconChip background="#0D1B2A" size={40} radius={12}>
-              <FileTextIcon size={20} color="#FFFFFF" />
-            </IconChip>
+            <BioAccountSettingsFillDocumentDark />
             <View style={styles.cardInfo}>
               <Text style={styles.cardTitle}>
                 {t('accountSettingsScreen.gdprTitle')}
@@ -218,7 +221,10 @@ const AccountSettingsScreen = () => {
               </Text>
             </View>
             <View style={gdprOpen ? styles.chevronOpen : undefined}>
-              <ChevronRightIcon size={18} color={semanticColors.iconChevron} />
+              <ChevronRightIcon
+                size={iconSizes.chevron}
+                color={semanticColors.iconChevron}
+              />
             </View>
           </TouchableOpacity>
 
@@ -237,13 +243,12 @@ const AccountSettingsScreen = () => {
                 value={gdprEmail}
                 onChangeText={setGdprEmail}
               />
-              <Button
-                variant={'figmaPrimary' as never}
-                isDisabled={!isGdprEmailValid || gdprSubmitting}
+              <AnimatedSubmitButton
+                disabled={!isGdprEmailValid || gdprSubmitting}
                 isLoading={gdprSubmitting}
                 onPress={handleGdprSubmit}>
                 {t('common.submit')}
-              </Button>
+              </AnimatedSubmitButton>
             </View>
           ) : null}
         </View>
@@ -251,7 +256,7 @@ const AccountSettingsScreen = () => {
         {/* Danger Zone */}
         <View style={styles.dangerCard}>
           <View style={styles.dangerHeader}>
-            <AlertTriangleIcon size={20} color="#E5373A" />
+            <BioAccountSettingsFillAlertWarning />
             <Text style={styles.dangerHeading}>
               {t('accountSettingsScreen.dangerZone')}
             </Text>

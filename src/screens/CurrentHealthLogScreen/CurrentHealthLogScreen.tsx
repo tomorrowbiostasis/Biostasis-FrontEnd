@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {StackActions, useNavigation} from '@react-navigation/native';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppSelector} from '~/redux/store/hooks';
@@ -27,7 +27,7 @@ const formatDateTime = (value?: number | string | null): string => {
 
 const CurrentHealthLogScreen = () => {
   const {t} = useAppTranslation();
-  const {navigate} = useNavigation();
+  const navigation = useNavigation();
   const health = useAppSelector(state => state.health.data);
 
   const hasData = !!health;
@@ -139,7 +139,9 @@ const CurrentHealthLogScreen = () => {
         <TouchableOpacity
           activeOpacity={0.8}
           disabled={!hasData}
-          onPress={() => navigate(Screens.HistoryLogs as never)}
+          onPress={() =>
+            navigation.dispatch(StackActions.push(Screens.HistoryLogs))
+          }
           style={[styles.historyButton, !hasData && styles.historyButtonDisabled]}>
           <Text
             style={[

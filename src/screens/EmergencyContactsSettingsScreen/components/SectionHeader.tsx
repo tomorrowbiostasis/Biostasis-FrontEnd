@@ -1,6 +1,6 @@
 import React, {FC, ReactNode} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {semanticColors} from '~/theme/tokens';
+import {semanticColors, typography} from '~/theme/tokens';
 
 interface SectionHeaderProps {
   label: string;
@@ -30,16 +30,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   label: {
-    fontFamily: 'DMSans-Bold',
-    fontSize: 12,
-    letterSpacing: 1.1,
-    textTransform: 'uppercase',
+    ...typography.sectionLabel,
     color: semanticColors.textMuted,
   },
   description: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 14,
-    lineHeight: 19.5,
+    ...typography.sectionDescription,
     color: '#3D5470',
   },
 });

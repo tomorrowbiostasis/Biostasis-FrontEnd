@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {semanticColors, typography} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,9 +14,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(11, 31, 58, 0.1)',
   },
   label: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 15,
-    color: '#96A3B3',
+    ...typography.body,
+    color: semanticColors.textMuted,
   },
 });
 

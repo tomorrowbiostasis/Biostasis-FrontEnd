@@ -1,3 +1,5 @@
+import {layout, typography} from '../tokens';
+
 export const buttonStyles = {
   baseStyle: {
     borderRadius: 100,
@@ -19,6 +21,8 @@ export const buttonStyles = {
     },
     figmaPrimary: () => figmaPrimaryButtonStyles,
     figmaSecondary: () => figmaSecondaryButtonStyles,
+    figmaFormPrimary: () => figmaFormPrimaryButtonStyles,
+    figmaFormSecondary: () => figmaFormSecondaryButtonStyles,
     figmaEmergency: () => figmaEmergencyButtonStyles,
   },
 };
@@ -56,8 +60,8 @@ export const secondaryButtonStyles = {
 export const figmaPrimaryButtonStyles = {
   backgroundColor: 'primary',
   borderWidth: 0,
-  borderRadius: 14,
-  minHeight: 44,
+  borderRadius: layout.ctaRadius,
+  minHeight: layout.ctaHeight,
   _text: {
     color: 'textInverse',
     fontFamily: 'DMSans',
@@ -89,8 +93,8 @@ export const figmaSecondaryButtonStyles = {
   backgroundColor: 'surface',
   borderColor: 'primary',
   borderWidth: 1,
-  borderRadius: 14,
-  minHeight: 44,
+  borderRadius: layout.ctaRadius,
+  minHeight: layout.ctaHeight,
   _text: {
     color: 'primary',
     fontFamily: 'DMSans',
@@ -105,11 +109,63 @@ export const figmaSecondaryButtonStyles = {
   },
 };
 
+export const figmaFormPrimaryButtonStyles = {
+  backgroundColor: 'primary',
+  borderWidth: 0,
+  borderRadius: layout.formCtaRadius,
+  height: layout.formCtaHeight,
+  px: layout.ctaPaddingHorizontal,
+  _text: {
+    ...typography.buttonLabelCompact,
+    color: 'textInverse',
+  },
+  _pressed: {
+    backgroundColor: 'primaryPressed',
+  },
+  _disabled: {
+    backgroundColor: 'primary',
+    opacity: 0.4,
+    _text: {
+      color: 'textInverse',
+    },
+  },
+  _loading: {
+    backgroundColor: '#2A3647',
+    opacity: 1,
+    _text: {
+      color: 'textInverse',
+    },
+    _spinner: {
+      color: 'textInverse',
+    },
+  },
+};
+
+export const figmaFormSecondaryButtonStyles = {
+  backgroundColor: 'surface',
+  borderColor: 'primary',
+  borderWidth: 1,
+  borderRadius: layout.formCtaRadius,
+  height: layout.formCtaHeight,
+  px: layout.ctaPaddingHorizontal,
+  _text: {
+    ...typography.buttonLabelCompact,
+    color: 'primary',
+  },
+  _pressed: {
+    backgroundColor: 'surfaceMuted',
+  },
+  _disabled: {
+    borderColor: 'borderStrong',
+    _text: {color: 'textDisabled'},
+  },
+};
+
 export const figmaEmergencyButtonStyles = {
   backgroundColor: 'dangerStrong',
   borderWidth: 0,
-  borderRadius: 14,
-  minHeight: 44,
+  borderRadius: layout.ctaRadius,
+  minHeight: layout.ctaHeight,
   _text: {
     color: 'textInverse',
     fontFamily: 'DMSans',

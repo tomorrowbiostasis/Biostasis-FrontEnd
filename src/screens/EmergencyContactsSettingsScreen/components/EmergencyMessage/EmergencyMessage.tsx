@@ -1,5 +1,13 @@
-import {Formik, FormikProps} from 'formik';
-import React, {FC, ReactNode, useCallback, useEffect, useMemo} from 'react';
+import {Formik, FormikHelpers, FormikProps} from 'formik';
+import React, {
+  FC,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   ActivityIndicator,
   Text,
@@ -9,9 +17,11 @@ import {
 } from 'react-native';
 
 import Loader from '~/components/Loader';
-import IconChip from '~/components/IconChip';
 import Toggle from '~/components/Toggle';
-import {MapPinIcon, CopyIcon} from '~/assets/icons/AppIcons';
+import {
+  BioEmergencyContactFillDocument,
+  BioEmergencyContactFillMapPin,
+} from '~/assets/icons/BiostasisIcons';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {
@@ -34,14 +44,16 @@ import {
   requestLocationPermission,
 } from '~/services/Location.service';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
+import ToastService from '~/services/Toast.service';
 import SectionHeader from '../SectionHeader';
 import styles from './styles';
 
 const MESSAGE_MAX_LENGTH = 300;
 
+type SaveStatus = 'idle' | 'saved' | 'error';
+
 interface ToggleCardProps {
   icon: ReactNode;
-  iconBackground: string;
   title: string;
   value?: boolean;
   onChange: (next: boolean) => void;
@@ -49,15 +61,12 @@ interface ToggleCardProps {
 
 const ToggleCard: FC<ToggleCardProps> = ({
   icon,
-  iconBackground,
   title,
   value,
   onChange,
 }) => (
   <View style={styles.toggleCard}>
-    <IconChip background={iconBackground} size={36} radius={8}>
-      {icon}
-    </IconChip>
+    {icon}
     <Text style={styles.toggleTitle}>{title}</Text>
     <Toggle value={!!value} onChange={onChange} />
   </View>
@@ -74,15 +83,24 @@ const EmergencyMessage = () => {
     useAppSelector(userSelector);
   const emergencyButtonSettings = useAppSelector(selectEmergencyButtonSettings);
   const testMessage = useAppSelector(testMessageSelector);
+  const [messageFocused, setMessageFocused] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
+  const [preparingTestMessage, setPreparingTestMessage] = useState(false);
+  const saveStatusTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
 
   useEffect(() => {
     return () => {
+      if (saveStatusTimeoutRef.current) {
+        clearTimeout(saveStatusTimeoutRef.current);
+      }
       dispatch(setEmergencyButtonSettingsUpdated(false));
     };
   }, [dispatch, emergencyButtonSettingsUpdated]);
 
   const initialFormValues = useMemo(() => {
-    const init = emergencyButtonSettings;
+    const init = {...emergencyButtonSettings};
     if (!init.emergencyMessage) {
       init.emergencyMessage = t(
         'emergencyContactsSettings.settings.defaultMessage',
@@ -92,13 +110,31 @@ const EmergencyMessage = () => {
     return init;
   }, [emergencyButtonSettings, t, user.name]);
 
+  const scheduleSaveStatusReset = useCallback(() => {
+    if (saveStatusTimeoutRef.current) {
+      clearTimeout(saveStatusTimeoutRef.current);
+    }
+    saveStatusTimeoutRef.current = setTimeout(() => {
+      setSaveStatus('idle');
+    }, 1300);
+  }, []);
+
   const handleConfirm = useCallback(
-    (values: EmergencyButtonSettings) => {
-      dispatch(updateEmergencyButtonSettings(values)).then(() => {
+    async (
+      values: EmergencyButtonSettings,
+      helpers: FormikHelpers<EmergencyButtonSettings>,
+    ) => {
+      try {
+        await dispatch(updateEmergencyButtonSettings(values)).unwrap();
         updateDataCollectionStatus();
-      });
+        helpers.resetForm({values});
+        setSaveStatus('saved');
+        scheduleSaveStatusReset();
+      } catch {
+        setSaveStatus('error');
+      }
     },
-    [dispatch],
+    [dispatch, scheduleSaveStatusReset],
   );
 
   const handleLocationSettingsChange = useCallback(
@@ -130,9 +166,33 @@ const EmergencyMessage = () => {
     [dispatch],
   );
 
-  const handleSendTestEmailPress = useCallback(() => {
-    dispatch(sendTestMessage());
-  }, [dispatch]);
+  const handleSendTestEmailPress = useCallback(
+    async (values: EmergencyButtonSettings) => {
+      try {
+        setPreparingTestMessage(true);
+
+        if (values.locationAccess) {
+          const payload: Partial<IUser> = {
+            timezone: timestampToISOWithOffset().slice(-6),
+          };
+          const location = await getLocation(10000, true);
+          payload.location = getGoogleMapsUrl(location);
+          await dispatch(updateUser(payload)).unwrap();
+        }
+
+        await dispatch(sendTestMessage());
+      } catch {
+        if (values.locationAccess) {
+          ToastService.error(
+            t('emergencyContactsSettings.settings.testMessageLocationError'),
+          );
+        }
+      } finally {
+        setPreparingTestMessage(false);
+      }
+    },
+    [dispatch, t],
+  );
 
   const hasInitialStateChanged = useCallback(
     (values: EmergencyButtonSettings) => {
@@ -157,6 +217,7 @@ const EmergencyMessage = () => {
   return (
     <Formik<EmergencyButtonSettings>
       initialValues={initialFormValues}
+      enableReinitialize
       onSubmit={handleConfirm}
       validationSchema={emergencyContactSettingsValidationSchema}
       validateOnBlur
@@ -170,11 +231,39 @@ const EmergencyMessage = () => {
         errors,
         setFieldValue,
         isValid,
+        dirty,
       }) => {
         const messageLength = (values.emergencyMessage || '').length;
-        const changed = hasInitialStateChanged(values);
+        const changed = dirty || hasInitialStateChanged(values);
         const saveDisabled = !isValid || pending || !changed;
-        const testDisabled = !isValid || testMessage.pending || changed;
+        const testDisabled =
+          !isValid || testMessage.pending || preparingTestMessage || changed;
+        const saveLabel =
+          saveStatus === 'saved'
+            ? t('emergencyContactsSettings.savedChanges')
+            : t('emergencyContactsSettings.saveChanges');
+
+        const handleMessageChange = (message: string) => {
+          if (saveStatus !== 'idle') {
+            setSaveStatus('idle');
+            if (saveStatusTimeoutRef.current) {
+              clearTimeout(saveStatusTimeoutRef.current);
+              saveStatusTimeoutRef.current = null;
+            }
+          }
+          handleChange('emergencyMessage')(message);
+        };
+
+        const resetSaveFeedbackForEdit = () => {
+          if (saveStatus === 'idle') {
+            return;
+          }
+          setSaveStatus('idle');
+          if (saveStatusTimeoutRef.current) {
+            clearTimeout(saveStatusTimeoutRef.current);
+            saveStatusTimeoutRef.current = null;
+          }
+        };
 
         return (
           <View style={styles.container}>
@@ -184,24 +273,24 @@ const EmergencyMessage = () => {
               />
               <View style={styles.toggleCards}>
                 <ToggleCard
-                  icon={<MapPinIcon size={18} color="#2C8F86" />}
-                  iconBackground="rgba(212, 236, 230, 0.6)"
+                  icon={<BioEmergencyContactFillMapPin />}
                   title={t('emergencyContactsSettings.settings.location')}
                   value={values.locationAccess}
-                  onChange={value =>
-                    handleLocationSettingsChange(value, setFieldValue)
-                  }
+                  onChange={value => {
+                    resetSaveFeedbackForEdit();
+                    handleLocationSettingsChange(value, setFieldValue);
+                  }}
                 />
                 <ToggleCard
-                  icon={<CopyIcon size={18} color="#4A6FA5" />}
-                  iconBackground="rgba(217, 228, 240, 0.6)"
+                  icon={<BioEmergencyContactFillDocument />}
                   title={t(
                     'emergencyContactsSettings.settings.uploadedDocuments',
                   )}
                   value={values.uploadedDocumentsAccess}
-                  onChange={value =>
-                    setFieldValue('uploadedDocumentsAccess', value)
-                  }
+                  onChange={value => {
+                    resetSaveFeedbackForEdit();
+                    setFieldValue('uploadedDocumentsAccess', value);
+                  }}
                 />
               </View>
             </View>
@@ -215,22 +304,38 @@ const EmergencyMessage = () => {
                   </Text>
                 }
               />
+              <Text style={styles.sectionHelper}>
+                {t('emergencyContactsSettings.emergencyMessageEditHelper')}
+              </Text>
               <TextInput
-                style={styles.messageInput}
+                style={[
+                  styles.messageInput,
+                  messageFocused && styles.messageInputFocused,
+                ]}
                 multiline
                 textAlignVertical="top"
                 maxLength={MESSAGE_MAX_LENGTH}
                 value={values.emergencyMessage}
-                onChangeText={handleChange('emergencyMessage')}
-                onBlur={handleBlur('emergencyMessage')}
+                onChangeText={handleMessageChange}
+                onFocus={() => setMessageFocused(true)}
+                onBlur={event => {
+                  setMessageFocused(false);
+                  handleBlur('emergencyMessage')(event);
+                }}
                 placeholder={t(
                   'emergencyContactsSettings.settings.defaultMessage',
                   {username: user.name},
                 )}
                 placeholderTextColor="#9BA8B5"
+                selectionColor="#2E7DAF"
+                scrollEnabled
               />
               {errors.emergencyMessage && touched.emergencyMessage ? (
                 <Text style={styles.error}>{errors.emergencyMessage}</Text>
+              ) : saveStatus === 'error' ? (
+                <Text style={styles.error}>
+                  {t('emergencyContactsSettings.saveError')}
+                </Text>
               ) : (
                 <Text style={styles.helper}>
                   {t('emergencyContactsSettings.emergencyMessageHelper')}
@@ -243,21 +348,29 @@ const EmergencyMessage = () => {
                 activeOpacity={0.85}
                 disabled={saveDisabled}
                 onPress={() => handleSubmit()}
-                style={[styles.saveButton, saveDisabled && styles.disabled]}>
+                style={[
+                  styles.saveButton,
+                  saveStatus === 'saved' && styles.saveButtonSaved,
+                  saveDisabled && saveStatus !== 'saved' && styles.disabled,
+                ]}>
                 {pending ? (
                   <ActivityIndicator color="#FFFFFF" />
                 ) : (
-                  <Text style={styles.saveText}>
-                    {t('emergencyContactsSettings.saveChanges')}
+                  <Text
+                    style={[
+                      styles.saveText,
+                      saveStatus === 'saved' && styles.saveTextSaved,
+                    ]}>
+                    {saveLabel}
                   </Text>
                 )}
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.85}
                 disabled={testDisabled}
-                onPress={handleSendTestEmailPress}
+                onPress={() => handleSendTestEmailPress(values)}
                 style={[styles.testButton, testDisabled && styles.disabled]}>
-                {testMessage.pending ? (
+                {testMessage.pending || preparingTestMessage ? (
                   <ActivityIndicator color="#0B1F3A" />
                 ) : (
                   <Text style={styles.testText}>

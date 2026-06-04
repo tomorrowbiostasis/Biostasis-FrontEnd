@@ -1,6 +1,5 @@
 import React, {useCallback} from 'react';
 import {Keyboard, Platform, Pressable, Text, View} from 'react-native';
-import {Button} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Formik} from 'formik';
@@ -8,6 +7,9 @@ import {useNavigation} from '@react-navigation/native';
 
 import FormInput from '~/components/FormInput';
 import StepIndicator from '~/components/StepIndicator';
+import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
+import {ArrowLeftIcon} from '~/assets/icons/AppIcons';
+import {semanticColors} from '~/theme/tokens';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useUserNameValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
@@ -128,16 +130,17 @@ export const UserNameScreen = () => {
                     hitSlop={10}
                     accessibilityRole="button"
                     accessibilityLabel="Back">
-                    <Text style={styles.backGlyph}>{'‹'}</Text>
+                    <ArrowLeftIcon size={18} color={semanticColors.primary} />
                   </Pressable>
-                  <Button
-                    variant={'figmaPrimary' as never}
+                  <AnimatedSubmitButton
+                    variant={'figmaFormPrimary' as never}
+                    style={styles.submitButton}
                     flex={1}
-                    isDisabled={!canSubmit}
+                    disabled={!canSubmit}
                     isLoading={pending}
                     onPress={() => handleSubmit()}>
                     {`${t('signUp.common.next')}  →`}
-                  </Button>
+                  </AnimatedSubmitButton>
                 </View>
               </>
             );

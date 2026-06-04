@@ -1,5 +1,6 @@
 import React, {FC, ReactNode} from 'react';
-import {StyleProp, View, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {iconSizes} from '~/theme/tokens';
 
 interface IconChipProps {
   children: ReactNode;
@@ -13,8 +14,8 @@ interface IconChipProps {
 const IconChip: FC<IconChipProps> = ({
   children,
   background,
-  size = 36,
-  radius = 8,
+  size = iconSizes.rowChip,
+  radius = iconSizes.rowChipRadius,
   style,
 }) => {
   return (
@@ -25,14 +26,20 @@ const IconChip: FC<IconChipProps> = ({
           height: size,
           borderRadius: radius,
           backgroundColor: background,
-          alignItems: 'center',
-          justifyContent: 'center',
         },
+        styles.base,
         style,
       ]}>
       {children}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  base: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default IconChip;

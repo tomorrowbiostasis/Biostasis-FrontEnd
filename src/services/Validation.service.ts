@@ -10,8 +10,10 @@ const MIN_AGE = 18;
 
 export const regex = {
   password: /^[\S]+.*[\S]+$/,
+  email:
+    /^(?!.*\.\.)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i,
   number: /[0-9]/,
-  fileName: /[ '’;:"?%#^\|{}<>€©®™°•¢£¥¶×÷π√]/g,
+  fileName: /[ '’;:"?%#^|{}<>€©®™°•¢£¥¶×÷π√]/g,
 };
 
 const checkUserNameRestrictions = (value: string | undefined) => {
@@ -37,7 +39,14 @@ const useCommonValidators = () => {
       .matches(regex.password, t('validation.password.whiteSpace'))
       .min(8, t('validation.password.minLength')),
     email: Yup.string()
+      .trim()
+      .lowercase()
       .email(t('validation.email.invalid'))
+      .test(
+        'email-domain',
+        t('validation.email.invalid'),
+        value => !value || regex.email.test(value),
+      )
       .required(t('validation.fieldRequired')),
     userName: Yup.string()
       .required(t('validation.fieldRequired'))
@@ -95,7 +104,7 @@ export const useConfirmPasswordValidationSchema = () => {
     password,
     confirmPassword: Yup.string()
       .concat(password)
-      .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+      .oneOf([Yup.ref('password')], 'Passwords must match'),
   });
 };
 
@@ -125,13 +134,19 @@ export const useUserPhoneAndDOBValidationSchema = () => {
     dateOfBirth: Yup.string()
       .required(t('validation.fieldRequired'))
       .test('dob-format', t('userDateOfBirth.invalidDate'), value => {
-        if (!value) return false;
+        if (!value) {
+          return false;
+        }
         return dayjs(value, DOB_FORMAT, true).isValid();
       })
       .test('dob-age', t('userDateOfBirth.invalidUserAge'), value => {
-        if (!value) return false;
+        if (!value) {
+          return false;
+        }
         const parsed = dayjs(value, DOB_FORMAT, true);
-        if (!parsed.isValid()) return false;
+        if (!parsed.isValid()) {
+          return false;
+        }
         return dayjs().diff(parsed, 'year') >= MIN_AGE;
       }),
   });

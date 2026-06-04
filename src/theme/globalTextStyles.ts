@@ -4,6 +4,6 @@ export const globalTextStyles = {
   },
   textMedium: {
     fontSize: 15,
-    lineHeight: 22,
+    lineHeight: 20,
   },
 };

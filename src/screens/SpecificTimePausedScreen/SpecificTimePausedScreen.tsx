@@ -1,4 +1,5 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useEffect} from 'react';
+import {InteractionManager} from 'react-native';
 import {ScrollView} from 'native-base';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
@@ -19,8 +20,12 @@ const SpecificTimesScreen = () => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector(timeSlotPatchLoading);
 
-  useLayoutEffect(() => {
-    dispatch(getUser());
+  useEffect(() => {
+    const task = InteractionManager.runAfterInteractions(() => {
+      dispatch(getUser());
+    });
+
+    return () => task.cancel();
   }, [dispatch]);
 
   return (

@@ -1,15 +1,15 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {
-  Modal,
   Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import IconFeather from 'react-native-vector-icons/Feather';
 
+import NativeBottomSheet from '~/components/NativeBottomSheet';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {
   getSleepSchedule,
@@ -17,7 +17,7 @@ import {
   formatTime,
   SleepSchedule,
 } from '~/services/SleepSchedule.service';
-import {semanticColors} from '~/theme/tokens';
+import {layout, semanticColors, typography} from '~/theme/tokens';
 
 interface Props {
   visible: boolean;
@@ -84,18 +84,23 @@ const SleepScheduleBottomSheet = ({visible, onDismiss}: Props) => {
   wakeDate.setHours(schedule.wakeHour, schedule.wakeMinute, 0, 0);
 
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="slide"
-      onRequestClose={onDismiss}>
-      <TouchableWithoutFeedback onPress={onDismiss}>
-        <View style={styles.overlay} />
-      </TouchableWithoutFeedback>
-
-      <View style={styles.sheet}>
-        <View style={styles.handle} />
-
+    <>
+      <NativeBottomSheet
+        visible={visible}
+        onDismiss={onDismiss}
+        sheetStyle={styles.sheet}>
+        <View style={styles.header}>
+          <View style={styles.headerSpacer} />
+          <TouchableOpacity
+            activeOpacity={0.7}
+            hitSlop={10}
+            accessibilityRole="button"
+            accessibilityLabel={t('common.cancel')}
+            onPress={onDismiss}
+            style={styles.closeButton}>
+            <IconFeather name="x" size={20} color={semanticColors.textSecondary} />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.title}>
           {t(
             'emergencyContactsSettings.automatedEmergencySettings.sleepScheduleSheet.title',
@@ -164,7 +169,7 @@ const SleepScheduleBottomSheet = ({visible, onDismiss}: Props) => {
             )}
           </Text>
         </TouchableOpacity>
-      </View>
+      </NativeBottomSheet>
 
       <DateTimePickerModal
         isVisible={showBedtimePicker}
@@ -182,30 +187,30 @@ const SleepScheduleBottomSheet = ({visible, onDismiss}: Props) => {
         onCancel={() => setShowWakePicker(false)}
         display={Platform.OS === 'ios' ? 'spinner' : 'default'}
       />
-    </Modal>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.45)',
-  },
   sheet: {
-    backgroundColor: semanticColors.surface,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
     paddingHorizontal: 24,
-    paddingTop: 12,
-    paddingBottom: Platform.OS === 'ios' ? 40 : 28,
+    paddingTop: 4,
   },
-  handle: {
-    width: 40,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: semanticColors.borderStrong,
-    alignSelf: 'center',
-    marginBottom: 20,
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 4,
+  },
+  headerSpacer: {
+    width: 20,
+    height: 20,
+  },
+  closeButton: {
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontFamily: 'DMSerifDisplay-Regular',
@@ -258,15 +263,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   saveButton: {
-    height: 48,
-    borderRadius: 14,
+    height: layout.ctaHeight,
+    borderRadius: layout.ctaRadius,
     backgroundColor: semanticColors.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: layout.ctaPaddingHorizontal,
   },
   saveButtonText: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 16,
+    ...typography.buttonLabel,
     color: semanticColors.textInverse,
   },
   cancelButton: {

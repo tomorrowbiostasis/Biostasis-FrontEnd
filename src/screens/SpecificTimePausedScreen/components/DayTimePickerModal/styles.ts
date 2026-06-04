@@ -1,22 +1,18 @@
 import {Dimensions, StyleSheet} from 'react-native';
 import colors from '~/theme/colors';
+import {layout, typography} from '~/theme/tokens';
 
 const screenHeight = Dimensions.get('window').height;
 const isSmall = screenHeight < 700;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: colors.white,
-  },
-  safeAreaContainer: {
-    flexGrow: 1,
+  sheet: {
+    paddingHorizontal: 20,
+    paddingTop: 8,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
     paddingTop: isSmall ? 12 : 20,
     paddingBottom: 12,
   },
@@ -101,19 +97,20 @@ const styles = StyleSheet.create({
     marginTop: isSmall ? 8 : 16,
   },
   saveButton: {
+    height: layout.ctaHeight,
     backgroundColor: colors.blue[700],
-    borderRadius: 14,
-    paddingVertical: 16,
+    borderRadius: layout.ctaRadius,
+    paddingHorizontal: layout.ctaPaddingHorizontal,
     alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 12,
   },
   saveButtonDisabled: {
     backgroundColor: colors.gray[400],
   },
   saveButtonText: {
+    ...typography.buttonLabel,
     color: colors.white,
-    fontSize: 16,
-    fontWeight: '700',
   },
   cancelButton: {
     alignItems: 'center',

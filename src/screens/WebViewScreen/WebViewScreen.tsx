@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {InteractionManager, View} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {RouteProp, useRoute} from '@react-navigation/native';
 
@@ -13,19 +13,30 @@ const WebViewScreen = () => {
   const {params} =
     useRoute<RouteProp<ScreensNavigationParamsList, 'WebView'>>();
   const [isLoading, setIsLoading] = useState(true);
+  const [canRenderWebView, setCanRenderWebView] = useState(false);
+
+  React.useEffect(() => {
+    const task = InteractionManager.runAfterInteractions(() => {
+      setCanRenderWebView(true);
+    });
+
+    return () => task.cancel();
+  }, []);
 
   return (
     <View style={styles.root}>
       <ScreenHeader title={params.title} />
       <View style={styles.body}>
-        <WebView
-          source={{uri: params.url}}
-          startInLoadingState
-          injectedJavaScript={params.injectedJavaScript}
-          onLoadEnd={() => setIsLoading(false)}
-          style={styles.webview}
-        />
-        {isLoading ? <Loader absolute /> : null}
+        {canRenderWebView ? (
+          <WebView
+            source={{uri: params.url}}
+            startInLoadingState
+            injectedJavaScript={params.injectedJavaScript}
+            onLoadEnd={() => setIsLoading(false)}
+            style={styles.webview}
+          />
+        ) : null}
+        {!canRenderWebView || isLoading ? <Loader absolute /> : null}
       </View>
     </View>
   );

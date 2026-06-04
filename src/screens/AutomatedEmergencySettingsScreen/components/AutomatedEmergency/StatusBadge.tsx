@@ -8,10 +8,16 @@ import triggerStyles from './triggerStyles';
 
 interface StatusBadgeProps {
   active: boolean;
+  activeLabel?: string;
+  inactiveLabel?: string;
 }
 
 /** Small on/off pill shown in the trigger panel headers. */
-const StatusBadge: FC<StatusBadgeProps> = ({active}) => {
+const StatusBadge: FC<StatusBadgeProps> = ({
+  active,
+  activeLabel,
+  inactiveLabel,
+}) => {
   const {t} = useAppTranslation();
   const color = active ? semanticColors.success : semanticColors.warningStrong;
 
@@ -27,11 +33,11 @@ const StatusBadge: FC<StatusBadgeProps> = ({active}) => {
         <AlertTriangleIcon size={13} color={color} />
       )}
       <Text style={[triggerStyles.badgeText, {color}]}>
-        {t(
-          active
-            ? 'emergencyContactsSettings.automatedEmergencySettings.systemOn'
-            : 'emergencyContactsSettings.automatedEmergencySettings.systemOff',
-        )}
+        {active
+          ? activeLabel ||
+            t('emergencyContactsSettings.automatedEmergencySettings.systemOn')
+          : inactiveLabel ||
+            t('emergencyContactsSettings.automatedEmergencySettings.systemOff')}
       </Text>
     </View>
   );

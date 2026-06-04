@@ -1,5 +1,6 @@
 import React from 'react';
 import {FC} from 'react';
+import {StyleSheet, View} from 'react-native';
 import GoogleIcon from '~/assets/icons/GoogleIcon';
 import {RootAuthButton, IRootAuthButtonProps} from './RootAuthButton';
 
@@ -20,9 +21,23 @@ export const GoogleButton: FC<IGoogleButtonProps> = ({
       disabled={disabled}
       text={text}
       variant="outline"
-      startIcon={<GoogleIcon />}
+      startIcon={
+        <View style={styles.iconFrame}>
+          <GoogleIcon size={20} />
+        </View>
+      }
       onClick={onClick}
       style={style}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  iconFrame: {
+    width: 24,
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'visible',
+  },
+});

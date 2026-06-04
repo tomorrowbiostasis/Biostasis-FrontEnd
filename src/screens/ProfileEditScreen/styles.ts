@@ -1,16 +1,17 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors, spacing} from '~/theme/tokens';
+import {layout, semanticColors, spacing} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: semanticColors.surfaceCanvas,
+    backgroundColor: semanticColors.primary,
   },
   scroll: {
     flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
   },
   content: {
-    paddingHorizontal: 34,
+    paddingHorizontal: layout.screenGutter,
     paddingTop: spacing.xl,
     paddingBottom: spacing['4xl'],
     gap: spacing.md,

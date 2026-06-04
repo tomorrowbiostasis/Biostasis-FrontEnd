@@ -1,9 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {LinkingOptions, NavigationContainer} from '@react-navigation/native';
+import {
+  DefaultTheme,
+  LinkingOptions,
+  NavigationContainer,
+  Theme,
+} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useAppSelector} from '~/redux/store/hooks';
 import {
   NavigationRouteName,
@@ -22,10 +27,20 @@ import LostConnection from './helper/LostConnection';
 import {userInitializedSelector} from '~/redux/user/selectors';
 import SignUpStack from './SignUpStack';
 import {navigationRef} from './navigationContainerRef';
+import {semanticColors} from '~/theme/tokens';
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export {navigationRef};
+
+const navigationTheme: Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: semanticColors.primary,
+    card: semanticColors.primary,
+  },
+};
 
 const linkingOptions: LinkingOptions<{}> = {
   prefixes: ['biostasis://'],
@@ -80,6 +95,7 @@ const Container = () => {
     <NavigationContainer
       ref={navigationRef as never}
       linking={linkingOptions}
+      theme={navigationTheme}
       onReady={() => setIsReady(true)}>
       {isReady && (
         <>
@@ -90,6 +106,10 @@ const Container = () => {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
+          freezeOnBlur: true,
+          contentStyle: {
+            backgroundColor: semanticColors.primary,
+          },
         }}>
         <Stack.Screen name="LostConnection" component={LostConnectionScreen} />
         {showAuthenticatedShell ? (

@@ -1,31 +1,29 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors, spacing} from '~/theme/tokens';
+import {layout, semanticColors, spacing, typography} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: semanticColors.surfaceCanvas,
+    backgroundColor: semanticColors.primary,
   },
   scroll: {
     flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
   },
   content: {
-    paddingHorizontal: 34,
+    paddingHorizontal: layout.screenGutter,
     paddingTop: spacing.xl,
     paddingBottom: spacing['4xl'],
     gap: spacing.md,
   },
   intro: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 15,
+    lineHeight: 22,
     color: semanticColors.textSecondary,
   },
   sectionLabel: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 12,
-    letterSpacing: 0.8,
-    textTransform: 'uppercase',
+    ...typography.sectionLabel,
     color: semanticColors.textSecondary,
     marginTop: spacing.xs,
   },

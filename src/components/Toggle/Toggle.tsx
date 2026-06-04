@@ -20,7 +20,7 @@ const Toggle: FC<ToggleProps> = ({value, onChange, disabled}) => {
     Animated.timing(anim, {
       toValue: value ? 1 : 0,
       duration: 160,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   }, [value, anim]);
 

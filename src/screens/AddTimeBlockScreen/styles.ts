@@ -1,16 +1,17 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors} from '~/theme/tokens';
+import {layout, semanticColors, typography} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: semanticColors.surfaceCanvas,
+    backgroundColor: semanticColors.primary,
   },
   scroll: {
     flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
   },
   content: {
-    paddingHorizontal: 34,
+    paddingHorizontal: layout.screenGutter,
     paddingTop: 24,
     paddingBottom: 24,
     gap: 17,
@@ -58,20 +59,20 @@ const styles = StyleSheet.create({
     transform: [{rotate: '90deg'}],
   },
   saveButton: {
-    height: 44,
-    borderRadius: 14,
+    height: layout.ctaHeight,
+    borderRadius: layout.ctaRadius,
     borderWidth: 1,
     borderColor: 'rgba(11, 31, 58, 0.1)',
-    backgroundColor: semanticColors.primaryDeep,
+    backgroundColor: semanticColors.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: layout.ctaPaddingHorizontal,
   },
   saveButtonDisabled: {
     opacity: 0.4,
   },
   saveButtonText: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 16,
+    ...typography.buttonLabel,
     color: semanticColors.textInverse,
   },
   cancelButton: {

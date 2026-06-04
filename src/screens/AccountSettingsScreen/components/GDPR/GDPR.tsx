@@ -11,6 +11,7 @@ import {clearGdprStatus} from '~/redux/gdpr/gdpr.slice';
 import {sendGDPR} from '~/redux/gdpr/thunks';
 import {gdprSelector} from '~/redux/gdpr/selectors';
 import Input from '~/components/Input';
+import {getVisibleFormError} from '~/utils';
 
 import {Screens} from '~/models/Navigation.model';
 import colors from '~/theme/colors';
@@ -65,6 +66,7 @@ const GDPR = () => {
           touched,
           errors,
           isValid,
+          submitCount,
         }) => (
           <>
             <View marginY={5}>
@@ -76,7 +78,12 @@ const GDPR = () => {
                 placeholder={t('placeholder.email')}
                 value={values.email}
                 isValid={!errors.email && touched.email}
-                errorMessage={errors.email}
+                errorMessage={getVisibleFormError({
+                  error: errors.email,
+                  submitCount,
+                  touched: touched.email,
+                  value: values.email,
+                })}
               />
             </View>
 

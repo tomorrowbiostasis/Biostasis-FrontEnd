@@ -1,7 +1,8 @@
 import React, {FC} from 'react';
 import {Pressable, Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
+import {ArrowLeftIcon} from '~/assets/icons/AppIcons';
+import AnimatedHeaderSurface from '~/components/AnimatedHeaderSurface';
 import styles from './styles';
 
 interface AuthHeaderProps {
@@ -23,7 +24,7 @@ const AuthHeader: FC<AuthHeaderProps> = ({
   const handleBack = onBack ?? (() => navigation.goBack());
 
   return (
-    <SafeAreaView edges={['top']} style={styles.container}>
+    <AnimatedHeaderSurface style={styles.container}>
       <View style={styles.inner}>
         <View style={[styles.topRow, !showBack && styles.topRowEnd]}>
           {showBack && (
@@ -33,7 +34,7 @@ const AuthHeader: FC<AuthHeaderProps> = ({
               hitSlop={10}
               accessibilityRole="button"
               accessibilityLabel="Back">
-              <Text style={styles.backGlyph}>{'←'}</Text>
+              <ArrowLeftIcon size={20} color="#BFC2C5" />
             </Pressable>
           )}
           <Text style={styles.eyebrow}>{eyebrow}</Text>
@@ -41,7 +42,7 @@ const AuthHeader: FC<AuthHeaderProps> = ({
         <Text style={styles.title}>{title}</Text>
         {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
       </View>
-    </SafeAreaView>
+    </AnimatedHeaderSurface>
   );
 };
 

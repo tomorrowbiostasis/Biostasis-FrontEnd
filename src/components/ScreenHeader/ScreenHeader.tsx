@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {ArrowLeftIcon} from '~/assets/icons/AppIcons';
-import {semanticColors} from '~/theme/tokens';
+import {iconSizes, layout, semanticColors} from '~/theme/tokens';
+import AnimatedHeaderSurface from '~/components/AnimatedHeaderSurface';
 
 interface ScreenHeaderProps {
   title: string;
@@ -34,7 +34,7 @@ const ScreenHeader: FC<ScreenHeaderProps> = ({
   const handleBack = onBack ?? (() => navigation.goBack());
 
   return (
-    <SafeAreaView edges={['top']} style={styles.container}>
+    <AnimatedHeaderSurface style={styles.container}>
       <StatusBar
         barStyle="light-content"
         backgroundColor={semanticColors.primary}
@@ -49,7 +49,7 @@ const ScreenHeader: FC<ScreenHeaderProps> = ({
               style={styles.backButton}
               accessibilityRole="button"
               accessibilityLabel="Back">
-              <ArrowLeftIcon size={20} color="#BFC2C5" />
+              <ArrowLeftIcon size={iconSizes.row} color="#BFC2C5" />
             </TouchableOpacity>
           ) : null}
         </View>
@@ -59,7 +59,7 @@ const ScreenHeader: FC<ScreenHeaderProps> = ({
         <View style={styles.side} />
       </View>
       {children}
-    </SafeAreaView>
+    </AnimatedHeaderSurface>
   );
 };
 
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 34,
+    paddingHorizontal: layout.screenGutter,
     paddingTop: Platform.OS === 'android' ? 16 : 12,
     paddingBottom: 16,
   },

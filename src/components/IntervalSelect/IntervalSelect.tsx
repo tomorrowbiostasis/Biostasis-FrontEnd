@@ -8,6 +8,7 @@ import {
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import EnvConfig from '~/services/Env.service';
 import colors from '~/theme/colors';
+import {layout, semanticColors, typography} from '~/theme/tokens';
 
 interface IntervalSelect {
   type: 'bio' | 'time';
@@ -44,7 +45,15 @@ const IntervalSelect: FC<IntervalSelect> = ({
   return (
     <Select
       selectedValue={selectedValue}
-      minWidth="200px"
+      width="100%"
+      h={`${layout.ctaHeight}px`}
+      borderRadius={layout.ctaRadius}
+      borderColor="rgba(11, 31, 58, 0.1)"
+      backgroundColor={semanticColors.surface}
+      fontSize={typography.body.fontSize}
+      lineHeight={typography.body.lineHeight}
+      color={semanticColors.primary}
+      px="12px"
       accessibilityLabel={t(
         'emergencyContactsSettings.automatedEmergencySettings.interval.title',
       )}
@@ -54,7 +63,15 @@ const IntervalSelect: FC<IntervalSelect> = ({
       _selectedItem={{
         bg: colors.blue[300],
       }}
-      mt={2}
+      _item={{
+        _text: {
+          fontSize: typography.body.fontSize,
+          color: semanticColors.primary,
+        },
+      }}
+      _actionSheetContent={{
+        backgroundColor: semanticColors.surface,
+      }}
       onValueChange={onValueChange}>
       {(intervals as Interval[])
         .map(({time, value, unit, debug, warning}) => {

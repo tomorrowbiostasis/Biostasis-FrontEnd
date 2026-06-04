@@ -1,18 +1,19 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors} from '~/theme/tokens';
+import {layout, semanticColors, typography} from '~/theme/tokens';
 
 const CARD_BORDER = 'rgba(11, 31, 58, 0.1)';
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: semanticColors.surfaceCanvas,
+    backgroundColor: semanticColors.primary,
   },
   scroll: {
     flex: 1,
+    backgroundColor: semanticColors.surfaceCanvas,
   },
   content: {
-    paddingHorizontal: 34,
+    paddingHorizontal: layout.screenGutter,
     paddingTop: 20,
     paddingBottom: 32,
     gap: 16,
@@ -24,9 +25,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: CARD_BORDER,
     borderRadius: 14,
-    paddingHorizontal: 14,
-    paddingVertical: 13,
-    gap: 12,
+    paddingHorizontal: layout.cardPaddingHorizontal,
+    paddingVertical: 14,
+    gap: 14,
   },
   cardColumn: {
     backgroundColor: semanticColors.surface,
@@ -38,22 +39,20 @@ const styles = StyleSheet.create({
   cardRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 13,
-    gap: 12,
+    paddingHorizontal: layout.cardPaddingHorizontal,
+    paddingVertical: 14,
+    gap: 14,
   },
   cardInfo: {
     flex: 1,
     gap: 2,
   },
   cardTitle: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 16,
+    ...typography.rowTitle,
     color: semanticColors.primary,
   },
   cardSubtitle: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 14,
+    ...typography.body,
     color: '#96A3B3',
   },
   chevronOpen: {
@@ -68,9 +67,7 @@ const styles = StyleSheet.create({
     borderTopColor: semanticColors.border,
   },
   gdprText: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 13,
-    lineHeight: 19,
+    ...typography.body,
     color: semanticColors.textSecondary,
   },
   dangerCard: {
@@ -87,20 +84,16 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   dangerHeading: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 16,
+    ...typography.rowTitle,
     color: semanticColors.primary,
   },
   dangerTitle: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 14,
+    ...typography.rowTitle,
     color: semanticColors.primary,
     marginTop: 4,
   },
   dangerDescription: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 13,
-    lineHeight: 19,
+    ...typography.body,
     color: semanticColors.textSecondary,
   },
   deleteButton: {
@@ -111,8 +104,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   deleteButtonText: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 16,
+    ...typography.rowTitle,
     color: semanticColors.danger,
   },
 });

@@ -1,12 +1,14 @@
 import {Platform, StyleSheet} from 'react-native';
 import {semanticColors} from '~/theme/tokens';
 
+export const SEGMENTED_CONTROL_PADDING = 4;
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: '#ECEEF2',
     borderRadius: 15,
-    padding: 4,
+    padding: SEGMENTED_CONTROL_PADDING,
     height: 51,
     alignSelf: 'stretch',
   },
@@ -16,7 +18,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 12,
   },
-  segmentActive: {
+  indicator: {
+    position: 'absolute',
+    top: SEGMENTED_CONTROL_PADDING,
+    bottom: SEGMENTED_CONTROL_PADDING,
+    left: SEGMENTED_CONTROL_PADDING,
+    borderRadius: 12,
     backgroundColor: semanticColors.surface,
     ...Platform.select({
       ios: {

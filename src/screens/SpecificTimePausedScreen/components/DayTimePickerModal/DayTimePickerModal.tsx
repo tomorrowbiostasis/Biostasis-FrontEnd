@@ -1,12 +1,11 @@
-import {Modal, Text} from 'native-base';
 import React, {FC, useCallback, useMemo, useState} from 'react';
-import {Platform, TouchableOpacity, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {Platform, Text, TouchableOpacity, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
+import NativeBottomSheet from '~/components/NativeBottomSheet';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import colors from '~/theme/colors';
 import {DaysOfTheWeekEnum, getUniqueId} from '../../util';
@@ -109,8 +108,12 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
       : new Date();
 
   return (
-    <Modal isOpen={true} style={styles.container}>
-      <SafeAreaView style={styles.safeAreaContainer}>
+    <>
+      <NativeBottomSheet
+        visible
+        onDismiss={onClose}
+        sheetStyle={styles.sheet}
+        maxHeight="92%">
         <View style={styles.header}>
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <IconFeather name="x" size={18} color={colors.gray[700]} />
@@ -210,16 +213,16 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
             </TouchableOpacity>
           </View>
         </KeyboardAwareScrollView>
+      </NativeBottomSheet>
 
-        <DateTimePickerModal
-          isVisible={!!activeTimePicker}
-          mode="time"
-          date={pickerDate}
-          onConfirm={handleTimeConfirm}
-          onCancel={() => setActiveTimePicker(null)}
-          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-        />
-      </SafeAreaView>
-    </Modal>
+      <DateTimePickerModal
+        isVisible={!!activeTimePicker}
+        mode="time"
+        date={pickerDate}
+        onConfirm={handleTimeConfirm}
+        onCancel={() => setActiveTimePicker(null)}
+        display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+      />
+    </>
   );
 };

@@ -6,9 +6,15 @@ const triggerStyles = StyleSheet.create({
   card: {
     backgroundColor: semanticColors.surface,
     borderRadius: 14,
-    paddingHorizontal: 15,
-    paddingVertical: 14,
+    paddingHorizontal: 18,
+    paddingVertical: 16,
     gap: 12,
+  },
+  embeddedCard: {
+    backgroundColor: '#F8FAFC',
+    borderWidth: 1,
+    borderColor: 'rgba(11, 31, 58, 0.08)',
+    marginTop: -4,
   },
   header: {
     flexDirection: 'row',
@@ -17,26 +23,27 @@ const triggerStyles = StyleSheet.create({
   },
   headerTitle: {
     fontFamily: 'DMSans-Bold',
-    fontSize: 15,
+    fontSize: 16,
+    lineHeight: 21,
     color: semanticColors.primary,
   },
   description: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 14,
-    lineHeight: 19.5,
+    fontSize: 15,
+    lineHeight: 22,
     color: '#3D5470',
   },
   warning: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 12,
-    lineHeight: 17,
-    color: semanticColors.danger,
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#6B7A8E',
   },
   recommendation: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 12,
-    lineHeight: 17,
-    color: semanticColors.danger,
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#6B7A8E',
   },
   frequencyLabel: {
     fontFamily: 'DMSans-SemiBold',
@@ -45,7 +52,7 @@ const triggerStyles = StyleSheet.create({
     marginTop: 4,
   },
   row: {
-    minHeight: 48,
+    minHeight: 56,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -63,7 +70,8 @@ const triggerStyles = StyleSheet.create({
   },
   rowLabel: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 14,
+    fontSize: 15,
+    lineHeight: 21,
     color: semanticColors.primary,
   },
   /* status badge */
@@ -84,7 +92,7 @@ const triggerStyles = StyleSheet.create({
   },
   badgeText: {
     fontFamily: 'DMSans-SemiBold',
-    fontSize: 12,
+    fontSize: 13,
   },
 });
 

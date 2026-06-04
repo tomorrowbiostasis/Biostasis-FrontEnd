@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors, spacing, typography} from '~/theme/tokens';
+import {layout, semanticColors, spacing, typography} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: semanticColors.primary,
     borderBottomLeftRadius: 39,
     borderBottomRightRadius: 39,
-    paddingHorizontal: 32,
+    paddingHorizontal: layout.screenGutter,
     paddingBottom: spacing['3xl'],
   },
   eyebrow: {
@@ -36,28 +36,24 @@ const styles = StyleSheet.create({
     marginTop: spacing['2xl'],
   },
   description: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 16,
-    lineHeight: 24,
+    ...typography.body,
     color: 'rgba(255, 255, 255, 0.6)',
     textAlign: 'left',
     marginTop: spacing.sm,
   },
   actions: {
-    paddingHorizontal: 32,
+    paddingHorizontal: layout.screenGutter,
     paddingTop: spacing['3xl'],
     gap: spacing.md,
   },
   footerWrap: {
     flex: 1,
     justifyContent: 'flex-end',
-    paddingHorizontal: 32,
+    paddingHorizontal: layout.screenGutter,
     paddingBottom: spacing.lg,
   },
   footerText: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 14,
-    lineHeight: 22,
+    ...typography.rowDescription,
     color: '#96A3B3',
     textAlign: 'center',
   },

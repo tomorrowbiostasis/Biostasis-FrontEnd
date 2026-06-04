@@ -9,16 +9,14 @@ import {clearDataAndSignOut} from '~/redux/store/utils';
 import {ClearDataTypes} from '~/services/ClearData.types';
 import ScreenHeader from '~/components/ScreenHeader';
 import {
-  UserPlusIcon,
-  EmergencySystemIcon,
-  UserCheckIcon,
-  ScrollTextIcon,
-  ShieldTickIcon,
-} from '~/assets/icons/AppIcons';
+  BioSettingsFillBook,
+  BioSettingsFillBroadcastSignal,
+  BioSettingsFillShieldCheck,
+  BioSettingsFillUserAdd,
+  BioSettingsFillUserVerified,
+} from '~/assets/icons/BiostasisIcons';
 import SettingsRow from './components/SettingsRow';
 import styles from './styles';
-
-const ICON_SIZE = 18;
 
 /* Blends the embedded Tomorrow Bio page background into the redesigned screen. */
 const TOMORROW_BIO_INJECTED_JS = `(function() {
@@ -59,50 +57,63 @@ const SettingsScreen = () => {
         style={styles.scroll}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}>
-        <View style={styles.group}>
-          <SettingsRow
-            icon={<UserPlusIcon size={ICON_SIZE} color="#7A4CC2" />}
-            iconBackground="rgba(228, 219, 247, 0.6)"
-            label={t('settings.emergencyContact')}
-            onPress={go(Screens.EmergencyContactSettings)}
-          />
-          <SettingsRow
-            icon={<EmergencySystemIcon size={ICON_SIZE} color="#2F9E7A" />}
-            iconBackground="rgba(207, 233, 223, 0.5)"
-            label={t('settings.emergencySystem')}
-            onPress={go(Screens.AutomatedEmergencySettings)}
-          />
-          <SettingsRow
-            icon={<UserCheckIcon size={ICON_SIZE} color="#3B5BDB" />}
-            iconBackground="#F5F7FD"
-            label={t('settings.tomorrowBio')}
-            onPress={openWebView(
-              t('signUpForTomorrow.signUpUrl'),
-              t('settings.tomorrowBio'),
-              TOMORROW_BIO_INJECTED_JS,
-            )}
-          />
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>
+            {t('settings.sections.emergency')}
+          </Text>
+          <View style={styles.group}>
+            <SettingsRow
+              icon={<BioSettingsFillUserAdd />}
+              label={t('settings.emergencyContact')}
+              onPress={go(Screens.EmergencyContactSettings)}
+            />
+            <SettingsRow
+              icon={<BioSettingsFillBroadcastSignal />}
+              label={t('settings.emergencySystem')}
+              onPress={go(Screens.AutomatedEmergencySettings)}
+            />
+          </View>
         </View>
 
-        <View style={styles.group}>
-          <SettingsRow
-            icon={<ScrollTextIcon size={ICON_SIZE} color="#2B6E99" />}
-            iconBackground="rgba(214, 230, 242, 0.6)"
-            label={t('settings.termsOfService')}
-            onPress={openWebView(
-              t('settings.termsUrl'),
-              t('settings.termsOfService'),
-            )}
-          />
-          <SettingsRow
-            icon={<ShieldTickIcon size={ICON_SIZE} color="#7B4BB7" />}
-            iconBackground="rgba(228, 219, 247, 0.5)"
-            label={t('settings.privacyStatements')}
-            onPress={openWebView(
-              t('settings.privacyUrl'),
-              t('settings.privacyStatements'),
-            )}
-          />
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>
+            {t('settings.sections.signUp')}
+          </Text>
+          <View style={styles.group}>
+            <SettingsRow
+              icon={<BioSettingsFillUserVerified />}
+              label={t('settings.tomorrowBio')}
+              onPress={openWebView(
+                t('signUpForTomorrow.signUpUrl'),
+                t('settings.tomorrowBio'),
+                TOMORROW_BIO_INJECTED_JS,
+              )}
+            />
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>
+            {t('settings.sections.legal')}
+          </Text>
+          <View style={styles.group}>
+            <SettingsRow
+              icon={<BioSettingsFillBook />}
+              label={t('settings.termsOfService')}
+              onPress={openWebView(
+                t('settings.termsUrl'),
+                t('settings.termsOfService'),
+              )}
+            />
+            <SettingsRow
+              icon={<BioSettingsFillShieldCheck />}
+              label={t('settings.privacyStatements')}
+              onPress={openWebView(
+                t('settings.privacyUrl'),
+                t('settings.privacyStatements'),
+              )}
+            />
+          </View>
         </View>
       </ScrollView>
 

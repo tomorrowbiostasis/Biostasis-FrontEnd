@@ -1,12 +1,12 @@
 import React, {FC, useCallback, useState} from 'react';
 import {View} from 'react-native';
-import {Button} from 'native-base';
 import {Formik} from 'formik';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {useAddNewEmergencyContactValidationSchema} from '~/services/Validation.service';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import FormInput from '~/components/FormInput';
+import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
 import {
   IPhoneNumber,
   PhoneNumberPicker,
@@ -15,6 +15,7 @@ import {
   IEmergencyContact,
   IEmergencyContactResponse,
 } from '~/redux/emergencyContacts/emergencyContacts.slice';
+import {getVisibleFormError} from '~/utils';
 
 import styles from '../styles';
 import {AddNewEmergencyContactFormFields} from '../AddNewEmergencyContactScreen';
@@ -84,6 +85,7 @@ export const EditContact: FC<IEditContactProps> = ({contact, onSavePress}) => {
         errors,
         isValid,
         dirty,
+        submitCount,
       }) => (
         <KeyboardAwareScrollView
           style={styles.scroll}
@@ -131,13 +133,19 @@ export const EditContact: FC<IEditContactProps> = ({contact, onSavePress}) => {
             value={values.email}
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
-            errorMessage={
-              errors.email && touched.email ? errors.email : undefined
-            }
+            errorMessage={getVisibleFormError({
+              error: errors.email,
+              submitCount,
+              touched: touched.email,
+              value: values.email,
+            })}
           />
           <PhoneNumberPicker
             variant="figma"
             label={t('emergencyContactsSettings.addNewEdit.phoneNumber')}
+            placeholder={t(
+              'emergencyContactsSettings.addNewEdit.phonePlaceholder',
+            )}
             initialPhone={contact.phone}
             initialPrefix={contact.prefix}
             onCheckIfValid={setIsPhoneValid}
@@ -146,14 +154,14 @@ export const EditContact: FC<IEditContactProps> = ({contact, onSavePress}) => {
           />
 
           <View style={styles.buttonWrap}>
-            <Button
-              variant={'figmaPrimary' as never}
-              isDisabled={
+            <AnimatedSubmitButton
+              variant={'figmaFormPrimary' as never}
+              disabled={
                 !(isValid && isPhoneValid && (dirty || isPhoneTouched))
               }
               onPress={() => handleSubmit()}>
               {t('emergencyContactsSettings.saveChanges')}
-            </Button>
+            </AnimatedSubmitButton>
           </View>
         </KeyboardAwareScrollView>
       )}

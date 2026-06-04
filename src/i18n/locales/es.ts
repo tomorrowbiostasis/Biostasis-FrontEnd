@@ -299,8 +299,10 @@ const translations: ITranslation = {
     yourContacts: 'Tus contactos',
     includeWithMessage: 'Incluir con el mensaje',
     emergencyMessageLabel: 'Mensaje de emergencia',
+    emergencyMessageEditHelper:
+      'Edita el mensaje que recibirán tus contactos durante una emergencia.',
     emergencyMessageHelper:
-      'Este mensaje se envía por correo electrónico y mensaje de texto a todos los contactos cuando se activa una emergencia.',
+      'Este mensaje se enviará por SMS y correo electrónico a tus contactos de emergencia cuando se active tu flujo de emergencia.',
     saveChanges: 'Guardar cambios',
     sendTestMessage: 'Enviar mensaje de prueba',
     addNewEdit: {
@@ -309,9 +311,10 @@ const translations: ITranslation = {
       lastName: 'Apellido',
       email: 'Correo electrónico',
       phoneNumber: 'Número de teléfono',
-      firstNamePlaceholder: 'p. ej. Petar',
-      lastNamePlaceholder: 'p. ej. Petrov',
-      emailPlaceholder: 'p. ej. mail@gmail.com',
+      firstNamePlaceholder: 'Introduce el nombre',
+      lastNamePlaceholder: 'Introduce el apellido',
+      emailPlaceholder: 'name@example.com',
+      phonePlaceholder: 'Introduce el número de teléfono',
       errorDuringUpdate:
         'Hay un problema con los datos del formulario. Por favor, compruebe que los datos son correctos y vuelva a guardarlos',
       activateContact: 'El contacto se ha activado correctamente',
@@ -352,8 +355,10 @@ const translations: ITranslation = {
     documents: {
       title: 'Documentos',
       topInfo:
-        'Se envían automáticamente a todos los contactos cuando se activa una emergencia.',
+        'Sube documentos importantes que tus contactos de emergencia puedan necesitar. Formatos aceptados: PDF, DOC, DOCX, JPG o PNG.',
       tapToUpload: 'Toca para subir',
+      formatsAction: 'PDF, DOC, DOCX, JPG o PNG · Toca para subir',
+      uploadedFile: 'Subido · {{fileName}}',
       addDocument: 'Añadir documento',
       headers: {
         directive: 'Directiva médica',

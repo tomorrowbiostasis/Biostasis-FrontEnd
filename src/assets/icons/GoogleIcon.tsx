@@ -10,7 +10,7 @@ const GoogleIcon: FC<IIconProps> = ({size = 20}) => {
     <Svg
       width={size}
       height={size}
-      viewBox="-3 0 262 262"
+      viewBox="-4 -4 264 270"
       preserveAspectRatio="xMidYMid"
     >
       <Path

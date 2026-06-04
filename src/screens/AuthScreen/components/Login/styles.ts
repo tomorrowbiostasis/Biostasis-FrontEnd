@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors} from '~/theme/tokens';
+import {semanticColors, typography} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,16 +9,16 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   forgotPasswordContainer: {
-    minHeight: 68,
+    minHeight: 44,
     alignItems: 'flex-end',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
+    marginTop: 12,
   },
   forgotPasswordButton: {
     paddingVertical: 8,
   },
   forgotPasswordText: {
-    fontFamily: 'DMSans-Medium',
-    fontSize: 14,
+    ...typography.rowDescriptionMedium,
     color: semanticColors.primaryAccent,
   },
   submitButton: {

@@ -1,15 +1,17 @@
 import React, {useCallback, useState} from 'react';
 import {Platform, Pressable, Text, View} from 'react-native';
-import {Button, Spinner} from 'native-base';
+import {Spinner} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/native';
-import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 
 import StepIndicator from '~/components/StepIndicator';
 import FormInput from '~/components/FormInput';
+import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
+import {ArrowLeftIcon} from '~/assets/icons/AppIcons';
+import {BioLogInSignUpMapPin} from '~/assets/icons/BiostasisIcons';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {updateUser} from '~/redux/user/thunks';
@@ -68,15 +70,35 @@ export const AddressScreen = () => {
   };
 
   const handleCurrentLocation = useCallback(
-    async (setFieldValue: (field: string, value: unknown) => void) => {
+    async (
+      applyAddress: (address: AddressFormFields) => Promise<void> | void,
+    ) => {
       try {
         setIsLoadingLocation(true);
         const address = await reverseGeoCode();
         if (address) {
-          setFieldValue('street', address.road || '');
-          setFieldValue('city', address.city || '');
-          setFieldValue('country', address.country || '');
-          setFieldValue('zipCode', address.postcode || '');
+          await applyAddress({
+            street:
+              [
+                address.road,
+                address.house_number,
+              ]
+                .filter(Boolean)
+                .join(' ')
+                .trim() ||
+              address.pedestrian ||
+              '',
+            city:
+              address.city ||
+              address.town ||
+              address.village ||
+              address.municipality ||
+              address.county ||
+              address.state ||
+              '',
+            country: address.country || '',
+            zipCode: address.postcode || '',
+          });
         }
       } catch (error) {
         console.error(error);
@@ -131,7 +153,9 @@ export const AddressScreen = () => {
             handleChange,
             handleBlur,
             handleSubmit,
-            setFieldValue,
+            setTouched,
+            setValues,
+            validateForm,
             values,
             touched,
             errors,
@@ -150,18 +174,28 @@ export const AddressScreen = () => {
             return (
               <>
                 <Pressable
-                  onPress={() => handleCurrentLocation(setFieldValue)}
+                  onPress={() =>
+                    handleCurrentLocation(async nextAddress => {
+                      setValues(nextAddress, false);
+                      setTouched(
+                        {
+                          street: true,
+                          city: true,
+                          country: true,
+                          zipCode: true,
+                        },
+                        false,
+                      );
+                      await validateForm(nextAddress);
+                    })
+                  }
                   style={styles.locationPill}
                   disabled={isLoadingLocation}>
                   {isLoadingLocation ? (
                     <Spinner color={semanticColors.info} size="small" />
                   ) : (
                     <>
-                      <IconMaterialCommunityIcons
-                        name="map-marker-outline"
-                        size={20}
-                        color={semanticColors.info}
-                      />
+                      <BioLogInSignUpMapPin size={20} />
                       <Text style={styles.locationPillText}>
                         {t('userAddress.currentLocation')}
                       </Text>
@@ -228,16 +262,17 @@ export const AddressScreen = () => {
                     hitSlop={10}
                     accessibilityRole="button"
                     accessibilityLabel="Back">
-                    <Text style={styles.backGlyph}>{'‹'}</Text>
+                    <ArrowLeftIcon size={18} color={semanticColors.primary} />
                   </Pressable>
-                  <Button
-                    variant={'figmaPrimary' as never}
+                  <AnimatedSubmitButton
+                    variant={'figmaFormPrimary' as never}
+                    style={styles.submitButton}
                     flex={1}
-                    isDisabled={!canSubmit}
+                    disabled={!canSubmit}
                     isLoading={pending}
                     onPress={() => handleSubmit()}>
                     {`${t('signUp.common.next')}  →`}
-                  </Button>
+                  </AnimatedSubmitButton>
                 </View>
               </>
             );

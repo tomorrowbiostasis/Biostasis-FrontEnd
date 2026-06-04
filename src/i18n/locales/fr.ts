@@ -298,8 +298,10 @@ const translations: ITranslation = {
     yourContacts: 'Vos contacts',
     includeWithMessage: 'Inclure dans le message',
     emergencyMessageLabel: "Message d'urgence",
+    emergencyMessageEditHelper:
+      "Modifiez le message que vos contacts recevront pendant une urgence.",
     emergencyMessageHelper:
-      "Ce message est envoyé par e-mail et SMS à tous les contacts lorsqu'une urgence se déclenche.",
+      "Ce message sera envoyé par SMS et e-mail à vos contacts d'urgence lorsque votre parcours d'urgence sera déclenché.",
     saveChanges: 'Enregistrer les modifications',
     sendTestMessage: 'Envoyer un message de test',
     addNewEdit: {
@@ -308,9 +310,10 @@ const translations: ITranslation = {
       lastName: 'Nom de famille',
       email: 'E-mail',
       phoneNumber: 'Numéro de téléphone',
-      firstNamePlaceholder: 'p. ex. Petar',
-      lastNamePlaceholder: 'p. ex. Petrov',
-      emailPlaceholder: 'p. ex. mail@gmail.com',
+      firstNamePlaceholder: 'Saisir le prénom',
+      lastNamePlaceholder: 'Saisir le nom',
+      emailPlaceholder: 'name@example.com',
+      phonePlaceholder: 'Saisir le numéro de téléphone',
       errorDuringUpdate:
         "Il y a un problème avec les données du formulaire. Veuillez vérifier l'exactitude des données et les enregistrer à nouveau",
       activateContact: 'Le contact a été activé avec succès',
@@ -351,8 +354,10 @@ const translations: ITranslation = {
     documents: {
       title: 'Documents',
       topInfo:
-        "Envoyés automatiquement à tous les contacts en cas de déclenchement d'une urgence.",
+        "Importez les documents importants dont vos contacts d'urgence peuvent avoir besoin. Formats acceptés : PDF, DOC, DOCX, JPG ou PNG.",
       tapToUpload: 'Appuyez pour téléverser',
+      formatsAction: 'PDF, DOC, DOCX, JPG ou PNG · Appuyez pour téléverser',
+      uploadedFile: 'Importé · {{fileName}}',
       addDocument: 'Ajouter un document',
       headers: {
         directive: 'Directive médicale',

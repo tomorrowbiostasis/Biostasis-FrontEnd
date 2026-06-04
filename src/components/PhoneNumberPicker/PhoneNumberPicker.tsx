@@ -14,6 +14,9 @@ import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import styles from './styles';
 import CheckMarkIcon from '~/assets/icons/CheckMarkIcon';
 
+const DEFAULT_PHONE_COUNTRY = 'de';
+const DEFAULT_PHONE_PREFIX = 49;
+
 export interface IPhoneNumber {
   phone: string;
   prefix: number;
@@ -24,6 +27,7 @@ interface IPhoneNumberPickerProps {
   initialPhone?: string;
   initialPrefix?: number;
   label?: string;
+  placeholder?: string;
   variant?: 'default' | 'figma';
   onChangePhoneNumber?: (obj: IPhoneNumber) => void;
   onCheckIfValid?: (isValid: boolean) => void;
@@ -35,6 +39,7 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
   initialPhone,
   initialPrefix,
   label,
+  placeholder,
   variant = 'default',
   onChangePhoneNumber,
   onCheckIfValid,
@@ -81,12 +86,14 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
     if (initialPrefix && initialPhone) {
       return `+${initialPrefix}${initialPhone}`;
     }
-    return '';
+    return `+${DEFAULT_PHONE_PREFIX}`;
   }, [initialPhone, initialPrefix]);
 
   const inputStyles = useMemo(() => {
     if (isFigma) {
-      if (isTouched && !isNumberValid) return styles.figmaInvalid;
+      if (isTouched && !isNumberValid) {
+        return styles.figmaInvalid;
+      }
       return null;
     }
     if (isTouched || (initialPhone && !isTouched)) {
@@ -102,7 +109,7 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
   const isCurrentNumberValid =
     (initialPhone && !isTouched) || (isTouched && isNumberValid);
   const focusInput = () => {
-    if(phoneNumberPickerRef.current){
+    if (phoneNumberPickerRef.current) {
       return phoneNumberPickerRef.current.focus();
     }
   };
@@ -120,7 +127,7 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
           <PhoneInput
             style={isFigma ? styles.figmaInput : styles.input}
             ref={phoneNumberPickerRef}
-            initialCountry={'de'}
+            initialCountry={DEFAULT_PHONE_COUNTRY}
             // @ts-ignore
             initialValue={initialPhoneNumber}
             onChangePhoneNumber={handlePhoneNumberChange}
@@ -136,6 +143,7 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
             textProps={{
               onBlur: handleInputBlur,
               keyboardType: 'number-pad',
+              placeholder,
               onSubmitEditing: () => {
                 if (isNumberValid) {
                   onSubmit?.();

@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect} from 'react';
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  InteractionManager,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
@@ -13,6 +20,7 @@ import {selectEmergencyContacts} from '~/redux/emergencyContacts/selectors';
 import {IEmergencyContactResponse} from '~/redux/emergencyContacts/emergencyContacts.slice';
 import {Screens} from '~/models/Navigation.model';
 import {CirclePlusIcon} from '~/assets/icons/AppIcons';
+import {typography} from '~/theme/tokens';
 import SectionHeader from '../SectionHeader';
 import EmergencyContact from './components/EmergencyContact';
 
@@ -23,7 +31,11 @@ const EmergencyContactsList = () => {
   const emergencyContacts = useAppSelector(selectEmergencyContacts);
 
   useEffect(() => {
-    dispatch(getEmergencyContacts());
+    const task = InteractionManager.runAfterInteractions(() => {
+      dispatch(getEmergencyContacts());
+    });
+
+    return () => task.cancel();
   }, [dispatch]);
 
   const handleAddContactPress = useCallback(() => {
@@ -115,8 +127,7 @@ const styles = StyleSheet.create({
     borderColor: '#C8D5E2',
   },
   addLabel: {
-    fontFamily: 'DMSans-Medium',
-    fontSize: 16,
+    ...typography.buttonLabel,
     color: '#3D5470',
   },
 });

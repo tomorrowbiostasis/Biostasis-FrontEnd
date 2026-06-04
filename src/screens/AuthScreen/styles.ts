@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors, spacing} from '~/theme/tokens';
+import {layout, semanticColors, spacing} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   root: {
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: spacing.xl,
-    paddingHorizontal: 34,
+    paddingHorizontal: layout.screenGutter,
     paddingBottom: spacing['3xl'],
   },
   segmentedControl: {

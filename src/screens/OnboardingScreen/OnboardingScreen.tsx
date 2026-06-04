@@ -98,7 +98,7 @@ const OnboardingScreen: FC = () => {
 
         <View style={styles.footer}>
           <Button
-            variant={'figmaPrimary' as never}
+            variant={'figmaFormPrimary' as never}
             onPress={handleCTA}>
             {isLastSlide
               ? t('onboarding.getStarted')

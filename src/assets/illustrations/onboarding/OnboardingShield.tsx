@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
-import {Image} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {BioProfileFillShield} from '~/assets/icons/BiostasisIcons';
 
 interface OnboardingShieldProps {
   width?: number;
@@ -10,13 +11,20 @@ const OnboardingShield: FC<OnboardingShieldProps> = ({
   width = 140,
   height = 127,
 }) => {
+  const size = Math.min(width, height);
+
   return (
-    <Image
-      source={require('./shield.png')}
-      style={{width, height}}
-      resizeMode="contain"
-    />
+    <View style={[styles.container, {width, height}]}>
+      <BioProfileFillShield size={size} />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default OnboardingShield;

@@ -57,12 +57,12 @@ const WelcomeScreen: FC = () => {
 
       <View style={styles.actions}>
         <Button
-          variant={'figmaPrimary' as never}
+          variant={'figmaFormPrimary' as never}
           onPress={handleCreateAccount}>
           {t('welcome.createAccount')}
         </Button>
         <Button
-          variant={'figmaSecondary' as never}
+          variant={'figmaFormSecondary' as never}
           borderColor={'rgba(11, 31, 58, 0.18)'}
           onPress={handleLogin}>
           {t('welcome.logIn')}

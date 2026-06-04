@@ -9,6 +9,7 @@ import type {TextStyle} from 'react-native';
 export const typography: Record<
   | 'display'
   | 'displayLg'
+  | 'authSubtitle'
   | 'bodyLg'
   | 'body'
   | 'bodyMedium'
@@ -18,6 +19,15 @@ export const typography: Record<
   | 'captionSemibold'
   | 'captionBold'
   | 'captionUnderline'
+  | 'sectionLabel'
+  | 'sectionDescription'
+  | 'rowTitle'
+  | 'rowDescription'
+  | 'rowDescriptionMedium'
+  | 'input'
+  | 'counter'
+  | 'buttonLabel'
+  | 'buttonLabelCompact'
   | 'mono',
   TextStyle
 > = {
@@ -31,6 +41,12 @@ export const typography: Record<
     fontSize: 32,
     lineHeight: 40,
   },
+  authSubtitle: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 16,
+    lineHeight: 22,
+    letterSpacing: 0,
+  },
   bodyLg: {
     fontFamily: 'DMSans-Bold',
     fontSize: 18,
@@ -39,44 +55,44 @@ export const typography: Record<
   },
   body: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 13,
-    lineHeight: 19.5,
+    fontSize: 15,
+    lineHeight: 20,
     letterSpacing: 0,
   },
   bodyMedium: {
     fontFamily: 'DMSans-Medium',
-    fontSize: 13,
-    lineHeight: 19.5,
+    fontSize: 15,
+    lineHeight: 20,
     letterSpacing: 0,
   },
   bodySemibold: {
     fontFamily: 'DMSans-SemiBold',
-    fontSize: 13,
-    lineHeight: 19.5,
+    fontSize: 15,
+    lineHeight: 20,
     letterSpacing: 0,
   },
   caption: {
     fontFamily: 'DMSans-Regular',
-    fontSize: 11,
-    lineHeight: 16.5,
+    fontSize: 12,
+    lineHeight: 17,
     letterSpacing: 0,
   },
   captionMedium: {
     fontFamily: 'DMSans-Medium',
-    fontSize: 11,
-    lineHeight: 16.5,
+    fontSize: 12,
+    lineHeight: 17,
     letterSpacing: 0,
   },
   captionSemibold: {
     fontFamily: 'DMSans-SemiBold',
-    fontSize: 11,
-    lineHeight: 16.5,
+    fontSize: 12,
+    lineHeight: 17,
     letterSpacing: 0.88,
   },
   captionBold: {
     fontFamily: 'DMSans-Bold',
-    fontSize: 11,
-    lineHeight: 16.5,
+    fontSize: 12,
+    lineHeight: 17,
     letterSpacing: 0.88,
   },
   captionUnderline: {
@@ -85,6 +101,61 @@ export const typography: Record<
     lineHeight: 15.4,
     letterSpacing: 0,
     textDecorationLine: 'underline',
+  },
+  sectionLabel: {
+    fontFamily: 'DMSans-Bold',
+    fontSize: 13,
+    lineHeight: 17,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
+  },
+  sectionDescription: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 15,
+    lineHeight: 20,
+    letterSpacing: 0,
+  },
+  rowTitle: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 15,
+    lineHeight: 20,
+    letterSpacing: 0,
+  },
+  rowDescription: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    lineHeight: 19,
+    letterSpacing: 0,
+  },
+  rowDescriptionMedium: {
+    fontFamily: 'DMSans-Medium',
+    fontSize: 14,
+    lineHeight: 19,
+    letterSpacing: 0,
+  },
+  input: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 16,
+    lineHeight: 23,
+    letterSpacing: 0,
+  },
+  counter: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 13,
+    lineHeight: 18,
+    letterSpacing: 0,
+  },
+  buttonLabel: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 16,
+    lineHeight: 20,
+    letterSpacing: 0,
+  },
+  buttonLabelCompact: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 15,
+    lineHeight: 19,
+    letterSpacing: 0,
   },
   mono: {
     fontFamily: 'Courier New',

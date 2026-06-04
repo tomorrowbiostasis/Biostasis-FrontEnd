@@ -1,27 +1,26 @@
-import {StackNavigationOptions} from '@react-navigation/stack';
+import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import LogoutTrigger from '~/components/LogoutTrigger';
 import colors from './colors';
+import {semanticColors} from './tokens';
 
-export const headerStyle: StackNavigationOptions = {
+export const headerStyle: NativeStackNavigationOptions = {
   headerShown: true,
   headerTitle: '',
   headerStyle: {
     backgroundColor: colors.gray[50],
-    elevation: 0,
-    shadowOpacity: 0,
-    height: 100,
+  },
+  headerShadowVisible: false,
+};
+
+export const homeScreenOptions: NativeStackNavigationOptions = {
+  headerShown: false,
+  freezeOnBlur: true,
+  contentStyle: {
+    backgroundColor: semanticColors.primary,
   },
 };
 
-export const homeScreenOptions: StackNavigationOptions = {
-  headerShown: false,
-};
-
-export const logoutScreenOptions: StackNavigationOptions = {
+export const logoutScreenOptions: NativeStackNavigationOptions = {
   headerLeft: LogoutTrigger,
   ...headerStyle,
-  headerLeftContainerStyle: {
-    position: 'absolute',
-    padding: 20,
-  },
 };

@@ -1,16 +1,16 @@
 import React, {useCallback, useState} from 'react';
 import {Platform, Pressable, Text, View} from 'react-native';
-import {Button} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/native';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Yup from 'yup';
 
 import StepIndicator from '~/components/StepIndicator';
+import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
+import {ArrowLeftIcon} from '~/assets/icons/AppIcons';
 import {
   IPhoneNumber,
   PhoneNumberPicker,
@@ -22,6 +22,7 @@ import {updateUser} from '~/redux/user/thunks';
 import {userLoading} from '~/redux/user/selectors';
 import {Screens} from '~/models/Navigation.model';
 import {semanticColors} from '~/theme/tokens';
+import {BioLogInSignUpCalendarDots} from '~/assets/icons/BiostasisIcons';
 
 import styles from './styles';
 
@@ -51,13 +52,19 @@ export const PhoneNumberScreen = () => {
         dateOfBirth: Yup.string()
           .required(t('validation.fieldRequired'))
           .test('dob-format', t('userDateOfBirth.invalidDate'), value => {
-            if (!value) return false;
+            if (!value) {
+              return false;
+            }
             return dayjs(value, DOB_FORMAT, true).isValid();
           })
           .test('dob-age', t('userDateOfBirth.invalidUserAge'), value => {
-            if (!value) return false;
+            if (!value) {
+              return false;
+            }
             const parsed = dayjs(value, DOB_FORMAT, true);
-            if (!parsed.isValid()) return false;
+            if (!parsed.isValid()) {
+              return false;
+            }
             return dayjs().diff(parsed, 'year') >= MIN_AGE;
           }),
       }),
@@ -72,7 +79,9 @@ export const PhoneNumberScreen = () => {
 
   const handleContinuePress = useCallback(
     (values: DOBFormFields) => {
-      if (!phoneData) return;
+      if (!phoneData) {
+        return;
+      }
       dispatch(
         updateUser({
           phone: phoneData.phone,
@@ -165,11 +174,7 @@ export const PhoneNumberScreen = () => {
                       {values.dateOfBirth ||
                         t('userDateOfBirth.placeholder')}
                     </Text>
-                    <IconMaterialCommunityIcons
-                      name="calendar-blank-outline"
-                      size={22}
-                      color={semanticColors.info}
-                    />
+                    <BioLogInSignUpCalendarDots size={22} />
                   </Pressable>
                   {dobError ? (
                     <Text style={styles.dobErrorText}>{dobError}</Text>
@@ -203,16 +208,17 @@ export const PhoneNumberScreen = () => {
                     hitSlop={10}
                     accessibilityRole="button"
                     accessibilityLabel="Back">
-                    <Text style={styles.backGlyph}>{'‹'}</Text>
+                    <ArrowLeftIcon size={18} color={semanticColors.primary} />
                   </Pressable>
-                  <Button
-                    variant={'figmaPrimary' as never}
+                  <AnimatedSubmitButton
+                    variant={'figmaFormPrimary' as never}
+                    style={styles.submitButton}
                     flex={1}
-                    isDisabled={!canSubmit}
+                    disabled={!canSubmit}
                     isLoading={pending}
                     onPress={() => handleSubmit()}>
                     {`${t('signUp.common.next')}  →`}
-                  </Button>
+                  </AnimatedSubmitButton>
                 </View>
               </>
             );

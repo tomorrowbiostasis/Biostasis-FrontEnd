@@ -46,10 +46,12 @@ const rejectedSignIn = (
 const pendingSignUp = (state: IAuthState) => {
   state.signUp.pending = true;
   state.signUp.message = undefined;
+  state.signUp.formFieldError = undefined;
 };
 
 const fulfilledSignUp = (state: IAuthState) => {
   state.signUp.pending = false;
+  state.signUp.formFieldError = undefined;
   state.signUp.message = {
     success: true,
     messageKey: 'auth.accountWasCreated',
@@ -66,6 +68,7 @@ const rejectedSignUp = (
       ToastService.error(i18n.t('bioCheck.messages.networkError'));
       break;
     case 'UsernameExistsException':
+    case 'AliasExistsException':
       state.signUp.formFieldError = {
         key: 'email',
         messageKey: 'validation.email.accountAlreadyExist',
@@ -120,12 +123,28 @@ const fulfilledForgotPassword = (state: IAuthState) => {
   };
 };
 
-const rejectedForgotPassword = (state: IAuthState) => {
+const rejectedForgotPassword = (
+  state: IAuthState,
+  {error}: {error: SerializedError},
+) => {
   state.forgotPassword.pending = false;
-  state.forgotPassword.emailMessage = {
-    success: false,
-    messageKey: 'defaultError',
-  };
+  switch (error.code) {
+    case 'NetworkError':
+      ToastService.error(i18n.t('common.errorNetwork'));
+      break;
+    case 'UserNotFoundException':
+    case 'InvalidParameterException':
+      state.forgotPassword.emailMessage = {
+        success: false,
+        messageKey: 'forgotPassword.warning',
+      };
+      break;
+    default:
+      state.forgotPassword.emailMessage = {
+        success: false,
+        messageKey: 'defaultError',
+      };
+  }
 };
 
 const pendingForgotPasswordSetNewPassword = (state: IAuthState) => {

@@ -1,36 +1,44 @@
 import React, {FC, useCallback} from 'react';
 import {Pressable, Text, View} from 'react-native';
-import {Button} from 'native-base';
 import {Formik} from 'formik';
 import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import FormInput from '~/components/FormInput';
 import Alert from '~/components/Alert';
+import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-import {isIOS, updateDataCollectionStatus} from '~/utils';
+import {getVisibleFormError, isIOS, updateDataCollectionStatus} from '~/utils';
 import {useSignInValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {signIn} from '~/redux/auth/thunks';
 import {getSignInParams} from '~/redux/auth/selectors';
-import {Screens} from '~/models/Navigation.model';
+import {AuthStackNavigatorParamList, Screens} from '~/models/Navigation.model';
 
 import styles from './styles';
 
-type LoginFormFields = {
+export type LoginFormFields = {
   email: string;
   password: string;
 };
 
-const Login: FC = () => {
+type LoginProps = {
+  initialValues: LoginFormFields;
+  onValuesChange: (values: LoginFormFields) => void;
+};
+
+const Login: FC<LoginProps> = ({initialValues, onValuesChange}) => {
   const {t} = useAppTranslation();
   const dispatch = useAppDispatch();
   const signInValidationSchema = useSignInValidationSchema();
   const {message, pending} = useAppSelector(getSignInParams);
-  const {navigate} = useNavigation();
+  const {navigate} =
+    useNavigation<
+      NativeStackNavigationProp<AuthStackNavigatorParamList, Screens.Auth>
+    >();
 
-  const onForgotPasswordPress = useCallback(() => {
-    // @ts-ignore — Screens enum lookup
-    navigate(Screens.ForgotPassword);
+  const onForgotPasswordPress = useCallback((email?: string) => {
+    navigate(Screens.ForgotPassword, {email});
   }, [navigate]);
 
   const onSubmit = useCallback(
@@ -50,9 +58,10 @@ const Login: FC = () => {
         </View>
       )}
       <Formik<LoginFormFields>
-        initialValues={{email: '', password: ''}}
+        initialValues={initialValues}
         onSubmit={onSubmit}
         validationSchema={signInValidationSchema}
+        validateOnMount
         validateOnChange>
         {({
           handleChange,
@@ -62,38 +71,60 @@ const Login: FC = () => {
           touched,
           errors,
           isValid,
-          dirty,
+          submitCount,
         }) => {
-          const canSubmit = isValid && dirty && !pending;
+          const canSubmit =
+            isValid &&
+            values.email.trim().length > 0 &&
+            values.password.length > 0 &&
+            !pending;
+          const handleFieldChange =
+            (field: keyof LoginFormFields) => (value: string) => {
+              handleChange(field)(value);
+              onValuesChange({...values, [field]: value});
+            };
+
           return (
             <>
               <FormInput
                 label={t('authScreen.emailLabel')}
                 type="email"
                 placeholder={t('authScreen.emailPlaceholder')}
-                onChangeText={handleChange('email')}
+                onChangeText={handleFieldChange('email')}
                 onBlur={handleBlur('email')}
                 value={values.email}
-                errorMessage={
-                  errors.email && touched.email ? errors.email : undefined
-                }
+                errorMessage={getVisibleFormError({
+                  error: errors.email,
+                  submitCount,
+                  touched: touched.email,
+                  value: values.email,
+                })}
               />
               <FormInput
                 label={t('authScreen.passwordLabel')}
                 type="password"
                 placeholder={t('authScreen.signIn.passwordPlaceholder')}
-                onChangeText={handleChange('password')}
+                onChangeText={handleFieldChange('password')}
                 onBlur={handleBlur('password')}
                 value={values.password}
-                errorMessage={
-                  errors.password && touched.password
-                    ? errors.password
-                    : undefined
-                }
+                errorMessage={getVisibleFormError({
+                  error: errors.password,
+                  submitCount,
+                  touched: touched.password,
+                  value: values.password,
+                })}
               />
+              <AnimatedSubmitButton
+                variant={'figmaFormPrimary' as never}
+                disabled={!canSubmit}
+                isLoading={pending}
+                onPress={() => handleSubmit()}
+                style={styles.submitButton}>
+                {t('authScreen.signIn.cta')}
+              </AnimatedSubmitButton>
               <View style={styles.forgotPasswordContainer}>
                 <Pressable
-                  onPress={onForgotPasswordPress}
+                  onPress={() => onForgotPasswordPress(values.email)}
                   style={styles.forgotPasswordButton}
                   hitSlop={8}>
                   <Text style={styles.forgotPasswordText}>
@@ -101,14 +132,6 @@ const Login: FC = () => {
                   </Text>
                 </Pressable>
               </View>
-              <Button
-                variant={'figmaPrimary' as never}
-                isDisabled={!canSubmit}
-                isLoading={pending}
-                onPress={() => handleSubmit()}
-                style={styles.submitButton}>
-                {t('authScreen.signIn.cta')}
-              </Button>
             </>
           );
         }}

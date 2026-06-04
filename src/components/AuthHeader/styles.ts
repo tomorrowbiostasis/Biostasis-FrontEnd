@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors, spacing} from '~/theme/tokens';
+import {layout, semanticColors, spacing, typography} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 26,
   },
   inner: {
-    paddingHorizontal: 34,
+    paddingHorizontal: layout.screenGutter,
     paddingTop: spacing.lg,
     paddingBottom: spacing.lg,
   },
@@ -32,12 +32,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  backGlyph: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 18,
-    color: '#BFC2C5',
-    lineHeight: 20,
-  },
   eyebrow: {
     fontFamily: 'DMSans-Bold',
     fontSize: 13,
@@ -46,19 +40,15 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   title: {
-    fontFamily: 'DMSerifDisplay-Regular',
-    fontSize: 32,
-    lineHeight: 40,
+    ...typography.displayLg,
     color: '#F1F3F6',
     marginTop: spacing.xs,
   },
   subtitle: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 16,
-    lineHeight: 24,
+    ...typography.authSubtitle,
     color: '#F1F3F6',
     marginTop: 6,
-    minHeight: 48,
+    minHeight: 44,
   },
 });
 

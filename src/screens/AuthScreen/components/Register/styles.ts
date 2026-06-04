@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors} from '~/theme/tokens';
+import {semanticColors, typography} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,9 +17,7 @@ const styles = StyleSheet.create({
   },
   termsText: {
     flex: 1,
-    fontFamily: 'DMSans-Regular',
-    fontSize: 14,
-    lineHeight: 22,
+    ...typography.rowDescription,
     color: '#5A6A7E',
   },
   termsLink: {

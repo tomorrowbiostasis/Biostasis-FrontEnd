@@ -1,6 +1,5 @@
-/* eslint-disable no-shadow */
 import {NavigatorScreenParams, RouteProp} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 declare global {
   namespace ReactNavigation {
@@ -19,10 +18,21 @@ export type RootStackParamList = {
 export type AuthStackNavigatorParamList = {
   Onboarding: undefined;
   Welcome: undefined;
-  Auth: undefined;
+  Auth:
+    | {
+        action?: string;
+        code?: string;
+        email?: string;
+      }
+    | undefined;
   AuthSample: undefined;
-  ForgotPassword: undefined;
-  NewPassword: undefined;
+  ForgotPassword: {email?: string} | undefined;
+  NewPassword:
+    | {
+        code?: string;
+        email?: string;
+      }
+    | undefined;
 };
 
 export type SignUpStackNavigatorParamList = {
@@ -35,12 +45,16 @@ export type SignUpStackNavigatorParamList = {
 
 export type MainStackNavigatorParamList = {
   Tabs: undefined;
-  Home: undefined;
+  Home:
+    | {
+        emergencySetupPromptId?: number;
+        emergencySetupPromptReason?: 'contacts' | 'monitoring';
+      }
+    | undefined;
   EmergencyConfirmation: undefined;
   CurrentHealthLog: undefined;
   HistoryLogs: undefined;
   EmergencyContactList: undefined;
-  EmergencyContactExplanations: undefined;
   AddNewEmergencyContact: undefined;
   AutomatedEmergencySettings: undefined;
   EmergencyContactSettings: undefined;
@@ -79,7 +93,7 @@ export type NavigationRouteParamList = AuthStackNavigatorParamList &
  */
 export type NavigationProps<T extends NavigationRouteName> = {
   route: RouteProp<NavigationRouteParamList, T>;
-  navigation: StackNavigationProp<NavigationRouteParamList, T>;
+  navigation: NativeStackNavigationProp<NavigationRouteParamList, T>;
 };
 
 export type ScreensNavigationParamsList = {
@@ -132,7 +146,6 @@ export enum Screens {
   CurrentHealthLog = 'CurrentHealthLog',
   HistoryLogs = 'HistoryLogs',
   AddNewEmergencyContact = 'EmergencyContact',
-  EmergencyContactExplanations = 'EmergencyContactExplanations',
   EmergencyContactSettings = 'EmergencyContactSettings',
   SpecificTimePaused = 'SpecificTimePaused',
   AddTimeBlock = 'AddTimeBlock',
