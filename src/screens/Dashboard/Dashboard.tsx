@@ -45,7 +45,7 @@ import {
   updateUser,
 } from '~/redux/user/thunks';
 import {requestLatestHealthData, getHealthDataEmitter, isIOS} from '~/utils';
-import {checkForBioData} from '~/services/BioCheck.service';
+import {recentBioData} from '~/services/GoogleFit.service';
 import {IUser} from '~/redux/user/user.slice';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
 import {setHealthData, setAllHealthData} from '~/redux/health/health.slice';
@@ -211,10 +211,12 @@ const Dashboard = () => {
       }
       // iOS pulls fresh HealthKit data through the native module (results
       // arrive via the HealthDataEvent emitter). Android has no such module —
-      // requestLatestHealthData() is a no-op there — so run the Google Fit
-      // bio-check path directly, which fetches Fit samples and dispatches them
-      // into state.health for display.
-      const refresh = isIOS ? requestLatestHealthData() : checkForBioData();
+      // requestLatestHealthData() is a no-op there — so fetch Google Fit
+      // samples directly. recentBioData() dispatches the values into
+      // state.health for display WITHOUT running emergency escalation (that
+      // stays owned by the background bio check), so a foreground refresh on an
+      // empty window can't trip the "no data" health-condition flow.
+      const refresh = isIOS ? requestLatestHealthData() : recentBioData();
       refresh.catch(error => {
         console.log('Could not refresh latest health data', error);
       });

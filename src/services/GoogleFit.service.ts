@@ -4,7 +4,10 @@ import GoogleFit, {BucketUnit, Scopes} from 'react-native-google-fit';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import {getUserPersistedSettings} from '~/services/AsyncStorage.service/helpers';
+import {store} from '~/redux/store';
+import {setHealthData} from '~/redux/health/health.slice';
 import {IBioData, IGoogleFitConfig} from './GoogleFit.types';
+import {IHealthData} from './BioCheck.types';
 
 // Google Fit step queries require the ACTIVITY_RECOGNITION runtime permission on
 // Android 10+ (API 29). Without it, getDailyStepCountSamples fails with
@@ -102,6 +105,34 @@ export const recentBioData = async () => {
       }
       if (movementData !== null) {
         bioData.movementData = movementData;
+      }
+
+      // Push the fetched values into the health slice the UI renders from
+      // (Android's analogue of the iOS HealthKit emitter). Only dispatch on a
+      // positive read so an empty window leaves the last displayed value intact.
+      if (
+        bioData.pulseData.value ||
+        bioData.restingPulseData.value ||
+        bioData.movementData.value
+      ) {
+        const toEndDate = (time: IHealthData['time']): number | null => {
+          if (!time) {
+            return null;
+          }
+          const ms = new Date(time).getTime();
+          return Number.isNaN(ms) ? null : ms;
+        };
+        store.dispatch(
+          setHealthData({
+            heartRate: bioData.pulseData.value,
+            restingHeartRate: bioData.restingPulseData.value,
+            steps: bioData.movementData.value,
+            totalSteps: bioData.movementData.value,
+            heartRateEndDate: toEndDate(bioData.pulseData.time),
+            restingHeartRateEndDate: toEndDate(bioData.restingPulseData.time),
+            stepsEndDate: toEndDate(bioData.movementData.time),
+          }),
+        );
       }
 
       return bioData;

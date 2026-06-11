@@ -19,8 +19,6 @@ import {isAirplaneModeOn} from './DeviceSignals.service';
 import {IHealthData} from './BioCheck.types';
 import {recommendationSystem} from './Recommendation.service';
 import {AppState} from 'react-native';
-import {store} from '~/redux/store';
-import {setHealthData} from '~/redux/health/health.slice';
 
 let bioCheckMutex = false;
 
@@ -99,29 +97,8 @@ export const handleBioData = async (recentAndCorrectBioData: IBioData) => {
     const {pulseData, restingPulseData, movementData} =
       recentAndCorrectBioData;
     if (pulseData.value || restingPulseData.value || movementData.value) {
-      // Mirror the iOS HealthKit emitter: on a positive read, push the values
-      // into the health slice the UI renders from. Android's Google Fit path
-      // otherwise never populates state.health, so the dashboard stayed empty
-      // even with a successful fetch. Empty reads don't dispatch (last value
-      // persists), matching the iOS emitter's behaviour.
-      const toEndDate = (time: IHealthData['time']): number | null => {
-        if (!time) {
-          return null;
-        }
-        const ms = new Date(time).getTime();
-        return Number.isNaN(ms) ? null : ms;
-      };
-      store.dispatch(
-        setHealthData({
-          heartRate: pulseData.value,
-          restingHeartRate: restingPulseData.value,
-          steps: movementData.value,
-          totalSteps: movementData.value,
-          heartRateEndDate: toEndDate(pulseData.time),
-          restingHeartRateEndDate: toEndDate(restingPulseData.time),
-          stepsEndDate: toEndDate(movementData.time),
-        }),
-      );
+      // Note: recentBioData() already dispatches the values into the health
+      // slice for display. Here we only run the emergency-side handling.
       await handlePositiveData(pulseData, restingPulseData, movementData);
       await AsyncStorageService.setItem(
         AsyncStorageEnum.HealthTrigger,
