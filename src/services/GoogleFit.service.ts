@@ -1,12 +1,35 @@
 /* eslint-disable no-shadow */
+import {PermissionsAndroid, Platform} from 'react-native';
 import GoogleFit, {BucketUnit, Scopes} from 'react-native-google-fit';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import {getUserPersistedSettings} from '~/services/AsyncStorage.service/helpers';
 import {IBioData, IGoogleFitConfig} from './GoogleFit.types';
 
+// Google Fit step queries require the ACTIVITY_RECOGNITION runtime permission on
+// Android 10+ (API 29). Without it, getDailyStepCountSamples fails with
+// ApiException 5025 and returns no data. Request it before authorizing/querying.
+const ensureActivityRecognitionPermission = async () => {
+  if (Platform.OS !== 'android' || Platform.Version < 29) {
+    return true;
+  }
+  try {
+    const permission =
+      PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION;
+    if (await PermissionsAndroid.check(permission)) {
+      return true;
+    }
+    const result = await PermissionsAndroid.request(permission);
+    return result === PermissionsAndroid.RESULTS.GRANTED;
+  } catch (e) {
+    console.warn('ACTIVITY_RECOGNITION permission request failed', e);
+    return false;
+  }
+};
+
 export const authenticateGoogleFit = async () => {
   try {
+    await ensureActivityRecognitionPermission();
     const authResult = await GoogleFit.authorize({
       scopes: [Scopes.FITNESS_HEART_RATE_READ, Scopes.FITNESS_ACTIVITY_READ],
     });
@@ -38,7 +61,20 @@ export const recentBioData = async () => {
 
     const {positiveInfoPeriod} = await getUserPersistedSettings();
 
+    // The native module's `isAuthorized` flag lives in memory and resets to
+    // false on every app launch / background-fetch JS restart. Relying on the
+    // persisted cache alone means we query Google Fit without an active Fitness
+    // client, which silently returns empty arrays. Re-establish the native
+    // connection here — this is a cheap no-op when the grant already exists.
     if (authResult && positiveInfoPeriod) {
+      const nativeAuthorized = await authenticateGoogleFit();
+      if (!nativeAuthorized) {
+        console.warn(
+          'Google Fit cached as authorized but native re-auth failed',
+        );
+        return null;
+      }
+
       const googleFitConfig: IGoogleFitConfig = {
         startDate: new Date(
           +new Date() - 1000 * 60 * positiveInfoPeriod,

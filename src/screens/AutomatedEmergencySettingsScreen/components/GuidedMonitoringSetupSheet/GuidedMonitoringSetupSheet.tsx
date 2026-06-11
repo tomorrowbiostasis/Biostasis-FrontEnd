@@ -156,9 +156,13 @@ const GuidedMonitoringSetupSheet = ({
     Platform.OS === 'ios'
       ? !!user.pulseBasedTriggerIOSHealthPermissions ||
         !!user.pulseBasedTriggerIOSAppleWatchPaired
-      : isGoogleFitAuthorized ||
-        !!user.pulseBasedTriggerGoogleFitAuthenticated ||
-        !!user.pulseBasedTriggerConnectedToGoogleFit;
+      : // Android: reflect the actual device-level Google Fit grant only.
+        // The server-synced checklist flags (pulseBasedTriggerGoogleFitAuthenticated /
+        // pulseBasedTriggerConnectedToGoogleFit) persist across devices and would
+        // show "Connected" even when this device never completed the native consent,
+        // leaving recentBioData() unable to query Fit. Gating on isGoogleFitAuthorized
+        // keeps the badge honest and lets the tile prompt the native dialog.
+        isGoogleFitAuthorized;
   const healthConnectionReady = healthConnectionGranted || healthAccessConfirmed;
   const healthReady = healthDataReceived || healthConnectionReady;
   const commonPermissionsReady =

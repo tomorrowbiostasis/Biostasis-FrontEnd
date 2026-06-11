@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {Button, Spinner} from 'native-base';
 
 import IconChip from '~/components/IconChip';
-import {semanticColors, spacing} from '~/theme/tokens';
+import {layout, semanticColors, spacing} from '~/theme/tokens';
 import styles from './styles';
 
 export type AlertTone = 'critical' | 'warning' | 'info';
@@ -86,7 +86,10 @@ const AlertScreen: FC<AlertScreenProps> = ({
             isDisabled={primary.isDisabled}
             spinner={<Spinner color="white" size="small" />}
             onPress={primary.onPress}
-            style={styles.actionButton}>
+            height={layout.ctaHeight}
+            minH={layout.ctaHeight}
+            maxH={layout.ctaHeight}
+            py={0}>
             {primary.label}
           </Button>
           {secondary ? (
@@ -106,7 +109,10 @@ const AlertScreen: FC<AlertScreenProps> = ({
                   />
                 }
                 onPress={secondary.onPress}
-                style={styles.actionButton}>
+                height={layout.ctaHeight}
+                minH={layout.ctaHeight}
+                maxH={layout.ctaHeight}
+                py={0}>
                 {secondary.label}
               </Button>
             </View>

@@ -44,7 +44,8 @@ import {
   updateEmergencyButtonSettings,
   updateUser,
 } from '~/redux/user/thunks';
-import {requestLatestHealthData, getHealthDataEmitter} from '~/utils';
+import {requestLatestHealthData, getHealthDataEmitter, isIOS} from '~/utils';
+import {checkForBioData} from '~/services/BioCheck.service';
 import {IUser} from '~/redux/user/user.slice';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
 import {setHealthData, setAllHealthData} from '~/redux/health/health.slice';
@@ -208,7 +209,13 @@ const Dashboard = () => {
         setIsRefreshingHealth(true);
         setRefreshPhase('refreshing');
       }
-      requestLatestHealthData().catch(error => {
+      // iOS pulls fresh HealthKit data through the native module (results
+      // arrive via the HealthDataEvent emitter). Android has no such module —
+      // requestLatestHealthData() is a no-op there — so run the Google Fit
+      // bio-check path directly, which fetches Fit samples and dispatches them
+      // into state.health for display.
+      const refresh = isIOS ? requestLatestHealthData() : checkForBioData();
+      refresh.catch(error => {
         console.log('Could not refresh latest health data', error);
       });
 

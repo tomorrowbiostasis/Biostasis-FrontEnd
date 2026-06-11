@@ -45,9 +45,6 @@ const styles = StyleSheet.create({
   actions: {
     paddingBottom: spacing.lg,
   },
-  actionButton: {
-    height: 50,
-  },
 });
 
 export default styles;
