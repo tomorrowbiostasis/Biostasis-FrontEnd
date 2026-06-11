@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import {
@@ -78,16 +79,34 @@ const NativeBottomSheet = ({
   const hiddenOffset = Math.max(windowHeight, 720);
   const dragY = useSharedValue(visible ? 0 : hiddenOffset);
 
+  // Mirror `rendered` so the visibility effect can read its current value
+  // without taking it as a dependency (which would re-run the effect — and
+  // thus replay the open animation — on a bare re-render).
+  const renderedRef = useRef(rendered);
+  renderedRef.current = rendered;
+
+  // Keep the latest callback identities in refs so that the close animation
+  // pipeline (finishClose -> animateClose -> open/close effect) never depends
+  // on the parent recreating these props. Without this, any parent re-render
+  // that hands us a new onDismiss reference would re-run the open animation
+  // while the sheet is already visible, making it flicker. See plan.
+  const onDismissRef = useRef(onDismiss);
+  const onDismissCompleteRef = useRef(onDismissComplete);
+  useEffect(() => {
+    onDismissRef.current = onDismiss;
+    onDismissCompleteRef.current = onDismissComplete;
+  }, [onDismiss, onDismissComplete]);
+
   const finishClose = useCallback(
     (notifyDismiss: boolean) => {
       setClosing(false);
       setRendered(false);
-      onDismissComplete?.();
+      onDismissCompleteRef.current?.();
       if (notifyDismiss) {
-        onDismiss();
+        onDismissRef.current();
       }
     },
-    [onDismiss, onDismissComplete],
+    [],
   );
 
   const animateClose = useCallback(
@@ -105,6 +124,9 @@ const NativeBottomSheet = ({
     [dragY, finishClose, hiddenOffset],
   );
 
+  // Drive open/close strictly off `visible`. animateClose/dragY/hiddenOffset
+  // are intentionally omitted from the deps: re-running this effect on a bare
+  // re-render must never replay the open animation on an already-open sheet.
   useEffect(() => {
     if (visible) {
       setRendered(true);
@@ -116,10 +138,11 @@ const NativeBottomSheet = ({
       return;
     }
 
-    if (rendered) {
+    if (renderedRef.current) {
       animateClose(false);
     }
-  }, [animateClose, dragY, hiddenOffset, rendered, visible]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
 
   const handleRequestDismiss = useCallback(() => {
     if (visible && !closing) {

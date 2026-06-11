@@ -41,6 +41,19 @@ export const useTriggerEmergency = (): IUseTriggerEmergencyReturn => {
     [dispatch],
   );
 
+  // Marks that this device initiated the emergency. CancelEmergencyPopup uses
+  // this to skip its auto-navigation to HealthConditionError when the backend
+  // flips `isEmergencyTriggerActive` as a result of OUR own send — keeping the
+  // user inside the confirmation sheet's success state and leaving the
+  // automated monitor running. The genuine backend-only escalation path (flag
+  // flips without a local trigger) is unaffected.
+  const markManualTrigger = useCallback(async () => {
+    await AsyncStorageService.setItem(
+      AsyncStorageEnum.ManualEmergencyInProgress,
+      'true',
+    );
+  }, []);
+
   const setupRetries = useCallback(
     async (geoPosition: GeoPosition | null) => {
       await AsyncStorageService.setItem(
@@ -63,13 +76,14 @@ export const useTriggerEmergency = (): IUseTriggerEmergencyReturn => {
   );
 
   const triggerEmergency = useCallback(async (): Promise<boolean> => {
+    await markManualTrigger();
     const geoPosition = await getGeoPosition();
     if (Platform.OS === 'ios') {
       return dispatchEmergency();
     }
     await setupRetries(geoPosition);
     return true;
-  }, [dispatchEmergency, getGeoPosition, setupRetries]);
+  }, [dispatchEmergency, getGeoPosition, markManualTrigger, setupRetries]);
 
   return {triggerEmergency};
 };

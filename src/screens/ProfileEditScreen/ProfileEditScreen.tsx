@@ -242,6 +242,7 @@ const ProfileEditScreen = () => {
               </View>
 
               <AnimatedSubmitButton
+                variant={'figmaFormPrimary' as never}
                 mt={4}
                 disabled={!canSave}
                 isLoading={isSubmitted}

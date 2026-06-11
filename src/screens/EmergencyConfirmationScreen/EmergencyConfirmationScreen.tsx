@@ -23,6 +23,8 @@ import {selectContactsInfo} from '~/redux/emergencyContacts/selectors';
 import {useTriggerEmergency} from '~/hooks/UseTriggerEmergency.hook';
 import {Screens} from '~/models/Navigation.model';
 import {getGoogleStaticMapUrl} from '~/services/Location.service';
+import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
+import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import styles from './styles';
 
 const HOLD_SECONDS = 3;
@@ -63,6 +65,8 @@ const EmergencyConfirmationScreen = ({
 
   const contactsReady = hasContacts && areContactsEnabled;
   const canDismiss = status !== 'holding' && status !== 'sending';
+  const canDismissRef = useRef(canDismiss);
+  canDismissRef.current = canDismiss;
 
   const setStatusValue = useCallback((nextStatus: Status) => {
     statusRef.current = nextStatus;
@@ -91,6 +95,15 @@ const EmergencyConfirmationScreen = ({
     }
     navigation.goBack();
   }, [clearHoldTimers, navigation, onDismiss]);
+
+  // Stable handler for the sheet: a fresh function identity here on every
+  // render (e.g. during the 1s hold tick) would re-trigger the sheet's open
+  // animation and make it flicker. Read the live dismissability from a ref.
+  const requestDismiss = useCallback(() => {
+    if (canDismissRef.current) {
+      dismiss();
+    }
+  }, [dismiss]);
 
   // Fires the real emergency and reflects the result inline.
   const runTrigger = useCallback(async () => {
@@ -130,6 +143,9 @@ const EmergencyConfirmationScreen = ({
     setLocationState('loading');
     setLocationPreviewUrl(null);
     setLocationLabel(null);
+    // Manual emergency flow is over once the sheet is fully gone; clear the
+    // marker so a later genuine backend escalation still routes normally.
+    AsyncStorageService.removeItem(AsyncStorageEnum.ManualEmergencyInProgress);
   }, [clearHoldTimers, holdProgress, setStatusValue]);
 
   const handlePressIn = useCallback(() => {
@@ -359,7 +375,7 @@ const EmergencyConfirmationScreen = ({
   return (
     <NativeBottomSheet
       visible={visible}
-      onDismiss={canDismiss ? dismiss : () => {}}
+      onDismiss={requestDismiss}
       onDismissComplete={handleDismissComplete}
       closeOnBackdropPress={canDismiss}
       swipeToDismiss={canDismiss}

@@ -192,6 +192,7 @@ const ProfileAddMedicalInfoScreen = () => {
             ) : null}
 
             <AnimatedSubmitButton
+              variant={'figmaFormPrimary' as never}
               mt={4}
               disabled={checkIfDisabled(values, errors)}
               isLoading={isSubmitted}

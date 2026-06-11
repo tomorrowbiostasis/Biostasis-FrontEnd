@@ -21,4 +21,5 @@ export enum AsyncStorageEnum {
   TimezoneBaseline = '@TimezoneBaseline',
   TravelDetectedAt = '@TravelDetectedAt',
   ConsecutiveNoDataCount = '@ConsecutiveNoDataCount',
+  ManualEmergencyInProgress = '@ManualEmergencyInProgress',
 }
