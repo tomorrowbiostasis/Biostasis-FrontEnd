@@ -1,6 +1,6 @@
 import React, {FC, ReactNode} from 'react';
 import {StyleProp, View, ViewStyle} from 'react-native';
-import {semanticColors, radius, shadow, spacing} from '~/theme/tokens';
+import {semanticColors, shadow, spacing} from '~/theme/tokens';
 import styles from './styles';
 
 type PanelVariant = 'default' | 'flat' | 'elevated';

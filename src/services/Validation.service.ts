@@ -9,7 +9,7 @@ const DOB_FORMAT = 'DD/MM/YYYY';
 const MIN_AGE = 18;
 
 export const regex = {
-  password: /^[\S]+.*[\S]+$/,
+  password: /^\S+$/,
   email:
     /^(?!.*\.\.)[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i,
   number: /[0-9]/,

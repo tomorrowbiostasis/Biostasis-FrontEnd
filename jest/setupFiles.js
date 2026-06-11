@@ -1,3 +1,4 @@
+/* global jest */
 require('react-native-gesture-handler/jestSetup');
 
 jest.mock('@react-native-community/netinfo', () => ({

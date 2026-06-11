@@ -2,7 +2,7 @@ import React, {FC, useCallback, useMemo} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
-import {semanticColors} from '~/theme/tokens';
+import {semanticColors, typography} from '~/theme/tokens';
 import Toggle from '~/components/Toggle';
 import {PencilIcon, TrashIcon} from '~/assets/icons/AppIcons';
 import {DaysOfTheWeekEnum, parseDaysOfTheWeekEnumToString} from '../../util';
@@ -165,8 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 3.5,
   },
   badgeText: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 12,
+    ...typography.statusTagSmall,
   },
   actions: {
     flexDirection: 'row',

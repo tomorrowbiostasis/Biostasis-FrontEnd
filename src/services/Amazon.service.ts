@@ -58,7 +58,7 @@ export const appleSignIn = () =>
 /** Amplify storage key: skip Hosted UI logout webview on local sign-out */
 const HOSTED_UI_SESSION_KEY = 'amplify-signin-with-hostedUI';
 
-type AuthWithStorage = typeof Auth & {
+type AuthWithStorage = {
   _storage?: {removeItem: (key: string) => unknown};
   _storageSync?: Promise<void>;
 };
@@ -70,7 +70,7 @@ type AuthWithStorage = typeof Auth & {
  */
 export const signOut = async () => {
   try {
-    const auth = Auth as AuthWithStorage;
+    const auth = Auth as unknown as AuthWithStorage;
     if (auth._storageSync) {
       await auth._storageSync.catch(() => undefined);
     }

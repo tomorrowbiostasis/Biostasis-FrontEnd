@@ -20,7 +20,7 @@ export const listenForPushTokenAndUpdate = async () => {
       AsyncStorageEnum.LastSavedPushToken,
     );
     const fcmToken = await messaging().getToken();
-    console.log('+=========>>> Updated FCM ', fcmToken);
+    console.log('Push token refreshed');
     if (currentSavedToken !== fcmToken) {
       API.updateUserToken(fcmToken)
         .then(() => {
@@ -50,11 +50,23 @@ export const checkNotificationPermissions = async () => {
 
     if (settings.authorizationStatus >= AuthorizationStatus.AUTHORIZED) {
       console.log('User granted notification permissions');
-    } else {
-      console.log('User declined notification permissions');
+      return true;
     }
+    console.log('User declined notification permissions');
+    return false;
   } catch (error) {
     console.log(error);
+    return false;
+  }
+};
+
+export const hasNotificationPermission = async () => {
+  try {
+    const settings = await notifee.getNotificationSettings();
+    return settings.authorizationStatus >= AuthorizationStatus.AUTHORIZED;
+  } catch (error) {
+    console.log(error);
+    return false;
   }
 };
 
@@ -79,7 +91,7 @@ export const handleRemoteMessages = async (message: {
   data: any;
   notification?: any;
 }) => {
-  console.log('📩 Remote message received:', message);
+  console.log('Remote push message received', message?.data?.type);
   await logPushEvent({source: 'background', ...message});
   const {data, notification} = message;
   const {type} = data || {};

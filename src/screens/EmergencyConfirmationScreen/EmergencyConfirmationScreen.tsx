@@ -4,17 +4,17 @@ import {
   Animated,
   Easing,
   Image,
-  Linking,
   Pressable,
+  ScrollView,
   Text,
   TouchableOpacity,
   Vibration,
   View,
 } from 'react-native';
 import {StackActions, useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/AntDesign';
 
 import {BioEmergencyContactFillMapPin} from '~/assets/icons/BiostasisIcons';
+import {XIcon} from '~/assets/icons/AppIcons';
 import NativeBottomSheet from '~/components/NativeBottomSheet';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useGeoPosition} from '~/hooks/UseGeoPosition.hook';
@@ -22,7 +22,7 @@ import {useAppSelector} from '~/redux/store/hooks';
 import {selectContactsInfo} from '~/redux/emergencyContacts/selectors';
 import {useTriggerEmergency} from '~/hooks/UseTriggerEmergency.hook';
 import {Screens} from '~/models/Navigation.model';
-import {getGoogleMapsUrl} from '~/services/Location.service';
+import {getGoogleStaticMapUrl} from '~/services/Location.service';
 import styles from './styles';
 
 const HOLD_SECONDS = 3;
@@ -30,14 +30,18 @@ const HOLD_DURATION_MS = HOLD_SECONDS * 1000;
 
 type Status = 'idle' | 'holding' | 'sending' | 'sent' | 'failed';
 type LocationPreviewState = 'loading' | 'ready' | 'unavailable';
-
-const buildStaticMapUrl = (latitude: number, longitude: number) =>
-  `https://staticmap.openstreetmap.de/staticmap.php?center=${latitude},${longitude}&zoom=15&size=640x280&markers=${latitude},${longitude},red-pushpin`;
+type EmergencyConfirmationScreenProps = {
+  visible?: boolean;
+  onDismiss?: () => void;
+};
 
 const formatCoordinate = (value: number, positiveLabel: string, negativeLabel: string) =>
   `${Math.abs(value).toFixed(4)}° ${value >= 0 ? positiveLabel : negativeLabel}`;
 
-const EmergencyConfirmationScreen = () => {
+const EmergencyConfirmationScreen = ({
+  visible = true,
+  onDismiss,
+}: EmergencyConfirmationScreenProps) => {
   const {t} = useAppTranslation();
   const navigation = useNavigation();
   const {triggerEmergency} = useTriggerEmergency();
@@ -48,12 +52,10 @@ const EmergencyConfirmationScreen = () => {
   const [countdown, setCountdown] = useState(HOLD_SECONDS);
   const [locationState, setLocationState] =
     useState<LocationPreviewState>('loading');
-  const [locationMapUrl, setLocationMapUrl] = useState<string | null>(null);
   const [locationPreviewUrl, setLocationPreviewUrl] = useState<string | null>(null);
   const [locationLabel, setLocationLabel] = useState<string | null>(null);
   const statusRef = useRef<Status>('idle');
   const holdProgress = useRef(new Animated.Value(0)).current;
-  const completionScale = useRef(new Animated.Value(1)).current;
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const vibrationRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const holdAnimationRef = useRef<Animated.CompositeAnimation | null>(null);
@@ -83,14 +85,22 @@ const EmergencyConfirmationScreen = () => {
 
   const dismiss = useCallback(() => {
     clearHoldTimers();
+    if (onDismiss) {
+      onDismiss();
+      return;
+    }
     navigation.goBack();
-  }, [clearHoldTimers, navigation]);
+  }, [clearHoldTimers, navigation, onDismiss]);
 
   // Fires the real emergency and reflects the result inline.
   const runTrigger = useCallback(async () => {
     setStatusValue('sending');
-    const success = await triggerEmergency();
-    setStatusValue(success ? 'sent' : 'failed');
+    try {
+      const success = await triggerEmergency();
+      setStatusValue(success ? 'sent' : 'failed');
+    } catch {
+      setStatusValue('failed');
+    }
   }, [setStatusValue, triggerEmergency]);
 
   const resetHold = useCallback(
@@ -104,18 +114,30 @@ const EmergencyConfirmationScreen = () => {
         toValue: 0,
         duration: animated ? 180 : 0,
         easing: Easing.out(Easing.cubic),
-        useNativeDriver: true,
+        useNativeDriver: false,
       });
       reset.start();
     },
     [clearHoldTimers, holdProgress, setStatusValue],
   );
 
+  const handleDismissComplete = useCallback(() => {
+    clearHoldTimers();
+    setCountdown(HOLD_SECONDS);
+    setStatusValue('idle');
+    holdCompletedRef.current = false;
+    holdProgress.setValue(0);
+    setLocationState('loading');
+    setLocationPreviewUrl(null);
+    setLocationLabel(null);
+  }, [clearHoldTimers, holdProgress, setStatusValue]);
+
   const handlePressIn = useCallback(() => {
     if (!contactsReady) {
       navigation.dispatch(
         StackActions.replace(Screens.EmergencyContactSettings),
       );
+      onDismiss?.();
       return;
     }
     if (statusRef.current !== 'idle') {
@@ -127,7 +149,6 @@ const EmergencyConfirmationScreen = () => {
     holdCompletedRef.current = false;
     setCountdown(HOLD_SECONDS);
     holdProgress.setValue(0);
-    completionScale.setValue(1);
     Vibration.vibrate(24);
 
     countdownRef.current = setInterval(() => {
@@ -144,7 +165,7 @@ const EmergencyConfirmationScreen = () => {
       toValue: 1,
       duration: HOLD_DURATION_MS,
       easing: Easing.linear,
-      useNativeDriver: true,
+      useNativeDriver: false,
     });
 
     holdAnimationRef.current.start(({finished}) => {
@@ -155,28 +176,14 @@ const EmergencyConfirmationScreen = () => {
       clearHoldTimers();
       setCountdown(0);
       setStatusValue('sending');
-      Animated.sequence([
-        Animated.timing(completionScale, {
-          toValue: 0.98,
-          duration: 70,
-          easing: Easing.out(Easing.cubic),
-          useNativeDriver: true,
-        }),
-        Animated.spring(completionScale, {
-          toValue: 1,
-          stiffness: 360,
-          damping: 22,
-          mass: 0.6,
-          useNativeDriver: true,
-        }),
-      ]).start(runTrigger);
+      runTrigger();
     });
   }, [
     clearHoldTimers,
-    completionScale,
     contactsReady,
     holdProgress,
     navigation,
+    onDismiss,
     runTrigger,
     setStatusValue,
   ]);
@@ -189,6 +196,10 @@ const EmergencyConfirmationScreen = () => {
 
   // Cancel any in-progress timers if the sheet is unmounted.
   useEffect(() => {
+    if (!visible) {
+      return undefined;
+    }
+
     let active = true;
 
     const loadLocationPreview = async () => {
@@ -198,7 +209,6 @@ const EmergencyConfirmationScreen = () => {
         if (!active || !geoPosition) {
           if (active) {
             setLocationState('unavailable');
-            setLocationMapUrl(null);
             setLocationPreviewUrl(null);
             setLocationLabel(null);
           }
@@ -208,8 +218,7 @@ const EmergencyConfirmationScreen = () => {
         const {
           coords: {latitude, longitude},
         } = geoPosition;
-        setLocationMapUrl(getGoogleMapsUrl(geoPosition));
-        setLocationPreviewUrl(buildStaticMapUrl(latitude, longitude));
+        setLocationPreviewUrl(getGoogleStaticMapUrl(latitude, longitude));
         setLocationLabel(
           `${formatCoordinate(latitude, 'N', 'S')} · ${formatCoordinate(
             longitude,
@@ -221,7 +230,6 @@ const EmergencyConfirmationScreen = () => {
       } catch {
         if (active) {
           setLocationState('unavailable');
-          setLocationMapUrl(null);
           setLocationPreviewUrl(null);
           setLocationLabel(null);
         }
@@ -234,7 +242,7 @@ const EmergencyConfirmationScreen = () => {
       active = false;
       clearHoldTimers();
     };
-  }, [clearHoldTimers, getGeoPosition]);
+  }, [clearHoldTimers, getGeoPosition, visible]);
 
   const steps = [t('emergencyConfirm.step1'), t('emergencyConfirm.step2')];
 
@@ -243,12 +251,9 @@ const EmergencyConfirmationScreen = () => {
     return (
       <View style={styles.resultContent}>
         {!isSent ? (
-          <Icon
-            name="closecircle"
-            size={64}
-            color="#D6455D"
-            style={styles.resultIcon}
-          />
+          <View style={styles.resultIcon}>
+            <XIcon size={34} color="#D6455D" />
+          </View>
         ) : null}
         <Text style={styles.title}>
           {t(
@@ -300,61 +305,49 @@ const EmergencyConfirmationScreen = () => {
 
   const renderEmergencyAction = () => {
     if (status === 'idle' || status === 'holding') {
-      const progressScale = holdProgress.interpolate({
+      const progressWidth = holdProgress.interpolate({
         inputRange: [0, 1],
-        outputRange: [0.2, 1],
-      });
-      const pressScale = holdProgress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [1, 0.96],
-      });
-      const progressOpacity = holdProgress.interpolate({
-        inputRange: [0, 0.12, 1],
-        outputRange: [0.18, 0.28, 0.52],
+        outputRange: ['0%', '100%'],
       });
 
       return (
-        <Pressable
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          accessibilityRole="button"
-          accessibilityLabel={`${t(
-            'emergencyConfirm.hold',
-          )} ${HOLD_SECONDS} ${t('emergencyConfirm.seconds')}`}
-          style={styles.holdPressableCircle}>
-          <Animated.View
-            style={[
-              styles.holdCircle,
-              {
-                transform: [
-                  {scale: Animated.multiply(pressScale, completionScale)},
-                ],
-              },
-            ]}>
-            <View style={styles.holdInnerRing} />
-            <Animated.View
-              style={[
-                styles.holdProgressOrb,
-                {
-                  opacity: progressOpacity,
-                  transform: [{scale: progressScale}],
-                },
-              ]}
-            />
-            <Text style={styles.holdCount}>{countdown}</Text>
-            <Text style={styles.holdSecondsLabel}>
-              {t('emergencyConfirm.seconds')}
-            </Text>
-            <Text style={styles.holdLabel} numberOfLines={2}>
-              {t('emergencyConfirm.holdInstruction')}
-            </Text>
-          </Animated.View>
-        </Pressable>
+        <View style={styles.holdButtonContainer}>
+          <Pressable
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            accessibilityRole="button"
+            accessibilityLabel={`${t(
+              'emergencyConfirm.hold',
+            )} ${HOLD_SECONDS} ${t('emergencyConfirm.seconds')}`}
+            style={styles.holdPressableButton}>
+            <View style={styles.holdButton}>
+              <Animated.View
+                style={[
+                  styles.holdProgressFill,
+                  {
+                    width: progressWidth,
+                  },
+                ]}
+              />
+              <View style={styles.holdButtonContent}>
+                <Text style={styles.holdCount}>{countdown}</Text>
+                <View>
+                  <Text style={styles.holdLabel} numberOfLines={1}>
+                    {t('emergencyConfirm.holdInstruction')}
+                  </Text>
+                  <Text style={styles.holdSecondsLabel}>
+                    {t('emergencyConfirm.seconds')}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </Pressable>
+        </View>
       );
     }
     // sending
     return (
-      <View style={styles.sendingCircle}>
+      <View style={[styles.holdButtonContainer, styles.sendingButton]}>
         <ActivityIndicator color="#FFFFFF" />
         <Text style={styles.holdLabel}>{t('emergencyConfirm.sending')}</Text>
       </View>
@@ -363,18 +356,14 @@ const EmergencyConfirmationScreen = () => {
 
   const isResult = status === 'sent' || status === 'failed';
 
-  const handleOpenMap = useCallback(() => {
-    if (locationMapUrl) {
-      Linking.openURL(locationMapUrl).catch(() => {});
-    }
-  }, [locationMapUrl]);
-
   return (
     <NativeBottomSheet
-      visible
+      visible={visible}
       onDismiss={canDismiss ? dismiss : () => {}}
+      onDismissComplete={handleDismissComplete}
       closeOnBackdropPress={canDismiss}
       swipeToDismiss={canDismiss}
+      panGestureTarget="handle"
       sheetStyle={styles.sheet}>
       <View style={styles.header}>
         <View style={styles.headerSpacer} />
@@ -386,14 +375,17 @@ const EmergencyConfirmationScreen = () => {
           disabled={!canDismiss}
           onPress={canDismiss ? dismiss : undefined}
           style={styles.closeButton}>
-          <Icon name="close" size={22} color="#7B6F72" />
+          <XIcon size={22} color="#7B6F72" />
         </TouchableOpacity>
       </View>
       {isResult ? (
         renderResult()
       ) : (
         <>
-          <View style={styles.content}>
+          <ScrollView
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.content}>
             <Text style={styles.title}>{t('emergencyConfirm.title')}</Text>
             <Text style={styles.description}>
               {t('emergencyConfirm.description')}
@@ -416,16 +408,6 @@ const EmergencyConfirmationScreen = () => {
                     </Text>
                   </View>
                 </View>
-                {locationMapUrl ? (
-                  <TouchableOpacity
-                    activeOpacity={0.78}
-                    style={styles.mapAction}
-                    onPress={handleOpenMap}>
-                    <Text style={styles.mapActionText}>
-                      {t('emergencyConfirm.openMap')}
-                    </Text>
-                  </TouchableOpacity>
-                ) : null}
               </View>
 
               {locationPreviewUrl ? (
@@ -433,8 +415,9 @@ const EmergencyConfirmationScreen = () => {
                   source={{uri: locationPreviewUrl}}
                   resizeMode="cover"
                   style={styles.mapPreview}
+                  onError={() => setLocationPreviewUrl(null)}
                 />
-              ) : (
+              ) : locationLabel ? null : (
                 <View style={styles.mapPreviewPlaceholder}>
                   <Text style={styles.mapPreviewPlaceholderText}>
                     {locationState === 'loading'
@@ -473,7 +456,7 @@ const EmergencyConfirmationScreen = () => {
             </View>
 
             <View style={styles.actionArea}>{renderEmergencyAction()}</View>
-          </View>
+          </ScrollView>
         </>
       )}
     </NativeBottomSheet>

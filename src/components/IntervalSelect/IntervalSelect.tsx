@@ -50,16 +50,7 @@ const IntervalSelect: FC<IntervalSelect> = ({
       borderRadius={layout.ctaRadius}
       borderColor="rgba(11, 31, 58, 0.1)"
       backgroundColor={semanticColors.surface}
-      fontSize={typography.body.fontSize}
-      lineHeight={typography.body.lineHeight}
-      color={semanticColors.primary}
       px="12px"
-      accessibilityLabel={t(
-        'emergencyContactsSettings.automatedEmergencySettings.interval.title',
-      )}
-      placeholder={t(
-        'emergencyContactsSettings.automatedEmergencySettings.interval.title',
-      )}
       _selectedItem={{
         bg: colors.blue[300],
       }}
@@ -69,6 +60,17 @@ const IntervalSelect: FC<IntervalSelect> = ({
           color: semanticColors.primary,
         },
       }}
+      _text={{
+        fontSize: typography.body.fontSize,
+        lineHeight: typography.body.lineHeight,
+        color: semanticColors.primary,
+      }}
+      accessibilityLabel={t(
+        'emergencyContactsSettings.automatedEmergencySettings.interval.title',
+      )}
+      placeholder={t(
+        'emergencyContactsSettings.automatedEmergencySettings.interval.title',
+      )}
       _actionSheetContent={{
         backgroundColor: semanticColors.surface,
       }}

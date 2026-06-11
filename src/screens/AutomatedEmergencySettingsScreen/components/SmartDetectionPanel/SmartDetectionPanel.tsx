@@ -2,9 +2,8 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {View, TouchableOpacity, Platform} from 'react-native';
 import {Text} from 'native-base';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
 
+import {BrainIcon, MoonIcon, SunIcon} from '~/assets/icons/AppIcons';
 import SwitchButton from '~/components/SwitchButton';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {
@@ -109,11 +108,7 @@ const SmartDetectionPanel = () => {
     <View style={styles.panel}>
       <View style={styles.panelHeader}>
         <View style={[styles.circle, styles.icon]}>
-          <IconMaterialCommunityIcons
-            name="brain"
-            size={20}
-            color="#9370DB"
-          />
+          <BrainIcon size={20} color="#9370DB" />
         </View>
         <Text style={styles.panelTitle} fontWeight={700}>
           {t(`${prefix}.title`)}
@@ -203,8 +198,7 @@ const SmartDetectionPanel = () => {
                     {justifyContent: 'space-between'},
                   ]}>
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <IconIonicons
-                      name="moon"
+                    <MoonIcon
                       size={18}
                       color="#9370DB"
                       style={{marginRight: 12}}
@@ -228,8 +222,7 @@ const SmartDetectionPanel = () => {
                     {justifyContent: 'space-between'},
                   ]}>
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <IconIonicons
-                      name="sunny"
+                    <SunIcon
                       size={18}
                       color="#F4BB44"
                       style={{marginRight: 12}}

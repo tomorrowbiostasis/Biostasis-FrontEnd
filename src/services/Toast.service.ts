@@ -1,28 +1,28 @@
-import Toast, {ToastProps} from 'react-native-toast-message';
+import Toast, {ToastShowParams} from 'react-native-toast-message';
 
 const ToastService = {
-  success: (message: string, additionalPayload?: Partial<ToastProps>) => {
+  success: (message: string, additionalPayload?: Partial<ToastShowParams>) => {
     Toast.show({
       text1: message,
       type: 'biostasis_success',
       ...additionalPayload,
     });
   },
-  error: (message: string, additionalPayload?: Partial<ToastProps>) => {
+  error: (message: string, additionalPayload?: Partial<ToastShowParams>) => {
     Toast.show({
       text1: message,
       type: 'biostasis_error',
       ...additionalPayload,
     });
   },
-  warning: (message: string, additionalPayload?: Partial<ToastProps>) => {
+  warning: (message: string, additionalPayload?: Partial<ToastShowParams>) => {
     Toast.show({
       text1: message,
       type: 'biostasis_warning',
       ...additionalPayload,
     });
   },
-  info: (message: string, additionalPayload?: Partial<ToastProps>) => {
+  info: (message: string, additionalPayload?: Partial<ToastShowParams>) => {
     Toast.show({
       text1: message,
       type: 'biostasis_info',

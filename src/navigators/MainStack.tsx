@@ -21,7 +21,6 @@ import SettingsScreen from '~/screens/SettingsScreen';
 import WebViewScreen from '~/screens/WebViewScreen';
 import CurrentHealthLogScreen from '~/screens/CurrentHealthLogScreen';
 import HistoryLogsScreen from '~/screens/HistoryLogsScreen';
-import EmergencyConfirmationScreen from '~/screens/EmergencyConfirmationScreen';
 import DevLogsScreen from '~/screens/DevLogs/DevLogsScreen';
 import DevHistoryLogsScreen from '~/screens/DevHistoryLogs/DevHistoryLogsScreen';
 import DevPushLogsScreen from '~/screens/DevPushLogs/DevPushLogsScreen';
@@ -40,18 +39,6 @@ export const MainStack = () => {
   return (
     <Stack.Navigator screenOptions={stackOptions}>
       <Stack.Screen name={Screens.Tabs} component={BottomTabs} />
-      <Stack.Screen
-        name={Screens.EmergencyConfirmation as never}
-        component={EmergencyConfirmationScreen}
-        options={{
-          presentation: 'transparentModal',
-          headerShown: false,
-          animation: 'none',
-          contentStyle: {
-            backgroundColor: 'transparent',
-          },
-        }}
-      />
       <Stack.Screen
         name={Screens.CurrentHealthLog as never}
         component={CurrentHealthLogScreen}

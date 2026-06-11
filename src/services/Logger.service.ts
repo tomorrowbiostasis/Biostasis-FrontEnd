@@ -24,6 +24,10 @@ const makeString = (item: any) => {
 };
 
 const saveLog = async (type: logType, data: any) => {
+  if (!__DEV__) {
+    return;
+  }
+
   const key = `${AsyncStorageEnum.LoggerData}#${uuidv4()}`;
   const value = `> ${+new Date()} ${type} ${data.map(makeString).join(' ')}`;
   await AsyncStorageService.setItem(key, value, true);
@@ -48,6 +52,13 @@ function logger(type: logType, ...args: any) {
 }
 
 export const startLogger = () => {
+  if (!__DEV__) {
+    console.log = () => {};
+    console.warn = () => {};
+    console.error = () => {};
+    return;
+  }
+
   console.log = (...args: any) => logger(logType.log, ...args);
   console.warn = (...args: any) => logger(logType.warn, ...args);
   console.error = (...args: any) => logger(logType.error, ...args);
@@ -55,6 +66,14 @@ export const startLogger = () => {
 };
 
 export const shareLog = async () => {
+  if (!__DEV__) {
+    await Share.open({
+      message:
+        'Diagnostics are not collected automatically in production builds.',
+    });
+    return;
+  }
+
   const allKeys = await AsyncStorageService.getAllKeys();
   const loggerKeys = allKeys.filter(i =>
     i.includes(AsyncStorageEnum.LoggerData),

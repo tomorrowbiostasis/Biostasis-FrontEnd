@@ -5,6 +5,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  WithSpringConfig,
 } from 'react-native-reanimated';
 import styles from '~/components/Switch/styles';
 import {
@@ -26,7 +27,7 @@ export type SwitchProps = {
   disabled?: boolean;
 };
 
-const config: Animated.WithSpringConfig = {
+const config: WithSpringConfig = {
   overshootClamping: true,
 };
 

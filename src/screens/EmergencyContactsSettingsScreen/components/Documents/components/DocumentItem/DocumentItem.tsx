@@ -32,9 +32,7 @@ const DocumentItem: FC<IDocumentItem> = ({
     }
   }, [id, onDelete]);
 
-  const statusLabel = name
-    ? t('emergencyContactsSettings.documents.status.uploaded')
-    : t('emergencyContactsSettings.documents.status.acceptedFormats');
+  const statusLabel = t('emergencyContactsSettings.documents.status.uploaded');
 
   const actionLabel = name
     ? t('emergencyContactsSettings.documents.actions.remove')
@@ -72,14 +70,16 @@ const DocumentItem: FC<IDocumentItem> = ({
         )}
       </View>
       <View style={styles.divider} />
-      <View style={styles.footerRow}>
-        <View style={[styles.statusPill, name && styles.statusPillSuccess]}>
-          <Text
-            style={[styles.statusText, name && styles.statusTextSuccess]}
-            numberOfLines={1}>
-            {statusLabel}
-          </Text>
-        </View>
+      <View style={[styles.footerRow, !name && styles.footerRowActionOnly]}>
+        {name ? (
+          <View style={[styles.statusPill, styles.statusPillSuccess]}>
+            <Text
+              style={[styles.statusText, styles.statusTextSuccess]}
+              numberOfLines={1}>
+              {statusLabel}
+            </Text>
+          </View>
+        ) : null}
         {name ? (
           <TouchableOpacity
             style={styles.footerAction}
@@ -173,6 +173,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 12,
   },
+  footerRowActionOnly: {
+    justifyContent: 'flex-end',
+  },
   statusPill: {
     flexShrink: 1,
     borderRadius: 999,
@@ -184,7 +187,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDF5E9',
   },
   statusText: {
-    ...typography.captionMedium,
+    ...typography.statusTagSmall,
     color: '#53677F',
   },
   statusTextSuccess: {

@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
 import boxShadow from '~/theme/boxShadow';
 import colors from '~/theme/colors';
-import {DrawerNavigationProp, useDrawerStatus} from '@react-navigation/drawer';
+import {useDrawerStatus} from '@react-navigation/drawer';
 
 const styles = StyleSheet.create({
   box: {

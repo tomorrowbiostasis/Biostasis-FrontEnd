@@ -118,6 +118,15 @@ extension BackgroundHealthChecker: IHandleBackgroundHealthCheck {
     private func checkHealthDataForType(identifier: HKSampleType,
                                       positiveInfoPeriod: Int,
                                       completion: @escaping (Bool) -> Void) {
+        if identifier == HKQuantityType.quantityType(forIdentifier: .stepCount),
+           let stepType = identifier as? HKQuantityType {
+            checkRecentStepCount(
+                stepType: stepType,
+                positiveInfoPeriod: positiveInfoPeriod,
+                completion: completion
+            )
+            return
+        }
         
         let endDate = Date()
         let startDate = Calendar.current.date(byAdding: .minute, value: -positiveInfoPeriod, to: endDate)
@@ -140,6 +149,33 @@ extension BackgroundHealthChecker: IHandleBackgroundHealthCheck {
             completion(hasData)
         }
         
+        healthKitStore.execute(query)
+    }
+
+    private func checkRecentStepCount(stepType: HKQuantityType,
+                                      positiveInfoPeriod: Int,
+                                      completion: @escaping (Bool) -> Void) {
+        let endDate = Date()
+        let startDate = Calendar.current.date(byAdding: .minute, value: -positiveInfoPeriod, to: endDate)
+
+        let predicate = HKQuery.predicateForSamples(
+            withStart: startDate,
+            end: endDate,
+            options: .strictStartDate
+        )
+        let query = HKStatisticsQuery(
+            quantityType: stepType,
+            quantitySamplePredicate: predicate,
+            options: .cumulativeSum
+        ) { _, result, error in
+            guard error == nil, let quantity = result?.sumQuantity() else {
+                completion(false)
+                return
+            }
+
+            completion(quantity.doubleValue(for: HKUnit.count()) > 0)
+        }
+
         healthKitStore.execute(query)
     }
     

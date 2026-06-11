@@ -1,9 +1,8 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC, ReactNode, useMemo} from 'react';
 import {
   View,
   ViewStyle,
   ScrollView,
-  KeyboardAvoidingView,
   Platform,
   TextStyle,
 } from 'react-native';
@@ -29,7 +28,7 @@ interface ContainerProps {
   titleText?: StyleProp<TextStyle>;
   showDrawerIcon?: boolean;
   showBackIcon?: boolean;
-  children:React.ReactNode | null
+  children: ReactNode | null
 }
 
 const Container: FC<ContainerProps> = ({
@@ -42,7 +41,7 @@ const Container: FC<ContainerProps> = ({
   disableWrapper,
   loading,
   titleText = {...styles.titleText},
-  showDrawerIcon = false,
+  showDrawerIcon: _showDrawerIcon = false,
   showBackIcon = false,
 }) => {
   const safeAreaEdges = useMemo<readonly Edge[]>(() => {
@@ -59,7 +58,7 @@ const Container: FC<ContainerProps> = ({
   );
 
   const ContentContainer = useCallback(
-    props => {
+    (props: {children?: ReactNode}) => {
       switch (type) {
         case 'static':
           return (

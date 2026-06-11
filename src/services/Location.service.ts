@@ -7,6 +7,7 @@ import i18n from '~/i18n/i18n';
 
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import {openSettings} from '~/utils';
+import EnvConfig from './Env.service';
 
 export class PermissionAlwaysDeniedError extends Error {
   code: number = 1; // compatible with ErrorCallback from react-native-geolocation-service
@@ -99,6 +100,28 @@ const requestPermissionAndroid = async () => {
   return false;
 };
 
+export const hasLocationPermission = async () => {
+  if (Platform.OS === 'ios') {
+    const alwaysStatus = await check(PERMISSIONS.IOS.LOCATION_ALWAYS);
+    const whenInUseStatus = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+
+    return alwaysStatus === RESULTS.GRANTED || whenInUseStatus === RESULTS.GRANTED;
+  }
+
+  if (+Platform.Version < 23) {
+    return true;
+  }
+
+  const backgroundGranted = await PermissionsAndroid.check(
+    PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+  );
+  const fineGranted = await PermissionsAndroid.check(
+    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  );
+
+  return backgroundGranted || fineGranted;
+};
+
 export const requestLocationPermission = async (
   shouldShowPermissionPopup?: boolean,
 ) => {
@@ -138,4 +161,28 @@ export const getLocation = async (
 
 export const getGoogleMapsUrl = (geoPosition: GeoPosition) => {
   return `https://www.google.com/maps/search/?api=1&query=${geoPosition?.coords.latitude}%2C${geoPosition?.coords.longitude}`;
+};
+
+export const getGoogleStaticMapUrl = (
+  latitude: number,
+  longitude: number,
+  width = 640,
+  height = 280,
+) => {
+  const key = EnvConfig.GOOGLE_MAPS_API_KEY;
+
+  if (!key) {
+    return null;
+  }
+
+  const marker = encodeURIComponent(`color:red|${latitude},${longitude}`);
+  return (
+    'https://maps.googleapis.com/maps/api/staticmap' +
+    `?center=${latitude},${longitude}` +
+    '&zoom=15' +
+    `&size=${width}x${height}` +
+    '&scale=2' +
+    `&markers=${marker}` +
+    `&key=${encodeURIComponent(key)}`
+  );
 };

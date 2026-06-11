@@ -5,9 +5,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
   },
-  alertContainer: {
-    paddingBottom: 10,
-  },
   forgotPasswordContainer: {
     minHeight: 44,
     alignItems: 'flex-end',

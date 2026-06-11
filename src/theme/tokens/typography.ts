@@ -19,6 +19,8 @@ export const typography: Record<
   | 'captionSemibold'
   | 'captionBold'
   | 'captionUnderline'
+  | 'statusTag'
+  | 'statusTagSmall'
   | 'sectionLabel'
   | 'sectionDescription'
   | 'rowTitle'
@@ -101,6 +103,20 @@ export const typography: Record<
     lineHeight: 15.4,
     letterSpacing: 0,
     textDecorationLine: 'underline',
+  },
+  statusTag: {
+    fontFamily: 'DMSans-Regular',
+    fontWeight: '400',
+    fontSize: 13,
+    lineHeight: 16,
+    letterSpacing: 0,
+  },
+  statusTagSmall: {
+    fontFamily: 'DMSans-Regular',
+    fontWeight: '400',
+    fontSize: 12,
+    lineHeight: 16,
+    letterSpacing: 0,
   },
   sectionLabel: {
     fontFamily: 'DMSans-Bold',

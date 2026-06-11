@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {Pressable, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {ArrowLeftIcon} from '~/assets/icons/AppIcons';
+import TmrBioLogo from '~/assets/icons/TmrBioLogo';
 import AnimatedHeaderSurface from '~/components/AnimatedHeaderSurface';
 import styles from './styles';
 
@@ -22,11 +23,12 @@ const AuthHeader: FC<AuthHeaderProps> = ({
 }) => {
   const navigation = useNavigation();
   const handleBack = onBack ?? (() => navigation.goBack());
+  const shouldShowLogo = eyebrow.trim().toUpperCase() === 'BIOSTASIS';
 
   return (
     <AnimatedHeaderSurface style={styles.container}>
       <View style={styles.inner}>
-        <View style={[styles.topRow, !showBack && styles.topRowEnd]}>
+        <View style={[styles.topRow, !showBack && styles.topRowStart]}>
           {showBack && (
             <Pressable
               onPress={handleBack}
@@ -37,7 +39,18 @@ const AuthHeader: FC<AuthHeaderProps> = ({
               <ArrowLeftIcon size={20} color="#BFC2C5" />
             </Pressable>
           )}
-          <Text style={styles.eyebrow}>{eyebrow}</Text>
+          {shouldShowLogo ? (
+            <View style={styles.logoWrap}>
+              <TmrBioLogo
+                width={120}
+                height={20}
+                color="#FFFFFF"
+                opacity={0.62}
+              />
+            </View>
+          ) : (
+            <Text style={styles.eyebrow}>{eyebrow}</Text>
+          )}
         </View>
         <Text style={styles.title}>{title}</Text>
         {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}

@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tomorrow Bio Deadman's Switch - Executive Summary</title>
+    <style>
+      :root {
+        --navy: #08213d;
+        --blue: #0539e5;
+        --ink: #10223a;
+        --muted: #66778c;
+        --line: #dbe3ec;
+        --panel: #f5f8fb;
+        --green: #18a870;
+        --amber: #d78b00;
+        --red: #d9415d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: #eef3f8;
+        line-height: 1.45;
+      }
+
+      .page {
+        width: min(1120px, calc(100vw - 48px));
+        margin: 32px auto;
+        background: #ffffff;
+        border-radius: 28px;
+        box-shadow: 0 24px 80px rgba(8, 33, 61, 0.12);
+        overflow: hidden;
+      }
+
+      .hero {
+        padding: 34px 42px 40px;
+        color: #ffffff;
+        background: linear-gradient(135deg, #061b35 0%, #0b2a4e 72%, #102f55 100%);
+      }
+
+      .logos {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        margin-bottom: 42px;
+      }
+
+      .logo-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 58px;
+        padding: 12px 18px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.94);
+      }
+
+      .logo-card img {
+        display: block;
+        max-width: 220px;
+        max-height: 40px;
+      }
+
+      .partner img {
+        max-width: 190px;
+        max-height: 42px;
+      }
+
+      h1 {
+        max-width: 820px;
+        margin: 0 0 16px;
+        font-size: 48px;
+        line-height: 1.06;
+        letter-spacing: 0;
+      }
+
+      .subtitle {
+        max-width: 820px;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 20px;
+        line-height: 1.45;
+      }
+
+      .content {
+        padding: 36px 42px 44px;
+      }
+
+      .summary {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 24px;
+        margin-bottom: 34px;
+      }
+
+      .box {
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: #ffffff;
+      }
+
+      .box.soft {
+        background: var(--panel);
+      }
+
+      h2 {
+        margin: 0 0 14px;
+        color: var(--navy);
+        font-size: 24px;
+        line-height: 1.2;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .principle {
+        color: var(--ink);
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 1.35;
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin: 26px 0 34px;
+      }
+
+      .step {
+        min-height: 188px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: #ffffff;
+      }
+
+      .number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 14px;
+        border-radius: 999px;
+        color: #ffffff;
+        background: var(--blue);
+        font-weight: 700;
+      }
+
+      .step h3 {
+        margin: 0 0 8px;
+        color: var(--navy);
+        font-size: 18px;
+        line-height: 1.25;
+      }
+
+      .step p {
+        font-size: 15px;
+        line-height: 1.4;
+      }
+
+      .signal-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .signal {
+        padding: 16px;
+        border-radius: 16px;
+        background: #edf5ff;
+        color: var(--navy);
+        font-size: 15px;
+        font-weight: 650;
+      }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        margin-top: 18px;
+      }
+
+      .timeline-item {
+        padding: 20px;
+        border-right: 1px solid var(--line);
+        background: #ffffff;
+      }
+
+      .timeline-item:last-child {
+        border-right: 0;
+      }
+
+      .tag {
+        display: inline-flex;
+        margin-bottom: 10px;
+        padding: 5px 10px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .green {
+        color: #08784e;
+        background: #dff5ec;
+      }
+
+      .amber {
+        color: #9a6200;
+        background: #fff1d8;
+      }
+
+      .red {
+        color: #a82038;
+        background: #ffe3e9;
+      }
+
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding-top: 28px;
+        border-top: 1px solid var(--line);
+      }
+
+      .footer strong {
+        color: var(--navy);
+      }
+
+      @media print {
+        body {
+          background: #ffffff;
+        }
+
+        .page {
+          width: auto;
+          margin: 0;
+          border-radius: 0;
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div class="logos">
+          <div class="logo-card">
+            <img src="/Users/daniel/Desktop/tmr-bio.svg" alt="Tomorrow Bio logo" />
+          </div>
+          <div class="logo-card partner">
+            <img src="/Users/daniel/Desktop/coding-oartners.svg" alt="Coding Partners logo" />
+          </div>
+        </div>
+
+        <h1>Deadman's Switch Logic: Business Executive Summary</h1>
+        <p class="subtitle">
+          A conservative emergency-monitoring model designed to detect lack of recent activity while reducing false alarms during sleep, travel, or intentionally paused periods.
+        </p>
+      </section>
+
+      <section class="content">
+        <div class="summary">
+          <div class="box">
+            <h2>Core Principle</h2>
+            <p class="principle">
+              The app does not escalate because one signal is missing. It escalates only after repeated absence of all expected activity signals, outside normal safe contexts.
+            </p>
+          </div>
+
+          <div class="box soft">
+            <h2>What This Protects Against</h2>
+            <p>
+              The system is built to avoid unnecessary alerts from a single missed sync, delayed health-data update, temporary network issue, or normal non-response period such as sleep.
+            </p>
+          </div>
+        </div>
+
+        <h2>Step-by-Step Flow</h2>
+        <div class="steps">
+          <article class="step">
+            <span class="number">1</span>
+            <h3>Monitoring Runs Periodically</h3>
+            <p>The mobile app performs scheduled safety checks and can also react to check-in notifications.</p>
+          </article>
+
+          <article class="step">
+            <span class="number">2</span>
+            <h3>Safe Contexts Are Checked First</h3>
+            <p>The app checks whether monitoring should pause because the user is sleeping, travelling, intentionally paused, or temporarily unreachable.</p>
+          </article>
+
+          <article class="step">
+            <span class="number">3</span>
+            <h3>Recent Activity Is Evaluated</h3>
+            <p>The app looks for recent movement and health signals. Any one positive signal is enough to confirm recent activity.</p>
+          </article>
+
+          <article class="step">
+            <span class="number">4</span>
+            <h3>Positive Signal Resets Risk</h3>
+            <p>If recent activity is found, the warning counter resets and no emergency flow starts.</p>
+          </article>
+
+          <article class="step">
+            <span class="number">5</span>
+            <h3>First Miss Creates a Warning</h3>
+            <p>If no activity is found once, the app does not immediately escalate. It treats this as a warning state.</p>
+          </article>
+
+          <article class="step">
+            <span class="number">6</span>
+            <h3>Repeated Misses Escalate</h3>
+            <p>If the next check also finds no activity and no safe pause condition applies, the emergency-risk flow can begin.</p>
+          </article>
+        </div>
+
+        <div class="box">
+          <h2>Signals Used to Confirm Recent Activity</h2>
+          <p>
+            The system is intentionally flexible. It does not require every signal to be present at the same time.
+          </p>
+          <div class="signal-grid">
+            <div class="signal">Heart-rate signal when available</div>
+            <div class="signal">Recent movement / steps</div>
+            <div class="signal">User response to check-in</div>
+          </div>
+        </div>
+
+        <div class="box" style="margin-top: 24px;">
+          <h2>Escalation Model</h2>
+          <p>
+            The product uses a staged decision process so one missing data point does not create a critical alert.
+          </p>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <span class="tag green">Normal</span>
+              <h3>Activity Found</h3>
+              <p>Risk resets. Monitoring continues quietly.</p>
+            </div>
+            <div class="timeline-item">
+              <span class="tag amber">Warning</span>
+              <h3>First No-Data Check</h3>
+              <p>The app treats this as a possible missed sync or temporary gap.</p>
+            </div>
+            <div class="timeline-item">
+              <span class="tag red">Escalation</span>
+              <h3>Repeated No-Data Check</h3>
+              <p>The emergency-risk flow can begin if no safe pause condition applies.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="box soft" style="margin-top: 24px;">
+          <h2>Important Positioning</h2>
+          <p>
+            This is an emergency-support and monitoring workflow. It helps identify possible non-response situations, but it should not be positioned as a replacement for emergency services, medical care, or guaranteed emergency dispatch.
+          </p>
+        </div>
+
+        <div class="footer">
+          <p><strong>Testing status:</strong> Existing deadman's-switch tests passed, including unit coverage and simulation coverage.</p>
+          <p><strong>Prepared for:</strong> Founder / executive review</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

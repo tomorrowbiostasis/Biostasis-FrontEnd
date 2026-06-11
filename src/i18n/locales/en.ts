@@ -1,5 +1,5 @@
 const translations = {
-  appName: 'Biostasis',
+  appName: 'Tomorrow Bio',
   bottomTab: {
     home: 'Home',
     profile: 'Profile',
@@ -102,7 +102,7 @@ const translations = {
       title: 'Health data',
       emptyTitle: 'No recent health data',
       emptySubtitle:
-        'We checked for the latest available data. If you use Apple Health, make sure Biostasis is allowed to read it.',
+        'We checked for the latest available data. If you use Apple Health, make sure Tomorrow Bio is allowed to read it.',
       checking: 'Checking health data…',
       checked: 'Checked just now',
       unavailableHelper:
@@ -129,7 +129,7 @@ const translations = {
         title: 'Emergency System',
         description:
           'Set up contacts and health sharing so your emergency contacts will be notified in an emergency.',
-        active: 'Active · Receiving data',
+        active: 'Emergency monitoring enabled',
         inactive: 'Inactive · Tap to enable',
         status: {
           monitoringBio: 'Monitoring via bio-based health data',
@@ -142,15 +142,15 @@ const translations = {
           off: 'Off · Not monitoring',
         },
         mode: {
-          bio: 'Bio-based monitoring',
-          time: 'Time-based check-ins',
+          bio: 'Health app monitoring',
+          time: 'Check-in monitoring',
           inactive: 'Monitoring not active',
           setup: 'Setup required',
         },
         live: {
-          activeTitle: 'Monitoring active',
-          activeBioDescription: 'Bio-based health data is being checked.',
-          activeTimeDescription: 'Time-based check-ins are enabled.',
+          activeTitle: 'Protection active',
+          activeBioDescription: 'Health and movement signals are being checked.',
+          activeTimeDescription: 'Scheduled check-ins are enabled.',
           setupTitle: 'Setup required',
           setupDescription:
             'Add contacts and enable monitoring to activate emergency protection.',
@@ -160,6 +160,7 @@ const translations = {
           pausedDescription: 'Monitoring will resume in {{time}}.',
         },
         badge: {
+          enabled: 'Enabled',
           monitoring: 'Monitoring',
           needsSetup: 'Needs setup',
           setup: 'Set up',
@@ -211,6 +212,8 @@ const translations = {
     locationReady: 'This location will be used for the emergency response.',
     locationLoading: 'Refreshing your current location…',
     locationUnavailable: 'Current location is unavailable right now.',
+    locationPreviewUnavailable:
+      'Location captured. Map preview is unavailable right now.',
     openMap: 'Open map',
     step1: 'Your emergency contacts will be notified',
     step2:
@@ -281,11 +284,20 @@ const translations = {
     title: 'Current Health Log',
     emptyTitle: 'No health data connected',
     emptySubtitle: 'Connect a wearable to start tracking',
+    snapshotTitle: 'Current snapshot',
+    snapshotDescription:
+      'Latest health and movement values available to the mobile app.',
+    emptySnapshotDescription:
+      'No recent health data is available yet. Connect Health app access and refresh from the dashboard.',
+    latestReadings: 'Latest readings',
+    lastChecked: 'Last checked',
+    historyDays: 'Days in history',
     heartRate: 'Heart Rate',
-    restingHeartRate: 'Resting Heart Rate',
-    restingHr: 'Resting HR',
     steps: 'Steps',
+    stepsToday: 'Steps today',
     totalSteps: 'Total Steps',
+    totalMovement: 'Total movement',
+    currentDay: 'Current day',
     today: 'today',
     session: 'session',
     hrEndDate: 'HR End Date',
@@ -296,6 +308,17 @@ const translations = {
   historyLogs: {
     title: 'History Logs',
     entry: 'Entry #{{index}}',
+    stats: {
+      title: 'Stats overview',
+      daysTracked: 'Days tracked',
+      totalSteps: 'Total steps',
+      averageSteps: 'Avg steps/day',
+      bestDay: 'Best day',
+    },
+    samples: '{{count}} records collected',
+    totalSteps: 'Total steps',
+    latestHeartRate: 'Latest heart rate',
+    averageHeartRate: 'Average heart rate',
     hrEndDate: 'Heart rate end date',
     stepsEndDate: 'Steps end date',
     restingHrEndDate: 'Resting heart end date',
@@ -334,7 +357,7 @@ const translations = {
     slide3: {
       badge: 'RAPID RESPONSE',
       title: 'Advanced care, ready when it matters.',
-      body: 'Biostasis connects you with trained emergency response teams for faster, more coordinated cryopreservation support.',
+      body: 'Tomorrow Bio helps you prepare emergency information and connect with trained response support for more coordinated cryopreservation workflows.',
     },
   },
   welcome: {
@@ -469,7 +492,7 @@ const translations = {
     email: 'you@example.com',
   },
   auth: {
-    welcomeTo: 'Welcome to Biostasis',
+    welcomeTo: 'Welcome to Tomorrow Bio',
     accountWasCreated:
       'Account created. Check your inbox and open the activation link on your mobile device.',
     invalidCredentials: 'Incorrect email or password',
@@ -488,7 +511,7 @@ const translations = {
     terms: 'Terms of Service',
     signIn: {
       title: 'Welcome back.',
-      subtitle: 'Log in to your Biostasis account.',
+      subtitle: 'Log in to your tomorrow.bio account.',
       cta: 'Log in',
       dividerLabel: 'or log in with email',
       passwordPlaceholder: 'Your password',
@@ -496,7 +519,7 @@ const translations = {
     },
     signUp: {
       title: 'Create account',
-      subtitle: 'Join Biostasis to manage your emergency preparedness.',
+      subtitle: 'Join Tomorrow Bio to manage your emergency preparedness.',
       cta: 'Create account',
       dividerLabel: 'or sign up with email',
       passwordPlaceholder: 'Create a password',
@@ -821,39 +844,78 @@ const translations = {
       howItWorks: {
         title: 'How emergency monitoring works',
         intro:
-          'Before you enable monitoring, choose how the mobile app should check in and what happens if you do not respond.',
-        step1Title: 'Choose monitoring',
-        step1Desc: 'Select bio-based monitoring or time-based check-ins.',
+          'Before you enable monitoring, review how the mobile app checks recent signals and what happens if you do not respond.',
+        step1Title: 'Connect signals',
+        step1Desc:
+          'Allow notifications, location, and Health app access so monitoring can work.',
         step2Title: 'Monitor',
         step2Desc:
-          'The mobile app checks the selected signal or sends check-ins based on your setup.',
+          'The mobile app uses recent health and movement signals when they are available.',
         step3Title: 'Alert',
         step3Desc:
           'If you become unresponsive, your emergency contacts will be notified.',
       },
       setupFlow: {
-        stepLabel: 'Step {{step}} of 4',
+        stepLabel: 'Step {{step}} of {{total}}',
         back: 'Back',
         continue: 'Continue',
         enableMonitoring: 'Enable emergency monitoring',
         enabledToast: 'Emergency monitoring is active',
+        permissions: {
+          title: 'Permissions & readiness',
+          subtitle:
+            'Allow notifications, location, and Health app access before you continue.',
+          notificationsTitle: 'Notifications',
+          notificationsSubtitle:
+            'Needed so the mobile app can send check-ins and emergency alerts.',
+          locationTitle: 'Location',
+          locationSubtitle:
+            'Needed so your current location can be shared during an emergency.',
+          healthTitle: 'Health data',
+          healthSubtitleIos:
+            'Connect Apple Health so the mobile app can verify recent health and movement signals.',
+          healthSubtitleAndroid:
+            'Connect Google Fit so the mobile app can verify recent health and movement signals.',
+          healthOptionalHint:
+            'You can continue after Health app access is connected, even if recent data has not appeared yet.',
+          required: 'Required',
+          optional: 'Optional',
+          allowed: 'Allowed',
+          connected: 'Connected',
+          allowAction: 'Allow',
+          connectAction: 'Connect',
+          checkHealthAction: 'Check health access',
+          healthCheckSuccess: 'Health access confirmed',
+          healthCheckFailed:
+            "We couldn't confirm Health app access yet. Check permissions and try again.",
+          allowedAction: 'Allowed',
+          connectedAction: 'Connected',
+          allSetTitle: 'Required permissions are already in place',
+          allSetSubtitle:
+            'You can continue and set your sleep schedule before turning on monitoring.',
+        },
         choose: {
           title: 'Choose monitoring type',
           subtitle:
             'Select how the mobile app should monitor for emergency risk.',
           bioSubtitle:
-            'Best if your phone already receives recent health data from your wearable or Health app.',
+            'For this to work, your wearable must be connected to {{source}} and share at least heart rate and steps.',
           timeSubtitle:
-            'Best if you prefer scheduled check-ins or are not using a wearable.',
+            'Uses fixed check-ins every 8 hours if you are not using bio-based monitoring.',
+          timeMovementNote:
+            'Even with time-based check-ins, the mobile app can still show live movement while it is open.',
         },
         bio: {
           title: 'Set up bio-based monitoring',
           subtitle:
             'The mobile app uses recent health data from your wearable or Health app to check for emergency risk.',
           connected: 'Health data connected',
+          connectedNoData: 'Health access connected',
           notConnected: 'Health data not available',
           connectedHelper:
             'Health data is connected and the app is receiving data.',
+          connectedNoDataHelper:
+            'Health access is connected. Recent samples may take a moment to appear.',
           missingHelper:
             'We are not receiving health data from your device yet.',
           checkConnection: 'Check connection',
@@ -861,15 +923,21 @@ const translations = {
         time: {
           title: 'Set up time-based check-ins',
           subtitle:
-            'The mobile app will send check-in notifications at your chosen interval. If you do not respond, your emergency flow can start.',
-          helper: 'This interval is saved when monitoring is enabled.',
+            'The mobile app will send check-in notifications every 8 hours. If you do not respond, your emergency flow can start.',
+          fixedIntervalTitle: '8-hour check-ins',
+          fixedIntervalDescription:
+            'There is no interval to choose. Time-based monitoring always checks in every 8 hours.',
+          movementTitle: 'Live movement while using the app',
+          movementDescription:
+            'When the app is on screen, it can show movement and step changes for feedback. Scheduled check-ins still run separately.',
+          helper: 'Continue when you are ready to set your sleep schedule.',
           devHelper:
             'Development builds use minute-based intervals for faster testing.',
         },
         sleep: {
           title: 'Set up your sleep schedule',
           subtitle:
-            'This is required for both monitoring types and helps prevent false alarms while you sleep.',
+            'Add your approximate sleep and wake times so the mobile app can align its monitoring logic with your daily rhythm.',
           enable: 'Enable sleep schedule',
           enableSubtitle:
             'Use the default 10:00 PM to 7:00 AM schedule. You can adjust it later.',
@@ -903,7 +971,7 @@ const translations = {
           title: 'Give Health permissions',
           alertTitle: 'Health Permissions',
           alertDescription:
-            'You will be prompted to allow Biostasis to access your health data. Please confirm.',
+            'You will be prompted to allow Tomorrow Bio to access your health data. Please confirm.',
         },
         turnOn: 'Use bio-based monitoring',
         warning:
@@ -923,7 +991,7 @@ const translations = {
           connect: 'Connect app to Google Fit',
           alertTitle1: 'Authenticate',
           alertDescription1:
-            "Please authenticate Google Fit to let Biostasis access your recorder health data. If you don't have the Google Fit app installed, please install it from Google Play first.",
+            "Please authenticate Google Fit to let Tomorrow Bio access recent health data. If you don't have Google Fit installed, please install it first from Google Play.",
           alertTitle2: 'Add Google Fit',
           alertDescription2:
             'Please open the Preferences section in your watch / fitness band companion app. Then find a section saying Add Accounts or similar. Choose Google Fit and then pass the authorization process.',
@@ -943,8 +1011,11 @@ const translations = {
         title: 'Time-based check-ins',
         configurationTitle: 'Time-based configuration',
         description:
-          'We send check-in notifications at your chosen interval. If you do not respond, your emergency flow can start.',
+          'We send check-in notifications every 8 hours. If you do not respond, your emergency flow can start.',
         frequency: 'Check-in interval',
+        fixedInterval: 'Every 8 hours',
+        movementNote:
+          'When the app is open, it can still show live movement and step changes for visual feedback.',
         systemStart: 'Time-based automated system is running',
         turnOn: 'Use time-based check-ins',
         warning:
@@ -1014,7 +1085,7 @@ const translations = {
     },
   },
   dashboard: {
-    title: 'Medical Biostasis\nAt Your Fingertips',
+    title: 'Emergency Preparedness\nAt Your Fingertips',
     profile: {
       title: 'Profile & Medical Info',
       description:
@@ -1101,15 +1172,15 @@ const translations = {
     locationPermissionDenied: 'Location permission denied',
     unableToOpenSettings: 'Unable to open settings',
     turnOnLocationFromSettings:
-      'Turn on Location Services to allow "Biostasis" to determine your location.',
+      'Turn on Location Services to allow Tomorrow Bio to determine your location.',
     goToSettings: 'Go to Settings',
     notEnoughsPermissions:
-      'The Biostasis application requires constant location information. To allow the use of your location, go to location privacy settings and select "always"',
+      'Tomorrow Bio requires location access for emergency monitoring workflows. To allow this, go to location privacy settings and select "Always".',
   },
   notifications: {
     goToSettings: 'Go to Settings',
     permissionsError:
-      'The Biostasis feature requires  push notification permissions.',
+      'Tomorrow Bio requires push notification permissions for emergency monitoring check-ins and alerts.',
   },
   time: {
     short: {
@@ -1317,7 +1388,7 @@ const translations = {
   automatedEmergencyStatus: {
     start: {
       title: 'Automated Health Check',
-      describe: 'The Biostasis Emergency App is checking your health data',
+      describe: 'Tomorrow Bio is checking recent health data',
     },
     emergency: 'Starting Emergency Process...',
     restart: 'Automated emergency system restarted',
@@ -1326,7 +1397,7 @@ const translations = {
     stop: {
       title: 'Automated Health Check Stopped',
       describe:
-        'The Biostasis Emergency App stopped due to emergency situation!',
+        'Tomorrow Bio emergency monitoring stopped because an emergency flow started.',
     },
   },
   cryopreservationCompaniesUrls: {

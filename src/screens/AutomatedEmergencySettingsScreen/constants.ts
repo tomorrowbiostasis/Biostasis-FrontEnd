@@ -1,0 +1,1 @@
+export const TIME_BASED_CHECK_IN_INTERVAL_MINUTES = 8 * 60;

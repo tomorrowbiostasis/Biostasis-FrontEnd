@@ -1,4 +1,4 @@
-import React, {VFC} from 'react';
+import React, {useCallback, VFC} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 
 import {IEmergencyContactResponse} from '~/redux/emergencyContacts/emergencyContacts.slice';
@@ -9,7 +9,7 @@ import styles from './styles';
 
 export type IEmergencyContactProps = {
   contact: IEmergencyContactResponse;
-  onSwitchPress: (value: boolean) => void;
+  onSwitchPress: (contact: IEmergencyContactResponse, value: boolean) => void;
   onEditPress: (contact: IEmergencyContactResponse) => void;
   onDeletePress: (contact: IEmergencyContactResponse) => void;
 };
@@ -30,6 +30,10 @@ const EmergencyContact: VFC<IEmergencyContactProps> = ({
       ? `+${contact.prefix}`
       : '';
   const phoneValue = [phonePrefix, contact.phone].filter(Boolean).join(' ');
+  const handleSwitchPress = useCallback(
+    (value: boolean) => onSwitchPress(contact, value),
+    [contact, onSwitchPress],
+  );
 
   return (
     <View style={styles.card}>
@@ -69,15 +73,13 @@ const EmergencyContact: VFC<IEmergencyContactProps> = ({
       </View>
       <View style={styles.divider} />
       <View style={styles.footerRow}>
-        <View style={styles.toggleGroup}>
-          <Toggle value={contact.active} onChange={onSwitchPress} />
-          <Text style={styles.toggleLabel} numberOfLines={2}>
-            {t('emergencyContactsSettings.contactToggleHelper')}
-          </Text>
-        </View>
+        <Text style={styles.toggleLabel} numberOfLines={2}>
+          {t('emergencyContactsSettings.contactToggleHelper')}
+        </Text>
+        <Toggle value={contact.active} onChange={handleSwitchPress} />
       </View>
     </View>
   );
 };
 
-export default EmergencyContact;
+export default React.memo(EmergencyContact);

@@ -14,8 +14,13 @@ interface ProvidersProps {
   children: ReactNode;
 }
 
+const ReduxProvider = Provider as unknown as FC<{
+  store: typeof store;
+  children: ReactNode;
+}>;
+
 const Providers: FC<ProvidersProps> = ({children}) => (
-  <Provider store={store}>
+  <ReduxProvider store={store}>
     {/* Listeners should be above PersistGate to avoid unmounting */}
     <AuthListener />
     <AutomatedSystemListener />
@@ -33,7 +38,7 @@ const Providers: FC<ProvidersProps> = ({children}) => (
         </NativeBaseProvider>
       </SafeAreaProvider>
     </PersistGate>
-  </Provider>
+  </ReduxProvider>
 );
 
 export default Providers;

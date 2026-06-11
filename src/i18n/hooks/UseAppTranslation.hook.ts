@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useCallback} from 'react';
-import {TFunction, useTranslation} from 'react-i18next';
+import {useTranslation} from 'react-i18next';
+import {TFunction} from 'i18next';
 import {Settings} from 'react-native';
 import {configSelector, setLanguage} from '~/redux/config/config.slice';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';

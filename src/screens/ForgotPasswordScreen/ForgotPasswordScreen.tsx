@@ -6,9 +6,9 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 
 import AuthHeader from '~/components/AuthHeader';
 import FormInput from '~/components/FormInput';
-import Alert from '~/components/Alert';
 import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
+import {useMessageToast} from '~/hooks/UseMessageToast.hook';
 import {useEmailValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {forgotPassword} from '~/redux/auth/thunks';
@@ -36,6 +36,7 @@ const ForgotPasswordScreen = () => {
     () => ({email: params?.email ?? ''}),
     [params?.email],
   );
+  useMessageToast(emailMessage);
 
   useEffect(() => {
     dispatch(setForgotPasswordEmailMessage(undefined));
@@ -64,14 +65,6 @@ const ForgotPasswordScreen = () => {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         bounces={false}>
-        {emailMessage && (
-          <View style={styles.alertContainer}>
-            <Alert
-              label={t(emailMessage.messageKey)}
-              error={!emailMessage.success}
-            />
-          </View>
-        )}
         <Formik<ForgotPasswordFormFields>
           initialValues={initialValues}
           enableReinitialize

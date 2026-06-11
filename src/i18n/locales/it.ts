@@ -185,7 +185,7 @@ const translations: ITranslation = {
     terms: 'Termini di Servizio',
     signIn: {
       title: 'Bentornato.',
-      subtitle: 'Accedi al tuo account Biostasis.',
+      subtitle: 'Accedi al tuo account tomorrow.bio.',
       cta: 'Accedi',
       dividerLabel: 'oppure accedi con email',
       passwordPlaceholder: 'La tua password',

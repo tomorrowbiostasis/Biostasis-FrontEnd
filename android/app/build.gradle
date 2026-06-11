@@ -156,11 +156,11 @@ android {
     flavorDimensions "default"
     productFlavors {
         development {
-            resValue "string", "app_name", "Biostasis dev"
+            resValue "string", "app_name", "Tomorrow Bio dev"
             applicationId "com.tomorrowbiostasis.app"
         }
         production {
-            resValue "string", "app_name", "Biostasis"
+            resValue "string", "app_name", "Tomorrow Bio"
             applicationId "com.tomorrowbiostasis.app"
         }
     }
@@ -233,4 +233,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.implementation
     into 'libs'
 }
-

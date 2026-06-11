@@ -18,12 +18,33 @@ export const updateDataCollectionStatus = () => {
   }
 };
 
-export const requestLatestHealthData = () => {
+export const requestLatestHealthData = async (): Promise<boolean> => {
   if (!isAndroid && NativeModules.NativeManager?.requestLatestHealthData) {
-    NativeModules.NativeManager.requestLatestHealthData();
+    const result = await NativeModules.NativeManager.requestLatestHealthData();
+    return result !== false;
   } else {
     updateDataCollectionStatus();
+    return true;
   }
+};
+
+export type RecentMovementData = {
+  steps: number;
+  hasRecentMovement: boolean;
+  source: 'healthkit' | 'pedometer' | 'unavailable';
+  lookbackMinutes: number;
+  startDate: number;
+  endDate: number;
+};
+
+export const queryRecentMovement = async (
+  lookbackMinutes = 10,
+): Promise<RecentMovementData | null> => {
+  if (!isIOS || !NativeModules.NativeManager?.queryRecentMovement) {
+    return null;
+  }
+
+  return NativeModules.NativeManager.queryRecentMovement(lookbackMinutes);
 };
 
 export const openSettings = () => {

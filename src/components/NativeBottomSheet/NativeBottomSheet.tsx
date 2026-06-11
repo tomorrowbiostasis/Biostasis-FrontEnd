@@ -10,11 +10,15 @@ import {
   Pressable,
   StyleProp,
   StyleSheet,
+  useWindowDimensions,
   View,
   ViewStyle,
 } from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import Animated, {
+  Easing,
+  Extrapolation,
+  interpolate,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -27,6 +31,7 @@ import {semanticColors} from '~/theme/tokens';
 interface NativeBottomSheetProps extends PropsWithChildren {
   visible: boolean;
   onDismiss: () => void;
+  onDismissComplete?: () => void;
   sheetStyle?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
   handleStyle?: StyleProp<ViewStyle>;
@@ -34,16 +39,27 @@ interface NativeBottomSheetProps extends PropsWithChildren {
   bottomInsetPadding?: number;
   closeOnBackdropPress?: boolean;
   swipeToDismiss?: boolean;
+  panGestureTarget?: 'sheet' | 'handle';
   showHandle?: boolean;
 }
 
-const CLOSED_OFFSET = 48;
 const DISMISS_DISTANCE = 120;
 const DISMISS_VELOCITY = 1100;
+const CLOSE_DURATION_MS = 420;
+const CLOSE_EASING = Easing.bezier(0.4, 0, 0.2, 1);
+const SHEET_SPRING = {
+  damping: 30,
+  stiffness: 185,
+  mass: 1,
+  overshootClamping: false,
+  restDisplacementThreshold: 0.5,
+  restSpeedThreshold: 0.5,
+};
 
 const NativeBottomSheet = ({
   visible,
   onDismiss,
+  onDismissComplete,
   children,
   sheetStyle,
   contentStyle,
@@ -52,43 +68,71 @@ const NativeBottomSheet = ({
   bottomInsetPadding = 18,
   closeOnBackdropPress = true,
   swipeToDismiss = true,
+  panGestureTarget = 'sheet',
   showHandle = true,
 }: NativeBottomSheetProps) => {
   const insets = useSafeAreaInsets();
+  const {height: windowHeight} = useWindowDimensions();
   const [rendered, setRendered] = useState(visible);
-  const dragY = useSharedValue(visible ? 0 : CLOSED_OFFSET);
+  const [closing, setClosing] = useState(false);
+  const hiddenOffset = Math.max(windowHeight, 720);
+  const dragY = useSharedValue(visible ? 0 : hiddenOffset);
+
+  const finishClose = useCallback(
+    (notifyDismiss: boolean) => {
+      setClosing(false);
+      setRendered(false);
+      onDismissComplete?.();
+      if (notifyDismiss) {
+        onDismiss();
+      }
+    },
+    [onDismiss, onDismissComplete],
+  );
+
+  const animateClose = useCallback(
+    (notifyDismiss: boolean) => {
+      setClosing(true);
+      dragY.value = withTiming(
+        hiddenOffset,
+        {
+          duration: CLOSE_DURATION_MS,
+          easing: CLOSE_EASING,
+        },
+        finished => finished && runOnJS(finishClose)(notifyDismiss),
+      );
+    },
+    [dragY, finishClose, hiddenOffset],
+  );
 
   useEffect(() => {
     if (visible) {
       setRendered(true);
-      dragY.value = CLOSED_OFFSET;
+      setClosing(false);
+      dragY.value = hiddenOffset;
       requestAnimationFrame(() => {
-        dragY.value = withSpring(0, {
-          damping: 24,
-          stiffness: 280,
-          mass: 0.92,
-        });
+        dragY.value = withSpring(0, SHEET_SPRING);
       });
       return;
     }
 
-    dragY.value = withTiming(
-      CLOSED_OFFSET,
-      {duration: 180},
-      finished => finished && runOnJS(setRendered)(false),
-    );
-  }, [dragY, visible]);
+    if (rendered) {
+      animateClose(false);
+    }
+  }, [animateClose, dragY, hiddenOffset, rendered, visible]);
 
   const handleRequestDismiss = useCallback(() => {
-    if (visible) {
-      onDismiss();
+    if (visible && !closing) {
+      animateClose(true);
     }
-  }, [onDismiss, visible]);
+  }, [animateClose, closing, visible]);
 
   const panGesture = useMemo(
     () =>
       Gesture.Pan()
         .enabled(swipeToDismiss)
+        .activeOffsetY(12)
+        .failOffsetX([-18, 18])
         .onUpdate(event => {
           if (event.translationY > 0) {
             dragY.value = event.translationY;
@@ -103,11 +147,7 @@ const NativeBottomSheet = ({
             return;
           }
 
-          dragY.value = withSpring(0, {
-            damping: 24,
-            stiffness: 280,
-            mass: 0.92,
-          });
+          dragY.value = withSpring(0, SHEET_SPRING);
         }),
     [dragY, handleRequestDismiss, swipeToDismiss],
   );
@@ -116,9 +156,41 @@ const NativeBottomSheet = ({
     transform: [{translateY: dragY.value}],
   }));
 
+  const animatedScrimStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      dragY.value,
+      [hiddenOffset, 0],
+      [0, 1],
+      Extrapolation.CLAMP,
+    ),
+  }));
+
   if (!rendered) {
     return null;
   }
+
+  const handle = (
+    <View style={styles.handleHitArea}>
+      {showHandle ? <View style={[styles.handle, handleStyle]} /> : null}
+    </View>
+  );
+
+  const sheet = (
+    <Animated.View
+      style={[
+        styles.sheet,
+        {maxHeight, paddingBottom: insets.bottom + bottomInsetPadding},
+        animatedSheetStyle,
+        sheetStyle,
+      ]}>
+      {panGestureTarget === 'handle' ? (
+        <GestureDetector gesture={panGesture}>{handle}</GestureDetector>
+      ) : (
+        handle
+      )}
+      <View style={contentStyle}>{children}</View>
+    </Animated.View>
+  );
 
   return (
     <Modal
@@ -132,25 +204,14 @@ const NativeBottomSheet = ({
           style={StyleSheet.absoluteFill}
           disabled={!closeOnBackdropPress}
           onPress={handleRequestDismiss}>
-          <View style={styles.scrim} />
+          <Animated.View style={[styles.scrim, animatedScrimStyle]} />
         </Pressable>
 
-        <GestureDetector gesture={panGesture}>
-          <Animated.View
-            style={[
-              styles.sheet,
-              {maxHeight, paddingBottom: insets.bottom + bottomInsetPadding},
-              animatedSheetStyle,
-              sheetStyle,
-            ]}>
-            <View style={styles.handleHitArea}>
-              {showHandle ? (
-                <View style={[styles.handle, handleStyle]} />
-              ) : null}
-            </View>
-            <View style={contentStyle}>{children}</View>
-          </Animated.View>
-        </GestureDetector>
+        {panGestureTarget === 'sheet' ? (
+          <GestureDetector gesture={panGesture}>{sheet}</GestureDetector>
+        ) : (
+          sheet
+        )}
       </View>
     </Modal>
   );

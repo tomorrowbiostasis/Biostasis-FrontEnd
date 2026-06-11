@@ -46,7 +46,7 @@ const AnimatedSubmitButton: FC<AnimatedSubmitButtonProps> = ({
     <Animated.View style={[styles.wrapper, style, animatedStyle]}>
       <Button
         {...props}
-        variant={variant}
+        variant={variant as IButtonProps['variant']}
         isDisabled={disabled}>
         {children}
       </Button>

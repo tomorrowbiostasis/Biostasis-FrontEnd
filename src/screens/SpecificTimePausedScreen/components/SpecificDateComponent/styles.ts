@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import colors from '~/theme/colors';
+import {typography} from '~/theme/tokens';
 
 const styles = StyleSheet.create({
   card: {
@@ -45,8 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray[500],
   },
   statusText: {
-    fontSize: 11,
-    fontWeight: '600',
+    ...typography.statusTagSmall,
   },
   statusTextActive: {
     color: '#4CAF50',

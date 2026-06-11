@@ -127,18 +127,18 @@ export const recentMovementData = async (config: IGoogleFitConfig) => {
 
     if (samples.length) {
       let maxSteps = 0;
-      let latestTime = '';
+      let latestTime: number | null = null;
       samples.forEach(sample => {
         const steps = sample.rawSteps.reduce(
           (sum, data) => sum + data.steps,
           0,
         );
-        const time = sample.rawSteps.reduce((latest: string, data) => {
+        const time = sample.rawSteps.reduce<number | null>((latest, data) => {
           if (!latest || data.endDate > latest) {
             return data.endDate;
           }
           return latest;
-        }, '');
+        }, null);
         if (steps > maxSteps) {
           maxSteps = steps;
           latestTime = time;

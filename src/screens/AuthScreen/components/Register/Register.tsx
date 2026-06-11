@@ -4,9 +4,9 @@ import {Formik, FormikProps} from 'formik';
 
 import FormInput from '~/components/FormInput';
 import Switch from '~/components/Switch';
-import Alert from '~/components/Alert';
 import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
+import {useMessageToast} from '~/hooks/UseMessageToast.hook';
 import {useSignUpValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {getSignUpParams} from '~/redux/auth/selectors';
@@ -34,6 +34,7 @@ const Register: FC<RegisterProps> = ({initialValues, onValuesChange}) => {
   const signUpValidationSchema = useSignUpValidationSchema();
   const {message, pending, formFieldError} = useAppSelector(getSignUpParams);
   const formRef = useRef<FormikProps<RegisterFormFields> | null>(null);
+  useMessageToast(message);
 
   useEffect(() => {
     if (message?.success) {
@@ -66,11 +67,6 @@ const Register: FC<RegisterProps> = ({initialValues, onValuesChange}) => {
 
   return (
     <View style={styles.container}>
-      {message && (
-        <View style={styles.alertContainer}>
-          <Alert label={t(message.messageKey)} error={!message.success} />
-        </View>
-      )}
       <Formik<RegisterFormFields>
         innerRef={formRef}
         initialValues={initialValues}

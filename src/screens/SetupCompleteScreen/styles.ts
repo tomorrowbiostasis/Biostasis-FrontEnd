@@ -50,12 +50,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  brand: {
-    fontFamily: 'DMSans-Bold',
-    fontSize: 13,
-    letterSpacing: 3.5,
-    color: semanticColors.success,
+  brandLogoWrap: {
     marginTop: spacing.lg,
+    height: 24,
+    justifyContent: 'center',
+  },
+  brandLogoColor: {
+    color: semanticColors.success,
   },
   titleArea: {
     marginTop: 80,

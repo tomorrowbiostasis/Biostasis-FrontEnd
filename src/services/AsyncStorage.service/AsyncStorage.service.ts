@@ -10,15 +10,11 @@ export const AsyncStorageService = {
     try {
       await AsyncStorage.setItem(key, value);
       if (!disableLog) {
-        console.log(
-          `AsyncStorageService: Item saved key: ${key}, value: ${value}`,
-        );
+        console.log(`AsyncStorageService: Item saved key: ${key}`);
       }
     } catch (e) {
       if (!disableLog) {
-        console.log(
-          `AsyncStorageService: Problem during save key: ${key}, value: ${value}`,
-        );
+        console.log(`AsyncStorageService: Problem during save key: ${key}`);
       }
       throw e;
     }

@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {RootAuthButton, IRootAuthButtonProps} from './RootAuthButton';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {StyleSheet, View} from 'react-native';
+import {AppleIcon} from '~/assets/icons/AppIcons';
 
 interface IAppleButtonProps
   extends Pick<
@@ -22,7 +22,7 @@ export const AppleButton: FC<IAppleButtonProps> = ({
       variant="solid"
       startIcon={
         <View style={styles.iconFrame}>
-          <Icon name="apple" size={19} color="white" />
+          <AppleIcon size={19} color="white" />
         </View>
       }
       style={style}

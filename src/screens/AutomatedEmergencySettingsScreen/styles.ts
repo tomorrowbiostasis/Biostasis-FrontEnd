@@ -382,9 +382,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E8EEF5',
   },
   modeBadgeText: {
-    fontFamily: 'DMSans-Bold',
-    fontSize: 11,
-    lineHeight: 14,
+    ...typography.statusTagSmall,
     textAlign: 'center',
   },
   modeBadgeTextActive: {

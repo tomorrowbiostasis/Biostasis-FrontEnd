@@ -2,7 +2,6 @@ import React, {FC, ReactNode} from 'react';
 import {Text, Box, IBoxProps} from 'native-base';
 import styles from './styles';
 import colors from '~/theme/colors';
-import { globalTextStyles } from '~/theme/globalTextStyles';
 
 interface IIconWithText {
   icon: ReactNode;

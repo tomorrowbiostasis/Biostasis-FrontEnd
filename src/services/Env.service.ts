@@ -8,6 +8,7 @@ type Config = {
   AWS_POOL_WEB_CLIENT_ID: string;
   AWS_IDENTITY_POOL_ID: string;
   AWS_OAUTH_DOMAIN: string;
+  GOOGLE_MAPS_API_KEY?: string;
   PROD: boolean;
   DEV: boolean;
 };
@@ -20,6 +21,7 @@ const EnvConfig: Config = {
   AWS_POOL_WEB_CLIENT_ID: RNConfig.AWS_POOL_WEB_CLIENT_ID,
   AWS_IDENTITY_POOL_ID: RNConfig.AWS_IDENTITY_POOL_ID,
   AWS_OAUTH_DOMAIN: RNConfig.AWS_OAUTH_DOMAIN,
+  GOOGLE_MAPS_API_KEY: RNConfig.GOOGLE_MAPS_API_KEY,
   PROD: RNConfig.ENVIRONMENT === 'production',
   DEV: RNConfig.ENVIRONMENT === 'development',
 } as Config;

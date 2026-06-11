@@ -25,6 +25,33 @@ const styles = StyleSheet.create({
   input: {
     width: '90%',
   },
+  flagButton: {
+    minWidth: 46,
+    height: 30,
+    borderRadius: 8,
+    backgroundColor: 'rgba(11, 31, 58, 0.05)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 5,
+    paddingHorizontal: 7,
+  },
+  flagImage: {
+    width: 24,
+    height: 16,
+    borderRadius: 2,
+  },
+  flagChevron: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 4,
+    borderRightWidth: 4,
+    borderTopWidth: 5,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: semanticColors.textSecondary,
+    marginTop: 2,
+  },
   errorMessage: {
     color: colors.red[400],
   },
@@ -62,6 +89,23 @@ const styles = StyleSheet.create({
   figmaInput: {
     flex: 1,
     height: 42,
+  },
+  figmaFlagButton: {
+    minWidth: 50,
+    height: 32,
+    borderRadius: 10,
+    backgroundColor: semanticColors.surfaceSubtle,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 5,
+    paddingHorizontal: 8,
+    marginRight: 2,
+  },
+  figmaFlagImage: {
+    width: 27,
+    height: 18,
+    borderRadius: 2,
   },
   figmaInputContainerText: {
     color: semanticColors.textPrimary,

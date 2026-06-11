@@ -52,13 +52,10 @@ const styles = StyleSheet.create({
   },
   footerRow: {
     minHeight: 34,
-  },
-  toggleGroup: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
-    minHeight: 30,
+    justifyContent: 'space-between',
+    gap: 12,
   },
   toggleLabel: {
     flex: 1,

@@ -27,7 +27,6 @@ import {
   stopBackgroundFetch,
 } from '~/services/Background.service';
 import {
-  checkNotificationPermissions,
   invokeGetToken,
   listenForPushTokenAndUpdate,
 } from '~/services/Push.service';
@@ -147,8 +146,11 @@ const AutomatedSystemListener = () => {
 
       // const isActive = await isForegroundActive;
       // console.log('isActive', isActive);
-      await checkNotificationPermissions().then(null);
-      await handleChangeAutomatedEmergencyState(isPlatformConditionsValid);
+      await handleChangeAutomatedEmergencyState(
+        isPlatformConditionsValid === undefined
+          ? undefined
+          : Boolean(isPlatformConditionsValid),
+      );
       if (Platform.OS === 'android') {
         if (allowNotifications && !isNowPaused && isConnected) {
           await updateNotification(

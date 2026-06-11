@@ -126,9 +126,12 @@ const pendingUpdateActiveEmergencyContactStatus: PendingUpdateActiveEmergencyCon
 
 const fulfilledUpdateActiveEmergencyContactStatus = (
   state: IEmergencyContactsState,
-  {payload}: PayloadAction<IEmergencyContactResponse>,
+  {payload}: PayloadAction<IEmergencyContactResponse | null>,
 ) => {
   state.pending = false;
+  if (!payload) {
+    return;
+  }
   const contactIndex = findEmergencyContactIndex(
     state.emergencyContacts,
     payload,

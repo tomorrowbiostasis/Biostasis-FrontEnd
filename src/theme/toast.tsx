@@ -13,28 +13,33 @@ import {
 type ToastVariant = {
   bg: string;
   accent: string;
+  border: string;
   Icon: React.ComponentType<{size?: number; color?: string}>;
 };
 
 const VARIANTS: Record<'success' | 'error' | 'warning' | 'info', ToastVariant> = {
   success: {
-    bg: semanticColors.successSurface,
+    bg: '#F4FBF8',
     accent: semanticColors.success,
+    border: 'rgba(30, 155, 107, 0.18)',
     Icon: CheckIcon,
   },
   error: {
-    bg: semanticColors.dangerSurface,
+    bg: '#FFF7F7',
     accent: semanticColors.danger,
+    border: 'rgba(229, 55, 58, 0.18)',
     Icon: XIcon,
   },
   warning: {
-    bg: semanticColors.warningSurface,
+    bg: '#FFFBF4',
     accent: semanticColors.warningStrong,
+    border: 'rgba(212, 130, 10, 0.18)',
     Icon: AlertTriangleIcon,
   },
   info: {
-    bg: semanticColors.infoSurface,
+    bg: '#F6F9FD',
     accent: semanticColors.info,
+    border: 'rgba(45, 107, 228, 0.16)',
     Icon: LightbulbIcon,
   },
 };
@@ -46,13 +51,13 @@ interface ToastBodyProps {
 }
 
 const ToastBody: React.FC<ToastBodyProps> = ({variant, title, body}) => {
-  const {bg, accent, Icon} = variant;
+  const {bg, accent, border, Icon} = variant;
   return (
     <Pressable
       onPress={() => Toast.hide()}
       accessibilityRole="button"
       accessibilityLabel="Dismiss notification"
-      style={[styles.container, {backgroundColor: bg}]}>
+      style={[styles.container, {backgroundColor: bg, borderColor: border}]}>
       <View style={[styles.accentBar, {backgroundColor: accent}]} />
       <View style={styles.iconChip}>
         <Icon size={20} color={accent} />
@@ -97,6 +102,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginHorizontal: 16,
     borderRadius: 14,
+    borderWidth: 1,
     overflow: 'hidden',
     ...shadow.md,
   },

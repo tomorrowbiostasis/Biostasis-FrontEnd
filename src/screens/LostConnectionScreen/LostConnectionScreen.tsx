@@ -39,7 +39,7 @@ const LostConnectionScreen: VFC = () => {
           loadingInitData,
           isInitialized,
           navigationReady: navigationRef.isReady(),
-        }),
+        }) as never,
       );
     }
   }, [isConnected, isInitialized, isLogged, loadingInitData, reset, type]);

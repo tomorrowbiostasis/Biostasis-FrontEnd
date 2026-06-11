@@ -13,21 +13,19 @@ import {updateUser} from '~/redux/user/thunks';
 import {setEmergencyCheckType} from '~/redux/automatedEmergency/automatedEmergency.slice';
 import {resetRecommendationSystem} from '~/services/Recommendation.service';
 import ToastService from '~/services/Toast.service';
-import EnvConfig from '~/services/Env.service';
 
-import IntervalSelect from '~/components/IntervalSelect';
 import {BioEmergencySettingsFillClock} from '~/assets/icons/BiostasisIcons';
 import StatusBadge from '../../StatusBadge';
 import TriggerToggleRow from '../../TriggerToggleRow';
 import triggerStyles from '../../triggerStyles';
-
-const defaultFrequencyOfRegularNotification = 120;
+import {TIME_BASED_CHECK_IN_INTERVAL_MINUTES} from '../../../../constants';
 
 const TimeBasedTrigger = ({embedded = false}: {embedded?: boolean}) => {
   const {t} = useAppTranslation();
   const dispatch = useAppDispatch();
-  const {regularPushNotification, frequencyOfRegularNotification} =
-    useAppSelector(automatedEmergencySettingsSelector);
+  const {regularPushNotification} = useAppSelector(
+    automatedEmergencySettingsSelector,
+  );
 
   const handleUpdateUser = useCallback(
     (updateData: AutomatedEmergencySettings, touched?: boolean) => {
@@ -42,31 +40,10 @@ const TimeBasedTrigger = ({embedded = false}: {embedded?: boolean}) => {
     const updateData: IUser = {
       regularPushNotification: true,
       frequencyOfRegularNotification:
-        frequencyOfRegularNotification || defaultFrequencyOfRegularNotification,
+        TIME_BASED_CHECK_IN_INTERVAL_MINUTES,
     };
     handleUpdateUser(updateData, true);
-  }, [handleUpdateUser, frequencyOfRegularNotification]);
-
-  const handleFrequency = useCallback(
-    (frequency: number) => {
-      ToastService.success(
-        t('emergencyContactsSettings.automatedEmergencySettings.frequencySet') +
-          ' ' +
-          (EnvConfig.DEV
-            ? t(
-                'emergencyContactsSettings.automatedEmergencySettings.time.minutes',
-                {count: frequency},
-              )
-            : t(
-                'emergencyContactsSettings.automatedEmergencySettings.time.hours',
-                {count: frequency / 60},
-              )),
-        {visibilityTime: 1000},
-      );
-      handleUpdateUser({frequencyOfRegularNotification: frequency}, true);
-    },
-    [handleUpdateUser, t],
-  );
+  }, [handleUpdateUser]);
 
   const handleEmergencyCheckTypeChange = async () => {
     await resetRecommendationSystem(AsyncStorage);
@@ -139,18 +116,23 @@ const TimeBasedTrigger = ({embedded = false}: {embedded?: boolean}) => {
       ) : null}
 
       {regularPushNotification || embedded ? (
-        <>
+        <View style={triggerStyles.fixedIntervalBox}>
           <Text style={triggerStyles.frequencyLabel}>
             {t(
               'emergencyContactsSettings.automatedEmergencySettings.timeTrigger.frequency',
             )}
           </Text>
-          <IntervalSelect
-            selectedValue={`${frequencyOfRegularNotification}`}
-            type="time"
-            onValueChange={itemValue => handleFrequency(+itemValue)}
-          />
-        </>
+          <Text style={triggerStyles.fixedIntervalValue}>
+            {t(
+              'emergencyContactsSettings.automatedEmergencySettings.timeTrigger.fixedInterval',
+            )}
+          </Text>
+          <Text style={triggerStyles.recommendation}>
+            {t(
+              'emergencyContactsSettings.automatedEmergencySettings.timeTrigger.movementNote',
+            )}
+          </Text>
+        </View>
       ) : null}
     </View>
   );

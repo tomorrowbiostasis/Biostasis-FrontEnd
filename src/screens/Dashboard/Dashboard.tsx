@@ -13,6 +13,7 @@ import {
 import {
   RouteProp,
   useFocusEffect,
+  useIsFocused,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
@@ -35,9 +36,9 @@ import {selectContactsInfo} from '~/redux/emergencyContacts/selectors';
 import {
   getGoogleMapsUrl,
   getLocation,
-  requestLocationPermission,
+  hasLocationPermission,
 } from '~/services/Location.service';
-import {checkNotificationPermissions} from '~/services/Push.service';
+import {hasNotificationPermission} from '~/services/Push.service';
 import {
   getUser,
   updateEmergencyButtonSettings,
@@ -55,6 +56,7 @@ import SystemCard from '~/components/SystemCard';
 import AnimatedHeaderSurface from '~/components/AnimatedHeaderSurface';
 import {FootprintsIcon, RefreshCwIcon} from '~/assets/icons/AppIcons';
 import {ChevronRightIcon} from '~/assets/icons/AppIcons';
+import TmrBioLogo from '~/assets/icons/TmrBioLogo';
 import {
   BioAccountSettingsFillAlertWarning,
   BioHomeFillBroadcastSignal,
@@ -152,6 +154,7 @@ const Dashboard = () => {
   const pausedDate = useAppSelector(automatedEmergencyPausedDateSelector);
   const health = useAppSelector(state => state.health.data);
   const {isActive} = UseAppState();
+  const isFocused = useIsFocused();
   const {isSlotPause} = useTimeSlotPauseStatus();
 
   const markRefreshComplete = useCallback(() => {
@@ -205,7 +208,9 @@ const Dashboard = () => {
         setIsRefreshingHealth(true);
         setRefreshPhase('refreshing');
       }
-      requestLatestHealthData();
+      requestLatestHealthData().catch(error => {
+        console.log('Could not refresh latest health data', error);
+      });
 
       if (refreshTimeoutRef.current) {
         clearTimeout(refreshTimeoutRef.current);
@@ -396,7 +401,7 @@ const Dashboard = () => {
       lastPermissionCheckAtRef.current = now;
 
       try {
-        const isLocationGranted = await requestLocationPermission(true);
+        const isLocationGranted = await hasLocationPermission();
         const values: EmergencyButtonSettings = {
           locationAccess: isLocationGranted,
         };
@@ -414,33 +419,25 @@ const Dashboard = () => {
         console.log('Could not get location permissions');
       }
 
-      await checkNotificationPermissions();
+      await hasNotificationPermission();
     }
   }, [dispatch, handleLocationChange]);
-
-  useEffect(() => {
-    const task = InteractionManager.runAfterInteractions(() => {
-      checkRequiredPermissions();
-      refreshHealthOnFocus();
-    });
-
-    return () => task.cancel();
-  }, [checkRequiredPermissions, refreshHealthOnFocus]);
 
   useFocusEffect(
     useCallback(() => {
       scrollRef.current?.scrollTo({y: 0, animated: false});
 
       const task = InteractionManager.runAfterInteractions(() => {
+        checkRequiredPermissions();
         refreshHealthOnFocus();
       });
 
       return () => task.cancel();
-    }, [refreshHealthOnFocus]),
+    }, [checkRequiredPermissions, refreshHealthOnFocus]),
   );
 
   useEffect(() => {
-    if (!isActive) {
+    if (!isActive || !isFocused) {
       return;
     }
 
@@ -449,19 +446,22 @@ const Dashboard = () => {
     });
 
     return () => task.cancel();
-  }, [checkRequiredPermissions, isActive]);
+  }, [checkRequiredPermissions, isActive, isFocused]);
 
   useEffect(() => {
-    isActive &&
-      (async () => {
-        const isInEmergencyState = await AsyncStorageService.getItem(
-          AsyncStorageEnum.IsEmergencyEscalationStarted,
-        );
-        if (JSON.parse(isInEmergencyState ?? 'false')) {
-          navigate(Screens.HealthConditionError as never);
-        }
-      })();
-  }, [isActive, navigate]);
+    if (!isActive || !isFocused) {
+      return;
+    }
+
+    (async () => {
+      const isInEmergencyState = await AsyncStorageService.getItem(
+        AsyncStorageEnum.IsEmergencyEscalationStarted,
+      );
+      if (JSON.parse(isInEmergencyState ?? 'false')) {
+        navigate(Screens.HealthConditionError as never);
+      }
+    })();
+  }, [isActive, isFocused, navigate]);
 
   /* ----- navigation ----- */
   const goSettings = useCallback(
@@ -592,6 +592,7 @@ const Dashboard = () => {
     t,
     timeActive,
   ]);
+  const readinessActive = readiness.tone === 'active';
 
   const readinessRows = useMemo(
     () => [
@@ -663,11 +664,8 @@ const Dashboard = () => {
 
     if (monitoringActive) {
       return {
-        subtitle: modeLabel,
-        statusTitle: t('dashboardHome.cards.emergencySystem.live.activeTitle'),
-        statusDescription: timeActive
-          ? t('dashboardHome.cards.emergencySystem.live.activeTimeDescription')
-          : t('dashboardHome.cards.emergencySystem.live.activeBioDescription'),
+        subtitle: t('dashboardHome.cards.emergencySystem.active'),
+        statusBadge: t('dashboardHome.cards.emergencySystem.badge.enabled'),
         actionLabel: t('dashboardHome.cards.emergencySystem.actions.view'),
         tone: 'success' as const,
       };
@@ -698,7 +696,14 @@ const Dashboard = () => {
       <AnimatedHeaderSurface style={styles.header}>
         <View style={styles.headerRow}>
           <View>
-            <Text style={styles.eyebrow}>{t('welcome.eyebrow')}</Text>
+            <View style={styles.logoWrap}>
+              <TmrBioLogo
+                width={96}
+                height={16}
+                color="#FFFFFF"
+                opacity={0.52}
+              />
+            </View>
             <Text style={styles.greeting}>{greeting}</Text>
             <Text style={styles.name} numberOfLines={1}>
               {user.name || ''}
@@ -798,57 +803,65 @@ const Dashboard = () => {
             </View>
           </View>
 
-          <View style={styles.readinessTitleBlock}>
-            <Text style={styles.readinessTitle}>{readiness.title}</Text>
-            <Text style={styles.readinessSubtitle}>{readiness.subtitle}</Text>
-          </View>
+          {!readinessActive ? (
+            <View style={styles.readinessTitleBlock}>
+              <Text style={styles.readinessTitle}>{readiness.title}</Text>
+              <Text style={styles.readinessSubtitle}>
+                {readiness.subtitle}
+              </Text>
+            </View>
+          ) : null}
 
-          <View style={styles.readinessChecklist}>
-            {readinessRows.map(item => (
+          {!readinessActive ? (
+            <>
+              <View style={styles.readinessChecklist}>
+                {readinessRows.map(item => (
+                  <TouchableOpacity
+                    key={item.label}
+                    activeOpacity={0.75}
+                    onPress={item.onPress}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${item.label}: ${item.value}`}>
+                    <View style={styles.readinessRow}>
+                      <Text style={styles.readinessRowLabel}>{item.label}</Text>
+                      <View
+                        style={[
+                          styles.readinessRowValuePill,
+                          item.tone === 'success'
+                            ? styles.readinessRowValuePillSuccess
+                            : item.tone === 'muted'
+                            ? styles.readinessRowValuePillMuted
+                            : styles.readinessRowValuePillWarning,
+                        ]}>
+                        <Text
+                          style={[
+                            styles.readinessRowValue,
+                            item.tone === 'success'
+                              ? styles.readinessRowValueDone
+                              : item.tone === 'muted'
+                              ? styles.readinessRowValueMuted
+                              : styles.readinessRowValueTodo,
+                          ]}
+                          numberOfLines={1}>
+                          {item.value}
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
               <TouchableOpacity
-                key={item.label}
-                activeOpacity={0.75}
-                onPress={item.onPress}
-                accessibilityRole="button"
-                accessibilityLabel={`${item.label}: ${item.value}`}>
-                <View style={styles.readinessRow}>
-                  <Text style={styles.readinessRowLabel}>{item.label}</Text>
-                  <View
-                    style={[
-                      styles.readinessRowValuePill,
-                      item.tone === 'success'
-                        ? styles.readinessRowValuePillSuccess
-                        : item.tone === 'muted'
-                        ? styles.readinessRowValuePillMuted
-                        : styles.readinessRowValuePillWarning,
-                    ]}>
-                    <Text
-                      style={[
-                        styles.readinessRowValue,
-                        item.tone === 'success'
-                          ? styles.readinessRowValueDone
-                          : item.tone === 'muted'
-                          ? styles.readinessRowValueMuted
-                          : styles.readinessRowValueTodo,
-                      ]}
-                      numberOfLines={1}>
-                      {item.value}
-                    </Text>
-                  </View>
-                </View>
+                style={styles.readinessAction}
+                activeOpacity={0.82}
+                onPress={readiness.onActionPress}
+                accessibilityRole="button">
+                <Text style={styles.readinessActionText}>
+                  {readiness.actionLabel}
+                </Text>
               </TouchableOpacity>
-            ))}
-          </View>
-
-          <TouchableOpacity
-            style={styles.readinessAction}
-            activeOpacity={0.82}
-            onPress={readiness.onActionPress}
-            accessibilityRole="button">
-            <Text style={styles.readinessActionText}>
-              {readiness.actionLabel}
-            </Text>
-          </TouchableOpacity>
+            </>
+          ) : null}
         </View>
 
         <Text style={styles.sectionLabel}>
@@ -936,14 +949,21 @@ const Dashboard = () => {
                 title={t('dashboardHome.cards.emergencySystem.title')}
                 subtitle={emergencySystemStatus.subtitle}
                 footer={
-                  <EmergencySystemStatusFooter
-                    title={emergencySystemStatus.statusTitle}
-                    description={emergencySystemStatus.statusDescription}
-                    action={emergencySystemStatus.actionLabel}
-                    tone={emergencySystemStatus.tone}
-                  />
+                  emergencySystemStatus.statusBadge ? (
+                    <StatusFooter
+                      status={emergencySystemStatus.statusBadge}
+                      action={emergencySystemStatus.actionLabel}
+                      tone={emergencySystemStatus.tone}
+                    />
+                  ) : (
+                    <EmergencySystemStatusFooter
+                      title={emergencySystemStatus.statusTitle ?? ''}
+                      description={emergencySystemStatus.statusDescription ?? ''}
+                      action={emergencySystemStatus.actionLabel}
+                      tone={emergencySystemStatus.tone}
+                    />
+                  )
                 }
-                highlighted={emergencySystemStatus.tone === 'success'}
                 onPress={goAutomatedEmergency}
               />
               <SystemCard
@@ -1136,6 +1156,7 @@ const EmergencySystemStatusFooter = React.memo(
           <Text style={styles.emergencyStatusDescription}>{description}</Text>
         </View>
       </View>
+      <View style={styles.emergencyStatusDivider} />
       <StatusAction label={action} />
     </View>
   ),

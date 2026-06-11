@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import {
   Animated,
-  Easing,
   LayoutChangeEvent,
   StyleSheet,
   Text,
@@ -52,10 +51,11 @@ type TabLayout = {
 
 type EmergencyCenterButtonProps = {
   navigation: BottomTabBarProps['navigation'];
+  onEmergencyPress?: () => void;
 };
 
 const EmergencyCenterButton: FC<EmergencyCenterButtonProps> = React.memo(
-  ({navigation}) => {
+  ({navigation, onEmergencyPress}) => {
     const {t} = useAppTranslation();
     const {user} = useAppSelector(userSelector);
     const {hasContacts, areContactsEnabled} =
@@ -63,7 +63,6 @@ const EmergencyCenterButton: FC<EmergencyCenterButtonProps> = React.memo(
     const {automatedEmergency} = useAppSelector(
       automatedEmergencySettingsSelector,
     );
-    const emergencyBreath = useRef(new Animated.Value(0)).current;
 
     const emergencyReadiness = useMemo(() => {
       const contactsReady = hasContacts && areContactsEnabled;
@@ -90,7 +89,7 @@ const EmergencyCenterButton: FC<EmergencyCenterButtonProps> = React.memo(
 
     const handleActivate = useCallback(() => {
       if (emergencyReady) {
-        navigation.navigate(Screens.EmergencyConfirmation as never);
+        onEmergencyPress?.();
         return;
       }
 
@@ -101,39 +100,13 @@ const EmergencyCenterButton: FC<EmergencyCenterButtonProps> = React.memo(
           emergencySetupPromptReason: emergencyReadiness.missingReason,
         } as never,
       );
-    }, [emergencyReadiness.missingReason, emergencyReady, navigation]);
+    }, [
+      emergencyReadiness.missingReason,
+      emergencyReady,
+      navigation,
+      onEmergencyPress,
+    ]);
 
-    useEffect(() => {
-      if (!emergencyReady) {
-        emergencyBreath.setValue(0);
-        return;
-      }
-
-      const animation = Animated.loop(
-        Animated.sequence([
-          Animated.timing(emergencyBreath, {
-            toValue: 1,
-            duration: 1800,
-            easing: Easing.inOut(Easing.sin),
-            useNativeDriver: true,
-          }),
-          Animated.timing(emergencyBreath, {
-            toValue: 0,
-            duration: 1800,
-            easing: Easing.inOut(Easing.sin),
-            useNativeDriver: true,
-          }),
-        ]),
-      );
-
-      animation.start();
-      return () => animation.stop();
-    }, [emergencyBreath, emergencyReady]);
-
-    const emergencyScale = emergencyBreath.interpolate({
-      inputRange: [0, 1],
-      outputRange: emergencyReady ? [1, 1.015] : [1, 1],
-    });
     return (
       <TouchableOpacity
         activeOpacity={0.9}
@@ -154,7 +127,7 @@ const EmergencyCenterButton: FC<EmergencyCenterButtonProps> = React.memo(
               {
                 transform: [
                   {translateY: EMERGENCY_BUTTON_OFFSET_Y},
-                  {scale: emergencyScale},
+                  {scale: 1},
                 ],
               },
             ]}>
@@ -191,7 +164,15 @@ const EmergencyCenterButton: FC<EmergencyCenterButtonProps> = React.memo(
 );
 
 /** Custom bottom tab bar — Home / Activate Emergency (center) / Profile. */
-const BottomTabBar: FC<BottomTabBarProps> = ({state, navigation}) => {
+type AppBottomTabBarProps = BottomTabBarProps & {
+  onEmergencyPress?: () => void;
+};
+
+const BottomTabBar: FC<AppBottomTabBarProps> = ({
+  state,
+  navigation,
+  onEmergencyPress,
+}) => {
   const insets = useSafeAreaInsets();
   const {t} = useAppTranslation();
   const [tabLayouts, setTabLayouts] = useState<Record<string, TabLayout>>({});
@@ -407,7 +388,10 @@ const BottomTabBar: FC<BottomTabBarProps> = ({state, navigation}) => {
         />
         {homeRoute ? renderRouteTab(homeRoute) : <View style={styles.tab} />}
 
-        <EmergencyCenterButton navigation={navigation} />
+        <EmergencyCenterButton
+          navigation={navigation}
+          onEmergencyPress={onEmergencyPress}
+        />
 
         {profileRoute ? (
           renderRouteTab(profileRoute)

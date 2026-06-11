@@ -19,17 +19,14 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 24,
   },
-  eyebrow: {
-    fontFamily: 'DMSans-Bold',
-    fontSize: 13,
-    letterSpacing: 2,
-    textTransform: 'uppercase',
-    color: 'rgba(255, 255, 255, 0.5)',
+  logoWrap: {
+    height: 18,
+    justifyContent: 'center',
   },
   greeting: {
-    fontFamily: 'DMSans-Bold',
+    fontFamily: 'DMSans-Medium',
     fontSize: 18,
-    letterSpacing: -0.36,
+    letterSpacing: 0,
     color: '#F1F3F6',
     marginTop: 12,
   },
@@ -431,8 +428,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   badgeText: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 13,
+    ...typography.statusTag,
   },
   statusFooter: {
     flexDirection: 'row',
@@ -447,9 +443,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   statusPillText: {
-    fontFamily: 'DMSans-Bold',
-    fontSize: 13,
-    lineHeight: 16,
+    ...typography.statusTag,
   },
   statusActionText: {
     flexShrink: 1,
@@ -468,6 +462,10 @@ const styles = StyleSheet.create({
   },
   emergencyStatusFooter: {
     gap: 10,
+  },
+  emergencyStatusDivider: {
+    height: 1,
+    backgroundColor: 'rgba(11, 31, 58, 0.06)',
   },
   emergencyStatusStrip: {
     flexDirection: 'row',

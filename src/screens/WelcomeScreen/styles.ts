@@ -13,13 +13,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: layout.screenGutter,
     paddingBottom: spacing['3xl'],
   },
-  eyebrow: {
-    fontFamily: 'DMSans-Bold',
-    fontSize: 13,
-    letterSpacing: 2,
-    color: 'rgba(255, 255, 255, 0.5)',
-    textTransform: 'uppercase',
+  logoWrap: {
     marginTop: spacing.md,
+    height: 24,
+    justifyContent: 'center',
   },
   illustrationHolder: {
     backgroundColor: 'rgba(255, 255, 255, 0.08)',

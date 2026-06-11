@@ -76,11 +76,26 @@ extension NativeManagerSingleton: IManageNativeComponents {
 
   @objc(requestLatestHealthData)
   internal func requestLatestHealthData() {
+    requestLatestHealthData { _ in }
+  }
+
+  internal func requestLatestHealthData(completion: @escaping (_ error: Error?) -> Void) {
     healthKitManager.requestAuthorizationAndFetchLatest { error in
       if let error = error {
         print("Latest HealthKit data request failed:", error)
       }
+      completion(error)
     }
+  }
+
+  internal func queryRecentMovement(
+    lookbackMinutes: Int,
+    completion: @escaping (Result<[String: Any], Error>) -> Void
+  ) {
+    healthKitManager.queryRecentMovement(
+      lookbackMinutes: lookbackMinutes,
+      completion: completion
+    )
   }
 
   @objc(handleSilentPushNotificationWithCompletion:)

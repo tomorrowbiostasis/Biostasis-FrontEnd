@@ -130,7 +130,7 @@ const translations: ITranslation = {
     cards: {
       emergencySystem: {
         title: 'Notfallsystem',
-        active: 'Aktiv · Daten werden empfangen',
+        active: 'Notfallüberwachung aktiviert',
         inactive: 'Inaktiv · Zum Aktivieren antippen',
         status: {
           monitoringBio: 'Überwachung über biobasierte Gesundheitsdaten',
@@ -144,15 +144,16 @@ const translations: ITranslation = {
           off: 'Aus · Keine Überwachung',
         },
         mode: {
-          bio: 'Biobasierte Überwachung',
-          time: 'Zeitbasierte Check-ins',
+          bio: 'Health-App-Überwachung',
+          time: 'Check-in-Überwachung',
           inactive: 'Überwachung nicht aktiv',
           setup: 'Einrichtung erforderlich',
         },
         live: {
-          activeTitle: 'Überwachung aktiv',
-          activeBioDescription: 'Biobasierte Gesundheitsdaten werden geprüft.',
-          activeTimeDescription: 'Zeitbasierte Check-ins sind aktiviert.',
+          activeTitle: 'Schutz aktiv',
+          activeBioDescription:
+            'Gesundheits- und Bewegungssignale werden geprüft.',
+          activeTimeDescription: 'Geplante Check-ins sind aktiviert.',
           setupTitle: 'Einrichtung erforderlich',
           setupDescription:
             'Fügen Sie Kontakte hinzu und aktivieren Sie die Überwachung, um den Notfallschutz einzuschalten.',
@@ -163,6 +164,7 @@ const translations: ITranslation = {
           pausedDescription: 'Die Überwachung wird in {{time}} fortgesetzt.',
         },
         badge: {
+          enabled: 'Aktiviert',
           monitoring: 'Überwachung',
           needsSetup: 'Einrichtung nötig',
           setup: 'Einrichten',
@@ -226,6 +228,50 @@ const translations: ITranslation = {
     currentHealthLog: 'Aktuelles Gesundheitsprotokoll',
     historyLogs: 'Verlauf',
   },
+  currentHealthLog: {
+    title: 'Aktuelles Gesundheitsprotokoll',
+    emptyTitle: 'Keine Gesundheitsdaten verbunden',
+    emptySubtitle: 'Verbinden Sie ein Wearable, um Daten zu erfassen',
+    snapshotTitle: 'Aktuelle Übersicht',
+    snapshotDescription:
+      'Neueste Gesundheits- und Bewegungswerte, die der mobilen App zur Verfügung stehen.',
+    emptySnapshotDescription:
+      'Es sind noch keine aktuellen Gesundheitsdaten verfügbar. Verbinden Sie den Zugriff auf die Health-App und aktualisieren Sie über das Dashboard.',
+    latestReadings: 'Neueste Werte',
+    lastChecked: 'Zuletzt geprüft',
+    historyDays: 'Tage im Verlauf',
+    heartRate: 'Herzfrequenz',
+    steps: 'Schritte',
+    stepsToday: 'Schritte heute',
+    totalSteps: 'Schritte gesamt',
+    totalMovement: 'Bewegung gesamt',
+    currentDay: 'Aktueller Tag',
+    today: 'heute',
+    session: 'Sitzung',
+    hrEndDate: 'HF-Enddatum',
+    restingHrEndDate: 'Ruhe-HF-Enddatum',
+    stepsEndDate: 'Schritt-Enddatum',
+    viewHistory: 'Verlauf ansehen',
+  },
+  historyLogs: {
+    title: 'Verlauf',
+    entry: 'Eintrag #{{index}}',
+    stats: {
+      title: 'Statistikübersicht',
+      daysTracked: 'Erfasste Tage',
+      totalSteps: 'Schritte gesamt',
+      averageSteps: 'Ø Schritte/Tag',
+      bestDay: 'Bester Tag',
+    },
+    samples: '{{count}} Datensätze erfasst',
+    totalSteps: 'Schritte gesamt',
+    latestHeartRate: 'Neueste Herzfrequenz',
+    averageHeartRate: 'Durchschnittliche Herzfrequenz',
+    hrEndDate: 'Herzfrequenz-Enddatum',
+    stepsEndDate: 'Schritt-Enddatum',
+    restingHrEndDate: 'Ruheherz-Enddatum',
+    empty: 'Noch kein Verlauf vorhanden.',
+  },
   settings: {
     title: 'Einstellungen',
     sections: {
@@ -282,6 +328,8 @@ const translations: ITranslation = {
     locationReady: 'Dieser Standort wird für die Notfallreaktion verwendet.',
     locationLoading: 'Ihr aktueller Standort wird aktualisiert…',
     locationUnavailable: 'Der aktuelle Standort ist im Moment nicht verfügbar.',
+    locationPreviewUnavailable:
+      'Standort erfasst. Die Kartenvorschau ist im Moment nicht verfügbar.',
     openMap: 'Karte öffnen',
     step1: 'Ihre Notfallkontakte werden benachrichtigt',
     step2:
@@ -443,7 +491,7 @@ const translations: ITranslation = {
     terms: 'Nutzungsbedingungen',
     signIn: {
       title: 'Willkommen zurück.',
-      subtitle: 'Melden Sie sich in Ihrem Biostasis-Konto an.',
+      subtitle: 'Melden Sie sich in Ihrem tomorrow.bio-Konto an.',
       cta: 'Anmelden',
       dividerLabel: 'oder mit E-Mail anmelden',
       passwordPlaceholder: 'Ihr Passwort',
@@ -767,40 +815,78 @@ const translations: ITranslation = {
       howItWorks: {
         title: 'So funktioniert die Notfallüberwachung',
         intro:
-          'Bevor Sie die Überwachung aktivieren, wählen Sie, wie die mobile App prüfen soll und was passiert, wenn Sie nicht reagieren.',
-        step1Title: 'Überwachung wählen',
+          'Bevor Sie die Überwachung aktivieren, prüfen Sie, wie die mobile App aktuelle Signale nutzt und was passiert, wenn Sie nicht reagieren.',
+        step1Title: 'Signale verbinden',
         step1Desc:
-          'Wählen Sie biobasierte Überwachung oder zeitbasierte Check-ins.',
+          'Erlauben Sie Benachrichtigungen, Standortzugriff und Zugriff auf die Health-App, damit die Überwachung funktionieren kann.',
         step2Title: 'Überwachen',
         step2Desc:
-          'Die mobile App prüft das gewählte Signal oder sendet Check-ins entsprechend Ihrer Einrichtung.',
+          'Die mobile App nutzt aktuelle Gesundheits- und Bewegungssignale, wenn diese verfügbar sind.',
         step3Title: 'Alarmieren',
         step3Desc:
           'Wenn Sie nicht reagieren, werden Ihre Notfallkontakte benachrichtigt.',
       },
       setupFlow: {
-        stepLabel: 'Schritt {{step}} von 4',
+        stepLabel: 'Schritt {{step}} von {{total}}',
         back: 'Zurück',
         continue: 'Weiter',
         enableMonitoring: 'Notfallüberwachung aktivieren',
         enabledToast: 'Notfallüberwachung ist aktiv',
+        permissions: {
+          title: 'Berechtigungen & Bereitschaft',
+          subtitle:
+            'Erlauben Sie Benachrichtigungen, Standortzugriff und Zugriff auf die Health-App, bevor Sie fortfahren.',
+          notificationsTitle: 'Benachrichtigungen',
+          notificationsSubtitle:
+            'Erforderlich, damit die mobile App Check-ins und Notfallwarnungen senden kann.',
+          locationTitle: 'Standort',
+          locationSubtitle:
+            'Erforderlich, damit Ihr aktueller Standort im Notfall geteilt werden kann.',
+          healthTitle: 'Gesundheitsdaten',
+          healthSubtitleIos:
+            'Verbinden Sie Apple Health, damit die mobile App aktuelle Gesundheits- und Bewegungssignale prüfen kann.',
+          healthSubtitleAndroid:
+            'Verbinden Sie Google Fit, damit die mobile App aktuelle Gesundheits- und Bewegungssignale prüfen kann.',
+          healthOptionalHint:
+            'Sie können fortfahren, sobald der Zugriff auf die Health-App verbunden ist, auch wenn noch keine aktuellen Daten angezeigt werden.',
+          required: 'Erforderlich',
+          optional: 'Optional',
+          allowed: 'Erlaubt',
+          connected: 'Verbunden',
+          allowAction: 'Erlauben',
+          connectAction: 'Verbinden',
+          checkHealthAction: 'Gesundheitszugriff prüfen',
+          healthCheckSuccess: 'Gesundheitszugriff bestätigt',
+          healthCheckFailed:
+            'Der Zugriff auf die Health-App konnte noch nicht bestätigt werden. Prüfen Sie die Berechtigungen und versuchen Sie es erneut.',
+          allowedAction: 'Erlaubt',
+          connectedAction: 'Verbunden',
+          allSetTitle: 'Die erforderlichen Berechtigungen sind bereits aktiv',
+          allSetSubtitle:
+            'Sie können fortfahren und Ihren Schlafplan festlegen, bevor Sie die Überwachung aktivieren.',
+        },
         choose: {
           title: 'Überwachungstyp wählen',
           subtitle:
             'Wählen Sie aus, wie die mobile App auf ein Notfallrisiko prüfen soll.',
           bioSubtitle:
-            'Am besten, wenn Ihr Telefon bereits aktuelle Gesundheitsdaten von Ihrem Wearable oder der Health-App empfängt.',
+            'Damit dies funktioniert, muss Ihr Wearable mit {{source}} verbunden sein und mindestens Herzfrequenz und Schritte teilen.',
           timeSubtitle:
-            'Am besten, wenn Sie geplante Check-ins bevorzugen oder kein Wearable nutzen.',
+            'Nutzt feste Check-ins alle 8 Stunden, wenn Sie keine biobasierte Überwachung verwenden.',
+          timeMovementNote:
+            'Auch bei zeitbasierten Check-ins kann die mobile App Live-Bewegung anzeigen, während sie geöffnet ist.',
         },
         bio: {
           title: 'Biobasierte Überwachung einrichten',
           subtitle:
             'Die mobile App nutzt aktuelle Gesundheitsdaten von Ihrem Wearable oder der Health-App, um Notfallrisiken zu prüfen.',
           connected: 'Gesundheitsdaten verbunden',
+          connectedNoData: 'Gesundheitszugriff verbunden',
           notConnected: 'Gesundheitsdaten nicht verfügbar',
           connectedHelper:
             'Gesundheitsdaten sind verbunden und die App empfängt Daten.',
+          connectedNoDataHelper:
+            'Der Gesundheitszugriff ist verbunden. Aktuelle Daten können mit etwas Verzögerung erscheinen.',
           missingHelper:
             'Wir empfangen noch keine Gesundheitsdaten von Ihrem Gerät.',
           checkConnection: 'Verbindung prüfen',
@@ -808,16 +894,22 @@ const translations: ITranslation = {
         time: {
           title: 'Zeitbasierte Check-ins einrichten',
           subtitle:
-            'Die mobile App sendet Check-in-Benachrichtigungen im gewählten Intervall. Wenn Sie nicht reagieren, kann der Notfallablauf starten.',
+            'Die mobile App sendet alle 8 Stunden Check-in-Benachrichtigungen. Wenn Sie nicht reagieren, kann der Notfallablauf starten.',
+          fixedIntervalTitle: 'Check-ins alle 8 Stunden',
+          fixedIntervalDescription:
+            'Es gibt kein Intervall zur Auswahl. Die zeitbasierte Überwachung fragt immer alle 8 Stunden nach.',
+          movementTitle: 'Live-Bewegung während der App-Nutzung',
+          movementDescription:
+            'Wenn die App auf dem Bildschirm geöffnet ist, kann sie Bewegung und Schrittänderungen anzeigen. Geplante Check-ins laufen separat weiter.',
           helper:
-            'Dieses Intervall wird gespeichert, wenn die Überwachung aktiviert wird.',
+            'Fahren Sie fort, wenn Sie bereit sind, Ihren Schlafplan einzurichten.',
           devHelper:
             'Development-Builds verwenden Minutenintervalle für schnelleres Testen.',
         },
         sleep: {
           title: 'Schlafplan einrichten',
           subtitle:
-            'Dies ist für beide Überwachungstypen erforderlich und hilft, Fehlalarme während des Schlafs zu vermeiden.',
+            'Geben Sie Ihre ungefähren Schlaf- und Aufwachzeiten an, damit die mobile App ihre Überwachungslogik an Ihren Tagesrhythmus anpassen kann.',
           enable: 'Schlafplan aktivieren',
           enableSubtitle:
             'Verwendet den Standardplan von 22:00 bis 07:00 Uhr. Sie können ihn später anpassen.',
@@ -890,8 +982,11 @@ const translations: ITranslation = {
       timeTrigger: {
         title: 'Zeitbasierte Check-ins',
         description:
-          'Wir senden Benachrichtigungen in regelmäßigen Abständen. Wenn Sie auf eine nicht reagieren, wird das Notfallsystem ausgelöst. Ihre Schlafenszeiten werden automatisch ausgenommen.',
+          'Wir senden alle 8 Stunden Check-in-Benachrichtigungen. Wenn Sie nicht reagieren, kann der Notfallablauf starten.',
         frequency: 'Notfall-Auslöser Zeitrahmen:',
+        fixedInterval: 'Alle 8 Stunden',
+        movementNote:
+          'Wenn die App geöffnet ist, kann sie Live-Bewegung und Schrittänderungen weiterhin als visuelles Feedback anzeigen.',
         systemStart: 'Zeitbasiertes automatisches System läuft',
         turnOn: 'Zeitbasierte Check-ins nutzen',
         warning:

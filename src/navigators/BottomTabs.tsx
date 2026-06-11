@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {Easing, useWindowDimensions} from 'react-native';
 import {
   BottomTabBarProps,
@@ -9,15 +9,28 @@ import Dashboard from '~/screens/Dashboard/Dashboard';
 import ProfileDefaultScreen from '~/screens/ProfileDefaultScreen';
 import BottomTabBar from '~/components/BottomTabBar';
 import {semanticColors} from '~/theme/tokens';
+import EmergencyConfirmationScreen from '~/screens/EmergencyConfirmationScreen';
 
 const Tab = createBottomTabNavigator();
 
 /** Home + Profile tabs. The center "Activate Emergency" button lives in the custom tab bar. */
 const BottomTabs = () => {
   const {width: screenWidth} = useWindowDimensions();
+  const [emergencySheetVisible, setEmergencySheetVisible] = useState(false);
+
+  const openEmergencySheet = useCallback(() => {
+    setEmergencySheetVisible(true);
+  }, []);
+
+  const closeEmergencySheet = useCallback(() => {
+    setEmergencySheetVisible(false);
+  }, []);
+
   const renderTabBar = useCallback(
-    (props: BottomTabBarProps) => <BottomTabBar {...props} />,
-    [],
+    (props: BottomTabBarProps) => (
+      <BottomTabBar {...props} onEmergencyPress={openEmergencySheet} />
+    ),
+    [openEmergencySheet],
   );
   const screenOptions = useMemo(
     () => ({
@@ -56,16 +69,22 @@ const BottomTabs = () => {
   );
 
   return (
-    <Tab.Navigator
-      detachInactiveScreens
-      screenOptions={screenOptions}
-      tabBar={renderTabBar}>
-      <Tab.Screen name={Screens.Home} component={Dashboard} />
-      <Tab.Screen
-        name={Screens.ProfileDefault}
-        component={ProfileDefaultScreen}
+    <>
+      <Tab.Navigator
+        detachInactiveScreens
+        screenOptions={screenOptions}
+        tabBar={renderTabBar}>
+        <Tab.Screen name={Screens.Home} component={Dashboard} />
+        <Tab.Screen
+          name={Screens.ProfileDefault}
+          component={ProfileDefaultScreen}
+        />
+      </Tab.Navigator>
+      <EmergencyConfirmationScreen
+        visible={emergencySheetVisible}
+        onDismiss={closeEmergencySheet}
       />
-    </Tab.Navigator>
+    </>
   );
 };
 

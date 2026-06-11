@@ -1,15 +1,14 @@
 import React from 'react';
 import {View} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import {IconProps} from 'react-native-vector-icons/Icon';
 import colors from '~/theme/colors';
+import {AppIconProps, LogOutIcon} from './AppIcons';
 
-export interface ILogoutIconProps extends Omit<IconProps, 'name'> {}
+export interface ILogoutIconProps extends AppIconProps {}
 
 const LogoutIcon = (props: ILogoutIconProps) => {
   return (
     <View>
-      <Icon name={'log-out'} size={15} color={colors.gray[800]} {...props} />
+      <LogOutIcon size={15} color={colors.gray[800]} {...props} />
     </View>
   );
 };

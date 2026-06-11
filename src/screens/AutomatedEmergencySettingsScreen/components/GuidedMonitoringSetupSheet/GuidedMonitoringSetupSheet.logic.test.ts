@@ -23,73 +23,36 @@ describe('GuidedMonitoringSetupSheet logic', () => {
   });
 
   describe('canContinueGuidedMonitoringSetup', () => {
-    it('starts at monitoring type selection', () => {
+    it('requires permissions before continuing to sleep schedule', () => {
       expect(
         canContinueGuidedMonitoringSetup({
           step: 1,
-          mode: null,
-          healthDataReceived: true,
-          sleepScheduleEnabled: false,
+          permissionsReady: false,
         }),
       ).toBe(false);
 
       expect(
         canContinueGuidedMonitoringSetup({
           step: 1,
-          mode: 'bio',
-          healthDataReceived: true,
-          sleepScheduleEnabled: false,
+          permissionsReady: true,
         }),
       ).toBe(true);
     });
 
-    it('allows bio setup to continue only when health data is received', () => {
+    it('keeps health access as part of permissions readiness', () => {
       expect(
         canContinueGuidedMonitoringSetup({
-          step: 2,
-          mode: 'bio',
-          healthDataReceived: false,
-          sleepScheduleEnabled: false,
+          step: 1,
+          permissionsReady: false,
         }),
       ).toBe(false);
+    });
 
+    it('allows final enable from the sleep schedule step', () => {
       expect(
         canContinueGuidedMonitoringSetup({
           step: 2,
-          mode: 'bio',
-          healthDataReceived: true,
-          sleepScheduleEnabled: false,
-        }),
-      ).toBe(true);
-    });
-
-    it('allows time setup to continue after type configuration', () => {
-      expect(
-        canContinueGuidedMonitoringSetup({
-          step: 2,
-          mode: 'time',
-          healthDataReceived: false,
-          sleepScheduleEnabled: false,
-        }),
-      ).toBe(true);
-    });
-
-    it('requires sleep schedule before final enable', () => {
-      expect(
-        canContinueGuidedMonitoringSetup({
-          step: 4,
-          mode: 'time',
-          healthDataReceived: false,
-          sleepScheduleEnabled: false,
-        }),
-      ).toBe(false);
-
-      expect(
-        canContinueGuidedMonitoringSetup({
-          step: 4,
-          mode: 'time',
-          healthDataReceived: false,
-          sleepScheduleEnabled: true,
+          permissionsReady: true,
         }),
       ).toBe(true);
     });

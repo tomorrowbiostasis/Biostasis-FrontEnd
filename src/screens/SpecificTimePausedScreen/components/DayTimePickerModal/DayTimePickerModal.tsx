@@ -1,10 +1,13 @@
 import React, {FC, useCallback, useMemo, useState} from 'react';
 import {Platform, Text, TouchableOpacity, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import IconFeather from 'react-native-vector-icons/Feather';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
+import {
+  ChevronRightIcon,
+  ClockIcon,
+  XIcon,
+} from '~/assets/icons/AppIcons';
 import NativeBottomSheet from '~/components/NativeBottomSheet';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import colors from '~/theme/colors';
@@ -116,7 +119,7 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
         maxHeight="92%">
         <View style={styles.header}>
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <IconFeather name="x" size={18} color={colors.gray[700]} />
+            <XIcon size={18} color={colors.gray[700]} />
           </TouchableOpacity>
           <Text style={styles.title}>
             {t('specificTimesScreen.specificTimes.title')}
@@ -142,8 +145,7 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
             <TouchableOpacity
               style={styles.timePickerButton}
               onPress={() => setActiveTimePicker('startTime')}>
-              <IconIonicons
-                name="time-outline"
+              <ClockIcon
                 size={20}
                 color={
                   dayTimeItem.startTime ? '#4CAF50' : colors.gray[400]
@@ -156,8 +158,7 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
                 ]}>
                 {startTimeFormatted}
               </Text>
-              <IconFeather
-                name="chevron-right"
+              <ChevronRightIcon
                 size={18}
                 color={colors.gray[400]}
               />
@@ -178,8 +179,7 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
             <TouchableOpacity
               style={styles.timePickerButton}
               onPress={() => setActiveTimePicker('endTime')}>
-              <IconIonicons
-                name="time-outline"
+              <ClockIcon
                 size={20}
                 color={
                   dayTimeItem.endTime ? colors.blue[700] : colors.gray[400]
@@ -192,8 +192,7 @@ export const DayTimePicker: FC<IDayTimePickerProps> = ({
                 ]}>
                 {endTimeFormatted}
               </Text>
-              <IconFeather
-                name="chevron-right"
+              <ChevronRightIcon
                 size={18}
                 color={colors.gray[400]}
               />

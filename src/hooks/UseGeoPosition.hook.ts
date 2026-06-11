@@ -19,7 +19,7 @@ export const useGeoPosition = (): IUseGeoPositionReturn => {
     } catch (error) {
       console.log(
         'Could not get location, sending emergency without it',
-        error.message,
+        error instanceof Error ? error.message : String(error),
       );
     }
     return geoPosition;

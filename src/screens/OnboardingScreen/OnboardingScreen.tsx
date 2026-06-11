@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import Badge, {BadgeVariant} from '~/components/Badge';
 import StepIndicator from '~/components/StepIndicator';
+import TmrBioLogo from '~/assets/icons/TmrBioLogo';
 import OnboardingShield from '~/assets/illustrations/onboarding/OnboardingShield';
 import OnboardingBell from '~/assets/illustrations/onboarding/OnboardingBell';
 import OnboardingMedical from '~/assets/illustrations/onboarding/OnboardingMedical';
@@ -85,11 +86,17 @@ const OnboardingScreen: FC = () => {
           {SLIDES.map(slide => (
             <View style={styles.slide} key={slide.badgeKey}>
               <View style={styles.illustrationWrap}>{slide.illustration}</View>
-              <Badge
-                label={t(slide.badgeKey)}
-                variant={slide.variant}
-                style={styles.badgeSpacing}
-              />
+              {slide.badgeKey === 'onboarding.slide1.badge' ? (
+                <View style={styles.logoSpacing}>
+                  <TmrBioLogo width={144} height={24} />
+                </View>
+              ) : (
+                <Badge
+                  label={t(slide.badgeKey)}
+                  variant={slide.variant}
+                  style={styles.badgeSpacing}
+                />
+              )}
               <Text style={styles.title}>{t(slide.titleKey)}</Text>
               <Text style={styles.body}>{t(slide.bodyKey)}</Text>
             </View>

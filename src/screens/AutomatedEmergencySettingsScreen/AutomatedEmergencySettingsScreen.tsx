@@ -8,7 +8,6 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import IconFeather from 'react-native-vector-icons/Feather';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
@@ -52,9 +51,11 @@ import GuidedMonitoringSetupSheet, {
 import {hasReceivedHealthData} from './components/GuidedMonitoringSetupSheet/GuidedMonitoringSetupSheet.logic';
 import styles from './styles';
 import GoogleIcon from '~/assets/icons/GoogleIcon';
-import {HeartPulseIcon} from '~/assets/icons/AppIcons';
+import {ChevronRightIcon, HeartPulseIcon} from '~/assets/icons/AppIcons';
+import {TIME_BASED_CHECK_IN_INTERVAL_MINUTES} from './constants';
 
-const defaultFrequencyOfRegularNotification = 120;
+const defaultFrequencyOfRegularNotification =
+  TIME_BASED_CHECK_IN_INTERVAL_MINUTES;
 const defaultPositiveInfoPeriod = 1440;
 const HOW_IT_WORKS_STEPS = [
   {
@@ -106,6 +107,7 @@ const AutomatedEmergencySettingsScreen = () => {
     effectiveMonitoringOn && user.regularPushNotification === false;
   const [showSetupSheet, setShowSetupSheet] = useState(false);
   const [sleepScheduleKey, setSleepScheduleKey] = useState(0);
+  const [pendingSetupRedirect, setPendingSetupRedirect] = useState(false);
 
   const isPaused = !!pausedDate || !!isSlotPause;
   const bioSourceLabel = t(
@@ -172,7 +174,7 @@ const AutomatedEmergencySettingsScreen = () => {
             : user.positiveInfoPeriod || defaultPositiveInfoPeriod,
       };
 
-      handleUpdateUser(updateData, true);
+      await dispatch(updateUser(updateData));
       dispatch(setEmergencyCheckType(mode));
 
       if (mode === 'time') {
@@ -183,21 +185,35 @@ const AutomatedEmergencySettingsScreen = () => {
         setSleepScheduleKey(k => k + 1);
       }
 
+      setPendingSetupRedirect(true);
       setShowSetupSheet(false);
-      ToastService.success(
-        t(
-          'emergencyContactsSettings.automatedEmergencySettings.setupFlow.enabledToast',
-        ),
-      );
     },
     [
       dispatch,
-      handleUpdateUser,
-      t,
       user.frequencyOfRegularNotification,
       user.positiveInfoPeriod,
     ],
   );
+
+  const handleSetupSheetDismissComplete = useCallback(() => {
+    if (!pendingSetupRedirect) {
+      return;
+    }
+
+    setPendingSetupRedirect(false);
+    dispatch(getUser());
+    ToastService.success(
+      t(
+        'emergencyContactsSettings.automatedEmergencySettings.setupFlow.enabledToast',
+      ),
+    );
+    navigate(Screens.Tabs as never, {screen: Screens.Home} as never);
+  }, [dispatch, navigate, pendingSetupRedirect, t]);
+
+  const handleSetupSheetDismiss = useCallback(() => {
+    setPendingSetupRedirect(false);
+    setShowSetupSheet(false);
+  }, []);
 
   const handleTurnOffMonitoring = useCallback(async () => {
     handleUpdateUser({automatedEmergency: false}, true);
@@ -460,8 +476,7 @@ const AutomatedEmergencySettingsScreen = () => {
                   )}
                 </Text>
               </View>
-              <IconFeather
-                name="chevron-right"
+              <ChevronRightIcon
                 size={18}
                 color="#6B7A8E"
                 style={styles.howChevron}
@@ -690,14 +705,11 @@ const AutomatedEmergencySettingsScreen = () => {
 
       <GuidedMonitoringSetupSheet
         visible={showSetupSheet}
-        defaultFrequency={
-          user.frequencyOfRegularNotification ||
-          defaultFrequencyOfRegularNotification
-        }
         defaultPositiveInfoPeriod={
           user.positiveInfoPeriod || defaultPositiveInfoPeriod
         }
-        onDismiss={() => setShowSetupSheet(false)}
+        onDismiss={handleSetupSheetDismiss}
+        onDismissComplete={handleSetupSheetDismissComplete}
         onComplete={handleSetupComplete}
       />
     </View>

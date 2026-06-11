@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: spacing.md,
   },
-  topRowEnd: {
-    justifyContent: 'flex-end',
+  topRowStart: {
+    justifyContent: 'flex-start',
     minHeight: 40,
   },
   backButton: {
@@ -38,6 +38,10 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
     color: 'rgba(255, 255, 255, 0.5)',
     textTransform: 'uppercase',
+  },
+  logoWrap: {
+    height: 20,
+    justifyContent: 'center',
   },
   title: {
     ...typography.displayLg,

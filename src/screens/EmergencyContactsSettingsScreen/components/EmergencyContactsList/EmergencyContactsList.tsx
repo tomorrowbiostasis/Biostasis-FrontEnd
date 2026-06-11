@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Alert,
   InteractionManager,
@@ -7,28 +7,36 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {
+  AddNewEmergencyContact,
   deleteEmergencyContact,
   getEmergencyContacts,
+  updateEmergencyContact,
   updateActiveEmergencyContactStatus,
 } from '~/redux/emergencyContacts/thunks';
 import {selectEmergencyContacts} from '~/redux/emergencyContacts/selectors';
-import {IEmergencyContactResponse} from '~/redux/emergencyContacts/emergencyContacts.slice';
-import {Screens} from '~/models/Navigation.model';
+import {
+  IEmergencyContact,
+  IEmergencyContactResponse,
+} from '~/redux/emergencyContacts/emergencyContacts.slice';
 import {CirclePlusIcon} from '~/assets/icons/AppIcons';
 import {typography} from '~/theme/tokens';
 import SectionHeader from '../SectionHeader';
 import EmergencyContact from './components/EmergencyContact';
+import EmergencyContactFormCard from './components/EmergencyContactFormCard';
+
+type EditorState =
+  | {mode: 'add'}
+  | {mode: 'edit'; contactId: string}
+  | null;
 
 const EmergencyContactsList = () => {
   const {t} = useAppTranslation();
   const dispatch = useAppDispatch();
-  const {navigate} = useNavigation();
   const emergencyContacts = useAppSelector(selectEmergencyContacts);
+  const [editorState, setEditorState] = useState<EditorState>(null);
 
   useEffect(() => {
     const task = InteractionManager.runAfterInteractions(() => {
@@ -39,8 +47,8 @@ const EmergencyContactsList = () => {
   }, [dispatch]);
 
   const handleAddContactPress = useCallback(() => {
-    navigate(Screens.AddNewEmergencyContact as never);
-  }, [navigate]);
+    setEditorState({mode: 'add'});
+  }, []);
 
   const handleChangeContactActiveStatus = useCallback(
     (contact: IEmergencyContactResponse, active: boolean) => {
@@ -51,9 +59,8 @@ const EmergencyContactsList = () => {
 
   const handleContactEditPress = useCallback(
     (contact: IEmergencyContactResponse) =>
-      // @ts-ignore — loose route params, matches the existing call site
-      navigate(Screens.AddNewEmergencyContact, {contactId: contact.id}),
-    [navigate],
+      setEditorState({mode: 'edit', contactId: contact.id}),
+    [],
   );
 
   const handleContactDeletePress = useCallback(
@@ -67,6 +74,11 @@ const EmergencyContactsList = () => {
             text: 'Yes',
             onPress: () => {
               if (contact?.id) {
+                setEditorState(current =>
+                  current?.mode === 'edit' && current.contactId === contact.id
+                    ? null
+                    : current,
+                );
                 dispatch(deleteEmergencyContact(contact?.id));
                 dispatch(getEmergencyContacts());
               }
@@ -79,6 +91,44 @@ const EmergencyContactsList = () => {
     [dispatch],
   );
 
+  const handleCancelEditor = useCallback(() => {
+    setEditorState(null);
+  }, []);
+
+  const handleAddContact = useCallback(
+    (contact: IEmergencyContact) => {
+      dispatch(
+        AddNewEmergencyContact({
+          contact,
+          onSuccess: () => setEditorState(null),
+        }),
+      );
+    },
+    [dispatch],
+  );
+
+  const handleEditContact = useCallback(
+    (contactId: string, contact: IEmergencyContact) => {
+      dispatch(
+        updateEmergencyContact({
+          id: contactId,
+          contact,
+          onSuccess: () => setEditorState(null),
+        }),
+      );
+    },
+    [dispatch],
+  );
+
+  const editingContact = useMemo(
+    () =>
+      editorState?.mode === 'edit'
+        ? emergencyContacts.find(contact => contact.id === editorState.contactId) ||
+          null
+        : null,
+    [editorState, emergencyContacts],
+  );
+
   return (
     <View style={styles.section}>
       <SectionHeader
@@ -87,26 +137,42 @@ const EmergencyContactsList = () => {
           'emergencyContactsSettings.makeSureToTestEmergencyContact',
         )}
       />
-      {emergencyContacts.map(contact => (
-        <EmergencyContact
-          key={`emergencyContact-${contact.id}`}
-          contact={contact}
-          onEditPress={handleContactEditPress}
-          onDeletePress={handleContactDeletePress}
-          onSwitchPress={value =>
-            handleChangeContactActiveStatus(contact, value)
-          }
+      {emergencyContacts.map(contact =>
+        editorState?.mode === 'edit' && editorState.contactId === contact.id ? (
+          <EmergencyContactFormCard
+            key={`emergencyContact-form-${contact.id}`}
+            contact={editingContact}
+            onCancel={handleCancelEditor}
+            onSubmit={nextContact =>
+              handleEditContact(contact.id, nextContact)
+            }
+          />
+        ) : (
+          <EmergencyContact
+            key={`emergencyContact-${contact.id}`}
+            contact={contact}
+            onEditPress={handleContactEditPress}
+            onDeletePress={handleContactDeletePress}
+            onSwitchPress={handleChangeContactActiveStatus}
+          />
+        ),
+      )}
+      {editorState?.mode === 'add' ? (
+        <EmergencyContactFormCard
+          onCancel={handleCancelEditor}
+          onSubmit={handleAddContact}
         />
-      ))}
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={styles.addButton}
-        onPress={handleAddContactPress}>
-        <CirclePlusIcon size={16} color="#3D5470" />
-        <Text style={styles.addLabel}>
-          {t('emergencyContactsSettings.AddNewEmergencyContact')}
-        </Text>
-      </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.addButton}
+          onPress={handleAddContactPress}>
+          <CirclePlusIcon size={16} color="#3D5470" />
+          <Text style={styles.addLabel}>
+            {t('emergencyContactsSettings.AddNewEmergencyContact')}
+          </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

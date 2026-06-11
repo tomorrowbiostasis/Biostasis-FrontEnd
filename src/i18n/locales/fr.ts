@@ -186,7 +186,7 @@ const translations: ITranslation = {
     terms: "Conditions d'utilisation",
     signIn: {
       title: 'Bon retour.',
-      subtitle: 'Connectez-vous à votre compte Biostasis.',
+      subtitle: 'Connectez-vous à votre compte tomorrow.bio.',
       cta: 'Se connecter',
       dividerLabel: 'ou se connecter avec e-mail',
       passwordPlaceholder: 'Votre mot de passe',

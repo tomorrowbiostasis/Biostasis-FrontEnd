@@ -100,7 +100,7 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         warnAfter: 128,
       },
-    }).concat(logger) :
+    }).concat(logger as any) :
     getDefaultMiddleware({
       immutableCheck: false,
       serializableCheck: {

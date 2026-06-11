@@ -34,10 +34,8 @@ export const getEmergencyContacts = createAsyncThunk(
 export const updateActiveEmergencyContactStatus = createAsyncThunk(
   'emergencyContacts/updateActiveStatus',
   async ({contact, active}: IUpdateEmergencyActiveStatus) => {
-    const response = await API.updateEmergencyContact(contact.id, {
-      active,
-    })
-      .then(() => {
+    try {
+      const response = await API.updateEmergencyContact(contact.id, {active});
         if (active) {
           ToastService.success(
             i18n.t('emergencyContactsSettings.addNewEdit.activateContact'),
@@ -47,13 +45,13 @@ export const updateActiveEmergencyContactStatus = createAsyncThunk(
             i18n.t('emergencyContactsSettings.addNewEdit.deactivateContact'),
           );
         }
-      })
-      .catch(() =>
-        ToastService.error(
-          i18n.t('emergencyContactsSettings.addNewEdit.errorActivate'),
-        ),
+      return response.data;
+    } catch {
+      ToastService.error(
+        i18n.t('emergencyContactsSettings.addNewEdit.errorActivate'),
       );
-    return response.data;
+      return null;
+    }
   },
 );
 export const AddNewEmergencyContact = createAsyncThunk(
@@ -79,7 +77,9 @@ export const AddNewEmergencyContact = createAsyncThunk(
       .catch(error => {
         const {code} = error.response.data.error;
         const {details} = error.response.data.message;
-        const isPhone = details.find(item => item.context.key === 'phone');
+        const isPhone = details.find(
+          (item: {context: {key: string}}) => item.context.key === 'phone',
+        );
         if ((code === 'E0003' || code === 'E0021') && isPhone) {
           ToastService.error(i18n.t('validation.number.incorrectFormat'));
         } else {

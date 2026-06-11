@@ -1,5 +1,5 @@
 export type GuidedMonitoringMode = 'bio' | 'time';
-export type GuidedMonitoringStep = 1 | 2 | 3 | 4;
+export type GuidedMonitoringStep = 1 | 2;
 
 type HealthDataLike =
   | {
@@ -32,28 +32,18 @@ export const hasReceivedHealthData = (health: HealthDataLike): boolean => {
 
 export const canContinueGuidedMonitoringSetup = ({
   step,
-  mode,
-  healthDataReceived,
-  sleepScheduleEnabled,
+  permissionsReady,
 }: {
   step: GuidedMonitoringStep;
-  mode: GuidedMonitoringMode | null;
-  healthDataReceived: boolean;
-  sleepScheduleEnabled: boolean;
+  permissionsReady: boolean;
 }): boolean => {
   if (step === 1) {
-    return !!mode;
+    return permissionsReady;
   }
 
   if (step === 2) {
-    return mode === 'time' || (mode === 'bio' && healthDataReceived);
+    return true;
   }
 
-  if (step === 3) {
-    return !!mode;
-  }
-
-  return (
-    !!mode && (mode === 'time' || healthDataReceived) && sleepScheduleEnabled
-  );
+  return false;
 };

@@ -4,9 +4,9 @@ type HealthData = {
   heartRate: number;
   restingHeartRate: number;
   steps: number;
-  heartRateEndDate: number;
-  restingHeartRateEndDate: number;
-  stepsEndDate: number;
+  heartRateEndDate: number | null;
+  restingHeartRateEndDate: number | null;
+  stepsEndDate: number | null;
   totalSteps: number;
 };
 

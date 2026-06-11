@@ -1,12 +1,9 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ScrollView, Text, View} from 'native-base';
-import {NativeModules, NativeEventEmitter} from 'react-native';
+import {ScrollView, Text} from 'native-base';
 import Container from '~/components/Container';
 import styles from './styles';
-import {Screens} from '~/models/Navigation.model';
 import {useAppSelector} from '~/redux/store/hooks';
-import { getLocation } from '~/services/Location.service';
 import Geolocation from 'react-native-geolocation-service';
 
 const DevLogsScreen = () => {

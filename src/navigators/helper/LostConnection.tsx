@@ -27,7 +27,7 @@ const LostConnection = () => {
             loadingInitData,
             isInitialized,
             navigationReady: navigationRef.isReady(),
-          }),
+          }) as never,
         );
       }
     }

@@ -1,7 +1,8 @@
 import React, {useCallback, useEffect, useRef} from 'react';
-import {Animated, BackHandler, Easing, StatusBar, Text, View} from 'react-native';
+import {Animated, BackHandler, Easing, StatusBar, View} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
+import TmrBioLogo from '~/assets/icons/TmrBioLogo';
 import SetupCompleteShield from '~/assets/illustrations/onboarding/SetupCompleteShield';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch} from '~/redux/store/hooks';
@@ -113,7 +114,13 @@ const SetupCompleteScreen = () => {
               </View>
             </View>
           </View>
-          <Text style={styles.brand}>BIOSTASIS</Text>
+          <View style={styles.brandLogoWrap}>
+            <TmrBioLogo
+              width={144}
+              height={24}
+              color={styles.brandLogoColor.color}
+            />
+          </View>
         </Animated.View>
       </View>
 

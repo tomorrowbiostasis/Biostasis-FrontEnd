@@ -43,7 +43,7 @@ const navigationTheme: Theme = {
 };
 
 const linkingOptions: LinkingOptions<{}> = {
-  prefixes: ['biostasis://'],
+  prefixes: ['biostasis://', 'tomorrowbio://'],
   config: {
     screens: {
       AuthStack: {

@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import {View} from 'native-base';
-import {Text, TouchableWithoutFeedback} from 'react-native';
+import {Image, Text, TouchableWithoutFeedback} from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
@@ -76,6 +76,16 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
     [prepareValues, onChangePhoneNumber],
   );
 
+  const handleSelectCountry = useCallback(() => {
+    requestAnimationFrame(() => {
+      const currentValue = phoneNumberPickerRef.current?.getValue?.() || '';
+      onChangePhoneNumber?.(prepareValues(currentValue));
+      onCheckIfValid?.(
+        phoneNumberPickerRef.current?.isValidNumber() as boolean,
+      );
+    });
+  }, [onChangePhoneNumber, onCheckIfValid, prepareValues]);
+
   useEffect(() => {
     if (onCheckIfValid) {
       onCheckIfValid(isNumberValid);
@@ -131,13 +141,20 @@ export const PhoneNumberPicker: FC<IPhoneNumberPickerProps> = ({
             // @ts-ignore
             initialValue={initialPhoneNumber}
             onChangePhoneNumber={handlePhoneNumberChange}
-            onPressFlag={() => {
-              // @ts-ignore
-              if (phoneNumberPickerRef.current?.getValue()?.length <= 1) {
-                // @ts-ignore
-                phoneNumberPickerRef.current?.picker?.show();
-              }
-            }}
+            onSelectCountry={handleSelectCountry}
+            renderFlag={({imageSource}) => (
+              <View
+                style={
+                  isFigma ? styles.figmaFlagButton : styles.flagButton
+                }>
+                <Image
+                  accessibilityIgnoresInvertColors
+                  source={imageSource}
+                  style={isFigma ? styles.figmaFlagImage : styles.flagImage}
+                />
+                <View style={styles.flagChevron} />
+              </View>
+            )}
             cancelText={t('common.cancel')}
             confirmText={t('common.confirm')}
             textProps={{

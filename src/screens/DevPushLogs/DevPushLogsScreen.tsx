@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View, Button } from 'native-base';
+import { ScrollView, Text, View } from 'native-base';
 import Container from '~/components/Container';
 import styles from './styles';
-import { getPushLogs, clearPushLogs } from '~/services/PushLogger.service';
+import { getPushLogs } from '~/services/PushLogger.service';
 
 const DevPushLogsScreen = () => {
   const [logs, setLogs] = useState<any[]>([]);
@@ -10,11 +10,6 @@ const DevPushLogsScreen = () => {
   const loadLogs = async () => {
     const storedLogs = await getPushLogs();
     setLogs(storedLogs);
-  };
-
-  const handleClearLogs = async () => {
-    await clearPushLogs();
-    setLogs([]);
   };
 
   useEffect(() => {

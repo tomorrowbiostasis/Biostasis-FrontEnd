@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Biostasis</string>
+	<string>Tomorrow Bio</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -30,6 +30,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>biostasis</string>
+				<string>tomorrowbio</string>
 			</array>
 		</dict>
 	</array>
@@ -59,19 +60,19 @@
 	<key>NSFocusStatusUsageDescription</key>
 	<string>${PRODUCT_NAME} uses Focus status to detect when you are sleeping and prevent false emergency alerts.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>${PRODUCT_NAME} uses bluetooth to connect with the smart devices to detect health problems and to trigger an automated emergency.</string>
+	<string>Tomorrow Bio uses Bluetooth only when supported devices are connected for emergency monitoring signals.</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>${PRODUCT_NAME} is checking your health data in case if we need to trigger an emergency</string>
+	<string>Tomorrow Bio reads recent heart rate and step data to support emergency monitoring when you enable it.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>${PRODUCT_NAME} is subscribing to your health data in case if we need to trigger an emergency</string>
+	<string>Tomorrow Bio may write limited health-related status only when a supported feature requires it.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>${PRODUCT_NAME} sending your location to the emergency contact when you trigger an emergency</string>
+	<string>Tomorrow Bio uses your location to share where you are during an emergency flow you trigger or enable.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>${PRODUCT_NAME} sending your location to the emergency contact when you trigger an emergency</string>
+	<string>Tomorrow Bio uses background location only to support emergency monitoring and response workflows you enable.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>${PRODUCT_NAME} sending your location to the emergency contact when you trigger an emergency</string>
+	<string>Tomorrow Bio uses your location to support emergency response workflows.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>${PRODUCT_NAME} sending your location to the emergency contact when you trigger an emergency</string>
+	<string>Tomorrow Bio uses your location to share where you are during an emergency flow.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>${PRODUCT_NAME} uses motion data to show today's steps as they update and help confirm recent movement.</string>
 	<key>UIAppFonts</key>

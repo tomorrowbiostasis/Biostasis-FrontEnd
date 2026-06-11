@@ -14,9 +14,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: layout.screenGutter,
     paddingBottom: spacing['3xl'],
   },
-  alertContainer: {
-    paddingBottom: 10,
-  },
   submitButton: {
     marginTop: spacing.md,
   },

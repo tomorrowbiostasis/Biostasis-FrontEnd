@@ -12,6 +12,8 @@ protocol IManageHealthkit {
   func requestAuthorizationAndStartObservers(completion: @escaping (_ error: Error?) -> ())
   /// Asks for Authorization and fetches the latest available samples once
   func requestAuthorizationAndFetchLatest(completion: @escaping (_ error: Error?) -> ())
+  /// Queries recent step movement for a short monitoring window.
+  func queryRecentMovement(lookbackMinutes: Int, completion: @escaping (Result<[String: Any], Error>) -> Void)
   /// Starts observer process
   func startObservers(completion: @escaping (_ error: Error?) -> ())
   /// Disables process
@@ -232,6 +234,74 @@ extension HealthKitManager: IManageHealthkit {
         self.startLiveStepTracking()
         completion(nil)
       }
+    }
+  }
+
+  func queryRecentMovement(
+    lookbackMinutes: Int,
+    completion: @escaping (Result<[String: Any], Error>) -> Void
+  ) {
+    let minutes = max(1, min(lookbackMinutes, 60))
+    let endDate = Date()
+    guard let startDate = Calendar.current.date(byAdding: .minute, value: -minutes, to: endDate) else {
+      completion(.failure(HealthKitManagerError.Deallocated))
+      return
+    }
+
+    let dispatchGroup = DispatchGroup()
+    var healthKitSteps: Int?
+    var pedometerSteps: Int?
+
+    if HKHealthStore.isHealthDataAvailable(),
+       let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) {
+      dispatchGroup.enter()
+      let predicate = HKQuery.predicateForSamples(
+        withStart: startDate,
+        end: endDate,
+        options: .strictStartDate
+      )
+      let query = HKStatisticsQuery(
+        quantityType: stepType,
+        quantitySamplePredicate: predicate,
+        options: .cumulativeSum
+      ) { _, result, error in
+        if error == nil, let quantity = result?.sumQuantity() {
+          healthKitSteps = Int(quantity.doubleValue(for: HKUnit.count()))
+        }
+        dispatchGroup.leave()
+      }
+      healthKitStore.execute(query)
+    }
+
+    if CMPedometer.isStepCountingAvailable() {
+      dispatchGroup.enter()
+      pedometer.queryPedometerData(from: startDate, to: endDate) { data, _ in
+        if let data = data {
+          pedometerSteps = data.numberOfSteps.intValue
+        }
+        dispatchGroup.leave()
+      }
+    }
+
+    dispatchGroup.notify(queue: .main) {
+      let bestSteps = max(healthKitSteps ?? 0, pedometerSteps ?? 0)
+      let source: String
+      if (pedometerSteps ?? -1) >= (healthKitSteps ?? -1), pedometerSteps != nil {
+        source = "pedometer"
+      } else if healthKitSteps != nil {
+        source = "healthkit"
+      } else {
+        source = "unavailable"
+      }
+
+      completion(.success([
+        "steps": bestSteps,
+        "hasRecentMovement": bestSteps > 0,
+        "source": source,
+        "lookbackMinutes": minutes,
+        "startDate": startDate.timeIntervalSince1970,
+        "endDate": endDate.timeIntervalSince1970
+      ]))
     }
   }
   

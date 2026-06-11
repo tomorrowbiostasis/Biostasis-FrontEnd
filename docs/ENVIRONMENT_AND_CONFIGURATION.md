@@ -1,6 +1,6 @@
 # Environment and Configuration Reference
 
-This document lists every configuration file and environment variable the Biostasis app requires to build and run. Each section describes the file's purpose, its expected contents, and where to obtain the values.
+This document lists every configuration file and environment variable the Tomorrow Bio app requires to build and run. Each section describes the file's purpose, its expected contents, and where to obtain the values.
 
 ---
 
@@ -19,21 +19,22 @@ A bare `.env` placeholder also exists in the project root to satisfy `react-nati
 
 ### Single environment (production only)
 
-The app currently has only one backend: **production**. Both `.env.development` and `.env.production` point to the same production API and Cognito. The **development** flavor is for local debugging (app name "Biostasis dev", debug-only UI such as the debug menu in the drawer) and still uses production credentials. The only difference between the two env files is `ENVIRONMENT`: set to `development` in `.env.development` (so `EnvConfig.DEV` is true and dev-only UI is visible) and to `production` in `.env.production`.
+The app currently has only one backend: **production**. Both `.env.development` and `.env.production` point to the same production API and Cognito. The **development** flavor is for local debugging (app name "Tomorrow Bio dev", debug-only UI such as the debug menu in the drawer) and still uses production credentials. The only difference between the two env files is `ENVIRONMENT`: set to `development` in `.env.development` (so `EnvConfig.DEV` is true and dev-only UI is visible) and to `production` in `.env.production`.
 
 ### Required Variables
 
 | Variable | Description | Example |
 |----------|-------------|---------|
 | `ENVIRONMENT` | `development` or `production` -- controls feature flags and logging | `development` |
-| `API_URL` | Base URL for the Biostasis backend API | `https://api.dev.biostasis.com` |
+| `API_URL` | Base URL for the Tomorrow Bio backend API | `https://api.biostasis.com` |
 | `AWS_REGION` | AWS region for Cognito services | `eu-central-1` |
 | `AWS_USER_POOL_ID` | Cognito User Pool ID | `eu-central-1_AbCdEfGhI` |
 | `AWS_POOL_WEB_CLIENT_ID` | Cognito App Client ID (public, no secret) | `1a2b3c4d5e6f7g8h9i0j` |
 | `AWS_IDENTITY_POOL_ID` | Cognito Identity Pool ID | `eu-central-1:12345678-abcd-efgh-ijkl-123456789012` |
 | `AWS_OAUTH_DOMAIN` | Cognito Hosted UI domain | `biostasis-dev.auth.eu-central-1.amazoncognito.com` |
+| `GOOGLE_MAPS_API_KEY` | Google Maps Platform key used for static emergency location previews | `AIza...` |
 
-These values come from your AWS Cognito configuration and the Biostasis Cloud infrastructure. See the [Biostasis-Cloud-infrastructure](https://github.com/tomorrowbiostasis/Biostasis-Cloud-infrastructure) repository for setup.
+These values come from your AWS Cognito configuration and the Tomorrow Bio cloud infrastructure. See the [Biostasis-Cloud-infrastructure](https://github.com/tomorrowbiostasis/Biostasis-Cloud-infrastructure) repository for setup.
 
 ### Example `.env.development`
 
@@ -45,6 +46,7 @@ AWS_USER_POOL_ID=eu-central-1_XXXXXXXXX
 AWS_POOL_WEB_CLIENT_ID=XXXXXXXXXXXXXXXXXXXXXXXXXX
 AWS_IDENTITY_POOL_ID=eu-central-1:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 AWS_OAUTH_DOMAIN=biostasis.auth.eu-central-1.amazoncognito.com
+GOOGLE_MAPS_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 ### Example `.env.production`
@@ -57,6 +59,7 @@ AWS_USER_POOL_ID=eu-central-1_XXXXXXXXX
 AWS_POOL_WEB_CLIENT_ID=XXXXXXXXXXXXXXXXXXXXXXXXXX
 AWS_IDENTITY_POOL_ID=eu-central-1:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 AWS_OAUTH_DOMAIN=biostasis.auth.eu-central-1.amazoncognito.com
+GOOGLE_MAPS_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 (With a single production backend, both files use the same API and Cognito values; only `ENVIRONMENT` differs. Replace placeholders with real values from Biostasis-Cloud-infrastructure.)
@@ -69,16 +72,16 @@ AWS_OAUTH_DOMAIN=biostasis.auth.eu-central-1.amazoncognito.com
 
 ## 2. `android/app/google-services.json`
 
-Firebase configuration file required for push notifications (`firebase-messaging`) and analytics (`firebase-analytics-ktx`).
+Firebase configuration file required for push notifications (`firebase-messaging`) and Crashlytics.
 
 ### How to obtain it
 
 1. Go to the [Firebase Console](https://console.firebase.google.com/).
-2. Select (or create) the project for Biostasis.
+2. Select (or create) the project for Tomorrow Bio.
 3. Add an Android app with package name **`com.tomorrowbiostasis.app`**.
 4. Download `google-services.json` and place it at `android/app/google-services.json`.
 
-This file is gitignored (`**/google-services.json` in `.gitignore`). A placeholder with dummy keys exists in the repo so the build doesn't fail, but **push notifications and analytics will not work** until it is replaced with a real file.
+This file is gitignored (`**/google-services.json` in `.gitignore`). It must contain a Firebase Android client whose package name is exactly **`com.tomorrowbiostasis.app`**. A config for any other package will fail the production release build during `processProductionReleaseGoogleServices`.
 
 ---
 
@@ -173,3 +176,4 @@ This file is gitignored (`*.keystore` in `.gitignore`). Keep it in a secure loca
 5. Verify `android/local.properties` exists with your SDK path (or set `ANDROID_HOME`).
 6. (Optional, release only) Create `android/keystore.properties` and place your keystore file.
 7. Open `android/` in Android Studio, sync, and build.
+8. Run release validation with `yarn ios:release-sim` and `yarn android:prod-release` before store submission.

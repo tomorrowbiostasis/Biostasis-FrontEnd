@@ -7,8 +7,8 @@ import {
   View,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import IconFeather from 'react-native-vector-icons/Feather';
 
+import {XIcon} from '~/assets/icons/AppIcons';
 import NativeBottomSheet from '~/components/NativeBottomSheet';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {
@@ -98,7 +98,7 @@ const SleepScheduleBottomSheet = ({visible, onDismiss}: Props) => {
             accessibilityLabel={t('common.cancel')}
             onPress={onDismiss}
             style={styles.closeButton}>
-            <IconFeather name="x" size={20} color={semanticColors.textSecondary} />
+            <XIcon size={20} color={semanticColors.textSecondary} />
           </TouchableOpacity>
         </View>
         <Text style={styles.title}>

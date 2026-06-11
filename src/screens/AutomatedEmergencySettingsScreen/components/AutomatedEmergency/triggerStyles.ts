@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {semanticColors} from '~/theme/tokens';
+import {semanticColors, typography} from '~/theme/tokens';
 
 /** Shared styles for the redesigned Bio / Time trigger panels. */
 const triggerStyles = StyleSheet.create({
@@ -46,10 +46,22 @@ const triggerStyles = StyleSheet.create({
     color: '#6B7A8E',
   },
   frequencyLabel: {
-    fontFamily: 'DMSans-SemiBold',
+    fontFamily: 'DMSans-Regular',
     fontSize: 14,
     color: semanticColors.primary,
-    marginTop: 4,
+  },
+  fixedIntervalBox: {
+    borderRadius: 12,
+    backgroundColor: semanticColors.surfaceSubtle,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    gap: 4,
+  },
+  fixedIntervalValue: {
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 16,
+    lineHeight: 21,
+    color: semanticColors.primary,
   },
   row: {
     minHeight: 56,
@@ -91,8 +103,7 @@ const triggerStyles = StyleSheet.create({
     backgroundColor: semanticColors.warningSurface,
   },
   badgeText: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 13,
+    ...typography.statusTag,
   },
 });
 

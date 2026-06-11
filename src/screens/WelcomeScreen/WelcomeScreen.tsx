@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {Button} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 
+import TmrBioLogo from '~/assets/icons/TmrBioLogo';
 import WelcomeHero from '~/assets/illustrations/onboarding/WelcomeHero';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {Screens} from '~/models/Navigation.model';
@@ -47,7 +48,9 @@ const WelcomeScreen: FC = () => {
   return (
     <View style={styles.container}>
       <SafeAreaView edges={['top']} style={styles.hero}>
-        <Text style={styles.eyebrow}>{t('welcome.eyebrow')}</Text>
+        <View style={styles.logoWrap}>
+          <TmrBioLogo width={144} height={24} color="#FFFFFF" opacity={0.62} />
+        </View>
         <View style={styles.illustrationHolder}>
           <WelcomeHero />
         </View>

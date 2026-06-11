@@ -5,9 +5,9 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import FormInput from '~/components/FormInput';
-import Alert from '~/components/Alert';
 import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
+import {useMessageToast} from '~/hooks/UseMessageToast.hook';
 import {getVisibleFormError, isIOS, updateDataCollectionStatus} from '~/utils';
 import {useSignInValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
@@ -36,6 +36,7 @@ const Login: FC<LoginProps> = ({initialValues, onValuesChange}) => {
     useNavigation<
       NativeStackNavigationProp<AuthStackNavigatorParamList, Screens.Auth>
     >();
+  useMessageToast(message);
 
   const onForgotPasswordPress = useCallback((email?: string) => {
     navigate(Screens.ForgotPassword, {email});
@@ -52,11 +53,6 @@ const Login: FC<LoginProps> = ({initialValues, onValuesChange}) => {
 
   return (
     <View style={styles.container}>
-      {message && (
-        <View style={styles.alertContainer}>
-          <Alert label={t(message.messageKey)} error={!message.success} />
-        </View>
-      )}
       <Formik<LoginFormFields>
         initialValues={initialValues}
         onSubmit={onSubmit}

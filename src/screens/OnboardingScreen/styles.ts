@@ -30,6 +30,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginTop: spacing.lg,
   },
+  logoSpacing: {
+    alignSelf: 'flex-start',
+    height: 24,
+    justifyContent: 'center',
+    marginTop: spacing.lg,
+  },
   title: {
     ...typography.displayLg,
     color: semanticColors.textPrimary,

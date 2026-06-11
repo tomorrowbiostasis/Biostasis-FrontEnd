@@ -2,8 +2,6 @@ import React, {FC, useMemo, useState, useCallback} from 'react';
 import {Pressable, Text, View} from 'react-native';
 import dayjs from 'dayjs';
 
-import {semanticColors} from '~/theme/tokens';
-
 import styles from './styles';
 
 type Mode = 'days' | 'years';

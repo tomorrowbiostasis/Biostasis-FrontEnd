@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
   },
   label: {
-    ...typography.captionBold,
+    ...typography.statusTagSmall,
   },
   upper: {
     textTransform: 'uppercase',

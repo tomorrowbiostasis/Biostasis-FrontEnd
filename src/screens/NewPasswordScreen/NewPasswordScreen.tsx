@@ -6,9 +6,9 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 
 import AuthHeader from '~/components/AuthHeader';
 import FormInput from '~/components/FormInput';
-import Alert from '~/components/Alert';
 import AnimatedSubmitButton from '~/components/AnimatedSubmitButton';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
+import {useMessageToast} from '~/hooks/UseMessageToast.hook';
 import {useConfirmPasswordValidationSchema} from '~/services/Validation.service';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {forgotPasswordSetNewPassword} from '~/redux/auth/thunks';
@@ -39,6 +39,7 @@ const NewPasswordScreen = () => {
   const {pending, newPasswordMessage, shouldBackToAuthScreen} = useAppSelector(
     getForgotPasswordParams,
   );
+  useMessageToast(newPasswordMessage);
 
   useEffect(() => {
     const clearMessage = () => {
@@ -97,14 +98,6 @@ const NewPasswordScreen = () => {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         bounces={false}>
-        {newPasswordMessage && (
-          <View style={styles.alertContainer}>
-            <Alert
-              label={t(newPasswordMessage.messageKey)}
-              error={!newPasswordMessage.success}
-            />
-          </View>
-        )}
         <Formik<NewPasswordFormFields>
           initialValues={{password: '', confirmPassword: ''}}
           onSubmit={handleContinue}

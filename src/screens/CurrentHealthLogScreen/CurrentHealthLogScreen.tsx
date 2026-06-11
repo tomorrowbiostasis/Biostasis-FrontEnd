@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {StackActions, useNavigation} from '@react-navigation/native';
 
@@ -9,69 +9,144 @@ import ScreenHeader from '~/components/ScreenHeader';
 import {HeartIcon} from '~/assets/icons/AppIcons';
 import styles from './styles';
 
-const formatDateTime = (value?: number | string | null): string => {
+type HealthEntry = {
+  heartRate?: number | null;
+  steps?: number | null;
+  totalSteps?: number | null;
+  heartRateEndDate?: number | string | null;
+  restingHeartRateEndDate?: number | string | null;
+  stepsEndDate?: number | string | null;
+};
+
+const normalizeTimestamp = (value?: number | string | null): number | null => {
   if (!value) {
-    return 'N/A';
+    return null;
   }
-  const date = new Date(value);
+
+  const numericValue = typeof value === 'string' ? Number(value) : value;
+  if (!Number.isFinite(numericValue)) {
+    return null;
+  }
+
+  return numericValue < 10000000000 ? numericValue * 1000 : numericValue;
+};
+
+const getLatestTimestamp = (entry?: HealthEntry | null): number | null => {
+  if (!entry) {
+    return null;
+  }
+
+  const timestamps = [
+    normalizeTimestamp(entry.heartRateEndDate),
+    normalizeTimestamp(entry.restingHeartRateEndDate),
+    normalizeTimestamp(entry.stepsEndDate),
+  ].filter((value): value is number => value != null);
+
+  return timestamps.length ? Math.max(...timestamps) : null;
+};
+
+const formatDateTime = (timestamp?: number | null): string => {
+  if (!timestamp) {
+    return '—';
+  }
+
+  const date = new Date(timestamp);
   if (Number.isNaN(date.getTime())) {
-    return 'N/A';
+    return '—';
   }
-  const pad = (n: number) => n.toString().padStart(2, '0');
-  return `${pad(date.getDate())}.${pad(
-    date.getMonth() + 1,
-  )}.${date.getFullYear()} · ${pad(date.getHours())}:${pad(
-    date.getMinutes(),
-  )}`;
+
+  return date.toLocaleString(undefined, {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+};
+
+const formatNumber = (value?: number | null): string => {
+  if (value == null) {
+    return '—';
+  }
+
+  return new Intl.NumberFormat().format(value);
+};
+
+const toLocalDayKey = (timestamp?: number | null): string | null => {
+  if (!timestamp) {
+    return null;
+  }
+
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) {
+    return null;
+  }
+
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
 
 const CurrentHealthLogScreen = () => {
   const {t} = useAppTranslation();
   const navigation = useNavigation();
-  const health = useAppSelector(state => state.health.data);
+  const health = useAppSelector(state => state.health.data) as HealthEntry | null;
+  const allData = useAppSelector(state => state.health.allData);
 
   const hasData = !!health;
+  const lastChecked = useMemo(() => getLatestTimestamp(health), [health]);
+  const historyDayCount = useMemo(() => {
+    const days = new Set<string>();
+    allData.forEach(entry => {
+      const dayKey = toLocalDayKey(getLatestTimestamp(entry));
+      if (dayKey) {
+        days.add(dayKey);
+      }
+    });
+    return days.size;
+  }, [allData]);
 
-  const dateRows = [
-    {
-      label: t('currentHealthLog.hrEndDate'),
-      value: formatDateTime(health?.heartRateEndDate),
-    },
-    {
-      label: t('currentHealthLog.restingHrEndDate'),
-      value: formatDateTime(health?.restingHeartRateEndDate),
-    },
-    {
-      label: t('currentHealthLog.stepsEndDate'),
-      value: formatDateTime(health?.stepsEndDate),
-    },
-  ];
+  const metrics = useMemo(
+    () => [
+      {
+        label: t('currentHealthLog.heartRate'),
+        value: formatNumber(health?.heartRate),
+        unit: 'bpm',
+      },
+      {
+        label: t('currentHealthLog.steps'),
+        value: formatNumber(health?.steps),
+        unit: t('currentHealthLog.today'),
+      },
+      {
+        label: t('currentHealthLog.totalSteps'),
+        value: formatNumber(health?.totalSteps),
+        unit: t('currentHealthLog.today'),
+      },
+    ],
+    [health, t],
+  );
 
-  const metrics = [
-    {
-      label: t('currentHealthLog.heartRate'),
-      value: health?.heartRate != null ? String(health.heartRate) : '0',
-      unit: 'bpm',
-    },
-    {
-      label: t('currentHealthLog.steps'),
-      value: health?.steps != null ? String(health.steps) : '0',
-      unit: t('currentHealthLog.today'),
-    },
-    {
-      label: t('currentHealthLog.restingHr'),
-      value:
-        health?.restingHeartRate != null
-          ? String(health.restingHeartRate)
-          : '0',
-      unit: 'bpm',
-    },
-    {
-      label: t('currentHealthLog.totalSteps'),
-      value: health?.totalSteps != null ? String(health.totalSteps) : '0',
-      unit: t('currentHealthLog.session'),
-    },
-  ];
+  const readings = useMemo(
+    () => [
+      {
+        label: t('currentHealthLog.heartRate'),
+        value:
+          health?.heartRate != null
+            ? `${formatNumber(health.heartRate)} bpm`
+            : '—',
+        detail: formatDateTime(normalizeTimestamp(health?.heartRateEndDate)),
+      },
+      {
+        label: t('currentHealthLog.stepsToday'),
+        value: formatNumber(health?.steps),
+        detail: formatDateTime(normalizeTimestamp(health?.stepsEndDate)),
+      },
+      {
+        label: t('currentHealthLog.totalMovement'),
+        value: formatNumber(health?.totalSteps),
+        detail: t('currentHealthLog.currentDay'),
+      },
+    ],
+    [health, t],
+  );
 
   return (
     <View style={styles.root}>
@@ -103,36 +178,44 @@ const CurrentHealthLogScreen = () => {
         style={styles.scroll}
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}>
-        {!hasData ? (
-          <View style={styles.rows}>
-            {[
-              t('currentHealthLog.heartRate'),
-              t('currentHealthLog.restingHeartRate'),
-              t('currentHealthLog.steps'),
-              t('currentHealthLog.totalSteps'),
-            ].map(label => (
-              <View key={label} style={styles.row}>
-                <Text style={styles.rowLabel}>{label}</Text>
-                <Text style={styles.rowValueMuted}>—</Text>
-              </View>
-            ))}
-            {dateRows.map(row => (
-              <View key={row.label} style={styles.row}>
-                <Text style={styles.rowLabel}>{row.label}</Text>
-                <Text style={styles.rowValueAccent}>N/A</Text>
+        <View style={styles.summaryCard}>
+          <Text style={styles.cardTitle}>
+            {t('currentHealthLog.snapshotTitle')}
+          </Text>
+          <Text style={styles.cardDescription}>
+            {hasData
+              ? t('currentHealthLog.snapshotDescription')
+              : t('currentHealthLog.emptySnapshotDescription')}
+          </Text>
+          <View style={styles.summaryDivider} />
+          <View style={styles.row}>
+            <Text style={styles.rowLabel}>{t('currentHealthLog.lastChecked')}</Text>
+            <Text style={styles.rowValueAccent}>{formatDateTime(lastChecked)}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.rowLabel}>{t('currentHealthLog.historyDays')}</Text>
+            <Text style={styles.rowValueAccent}>
+              {new Intl.NumberFormat().format(historyDayCount)}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.summaryCard}>
+          <Text style={styles.cardTitle}>
+            {t('currentHealthLog.latestReadings')}
+          </Text>
+          <View style={styles.readings}>
+            {readings.map(reading => (
+              <View key={reading.label} style={styles.readingRow}>
+                <View>
+                  <Text style={styles.rowLabel}>{reading.label}</Text>
+                  <Text style={styles.readingDetail}>{reading.detail}</Text>
+                </View>
+                <Text style={styles.rowValueAccent}>{reading.value}</Text>
               </View>
             ))}
           </View>
-        ) : (
-          <View style={styles.rows}>
-            {dateRows.map(row => (
-              <View key={row.label} style={styles.row}>
-                <Text style={styles.rowLabel}>{row.label}</Text>
-                <Text style={styles.rowValueAccent}>{row.value}</Text>
-              </View>
-            ))}
-          </View>
-        )}
+        </View>
       </ScrollView>
 
       <View style={styles.footer}>
@@ -142,7 +225,10 @@ const CurrentHealthLogScreen = () => {
           onPress={() =>
             navigation.dispatch(StackActions.push(Screens.HistoryLogs))
           }
-          style={[styles.historyButton, !hasData && styles.historyButtonDisabled]}>
+          style={[
+            styles.historyButton,
+            !hasData && styles.historyButtonDisabled,
+          ]}>
           <Text
             style={[
               styles.historyButtonText,
