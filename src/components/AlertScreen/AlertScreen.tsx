@@ -86,10 +86,8 @@ const AlertScreen: FC<AlertScreenProps> = ({
             isDisabled={primary.isDisabled}
             spinner={<Spinner color="white" size="small" />}
             onPress={primary.onPress}
-            height={layout.ctaHeight}
-            minH={layout.ctaHeight}
-            maxH={layout.ctaHeight}
-            py={0}>
+            justifyContent="center"
+            style={{height: layout.ctaHeight}}>
             {primary.label}
           </Button>
           {secondary ? (
@@ -109,10 +107,8 @@ const AlertScreen: FC<AlertScreenProps> = ({
                   />
                 }
                 onPress={secondary.onPress}
-                height={layout.ctaHeight}
-                minH={layout.ctaHeight}
-                maxH={layout.ctaHeight}
-                py={0}>
+                justifyContent="center"
+                style={{height: layout.ctaHeight}}>
                 {secondary.label}
               </Button>
             </View>

@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
     backgroundColor: semanticColors.surfaceCanvas,
     paddingHorizontal: layout.screenGutter,
     paddingTop: 12,
-    paddingBottom: 28,
   },
   historyButton: {
     height: layout.ctaHeight,

@@ -43,6 +43,8 @@ const styles = StyleSheet.create({
     maxWidth: 320,
   },
   actions: {
+    flexShrink: 0,
+    flexGrow: 0,
     paddingBottom: spacing.lg,
   },
 });

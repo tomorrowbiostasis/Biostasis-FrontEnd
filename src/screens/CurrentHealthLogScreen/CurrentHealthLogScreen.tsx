@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {StackActions, useNavigation} from '@react-navigation/native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppSelector} from '~/redux/store/hooks';
@@ -87,6 +88,7 @@ const toLocalDayKey = (timestamp?: number | null): string | null => {
 const CurrentHealthLogScreen = () => {
   const {t} = useAppTranslation();
   const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
   const health = useAppSelector(state => state.health.data) as HealthEntry | null;
   const allData = useAppSelector(state => state.health.allData);
 
@@ -218,7 +220,7 @@ const CurrentHealthLogScreen = () => {
         </View>
       </ScrollView>
 
-      <View style={styles.footer}>
+      <View style={[styles.footer, {paddingBottom: insets.bottom + 16}]}>
         <TouchableOpacity
           activeOpacity={0.8}
           disabled={!hasData}

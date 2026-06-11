@@ -61,7 +61,7 @@ export const figmaPrimaryButtonStyles = {
   backgroundColor: 'primary',
   borderWidth: 0,
   borderRadius: layout.ctaRadius,
-  minHeight: layout.ctaHeight,
+  height: layout.ctaHeight,
   _text: {
     color: 'textInverse',
     fontFamily: 'DMSans',
@@ -94,7 +94,7 @@ export const figmaSecondaryButtonStyles = {
   borderColor: 'primary',
   borderWidth: 1,
   borderRadius: layout.ctaRadius,
-  minHeight: layout.ctaHeight,
+  height: layout.ctaHeight,
   _text: {
     color: 'primary',
     fontFamily: 'DMSans',
@@ -165,7 +165,7 @@ export const figmaEmergencyButtonStyles = {
   backgroundColor: 'dangerStrong',
   borderWidth: 0,
   borderRadius: layout.ctaRadius,
-  minHeight: layout.ctaHeight,
+  height: layout.ctaHeight,
   _text: {
     color: 'textInverse',
     fontFamily: 'DMSans',

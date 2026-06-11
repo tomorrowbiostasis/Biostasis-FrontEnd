@@ -203,7 +203,8 @@ const createNotificationBasedOnType = async (
           ],
           ongoing: true,
           color: '#0096FF',
-          largeIcon: 'ic_stat_notification',
+          smallIcon: 'ic_stat_notification',
+          largeIcon: 'ic_launcher',
           style: {type: AndroidStyle.BIGTEXT, text},
         },
       };
@@ -246,7 +247,8 @@ const createNotificationBasedOnType = async (
           ],
           ongoing: true,
           color: '#0096FF',
-          largeIcon: 'ic_stat_notification',
+          smallIcon: 'ic_stat_notification',
+          largeIcon: 'ic_launcher',
           style: {type: AndroidStyle.BIGTEXT, text},
         },
         ios: {
@@ -298,7 +300,8 @@ const createNotificationBasedOnType = async (
           ],
           ongoing: true,
           color: '#0096FF',
-          largeIcon: 'ic_stat_notification',
+          smallIcon: 'ic_stat_notification',
+          largeIcon: 'ic_launcher',
           style: {type: AndroidStyle.BIGTEXT, text},
         },
         ios: {
@@ -327,7 +330,8 @@ const createNotificationBasedOnType = async (
           },
           ongoing: true,
           color: '#0096FF',
-          largeIcon: 'ic_stat_notification',
+          smallIcon: 'ic_stat_notification',
+          largeIcon: 'ic_launcher',
         },
         ios: {
           critical: true,
@@ -352,7 +356,8 @@ const createNotificationBasedOnType = async (
           },
           ongoing: true,
           color: '#0096FF',
-          largeIcon: 'ic_stat_notification',
+          smallIcon: 'ic_stat_notification',
+          largeIcon: 'ic_launcher',
         },
         ios: {
           critical: true,
@@ -388,7 +393,8 @@ const createNotificationBasedOnType = async (
           ],
           ongoing: true,
           color: '#0096FF',
-          largeIcon: 'ic_stat_notification',
+          smallIcon: 'ic_stat_notification',
+          largeIcon: 'ic_launcher',
           style: {type: AndroidStyle.BIGTEXT, text},
         },
       };
@@ -427,7 +433,8 @@ const createNotificationBasedOnType = async (
           ],
           ongoing: true,
           color: '#0096FF',
-          largeIcon: 'ic_stat_notification',
+          smallIcon: 'ic_stat_notification',
+          largeIcon: 'ic_launcher',
           style: {type: AndroidStyle.BIGTEXT, text},
         },
         ios: {
@@ -457,7 +464,8 @@ const createNotificationBasedOnType = async (
           autoCancel: false,
           ongoing: false,
           color: '#0096FF',
-          largeIcon: 'ic_stat_notification',
+          smallIcon: 'ic_stat_notification',
+          largeIcon: 'ic_launcher',
           style: {type: AndroidStyle.BIGTEXT, text},
         },
         ios: {
