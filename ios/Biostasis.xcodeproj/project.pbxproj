@@ -864,7 +864,7 @@
 				CODE_SIGN_ENTITLEMENTS = Biostasis/BiostasisDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = 379N8TSZND;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Biostasis/Info.plist;
@@ -898,7 +898,7 @@
 				CODE_SIGN_ENTITLEMENTS = Biostasis/BiostasisRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = 379N8TSZND;
 				INFOPLIST_FILE = Biostasis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;

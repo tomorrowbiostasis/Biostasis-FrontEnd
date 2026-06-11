@@ -101,7 +101,7 @@ android {
         flavorDimensions "default" // add this line
         resValue "string", "build_config_package", "com.tomorrowbiostasis.app"
         versionName "2.2.0"
-        versionCode 20
+        versionCode 21
     }
     splits {
         abi {
