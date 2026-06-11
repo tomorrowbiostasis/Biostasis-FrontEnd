@@ -1,5 +1,5 @@
 const translations = {
-  appName: 'Tomorrow Bio',
+  appName: 'Tomorrow.bio',
   bottomTab: {
     home: 'Home',
     profile: 'Profile',
@@ -102,7 +102,7 @@ const translations = {
       title: 'Health data',
       emptyTitle: 'No recent health data',
       emptySubtitle:
-        'We checked for the latest available data. If you use Apple Health, make sure Tomorrow Bio is allowed to read it.',
+        'We checked for the latest available data. If you use Apple Health, make sure Tomorrow.bio is allowed to read it.',
       checking: 'Checking health data…',
       checked: 'Checked just now',
       unavailableHelper:
@@ -333,7 +333,7 @@ const translations = {
     },
     emergencyContact: 'Emergency Contact Settings',
     emergencySystem: 'Emergency System Settings',
-    tomorrowBio: 'Sign up with Tomorrow Bio',
+    tomorrowBio: 'Sign up with Tomorrow.bio',
     termsOfService: 'Terms of Service',
     privacyStatements: 'Privacy Statements',
     logOut: 'Log out',
@@ -357,7 +357,7 @@ const translations = {
     slide3: {
       badge: 'RAPID RESPONSE',
       title: 'Advanced care, ready when it matters.',
-      body: 'Tomorrow Bio helps you prepare emergency information and connect with trained response support for more coordinated cryopreservation workflows.',
+      body: 'Tomorrow.bio helps you prepare emergency information and connect with trained response support for more coordinated cryopreservation workflows.',
     },
   },
   welcome: {
@@ -415,13 +415,13 @@ const translations = {
     debugInfo: 'Debug Info',
     emergencyContactSettings: 'Emergency Contact Settings',
     pauseTimes: 'Pause Emergency System',
-    signUpForCryopreservation: 'Sign Up with Tomorrow Bio',
+    signUpForCryopreservation: 'Sign Up with Tomorrow.bio',
     devLogs: 'Current Health Log',
     devHistoryLogs: 'Dev History Logs',
     devPushLogs: 'Dev Push Logs',
   },
   signUpForTomorrow: {
-    title: 'Sign up with Tomorrow Bio',
+    title: 'Sign up with Tomorrow.bio',
     signUpUrl: 'https://tomorrowbiostasis.com/signup/',
     internetError: {
       title: 'No internet connection',
@@ -492,7 +492,7 @@ const translations = {
     email: 'you@example.com',
   },
   auth: {
-    welcomeTo: 'Welcome to Tomorrow Bio',
+    welcomeTo: 'Welcome to Tomorrow.bio',
     accountWasCreated:
       'Account created. Check your inbox and open the activation link on your mobile device.',
     invalidCredentials: 'Incorrect email or password',
@@ -519,7 +519,7 @@ const translations = {
     },
     signUp: {
       title: 'Create account',
-      subtitle: 'Join Tomorrow Bio to manage your emergency preparedness.',
+      subtitle: 'Join Tomorrow.bio to manage your emergency preparedness.',
       cta: 'Create account',
       dividerLabel: 'or sign up with email',
       passwordPlaceholder: 'Create a password',
@@ -971,7 +971,7 @@ const translations = {
           title: 'Give Health permissions',
           alertTitle: 'Health Permissions',
           alertDescription:
-            'You will be prompted to allow Tomorrow Bio to access your health data. Please confirm.',
+            'You will be prompted to allow Tomorrow.bio to access your health data. Please confirm.',
         },
         turnOn: 'Use bio-based monitoring',
         warning:
@@ -991,7 +991,7 @@ const translations = {
           connect: 'Connect app to Google Fit',
           alertTitle1: 'Authenticate',
           alertDescription1:
-            "Please authenticate Google Fit to let Tomorrow Bio access recent health data. If you don't have Google Fit installed, please install it first from Google Play.",
+            "Please authenticate Google Fit to let Tomorrow.bio access recent health data. If you don't have Google Fit installed, please install it first from Google Play.",
           alertTitle2: 'Add Google Fit',
           alertDescription2:
             'Please open the Preferences section in your watch / fitness band companion app. Then find a section saying Add Accounts or similar. Choose Google Fit and then pass the authorization process.',
@@ -1121,7 +1121,7 @@ const translations = {
     },
     signUpForCryopreservation: {
       tomorrowBio: {
-        title: 'Sign Up with Tomorrow Bio',
+        title: 'Sign Up with Tomorrow.bio',
         description: 'European Provider with strong SST infrastructure',
         footer: 'Learn more & sign up',
       },
@@ -1172,15 +1172,15 @@ const translations = {
     locationPermissionDenied: 'Location permission denied',
     unableToOpenSettings: 'Unable to open settings',
     turnOnLocationFromSettings:
-      'Turn on Location Services to allow Tomorrow Bio to determine your location.',
+      'Turn on Location Services to allow Tomorrow.bio to determine your location.',
     goToSettings: 'Go to Settings',
     notEnoughsPermissions:
-      'Tomorrow Bio requires location access for emergency monitoring workflows. To allow this, go to location privacy settings and select "Always".',
+      'Tomorrow.bio requires location access for emergency monitoring workflows. To allow this, go to location privacy settings and select "Always".',
   },
   notifications: {
     goToSettings: 'Go to Settings',
     permissionsError:
-      'Tomorrow Bio requires push notification permissions for emergency monitoring check-ins and alerts.',
+      'Tomorrow.bio requires push notification permissions for emergency monitoring check-ins and alerts.',
   },
   time: {
     short: {
@@ -1388,7 +1388,7 @@ const translations = {
   automatedEmergencyStatus: {
     start: {
       title: 'Automated Health Check',
-      describe: 'Tomorrow Bio is checking recent health data',
+      describe: 'Tomorrow.bio is checking recent health data',
     },
     emergency: 'Starting Emergency Process...',
     restart: 'Automated emergency system restarted',
@@ -1397,7 +1397,7 @@ const translations = {
     stop: {
       title: 'Automated Health Check Stopped',
       describe:
-        'Tomorrow Bio emergency monitoring stopped because an emergency flow started.',
+        'Tomorrow.bio emergency monitoring stopped because an emergency flow started.',
     },
   },
   cryopreservationCompaniesUrls: {

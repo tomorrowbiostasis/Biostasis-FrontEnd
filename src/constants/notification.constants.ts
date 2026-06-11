@@ -26,9 +26,9 @@ export const notificationGroupId = 'biostasis';
 
 export const channelGroupConfig: AndroidChannelGroup = {
   id: notificationGroupId,
-  name: 'Tomorrow Bio',
+  name: 'Tomorrow.bio',
   description:
-    'Notification channels used by Tomorrow Bio on Android.',
+    'Notification channels used by Tomorrow.bio on Android.',
 };
 export const normalNotification = {
   id: '4',
@@ -48,8 +48,8 @@ export const emergencyNotification = {
 export const normalChannelConfig: AndroidChannel = {
   id: normalNotification.channelId,
   groupId: notificationGroupId,
-  name: 'Tomorrow Bio info',
-  description: 'General Tomorrow Bio notifications.',
+  name: 'Tomorrow.bio info',
+  description: 'General Tomorrow.bio notifications.',
   badge: true,
   vibration: true,
   lights: false,
@@ -59,7 +59,7 @@ export const normalChannelConfig: AndroidChannel = {
 export const regularCheckChannelConfig: AndroidChannel = {
   id: regularCheckNotification.channelId,
   groupId: notificationGroupId,
-  name: 'Tomorrow Bio check-ins',
+  name: 'Tomorrow.bio check-ins',
   description: 'Emergency monitoring check-in notifications.',
   badge: true,
   vibration: false,
@@ -70,7 +70,7 @@ export const regularCheckChannelConfig: AndroidChannel = {
 export const emergencyChannelConfig: AndroidChannel = {
   id: emergencyNotification.channelId,
   groupId: notificationGroupId,
-  name: 'Tomorrow Bio emergency',
+  name: 'Tomorrow.bio emergency',
   description: 'Urgent emergency workflow notifications.',
   badge: true,
   vibration: true,

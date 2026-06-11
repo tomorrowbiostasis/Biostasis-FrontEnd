@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Tomorrow Bio</string>
+	<string>Tomorrow.bio</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -60,19 +60,19 @@
 	<key>NSFocusStatusUsageDescription</key>
 	<string>${PRODUCT_NAME} uses Focus status to detect when you are sleeping and prevent false emergency alerts.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Tomorrow Bio uses Bluetooth only when supported devices are connected for emergency monitoring signals.</string>
+	<string>Tomorrow.bio uses Bluetooth only when supported devices are connected for emergency monitoring signals.</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Tomorrow Bio reads recent heart rate and step data to support emergency monitoring when you enable it.</string>
+	<string>Tomorrow.bio reads recent heart rate and step data to support emergency monitoring when you enable it.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Tomorrow Bio may write limited health-related status only when a supported feature requires it.</string>
+	<string>Tomorrow.bio may write limited health-related status only when a supported feature requires it.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Tomorrow Bio uses your location to share where you are during an emergency flow you trigger or enable.</string>
+	<string>Tomorrow.bio uses your location to share where you are during an emergency flow you trigger or enable.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Tomorrow Bio uses background location only to support emergency monitoring and response workflows you enable.</string>
+	<string>Tomorrow.bio uses background location only to support emergency monitoring and response workflows you enable.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Tomorrow Bio uses your location to support emergency response workflows.</string>
+	<string>Tomorrow.bio uses your location to support emergency response workflows.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Tomorrow Bio uses your location to share where you are during an emergency flow.</string>
+	<string>Tomorrow.bio uses your location to share where you are during an emergency flow.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>${PRODUCT_NAME} uses motion data to show today's steps as they update and help confirm recent movement.</string>
 	<key>UIAppFonts</key>

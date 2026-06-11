@@ -26,7 +26,7 @@
   - Automated Emergency System: it will direct the user to AutomatedEmergencySettingsScreen.
 
 - **Sign up for Cryopreservation**:
-  - Sign Up with Tomorrow Bio: it will direct the user to the SignUPForCryoprservation screen inside the application.
+  - Sign Up with Tomorrow.bio: it will direct the user to the SignUPForCryoprservation screen inside the application.
   - Sign Up with Alcor: it will direct the user to an external link to the Alcor website.
   - Sign Up with Cryonics Institute: it will direct the user to an external link to the Cryonics Institute website.
   - Sign Up with Southern Cryonics: it will direct the user to an external link to the Southern Cryonics website.
@@ -77,7 +77,7 @@ Also, the Dashboard screen contains an Emergency Button where the users can star
 
 17. **ProfileEditScreen**: Users can edit all their profile details (First Name - Last Name - Phone Number - Date of Birth - Full Address)
 
-18. **SignUPForCryoprservation**: This screen will render the sign-up to Tomorrow Bio page to allow the users to sign up without the need to leave the application.
+18. **SignUPForCryoprservation**: This screen will render the sign-up to Tomorrow.bio page to allow the users to sign up without the need to leave the application.
 
 19. **SpecificTimePausedScreen**: it is part of the automated emergency system structure where the users have the ability to pause the automated system at certain times. it contains two methods:
 

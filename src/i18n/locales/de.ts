@@ -1,7 +1,7 @@
 import {ITranslation} from '../interfaces/Translation.interface';
 
 const translations: ITranslation = {
-  appName: 'Biostasis',
+  appName: 'Tomorrow.bio',
   bottomTab: {
     home: 'Home',
     profile: 'Profil',
@@ -281,7 +281,7 @@ const translations: ITranslation = {
     },
     emergencyContact: 'Einstellungen für Notfallkontakte',
     emergencySystem: 'Einstellungen des Notfallsystems',
-    tomorrowBio: 'Bei Tomorrow Bio anmelden',
+    tomorrowBio: 'Bei Tomorrow.bio anmelden',
     termsOfService: 'Nutzungsbedingungen',
     privacyStatements: 'Datenschutzerklärung',
     logOut: 'Abmelden',
@@ -393,13 +393,13 @@ const translations: ITranslation = {
     debugInfo: 'Debug-Informationen',
     emergencyContactSettings: 'Notfallkontakt-Einstellungen',
     pauseTimes: 'Notfallsystem pausieren',
-    signUpForCryopreservation: 'Melden Sie sich bei Tomorrow Bio an',
+    signUpForCryopreservation: 'Melden Sie sich bei Tomorrow.bio an',
     devLogs: 'Aktuelles Gesundheitsprotokoll',
     devHistoryLogs: 'Entwicklungsprotokolle',
     devPushLogs: 'Push-Benachrichtigungsprotokolle',
   },
   signUpForTomorrow: {
-    title: 'Melden Sie sich bei Tomorrow Bio an',
+    title: 'Melden Sie sich bei Tomorrow.bio an',
     signUpUrl: 'https://member.tomorrow.bio/de/signup/start/',
     internetError: {
       title: 'Keine Internetverbindung',
@@ -1074,7 +1074,7 @@ const translations: ITranslation = {
     },
     signUpForCryopreservation: {
       tomorrowBio: {
-        title: 'Anmelden mit Tomorrow Bio',
+        title: 'Anmelden mit Tomorrow.bio',
         description: 'Europäischer Anbieter mit starker SST-Infrastruktur',
         footer: 'Mehr erfahren und anmelden',
       },

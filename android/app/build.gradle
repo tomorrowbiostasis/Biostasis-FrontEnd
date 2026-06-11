@@ -156,11 +156,11 @@ android {
     flavorDimensions "default"
     productFlavors {
         development {
-            resValue "string", "app_name", "Tomorrow Bio dev"
+            resValue "string", "app_name", "Tomorrow.bio dev"
             applicationId "com.tomorrowbiostasis.app"
         }
         production {
-            resValue "string", "app_name", "Tomorrow Bio"
+            resValue "string", "app_name", "Tomorrow.bio"
             applicationId "com.tomorrowbiostasis.app"
         }
     }

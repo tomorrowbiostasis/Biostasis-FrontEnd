@@ -18,7 +18,7 @@ import {
 import SettingsRow from './components/SettingsRow';
 import styles from './styles';
 
-/* Blends the embedded Tomorrow Bio page background into the redesigned screen. */
+/* Blends the embedded Tomorrow.bio page background into the redesigned screen. */
 const TOMORROW_BIO_INJECTED_JS = `(function() {
   var style = document.createElement('style');
   style.innerHTML = '.light-gray{background-color:#F5F6F8 !important;}.html-embed-23{background-color:#F5F6F8 !important;}';
