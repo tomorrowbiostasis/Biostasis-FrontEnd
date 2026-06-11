@@ -244,6 +244,7 @@ const AccountSettingsScreen = () => {
                 onChangeText={setGdprEmail}
               />
               <AnimatedSubmitButton
+                variant={'figmaFormPrimary' as never}
                 disabled={!isGdprEmailValid || gdprSubmitting}
                 isLoading={gdprSubmitting}
                 onPress={handleGdprSubmit}>
