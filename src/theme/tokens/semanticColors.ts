@@ -11,7 +11,7 @@ export const semanticColors = {
   primaryDeep: '#1A3558',
   primaryAccent: '#2B6E99',
   primaryPressed: '#0D1B2E',
-  primaryDisabled: '#9BA8B5',
+  primaryDisabled: '#536A83',
 
   surface: '#FFFFFF',
   surfaceMuted: '#EEF0F3',

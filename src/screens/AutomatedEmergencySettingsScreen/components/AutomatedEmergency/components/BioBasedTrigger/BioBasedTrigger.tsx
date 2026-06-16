@@ -16,6 +16,11 @@ import {setEmergencyCheckType} from '~/redux/automatedEmergency/automatedEmergen
 import {useGoogleFitAuthStatus} from '~/hooks/UseGoogleFitAuthStatus.hook';
 import useBioTriggerValid from '~/hooks/UseBioTriggerValid.hook';
 import ToastService from '~/services/Toast.service';
+import {
+  getGoogleFitAvailability,
+  openGoogleFit,
+  openGooglePlayServicesSettings,
+} from '~/services/DeviceSignals.service';
 import EnvConfig from '~/services/Env.service';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
@@ -43,7 +48,7 @@ const BioBasedTrigger = ({embedded = false}: {embedded?: boolean}) => {
   const {navigate} = useNavigation();
   const dispatch = useAppDispatch();
   const {user} = useAppSelector(userSelector);
-  const {authorizeGoogleFit, isGoogleFitAuthorized, resetGoogleFit} =
+  const {authorizeGoogleFitDetailed, isGoogleFitAuthorized, resetGoogleFit} =
     useGoogleFitAuthStatus();
   const {regularPushNotification, positiveInfoPeriod} = useAppSelector(
     automatedEmergencySettingsSelector,
@@ -225,15 +230,99 @@ const BioBasedTrigger = ({embedded = false}: {embedded?: boolean}) => {
           {
             text: t('common.ok'),
             onPress: async () => {
-              const authSuccess = await authorizeGoogleFit();
-              if (authSuccess) {
+              const googleFitAvailability = await getGoogleFitAvailability();
+              if (googleFitAvailability === 'googleFitMissing') {
+                ToastService.warning(
+                  t(
+                    'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googleFitMissing',
+                  ),
+                );
+                return;
+              }
+
+              if (googleFitAvailability === 'googlePlayServicesMissing') {
+                Alert.alert(
+                  t(
+                    'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googlePlayServicesTitle',
+                  ),
+                  t(
+                    'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googlePlayServicesMissing',
+                  ),
+                  [
+                    {text: t('common.cancel'), style: 'cancel'},
+                    {
+                      text: t(
+                        'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.openGooglePlayServicesSettings',
+                      ),
+                      onPress: () => {
+                        openGooglePlayServicesSettings();
+                      },
+                    },
+                  ],
+                );
+                return;
+              }
+
+              const authResult = await authorizeGoogleFitDetailed();
+              if (authResult.success) {
                 handleUpdateUser(
                   {pulseBasedTriggerGoogleFitAuthenticated: value},
                   true,
                 );
                 return;
               }
-              ToastService.error('Google Fit authorization was cancelled');
+
+              const retryAuthorization = async () => {
+                const retryResult = await authorizeGoogleFitDetailed();
+                if (retryResult.success) {
+                  handleUpdateUser(
+                    {pulseBasedTriggerGoogleFitAuthenticated: value},
+                    true,
+                  );
+                  return;
+                }
+
+                ToastService.warning(
+                  t(
+                    'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googleFitAuthCancelled',
+                  ),
+                  {text2: retryResult.message},
+                );
+              };
+
+              Alert.alert(
+                t(
+                  'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googleFitAccessTitle',
+                ),
+                t(
+                  'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googleFitAccessDescription',
+                ),
+                [
+                  {text: t('common.cancel'), style: 'cancel'},
+                  {
+                    text: t(
+                      'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.openGoogleFit',
+                    ),
+                    onPress: () => {
+                      openGoogleFit().then(opened => {
+                        if (!opened) {
+                          ToastService.warning(
+                            t(
+                              'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.healthCheckFailedAndroid',
+                            ),
+                          );
+                        }
+                      });
+                    },
+                  },
+                  {
+                    text: t(
+                      'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.tryGoogleFitAgain',
+                    ),
+                    onPress: retryAuthorization,
+                  },
+                ],
+              );
             },
           },
         ]);
@@ -242,7 +331,7 @@ const BioBasedTrigger = ({embedded = false}: {embedded?: boolean}) => {
         handleUpdateUser({pulseBasedTriggerGoogleFitAuthenticated: false}, true);
       }
     },
-    [authorizeGoogleFit, handleUpdateUser, resetGoogleFit, t],
+    [authorizeGoogleFitDetailed, handleUpdateUser, resetGoogleFit, t],
   );
 
   const infoAlert = (titleKey: string, descKey: string) => () =>

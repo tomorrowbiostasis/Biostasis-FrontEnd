@@ -2,6 +2,10 @@ package com.tomorrowbiostasis.app;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.provider.Settings;
 
 import androidx.annotation.NonNull;
 
@@ -34,6 +38,50 @@ public class DeviceSignalsModule extends ReactContextBaseJavaModule {
             } else {
                 promise.resolve(false);
             }
+        } catch (Exception e) {
+            promise.resolve(false);
+        }
+    }
+
+    @ReactMethod
+    public void isPackageInstalled(String packageName, Promise promise) {
+        try {
+            PackageManager packageManager = getReactApplicationContext().getPackageManager();
+            packageManager.getPackageInfo(packageName, 0);
+            promise.resolve(true);
+        } catch (PackageManager.NameNotFoundException e) {
+            promise.resolve(false);
+        } catch (Exception e) {
+            promise.resolve(false);
+        }
+    }
+
+    @ReactMethod
+    public void openAppSettings(String packageName, Promise promise) {
+        try {
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setData(Uri.parse("package:" + packageName));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getReactApplicationContext().startActivity(intent);
+            promise.resolve(true);
+        } catch (Exception e) {
+            promise.resolve(false);
+        }
+    }
+
+    @ReactMethod
+    public void openApp(String packageName, Promise promise) {
+        try {
+            PackageManager packageManager = getReactApplicationContext().getPackageManager();
+            Intent intent = packageManager.getLaunchIntentForPackage(packageName);
+            if (intent == null) {
+                promise.resolve(false);
+                return;
+            }
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getReactApplicationContext().startActivity(intent);
+            promise.resolve(true);
         } catch (Exception e) {
             promise.resolve(false);
         }

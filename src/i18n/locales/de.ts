@@ -836,6 +836,10 @@ const translations: ITranslation = {
           title: 'Berechtigungen & Bereitschaft',
           subtitle:
             'Erlauben Sie Benachrichtigungen, Standortzugriff und Zugriff auf die Health-App, bevor Sie fortfahren.',
+          subtitleAndroid:
+            'Erlauben Sie Benachrichtigungen, Standortzugriff und Zugriff auf Google Fit, bevor Sie fortfahren.',
+          googleFitOnlySubtitle:
+            'Benachrichtigungen und Standort sind bereits erlaubt. Bestätigen Sie den Google-Fit-Zugriff, um die Einrichtung abzuschließen.',
           notificationsTitle: 'Benachrichtigungen',
           notificationsSubtitle:
             'Erforderlich, damit die mobile App Check-ins und Notfallwarnungen senden kann.',
@@ -857,8 +861,26 @@ const translations: ITranslation = {
           connectAction: 'Verbinden',
           checkHealthAction: 'Gesundheitszugriff prüfen',
           healthCheckSuccess: 'Gesundheitszugriff bestätigt',
+          healthCheckSuccessAndroid: 'Google-Fit-Zugriff bestätigt',
           healthCheckFailed:
             'Der Zugriff auf die Health-App konnte noch nicht bestätigt werden. Prüfen Sie die Berechtigungen und versuchen Sie es erneut.',
+          healthCheckFailedAndroid:
+            'Der Zugriff auf Google Fit konnte noch nicht bestätigt werden. Bestätigen Sie den Zugriff im Google-Anmeldefenster und versuchen Sie es erneut.',
+          googleFitAccessTitle: 'Google-Fit-Zugriff bestätigen',
+          googleFitAccessDescription:
+            'Health-Tracking kann in Google Fit aktiviert sein, aber Tomorrow Bio benötigt weiterhin einen separaten Zugriff. Wenn das Google-Anmeldefenster geöffnet wird, wählen Sie Ihr Konto aus und bestätigen Sie den Zugriff.',
+          googleFitAuthCancelled:
+            'Die Google-Fit-Anmeldung wurde abgebrochen. Wählen Sie Ihr Konto aus und bestätigen Sie den Zugriff, wenn Sie dazu aufgefordert werden.',
+          openGoogleFit: 'Google Fit öffnen',
+          tryGoogleFitAgain: 'Erneut versuchen',
+          googleFitMissing:
+            'Google Fit ist nicht installiert. Installieren Sie Google Fit aus Google Play, melden Sie sich an und versuchen Sie es erneut.',
+          googlePlayServicesTitle:
+            'Google Play-Dienste benötigen Aufmerksamkeit',
+          googlePlayServicesMissing:
+            'Google Play-Dienste fehlen oder sind deaktiviert. Aktualisieren Sie Google Play-Dienste und versuchen Sie es erneut.',
+          openGooglePlayServicesSettings:
+            'Play-Dienste-Einstellungen öffnen',
           allowedAction: 'Erlaubt',
           connectedAction: 'Verbunden',
           allSetTitle: 'Die erforderlichen Berechtigungen sind bereits aktiv',
@@ -1163,6 +1185,12 @@ const translations: ITranslation = {
       systemPaused: 'System ist pausiert',
       pausedUntil: 'Pausiert bis {{time}}',
       cancelPause: 'Pause aufheben',
+      pauseEnabled: 'Aktiviert',
+      pauseDisabled: 'Deaktiviert',
+      enablePauseHint:
+        'Aktivieren, um festzulegen, wie lange die Überwachung pausiert.',
+      disablePauseHint:
+        'Deaktivieren, um die Überwachung jetzt fortzusetzen.',
     },
     addTimeBlock: {
       title: 'Zeitblock hinzufügen',

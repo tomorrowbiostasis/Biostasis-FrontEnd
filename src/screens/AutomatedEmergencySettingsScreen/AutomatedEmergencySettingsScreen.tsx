@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   InteractionManager,
-  Platform,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -32,7 +31,6 @@ import {setEmergencyCheckType} from '~/redux/automatedEmergency/automatedEmergen
 
 import ScreenHeader from '~/components/ScreenHeader';
 import {
-  BioEmergencySettingsFillClock,
   BioEmergencySettingsFillEcgWave,
   BioEmergencySettingsFillInfo,
   BioHomeFillBroadcastSignal,
@@ -48,15 +46,13 @@ import GuidedMonitoringSetupSheet, {
   GuidedMonitoringMode,
   SleepSetupChoice,
 } from './components/GuidedMonitoringSetupSheet/GuidedMonitoringSetupSheet';
-import {hasReceivedHealthData} from './components/GuidedMonitoringSetupSheet/GuidedMonitoringSetupSheet.logic';
 import styles from './styles';
-import GoogleIcon from '~/assets/icons/GoogleIcon';
-import {ChevronRightIcon, HeartPulseIcon} from '~/assets/icons/AppIcons';
 import {TIME_BASED_CHECK_IN_INTERVAL_MINUTES} from './constants';
 
 const defaultFrequencyOfRegularNotification =
   TIME_BASED_CHECK_IN_INTERVAL_MINUTES;
 const defaultPositiveInfoPeriod = 1440;
+
 const HOW_IT_WORKS_STEPS = [
   {
     icon: <BioHomeFillBroadcastSignal />,
@@ -94,8 +90,6 @@ const AutomatedEmergencySettingsScreen = () => {
   const {automatedEmergency, readManual} = useAppSelector(
     automatedEmergencySettingsSelector,
   );
-  const health = useAppSelector(state => state.health.data);
-  const healthDataReceived = hasReceivedHealthData(health);
   const monitoringEnabledFromBackend = !!automatedEmergency;
   const contactsReady = hasContacts && areContactsEnabled;
   const setupComplete = contactsReady && readManual;
@@ -110,11 +104,6 @@ const AutomatedEmergencySettingsScreen = () => {
   const [pendingSetupRedirect, setPendingSetupRedirect] = useState(false);
 
   const isPaused = !!pausedDate || !!isSlotPause;
-  const bioSourceLabel = t(
-    Platform.OS === 'ios'
-      ? 'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.sourceBioIos'
-      : 'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.sourceBioAndroid',
-  );
 
   useEffect(() => {
     const task = InteractionManager.runAfterInteractions(() => {
@@ -226,66 +215,6 @@ const AutomatedEmergencySettingsScreen = () => {
       ),
     );
   }, [dispatch, handleUpdateUser, t]);
-
-  const handleSwitchToTimeBased = useCallback(async () => {
-    handleUpdateUser(
-      {
-        automatedEmergency: true,
-        readManual: true,
-        regularPushNotification: true,
-        frequencyOfRegularNotification:
-          user.frequencyOfRegularNotification ||
-          defaultFrequencyOfRegularNotification,
-      },
-      true,
-    );
-    await resetRecommendationSystem(AsyncStorage);
-    dispatch(setEmergencyCheckType('time'));
-    ToastService.success(
-      t(
-        'emergencyContactsSettings.automatedEmergencySettings.guidance.activeActions.switchedToTime',
-      ),
-    );
-  }, [dispatch, handleUpdateUser, t, user.frequencyOfRegularNotification]);
-
-  const handleSwitchToBioBased = useCallback(() => {
-    if (!healthDataReceived) {
-      ToastService.info(
-        t(
-          'emergencyContactsSettings.automatedEmergencySettings.guidance.activeActions.bioUnavailableTitle',
-        ),
-        {
-          text2: t(
-            'emergencyContactsSettings.automatedEmergencySettings.guidance.activeActions.bioUnavailableMessage',
-          ),
-        },
-      );
-      return;
-    }
-
-    handleUpdateUser(
-      {
-        automatedEmergency: true,
-        readManual: true,
-        regularPushNotification: false,
-        positiveInfoPeriod:
-          user.positiveInfoPeriod || defaultPositiveInfoPeriod,
-      },
-      true,
-    );
-    dispatch(setEmergencyCheckType('bio'));
-    ToastService.success(
-      t(
-        'emergencyContactsSettings.automatedEmergencySettings.guidance.activeActions.switchedToBio',
-      ),
-    );
-  }, [
-    dispatch,
-    handleUpdateUser,
-    healthDataReceived,
-    t,
-    user.positiveInfoPeriod,
-  ]);
 
   const setupStatus = (() => {
     if (!contactsReady) {
@@ -456,249 +385,25 @@ const AutomatedEmergencySettingsScreen = () => {
               </Text>
             </TouchableOpacity>
           </>
-        ) : effectiveMonitoringOn ? (
-          <TouchableOpacity
-            activeOpacity={0.82}
-            style={styles.howCard}
-            onPress={() => setShowSetupSheet(true)}
-            accessibilityRole="button">
-            <View style={styles.howHeader}>
-              <BioEmergencySettingsFillInfo />
-              <View style={styles.howHeaderText}>
-                <Text style={styles.howTitle}>
-                  {t(
-                    'emergencyContactsSettings.automatedEmergencySettings.guidance.howCompleted',
-                  )}
-                </Text>
-                <Text style={styles.howCompletedSubtitle}>
-                  {t(
-                    'emergencyContactsSettings.automatedEmergencySettings.guidance.howCompletedSubtitle',
-                  )}
-                </Text>
-              </View>
-              <ChevronRightIcon
-                size={18}
-                color="#6B7A8E"
-                style={styles.howChevron}
-              />
-            </View>
-          </TouchableOpacity>
         ) : null}
 
         {effectiveMonitoringOn ? (
           <>
             <PauseEmergencyPanel />
-            <View
-              style={[
-                styles.activeConfiguration,
-                isPaused ? styles.dimmed : undefined,
-              ]}
-              pointerEvents={isPaused ? 'none' : 'auto'}>
-              <View style={styles.activeHeader}>
-                {bioBasedActive ? (
-                  <BioEmergencySettingsFillEcgWave />
-                ) : (
-                  <BioEmergencySettingsFillClock />
-                )}
-                <View style={styles.activeHeaderCopy}>
-                  <Text style={styles.activeTitle}>
-                    {bioBasedActive
-                      ? t(
-                          'emergencyContactsSettings.automatedEmergencySettings.guidance.bioChoice.title',
-                        )
-                      : t(
-                          'emergencyContactsSettings.automatedEmergencySettings.guidance.timeChoice.title',
-                        )}
-                  </Text>
-                  <Text style={styles.activeDescription}>
-                    {bioBasedActive
-                      ? t(
-                          'emergencyContactsSettings.automatedEmergencySettings.guidance.status.active.subtitleBio',
-                        )
-                      : t(
-                          'emergencyContactsSettings.automatedEmergencySettings.guidance.status.active.subtitleTime',
-                        )}
-                  </Text>
-                </View>
+            {timeBasedActive ? (
+              <View
+                style={[
+                  styles.activeConfiguration,
+                  isPaused ? styles.dimmed : undefined,
+                ]}
+                pointerEvents={isPaused ? 'none' : 'auto'}>
+                <AutomatedEmergency />
+                {contactsReady ? <SpecificTimesPanel /> : null}
               </View>
-              {bioBasedActive ? (
-                <View style={styles.activeSummaryRows}>
-                  <View style={styles.activeSummaryRow}>
-                    <View style={styles.activeSummaryLabelGroup}>
-                      <BioEmergencySettingsFillEcgWave size={30} />
-                      <Text style={styles.activeSummaryLabel}>
-                        {t(
-                          'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.sourceLabel',
-                        )}
-                      </Text>
-                    </View>
-                    <View style={styles.activeSummaryValueGroup}>
-                      {Platform.OS === 'ios' ? (
-                        <HeartPulseIcon size={16} color="#E0527A" />
-                      ) : (
-                        <GoogleIcon size={16} />
-                      )}
-                      <Text style={styles.activeSummaryValue}>
-                        {bioSourceLabel}
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={styles.activeSummaryRow}>
-                    <Text style={styles.activeSummaryLabel}>
-                      {t(
-                        'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.healthDataLabel',
-                      )}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.activeSummaryValue,
-                        healthDataReceived
-                          ? styles.activeSummaryValueSuccess
-                          : styles.activeSummaryValueWarning,
-                      ]}>
-                      {healthDataReceived
-                        ? t(
-                            'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.healthDataConnected',
-                          )
-                        : t(
-                            'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.healthDataMissing',
-                          )}
-                    </Text>
-                  </View>
-                </View>
-              ) : null}
-              {timeBasedActive ? <AutomatedEmergency /> : null}
-              <View style={styles.modeSection}>
-                <View style={styles.modeSectionHeader}>
-                  <Text style={styles.modeSectionTitle}>
-                    {t(
-                      'emergencyContactsSettings.automatedEmergencySettings.guidance.monitoringTypeTitle',
-                    )}
-                  </Text>
-                  <Text style={styles.modeSectionSubtitle}>
-                    {t(
-                      'emergencyContactsSettings.automatedEmergencySettings.guidance.monitoringTypeSubtitle',
-                    )}
-                  </Text>
-                </View>
-
-                <TouchableOpacity
-                  activeOpacity={0.82}
-                  style={[
-                    styles.modeOption,
-                    bioBasedActive ? styles.modeOptionActive : undefined,
-                  ]}
-                  onPress={
-                    bioBasedActive ? undefined : handleSwitchToBioBased
-                  }
-                  disabled={bioBasedActive}
-                  accessibilityRole="button">
-                  <View style={styles.modeOptionIcon}>
-                    <BioEmergencySettingsFillEcgWave />
-                  </View>
-                  <View style={styles.modeOptionCopy}>
-                    <Text style={styles.modeOptionTitle}>
-                      {t(
-                        'emergencyContactsSettings.automatedEmergencySettings.guidance.bioChoice.title',
-                      )}
-                    </Text>
-                    <Text style={styles.modeOptionDescription}>
-                      {bioBasedActive
-                        ? t(
-                            'emergencyContactsSettings.automatedEmergencySettings.guidance.status.active.subtitleBio',
-                          )
-                        : t(
-                            'emergencyContactsSettings.automatedEmergencySettings.guidance.bioChoice.support',
-                          )}
-                    </Text>
-                  </View>
-                  <View
-                    style={[
-                      styles.modeBadge,
-                      bioBasedActive
-                        ? styles.modeBadgeActive
-                        : styles.modeBadgeIdle,
-                    ]}>
-                    <Text
-                      style={[
-                        styles.modeBadgeText,
-                        bioBasedActive
-                          ? styles.modeBadgeTextActive
-                          : styles.modeBadgeTextIdle,
-                      ]}>
-                      {bioBasedActive
-                        ? t(
-                            'emergencyContactsSettings.automatedEmergencySettings.guidance.statusLabels.active',
-                          )
-                        : t(
-                            'emergencyContactsSettings.automatedEmergencySettings.guidance.statusLabels.select',
-                          )}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  activeOpacity={0.82}
-                  style={[
-                    styles.modeOption,
-                    timeBasedActive ? styles.modeOptionActive : undefined,
-                  ]}
-                  onPress={
-                    timeBasedActive ? undefined : handleSwitchToTimeBased
-                  }
-                  disabled={timeBasedActive}
-                  accessibilityRole="button">
-                  <View style={styles.modeOptionIcon}>
-                    <BioEmergencySettingsFillClock />
-                  </View>
-                  <View style={styles.modeOptionCopy}>
-                    <Text style={styles.modeOptionTitle}>
-                      {t(
-                        'emergencyContactsSettings.automatedEmergencySettings.guidance.timeChoice.title',
-                      )}
-                    </Text>
-                    <Text style={styles.modeOptionDescription}>
-                      {timeBasedActive
-                        ? t(
-                            'emergencyContactsSettings.automatedEmergencySettings.guidance.status.active.subtitleTime',
-                          )
-                        : t(
-                            'emergencyContactsSettings.automatedEmergencySettings.guidance.timeChoice.support',
-                          )}
-                    </Text>
-                  </View>
-                  <View
-                    style={[
-                      styles.modeBadge,
-                      timeBasedActive
-                        ? styles.modeBadgeActive
-                        : styles.modeBadgeIdle,
-                    ]}>
-                    <Text
-                      style={[
-                        styles.modeBadgeText,
-                        timeBasedActive
-                          ? styles.modeBadgeTextActive
-                          : styles.modeBadgeTextIdle,
-                      ]}>
-                      {timeBasedActive
-                        ? t(
-                            'emergencyContactsSettings.automatedEmergencySettings.guidance.statusLabels.active',
-                          )
-                        : t(
-                            'emergencyContactsSettings.automatedEmergencySettings.guidance.statusLabels.select',
-                          )}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-              {contactsReady ? (
-                <>
-                  <SleepSchedulePanel refreshKey={sleepScheduleKey} required />
-                  {timeBasedActive ? <SpecificTimesPanel /> : null}
-                </>
-              ) : null}
-            </View>
+            ) : null}
+            {contactsReady ? (
+              <SleepSchedulePanel refreshKey={sleepScheduleKey} required />
+            ) : null}
           </>
         ) : null}
       </ScrollView>

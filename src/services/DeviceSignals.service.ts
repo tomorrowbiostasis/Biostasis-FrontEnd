@@ -117,6 +117,106 @@ export const isAirplaneModeOn = async (): Promise<boolean> => {
   }
 };
 
+const GOOGLE_FIT_PACKAGE = 'com.google.android.apps.fitness';
+const GOOGLE_PLAY_SERVICES_PACKAGE = 'com.google.android.gms';
+
+export type GoogleFitAvailability =
+  | 'available'
+  | 'googleFitMissing'
+  | 'googlePlayServicesMissing'
+  | 'unknown';
+
+export const isAndroidPackageInstalled = async (
+  packageName: string,
+): Promise<boolean> => {
+  if (Platform.OS !== 'android') {
+    return false;
+  }
+
+  try {
+    if (NativeModules.DeviceSignalsModule?.isPackageInstalled) {
+      return await NativeModules.DeviceSignalsModule.isPackageInstalled(
+        packageName,
+      );
+    }
+  } catch (e) {
+    console.log('Error checking Android package installation', e);
+  }
+
+  return false;
+};
+
+export const getGoogleFitAvailability =
+  async (): Promise<GoogleFitAvailability> => {
+    if (Platform.OS !== 'android') {
+      return 'available';
+    }
+
+    if (!NativeModules.DeviceSignalsModule?.isPackageInstalled) {
+      return 'unknown';
+    }
+
+    const [hasGoogleFit, hasGooglePlayServices] = await Promise.all([
+      isAndroidPackageInstalled(GOOGLE_FIT_PACKAGE),
+      isAndroidPackageInstalled(GOOGLE_PLAY_SERVICES_PACKAGE),
+    ]);
+
+    if (!hasGooglePlayServices) {
+      return 'googlePlayServicesMissing';
+    }
+
+    if (!hasGoogleFit) {
+      return 'googleFitMissing';
+    }
+
+    return 'available';
+  };
+
+export const openAndroidAppSettings = async (
+  packageName: string,
+): Promise<boolean> => {
+  if (Platform.OS !== 'android') {
+    return false;
+  }
+
+  try {
+    if (NativeModules.DeviceSignalsModule?.openAppSettings) {
+      return await NativeModules.DeviceSignalsModule.openAppSettings(
+        packageName,
+      );
+    }
+  } catch (e) {
+    console.log('Error opening Android app settings', e);
+  }
+
+  return false;
+};
+
+export const openAndroidApp = async (packageName: string): Promise<boolean> => {
+  if (Platform.OS !== 'android') {
+    return false;
+  }
+
+  try {
+    if (NativeModules.DeviceSignalsModule?.openApp) {
+      return await NativeModules.DeviceSignalsModule.openApp(packageName);
+    }
+  } catch (e) {
+    console.log('Error opening Android app', e);
+  }
+
+  return false;
+};
+
+export const openGoogleFit = async (): Promise<boolean> =>
+  openAndroidApp(GOOGLE_FIT_PACKAGE);
+
+export const openGoogleFitSettings = async (): Promise<boolean> =>
+  openAndroidAppSettings(GOOGLE_FIT_PACKAGE);
+
+export const openGooglePlayServicesSettings = async (): Promise<boolean> =>
+  openAndroidAppSettings(GOOGLE_PLAY_SERVICES_PACKAGE);
+
 /**
  * Silently detect timezone shifts. Stores a baseline offset and compares
  * on each call. If the offset changes by ≥60 minutes, records a travel

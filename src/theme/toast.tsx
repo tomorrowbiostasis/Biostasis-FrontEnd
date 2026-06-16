@@ -2,7 +2,8 @@ import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import Toast from 'react-native-toast-message';
 
-import {semanticColors, shadow} from './tokens';
+import {radius, semanticColors, shadow, spacing, typography} from './tokens';
+import {addOpacity} from './utils/colorOpacity';
 import {
   AlertTriangleIcon,
   CheckIcon,
@@ -11,35 +12,25 @@ import {
 } from '~/assets/icons/AppIcons';
 
 type ToastVariant = {
-  bg: string;
   accent: string;
-  border: string;
   Icon: React.ComponentType<{size?: number; color?: string}>;
 };
 
 const VARIANTS: Record<'success' | 'error' | 'warning' | 'info', ToastVariant> = {
   success: {
-    bg: '#F4FBF8',
     accent: semanticColors.success,
-    border: 'rgba(30, 155, 107, 0.18)',
     Icon: CheckIcon,
   },
   error: {
-    bg: '#FFF7F7',
     accent: semanticColors.danger,
-    border: 'rgba(229, 55, 58, 0.18)',
     Icon: XIcon,
   },
   warning: {
-    bg: '#FFFBF4',
     accent: semanticColors.warningStrong,
-    border: 'rgba(212, 130, 10, 0.18)',
     Icon: AlertTriangleIcon,
   },
   info: {
-    bg: '#F6F9FD',
     accent: semanticColors.info,
-    border: 'rgba(45, 107, 228, 0.16)',
     Icon: LightbulbIcon,
   },
 };
@@ -51,16 +42,22 @@ interface ToastBodyProps {
 }
 
 const ToastBody: React.FC<ToastBodyProps> = ({variant, title, body}) => {
-  const {bg, accent, border, Icon} = variant;
+  const {accent, Icon} = variant;
   return (
     <Pressable
       onPress={() => Toast.hide()}
       accessibilityRole="button"
       accessibilityLabel="Dismiss notification"
-      style={[styles.container, {backgroundColor: bg, borderColor: border}]}>
-      <View style={[styles.accentBar, {backgroundColor: accent}]} />
-      <View style={styles.iconChip}>
-        <Icon size={20} color={accent} />
+      style={styles.container}>
+      <View
+        style={[
+          styles.iconChip,
+          {
+            backgroundColor: addOpacity(accent, 14),
+            borderColor: addOpacity(accent, 28),
+          },
+        ]}>
+        <Icon size={18} color={semanticColors.textInverse} />
       </View>
       <View style={styles.textCol}>
         {title ? (
@@ -97,42 +94,43 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    marginHorizontal: 16,
-    borderRadius: 14,
+    gap: spacing.md,
+    minHeight: 56,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    marginHorizontal: spacing.xl,
+    borderRadius: radius.lg,
     borderWidth: 1,
-    overflow: 'hidden',
-    ...shadow.md,
-  },
-  accentBar: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: 4,
+    borderColor: 'rgba(255, 255, 255, 0.12)',
+    backgroundColor: semanticColors.primaryDeep,
+    ...shadow.lg,
   },
   iconChip: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    backgroundColor: semanticColors.surface,
+    width: 34,
+    height: 34,
+    borderRadius: radius.md,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   textCol: {
     flex: 1,
-    gap: 2,
+    gap: spacing.xs,
   },
   title: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 14,
-    color: semanticColors.textPrimary,
+    fontFamily: 'Poppins-Light',
+    fontSize: typography.rowTitle.fontSize,
+    fontWeight: '300',
+    lineHeight: typography.rowTitle.lineHeight,
+    letterSpacing: 0,
+    color: semanticColors.textInverse,
   },
   body: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 13,
-    color: semanticColors.textSecondary,
+    fontFamily: 'Poppins-Light',
+    fontSize: typography.caption.fontSize,
+    fontWeight: '300',
+    lineHeight: typography.caption.lineHeight,
+    letterSpacing: 0,
+    color: addOpacity(semanticColors.textInverse, 72),
   },
 });

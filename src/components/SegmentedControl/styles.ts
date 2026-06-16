@@ -2,6 +2,8 @@ import {Platform, StyleSheet} from 'react-native';
 import {semanticColors} from '~/theme/tokens';
 
 export const SEGMENTED_CONTROL_PADDING = 4;
+const SEGMENTED_CONTROL_HEIGHT = 51;
+const INDICATOR_HEIGHT = SEGMENTED_CONTROL_HEIGHT - SEGMENTED_CONTROL_PADDING * 2;
 
 const styles = StyleSheet.create({
   container: {
@@ -9,7 +11,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ECEEF2',
     borderRadius: 15,
     padding: SEGMENTED_CONTROL_PADDING,
-    height: 51,
+    height: SEGMENTED_CONTROL_HEIGHT,
     alignSelf: 'stretch',
   },
   segment: {
@@ -21,10 +23,11 @@ const styles = StyleSheet.create({
   indicator: {
     position: 'absolute',
     top: SEGMENTED_CONTROL_PADDING,
-    bottom: SEGMENTED_CONTROL_PADDING,
     left: SEGMENTED_CONTROL_PADDING,
-    borderRadius: 12,
+    height: INDICATOR_HEIGHT,
+    borderRadius: 14,
     backgroundColor: semanticColors.surface,
+    overflow: 'hidden',
     ...Platform.select({
       ios: {
         shadowColor: 'rgba(11, 31, 58, 0.1)',
@@ -33,7 +36,8 @@ const styles = StyleSheet.create({
         shadowRadius: 2.5,
       },
       android: {
-        elevation: 2,
+        borderWidth: 1,
+        borderColor: 'rgba(11, 31, 58, 0.06)',
       },
     }),
   },

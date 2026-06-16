@@ -16,6 +16,7 @@ import {AuthStackNavigatorParamList, Screens} from '~/models/Navigation.model';
 import {getForgotPasswordParams} from '~/redux/auth/selectors';
 import {
   setForgotPasswordEmailMessage,
+  setForgotPasswordNewPasswordMessage,
   setShouldBackToAuthScreen,
 } from '~/redux/auth/auth.slice';
 import {getVisibleFormError} from '~/utils';
@@ -44,6 +45,7 @@ const NewPasswordScreen = () => {
   useEffect(() => {
     const clearMessage = () => {
       dispatch(setForgotPasswordEmailMessage(undefined));
+      dispatch(setForgotPasswordNewPasswordMessage(undefined));
     };
     clearMessage();
     return clearMessage;

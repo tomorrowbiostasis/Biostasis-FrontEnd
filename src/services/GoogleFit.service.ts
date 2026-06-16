@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import {PermissionsAndroid, Platform} from 'react-native';
 import GoogleFit, {BucketUnit, Scopes} from 'react-native-google-fit';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
@@ -30,18 +29,44 @@ const ensureActivityRecognitionPermission = async () => {
   }
 };
 
+export type GoogleFitAuthResult =
+  | {success: true}
+  | {success: false; message: string};
+
+export const authenticateGoogleFitDetailed =
+  async (): Promise<GoogleFitAuthResult> => {
+    try {
+      const activityPermissionGranted =
+        await ensureActivityRecognitionPermission();
+      if (!activityPermissionGranted) {
+        return {
+          success: false,
+          message: 'Activity recognition permission denied',
+        };
+      }
+
+      const authResult = await GoogleFit.authorize({
+        scopes: [Scopes.FITNESS_HEART_RATE_READ, Scopes.FITNESS_ACTIVITY_READ],
+      });
+      if (authResult.success) {
+        console.log('Google Fit authorized successfully');
+        return {success: true};
+      }
+
+      const message = authResult.message || 'Authorization failed';
+      console.warn('Could not authorize Google Fit', authResult);
+      return {success: false, message};
+    } catch (e) {
+      const message = e instanceof Error ? e.message : 'Authorization failed';
+      console.warn('Google Fit authorization error', e);
+      return {success: false, message};
+    }
+  };
+
 export const authenticateGoogleFit = async () => {
   try {
-    await ensureActivityRecognitionPermission();
-    const authResult = await GoogleFit.authorize({
-      scopes: [Scopes.FITNESS_HEART_RATE_READ, Scopes.FITNESS_ACTIVITY_READ],
-    });
-    if (authResult.success) {
-      console.log('Google Fit authorized successfully');
-      return true;
-    }
-    console.warn('Could not authorize Google Fit', authResult);
-    return false;
+    const authResult = await authenticateGoogleFitDetailed();
+    return authResult.success;
   } catch (e) {
     console.warn('Google Fit authorization error', e);
     return false;

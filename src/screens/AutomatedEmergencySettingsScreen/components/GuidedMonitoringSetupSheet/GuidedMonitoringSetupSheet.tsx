@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Animated as RNAnimated,
+  Alert,
   Easing,
   GestureResponderEvent,
   Platform,
@@ -43,6 +44,11 @@ import {
   requestLocationPermission,
 } from '~/services/Location.service';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
+import {
+  getGoogleFitAvailability,
+  openGoogleFit,
+  openGooglePlayServicesSettings,
+} from '~/services/DeviceSignals.service';
 import {
   checkNotificationPermissions,
   hasNotificationPermission,
@@ -122,7 +128,8 @@ const GuidedMonitoringSetupSheet = ({
   const dispatch = useAppDispatch();
   const health = useAppSelector(state => state.health.data);
   const user = useAppSelector(state => state.user.user);
-  const {authorizeGoogleFit, isGoogleFitAuthorized} = useGoogleFitAuthStatus();
+  const {authorizeGoogleFitDetailed, isGoogleFitAuthorized} =
+    useGoogleFitAuthStatus();
   const [step, setStep] = useState<GuidedMonitoringStep>(1);
   const [positiveInfoPeriod, setPositiveInfoPeriod] = useState(
     defaultPositiveInfoPeriod,
@@ -227,13 +234,15 @@ const GuidedMonitoringSetupSheet = ({
         }
       }
 
-      ToastService[success ? 'success' : 'warning'](
-        t(
-          success
-            ? 'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.healthCheckSuccess'
-            : 'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.healthCheckFailed',
-        ),
-      );
+      const toastKey = success
+        ? Platform.OS === 'android'
+          ? 'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.healthCheckSuccessAndroid'
+          : 'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.healthCheckSuccess'
+        : Platform.OS === 'android'
+        ? 'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.healthCheckFailedAndroid'
+        : 'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.healthCheckFailed';
+
+      ToastService[success ? 'success' : 'warning'](t(toastKey));
     },
     [clearHealthCheckTimeout, dispatch, t],
   );
@@ -435,18 +444,116 @@ const GuidedMonitoringSetupSheet = ({
       return;
     }
 
-    const granted = await authorizeGoogleFit();
-    if (granted) {
+    const googleFitAvailability = await getGoogleFitAvailability();
+    if (googleFitAvailability === 'googleFitMissing') {
+      healthCheckResolvedRef.current = true;
+      clearHealthCheckTimeout();
+      setActivePermissionAction(null);
+      ToastService.warning(
+        t(
+          'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googleFitMissing',
+        ),
+      );
+      return;
+    }
+
+    if (googleFitAvailability === 'googlePlayServicesMissing') {
+      healthCheckResolvedRef.current = true;
+      clearHealthCheckTimeout();
+      setActivePermissionAction(null);
+      Alert.alert(
+        t(
+          'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googlePlayServicesTitle',
+        ),
+        t(
+          'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googlePlayServicesMissing',
+        ),
+        [
+          {text: t('common.cancel'), style: 'cancel'},
+          {
+            text: t(
+              'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.openGooglePlayServicesSettings',
+            ),
+            onPress: () => {
+              openGooglePlayServicesSettings();
+            },
+          },
+        ],
+      );
+      return;
+    }
+
+    const authResult = await authorizeGoogleFitDetailed();
+    if (authResult.success) {
       dispatch(updateUser({pulseBasedTriggerGoogleFitAuthenticated: true}));
       finishHealthPermissionCheck(true);
       return;
     }
-    finishHealthPermissionCheck(false);
+
+    const retryAuthorization = async () => {
+      setActivePermissionAction('health');
+      healthCheckResolvedRef.current = false;
+
+      const retryResult = await authorizeGoogleFitDetailed();
+      if (retryResult.success) {
+        dispatch(updateUser({pulseBasedTriggerGoogleFitAuthenticated: true}));
+        finishHealthPermissionCheck(true);
+        return;
+      }
+
+      healthCheckResolvedRef.current = true;
+      clearHealthCheckTimeout();
+      setActivePermissionAction(null);
+      ToastService.warning(
+        t(
+          'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googleFitAuthCancelled',
+        ),
+        {text2: retryResult.message},
+      );
+    };
+
+    healthCheckResolvedRef.current = true;
+    clearHealthCheckTimeout();
+    setActivePermissionAction(null);
+    Alert.alert(
+      t(
+        'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googleFitAccessTitle',
+      ),
+      t(
+        'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googleFitAccessDescription',
+      ),
+      [
+        {text: t('common.cancel'), style: 'cancel'},
+        {
+          text: t(
+            'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.openGoogleFit',
+          ),
+          onPress: () => {
+            openGoogleFit().then(opened => {
+              if (!opened) {
+                ToastService.warning(
+                  t(
+                    'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.healthCheckFailedAndroid',
+                  ),
+                );
+              }
+            });
+          },
+        },
+        {
+          text: t(
+            'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.tryGoogleFitAgain',
+          ),
+          onPress: retryAuthorization,
+        },
+      ],
+    );
   }, [
-    authorizeGoogleFit,
+    authorizeGoogleFitDetailed,
     clearHealthCheckTimeout,
     dispatch,
     finishHealthPermissionCheck,
+    t,
   ]);
 
   const handlePrimaryPress = async () => {
@@ -508,6 +615,21 @@ const GuidedMonitoringSetupSheet = ({
       const showNotificationStatus = notificationsGranted;
       const showLocationStatus = locationGranted;
       const showHealthStatus = healthReady;
+      const onlyGoogleFitRemaining =
+        Platform.OS === 'android' &&
+        showHealthTile &&
+        notificationsGranted &&
+        locationGranted;
+      const permissionsSubtitle =
+        Platform.OS === 'android'
+          ? t(
+              onlyGoogleFitRemaining
+                ? 'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.googleFitOnlySubtitle'
+                : 'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.subtitleAndroid',
+            )
+          : t(
+              'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.subtitle',
+            );
       const hasVisiblePermissionTiles =
         showNotificationsTile || showLocationTile || showHealthTile;
       const hasResolvedPermissions =
@@ -520,11 +642,7 @@ const GuidedMonitoringSetupSheet = ({
               'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.title',
             )}
           </Text>
-          <Text style={styles.subtitle}>
-            {t(
-              'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.subtitle',
-            )}
-          </Text>
+          <Text style={styles.subtitle}>{permissionsSubtitle}</Text>
           {hasResolvedPermissions ? (
             <View style={styles.permissionResolvedList}>
               {showNotificationStatus ? (
@@ -734,6 +852,9 @@ const GuidedMonitoringSetupSheet = ({
                   }
                   mode="time"
                   display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                  themeVariant="light"
+                  textColor={semanticColors.primary}
+                  accentColor={semanticColors.primary}
                   onChange={handleSleepPickerChange}
                 />
               </View>
@@ -750,7 +871,11 @@ const GuidedMonitoringSetupSheet = ({
         visible={visible}
         onDismiss={onDismiss}
         onDismissComplete={onDismissComplete}
-        sheetStyle={styles.sheet}>
+        panGestureTarget="handle"
+        maxHeight="90%"
+        bottomInsetPadding={12}
+        sheetStyle={styles.sheet}
+        contentStyle={styles.sheetContent}>
         <View style={styles.header}>
             <Text style={styles.stepLabel}>
               {t(
@@ -769,6 +894,7 @@ const GuidedMonitoringSetupSheet = ({
           </View>
           <ScrollView
             ref={scrollRef}
+            style={styles.scrollView}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.body}>
             <RNAnimated.View style={[styles.stepContent, stepAnimatedStyle]}>
@@ -926,9 +1052,13 @@ const PermissionStatusRow = ({
 
 const styles = StyleSheet.create({
   sheet: {
-    maxHeight: '86%',
+    height: '86%',
     paddingHorizontal: 22,
     paddingTop: 6,
+  },
+  sheetContent: {
+    flex: 1,
+    minHeight: 0,
   },
   header: {
     flexDirection: 'row',
@@ -942,7 +1072,10 @@ const styles = StyleSheet.create({
     color: semanticColors.textMuted,
   },
   body: {
-    paddingBottom: 2,
+    paddingBottom: 16,
+  },
+  scrollView: {
+    flex: 1,
   },
   stepContent: {
     gap: 14,
@@ -1315,7 +1448,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
     paddingTop: 14,
-    paddingBottom: 6,
+    paddingBottom: 0,
   },
   secondaryButton: {
     height: layout.ctaHeight,

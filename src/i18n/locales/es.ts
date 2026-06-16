@@ -643,6 +643,12 @@ const translations: ITranslation = {
       systemPaused: 'Sistema en pausa',
       pausedUntil: 'Pausado hasta {{time}}',
       cancelPause: 'Cancelar pausa',
+      pauseEnabled: 'Activado',
+      pauseDisabled: 'Desactivado',
+      enablePauseHint:
+        'Actívalo para elegir cuánto tiempo se pausará la monitorización.',
+      disablePauseHint:
+        'Desactívalo para reanudar la monitorización ahora.',
     },
     addTimeBlock: {
       title: 'Añadir bloque de tiempo',

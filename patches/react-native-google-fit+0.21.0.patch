@@ -1,656 +1,560 @@
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/results.bin b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/results.bin
+diff --git a/node_modules/react-native-google-fit/.eslintignore b/node_modules/react-native-google-fit/.eslintignore
 new file mode 100644
-index 0000000..e1640c9
+index 0000000..f26efce
 --- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/results.bin
-@@ -0,0 +1 @@
-+o/bundleLibRuntimeToDirRelease
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/ActivityHistory.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/ActivityHistory.dex
++++ b/node_modules/react-native-google-fit/.eslintignore
+@@ -0,0 +1,2 @@
++**/node_modules/**
++node_modules/
+diff --git a/node_modules/react-native-google-fit/.eslintrc b/node_modules/react-native-google-fit/.eslintrc
 new file mode 100644
-index 0000000..f692d58
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/ActivityHistory.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/BodyHistory$InsertAndVerifyDataTask.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/BodyHistory$InsertAndVerifyDataTask.dex
-new file mode 100644
-index 0000000..3ae2b4c
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/BodyHistory$InsertAndVerifyDataTask.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/BodyHistory.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/BodyHistory.dex
-new file mode 100644
-index 0000000..693687e
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/BodyHistory.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/BuildConfig.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/BuildConfig.dex
-new file mode 100644
-index 0000000..02aab13
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/BuildConfig.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/CalorieHistory$InsertAndVerifyDataTask.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/CalorieHistory$InsertAndVerifyDataTask.dex
-new file mode 100644
-index 0000000..298ce7d
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/CalorieHistory$InsertAndVerifyDataTask.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/CalorieHistory.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/CalorieHistory.dex
-new file mode 100644
-index 0000000..bbef47e
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/CalorieHistory.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/DeleteDataHelper.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/DeleteDataHelper.dex
-new file mode 100644
-index 0000000..4148efc
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/DeleteDataHelper.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/DistanceHistory.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/DistanceHistory.dex
-new file mode 100644
-index 0000000..8243af9
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/DistanceHistory.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$1.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$1.dex
-new file mode 100644
-index 0000000..eb7fabe
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$1.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$2.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$2.dex
-new file mode 100644
-index 0000000..b87f0c7
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$2.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$3.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$3.dex
-new file mode 100644
-index 0000000..54ccd3e
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$3.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$GoogleFitCustomErrorDialig.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$GoogleFitCustomErrorDialig.dex
-new file mode 100644
-index 0000000..0c716ab
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager$GoogleFitCustomErrorDialig.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager.dex
-new file mode 100644
-index 0000000..cef4870
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitManager.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitModule.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitModule.dex
-new file mode 100644
-index 0000000..3fecf92
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitModule.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitPackage.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitPackage.dex
-new file mode 100644
-index 0000000..054969c
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/GoogleFitPackage.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HealthHistory$InsertAndVerifyDataTask.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HealthHistory$InsertAndVerifyDataTask.dex
-new file mode 100644
-index 0000000..b117aed
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HealthHistory$InsertAndVerifyDataTask.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HealthHistory.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HealthHistory.dex
-new file mode 100644
-index 0000000..1fb6e5c
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HealthHistory.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HelperUtil.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HelperUtil.dex
-new file mode 100644
-index 0000000..c7cdd4c
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HelperUtil.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HydrationHistory.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HydrationHistory.dex
-new file mode 100644
-index 0000000..299f3e3
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/HydrationHistory.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/NutritionHistory.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/NutritionHistory.dex
-new file mode 100644
-index 0000000..1c3e6ce
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/NutritionHistory.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/RecordingApi$1.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/RecordingApi$1.dex
-new file mode 100644
-index 0000000..1630c93
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/RecordingApi$1.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/RecordingApi.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/RecordingApi.dex
-new file mode 100644
-index 0000000..686a6d3
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/RecordingApi.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SaveDataHelper.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SaveDataHelper.dex
-new file mode 100644
-index 0000000..f407961
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SaveDataHelper.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SleepHistory$1.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SleepHistory$1.dex
-new file mode 100644
-index 0000000..15a571c
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SleepHistory$1.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SleepHistory$2.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SleepHistory$2.dex
-new file mode 100644
-index 0000000..8f54708
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SleepHistory$2.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SleepHistory.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SleepHistory.dex
-new file mode 100644
-index 0000000..c43aa7e
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/SleepHistory.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepCounter$1.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepCounter$1.dex
-new file mode 100644
-index 0000000..1c9c148
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepCounter$1.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepCounter$2.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepCounter$2.dex
-new file mode 100644
-index 0000000..21a182f
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepCounter$2.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepCounter.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepCounter.dex
-new file mode 100644
-index 0000000..a3247bf
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepCounter.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepHistory$1.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepHistory$1.dex
-new file mode 100644
-index 0000000..c4d3fc3
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepHistory$1.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepHistory$2.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepHistory$2.dex
-new file mode 100644
-index 0000000..be43ad1
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepHistory$2.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepHistory.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepHistory.dex
-new file mode 100644
-index 0000000..b675497
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepHistory.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepSensor$1.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepSensor$1.dex
-new file mode 100644
-index 0000000..403923f
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepSensor$1.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepSensor.dex b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepSensor.dex
-new file mode 100644
-index 0000000..7851cfd
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/bundleLibRuntimeToDirRelease_dex/com/reactnative/googlefit/StepSensor.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/desugar_graph.bin b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/desugar_graph.bin
-new file mode 100644
-index 0000000..abd94a0
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/4e3a0da1d5adf2c8f2bcbf2c3fa70721/transformed/bundleLibRuntimeToDirRelease/desugar_graph.bin differ
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/569e5f3f536b119236482ab7d667407d/results.bin b/node_modules/react-native-google-fit/android/build/.transforms/569e5f3f536b119236482ab7d667407d/results.bin
-new file mode 100644
-index 0000000..0d259dd
+index 0000000..15d1709
 --- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/.transforms/569e5f3f536b119236482ab7d667407d/results.bin
-@@ -0,0 +1 @@
-+o/classes
-diff --git a/node_modules/react-native-google-fit/android/build/.transforms/569e5f3f536b119236482ab7d667407d/transformed/classes/classes_dex/classes.dex b/node_modules/react-native-google-fit/android/build/.transforms/569e5f3f536b119236482ab7d667407d/transformed/classes/classes_dex/classes.dex
-new file mode 100644
-index 0000000..b215792
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/.transforms/569e5f3f536b119236482ab7d667407d/transformed/classes/classes_dex/classes.dex differ
-diff --git a/node_modules/react-native-google-fit/android/build/generated/source/buildConfig/release/com/reactnative/googlefit/BuildConfig.java b/node_modules/react-native-google-fit/android/build/generated/source/buildConfig/release/com/reactnative/googlefit/BuildConfig.java
-new file mode 100644
-index 0000000..e8a7d05
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/generated/source/buildConfig/release/com/reactnative/googlefit/BuildConfig.java
-@@ -0,0 +1,10 @@
-+/**
-+ * Automatically generated file. DO NOT MODIFY
-+ */
-+package com.reactnative.googlefit;
-+
-+public final class BuildConfig {
-+  public static final boolean DEBUG = false;
-+  public static final String LIBRARY_PACKAGE_NAME = "com.reactnative.googlefit";
-+  public static final String BUILD_TYPE = "release";
-+}
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/AndroidManifest.xml b/node_modules/react-native-google-fit/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/AndroidManifest.xml
-new file mode 100644
-index 0000000..8dcca4c
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/AndroidManifest.xml
-@@ -0,0 +1,7 @@
-+<?xml version="1.0" encoding="utf-8"?>
-+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-+    package="com.reactnative.googlefit" >
-+
-+    <uses-sdk android:minSdkVersion="24" />
-+
-+</manifest>
-\ No newline at end of file
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/output-metadata.json b/node_modules/react-native-google-fit/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/output-metadata.json
-new file mode 100644
-index 0000000..fcedbd9
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/output-metadata.json
-@@ -0,0 +1,18 @@
++++ b/node_modules/react-native-google-fit/.eslintrc
+@@ -0,0 +1,99 @@
 +{
-+  "version": 3,
-+  "artifactType": {
-+    "type": "AAPT_FRIENDLY_MERGED_MANIFESTS",
-+    "kind": "Directory"
++  "parser": "babel-eslint",
++  "env": {
++    "browser": true,
++    "es6": true,
++    "jest": true,
++    "node": true
 +  },
-+  "applicationId": "com.reactnative.googlefit",
-+  "variantName": "release",
-+  "elements": [
-+    {
-+      "type": "SINGLE",
-+      "filters": [],
-+      "attributes": [],
-+      "outputFile": "AndroidManifest.xml"
-+    }
-+  ],
-+  "elementType": "File"
++  "extends": ["standard", "standard-react", "eslint:recommended", "plugin:react/recommended"],
++  "plugins": ["babel", "react"],
++  "globals": {
++    "__DEV__": true,
++    "by": true,
++    "device": true,
++    "element": true,
++    "expect": true,
++    "fetch": true,
++    "global": true,
++    "jasmine": true,
++    "module": true,
++    "process": true,
++    "React": true
++  },
++  "parserOptions": {
++    "ecmaFeatures": {
++      "jsx": true
++    },
++    "ecmaVersion": 6,
++    "sourceType": "module"
++  },
++  "rules": {
++    "arrow-parens": [1, "always"],
++    "brace-style": [1, "1tbs", { "allowSingleLine": true }],
++    "camelcase": [0, { "properties": "always" }],
++    "comma-dangle": [1, "always-multiline"],
++    "curly": [2, "all"],
++    "generator-star-spacing": ["error", { "before": true, "after": false }],
++    "indent": [2, 2, { "SwitchCase": 1 }],
++    "jsx-quotes": [1, "prefer-single"],
++    "max-len": [1, 120, 2],
++    "no-alert": [1],
++    "no-case-declarations": [0],
++    "no-console": [0],
++    "no-duplicate-imports": [1, { "includeExports": false }],
++    "no-eval": ["error", { "allowIndirect": true }],
++    "no-mixed-operators": [0],
++    "no-unused-vars": [1],
++    "no-useless-return": [1],
++    "no-var": 2,
++    "import/no-named-default": [0],
++    "prefer-const": ["error", { "ignoreReadBeforeAssign": false, "destructuring": "all" }],
++    "quote-props": [1, "consistent"],
++    "quotes": [1, "single"],
++    "react/display-name": [0, { "ignoreTranspilerName": true }],
++    "react/jsx-indent": [2, 2],
++    "react/jsx-wrap-multilines": [
++      1,
++      {
++        "declaration": "parens",
++        "assignment": "parens-new-line",
++        "return": "parens-new-line",
++        "arrow": "parens-new-line",
++        "condition": "ignore",
++        "logical": "ignore",
++        "prop": "ignore"
++      }
++    ],
++    "react/jsx-closing-bracket-location": [1, { "selfClosing": "line-aligned", "nonEmpty": "line-aligned" }],
++    "react/jsx-first-prop-new-line": [1, "multiline"],
++    "react/jsx-max-props-per-line": [
++      1,
++      {
++        "maximum": 1
++      }
++    ],
++    "react/jsx-no-bind": [
++      2,
++      {
++        "allowArrowFunctions": true,
++        "allowBind": false,
++        "ignoreRefs": true
++      }
++    ],
++    "react/jsx-uses-react": "error",
++    "react/jsx-uses-vars": "error",
++    "react/no-unused-prop-types": [1, { "skipShapeProps": true }],
++    "standard/no-callback-literal": "off",
++    "semi": [2, "never"],
++    "space-before-function-paren": [
++      1,
++      {
++        "anonymous": "always",
++        "named": "always",
++        "asyncArrow": "always"
++      }
++    ],
++    "yield-star-spacing": ["error", { "before": true, "after": false }]
++  }
 +}
-\ No newline at end of file
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/aar_metadata/release/writeReleaseAarMetadata/aar-metadata.properties b/node_modules/react-native-google-fit/android/build/intermediates/aar_metadata/release/writeReleaseAarMetadata/aar-metadata.properties
+diff --git a/node_modules/react-native-google-fit/.github/workflows/npm-publish.yml b/node_modules/react-native-google-fit/.github/workflows/npm-publish.yml
 new file mode 100644
-index 0000000..1211b1e
+index 0000000..1539c0c
 --- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/aar_metadata/release/writeReleaseAarMetadata/aar-metadata.properties
++++ b/node_modules/react-native-google-fit/.github/workflows/npm-publish.yml
+@@ -0,0 +1,15 @@
++on:
++  push:
++    branches: master
++
++jobs:
++  publish:
++    runs-on: ubuntu-latest
++    steps:
++      - uses: actions/checkout@v4
++      - uses: actions/setup-node@v3
++        with:
++          node-version: "18"
++      - uses: JS-DevTools/npm-publish@v3
++        with:
++          token: ${{ secrets.NPM_TOKEN }}
+\ No newline at end of file
+diff --git a/node_modules/react-native-google-fit/.prettierignore b/node_modules/react-native-google-fit/.prettierignore
+new file mode 100644
+index 0000000..07079f4
+--- /dev/null
++++ b/node_modules/react-native-google-fit/.prettierignore
+@@ -0,0 +1,2 @@
++*.md
++android/src/**
+\ No newline at end of file
+diff --git a/node_modules/react-native-google-fit/.prettierrc b/node_modules/react-native-google-fit/.prettierrc
+new file mode 100644
+index 0000000..ad4d895
+--- /dev/null
++++ b/node_modules/react-native-google-fit/.prettierrc
 @@ -0,0 +1,6 @@
-+aarFormatVersion=1.0
-+aarMetadataVersion=1.0
-+minCompileSdk=1
-+minCompileSdkExtension=0
-+minAndroidGradlePluginVersion=1.0.0
-+coreLibraryDesugaringEnabled=false
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/annotation_processor_list/release/javaPreCompileRelease/annotationProcessors.json b/node_modules/react-native-google-fit/android/build/intermediates/annotation_processor_list/release/javaPreCompileRelease/annotationProcessors.json
++{
++  "semi": false,
++  "singleQuote": true,
++  "tabWidth": 2,
++  "trailingComma": "es5"
++}
+diff --git a/node_modules/react-native-google-fit/CHANGELOG.md b/node_modules/react-native-google-fit/CHANGELOG.md
+deleted file mode 100644
+index ba47f88..0000000
+--- a/node_modules/react-native-google-fit/CHANGELOG.md
++++ /dev/null
+@@ -1,261 +0,0 @@
+-## Changelog
+-
+-All notable changes to this project will be documented in this file.
+-
+-The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+-
+-### [0.21.4] - 2025-10-08
+-
+-## What's Changed
+-* Chore: Fix release-published.yml by @StasDoskalenko in https://github.com/StasDoskalenko/react-native-google-fit/pull/376
+-
+-
+-**Full Changelog**: https://github.com/StasDoskalenko/react-native-google-fit/compare/v0.21.3...v0.21.4
+-
+-
+-
+-### [0.21.2] - 2025-10-08
+-
+-#### Changes
+-
+-
+-
+-### [0.21.0] - 2024-05-17
+-
+-#### Added
+-- Distance field support in `saveWorkout()` to match workout fetching (#356)
+-
+-### [0.20.0] - 2023-11-14
+-
+-#### Added
+-- `deleteAllSleep()` method for removing sleep data (#303)
+-- Support for saving blood pressure data (#309)
+-- Flag to identify manually added data in CalorieHistory & HealthHistory (#335)
+-- `inLocalTimeZone` parameter to prepareResponse function (#338)
+-
+-#### Changed
+-- Migrated to AndroidX from Android Support Library (#347)
+-- Bump dependencies: react-devtools-core, @babel/traverse, @sideway/formula
+-- Security updates: json5, decode-uri-component
+-
+-### [0.19.1] - 2022-11-16
+-
+-#### Added
+-- Resting Heart Rate support (#325, kudos to @AaronDsilva97)
+-
+-### [0.19.0] - 2022-08-20
+-
+-#### Changed
+-- Relaxed dependency version requirements (#313, kudos to @matiaskorhonen)
+-
+-### [0.18.3]
+-
+-#### Added
+-- Device info to step history data (#279, kudos to @kristerkari)
+-
+-#### Changed
+-- Updated typescript definitions
+-
+-### [0.18.2]
+-
+-#### Fixed
+-- Temporary hotfix (#268, kudos to @nikhil-kumar-160)
+-
+-### [0.18.1]
+-
+-#### Added
+-- `getBodyTemperatureSamples()` method (#266, kudos to @mluksha)
+-- `getOxygenSaturationSamples()` method (#266, kudos to @mluksha)
+-
+-#### Changed
+-- Updated typescript definitions
+-        
+-### [0.18.0]
+-
+-#### Added
+-- Workout Support [Experimental] (#251)
+-- TypeScript: `BucketUnitType` and `BucketUnit` helper types
+-        
+-### [0.17.1]
+-
+-#### Added
+-- Basic `getBloodGlucoseSamples()` implementation (kudos @ksetrin)
+-- Android 11 documentation note (kudos @moulie415)
+-
+-#### Changed
+-- Updated typescript definitions
+-
+-### [0.16.3]
+-
+-#### Added
+-- `getMoveMinutes()` method
+-
+-#### Changed
+-- Refactored and removed duplicated processData in stepHistory
+-- Updated typescript definitions
+-
+-### [0.10.0]
+-
+-#### Added
+-- Hydration support
+-
+-#### Fixed
+-- Weight and height deletion
+-
+-#### Changed
+-- Updated typescript definitions
+-
+-### [0.9.17]
+-
+-#### Fixed
+-- `observeSteps` fix (kudos to @nojas01)
+-- `disconnect()` method (kudos to @AylanBoscarino)
+-
+-#### Changed
+-- Better React Native 0.60 support (kudos to @spacekadet)
+-
+-### [0.9.15]
+-
+-#### Added
+-- `getUserInputSteps()` function (kudos @HelloCore)
+-- Retrieve Daily Nutrition Data (kudos @jguix) 
+-
+-### [0.9.13]
+-
+-#### Changed
+-- Improved weights granularity and always use FIELD_AVERAGE (@chrisgibbs44)
+-
+-### [0.9.12]
+-
+-#### Changed
+-- Updated typescript definitions for Scoped Authorization
+-
+-### [0.9.11]
+-
+-#### Changed
+-- `getDailyCalorieSamples()` now includes basalCalculation boolean flag
+-
+-### [0.9.10-beta]
+-
+-#### Added
+-- Scope authorizations (thanks, @gaykov)
+-        
+-### [0.9.1]
+-
+-#### Changed
+-- `getDailyStepCountSamples()` now returns promise if no callback is provided
+-
+-### [0.9.0]
+-
+-#### Added
+-- `getHeartRateSamples()` (thanks @damnnkst)
+-- `getBloodPressureSamples()` (thanks @damnnkst)
+-
+-#### Changed
+-- `authorize()` is now a promise
+-- Non-blocking step retrieve
+-
+-### [0.7.1]
+-
+-#### Fixed
+-- `disconnect()` method (@dmitriys-lits thanks for the PR)
+-
+-### [0.7]
+-
+-#### Added
+-- Retrieve Heights
+-- Open fit activity
+-- Unified body method (@EJohnF thanks for the PR!)
+-
+-### [0.6]
+-
+-#### Added
+-- React Native 0.56+ support (@skb1129 thanks for the PR)
+-- Nutrition scenario (@13thdeus thanks for the PR)
+-
+-### [0.5]
+-
+-#### Added
+-- New auth process (@priezz thanks for PR)
+-
+-#### Fixed
+-- Unsubscribe listeners
+-
+-#### Changed
+-- README refactoring
+-
+-### [0.4.0-beta]
+-
+-#### Added
+-- Recording API implementation (@reboss thanks for PR)
+-- `startRecording(callback)` function which listens to STEPS and DISTANCE activities from Google Fitness API (no Google Fit app needed)
+-
+-### [0.3.5]
+-
+-#### Fixed
+-- Error: Fragments should be static
+-- Updated README
+-
+-### [0.3.4]
+-
+-#### Added
+-- Burned Calories History (`getDailyCalorieSamples()`)
+-
+-### [0.3.2]
+-
+-#### Added
+-- React Native 0.46 Support
+-
+-### [0.3.1-beta]
+-
+-#### Changed
+-- Better cancel/deny support
+-
+-### [0.3.0-beta]
+-
+-#### Added
+-- Steps adapter to avoid errors (@firodj thanks for this PR!)
+-- Authorize: allow cancel
+-- Authorize: using callback instead of event
+-- Strict dataSource
+-- Xiaomi support
+-
+-### [0.2.0]
+-
+-#### Added
+-- `getDailyDistanceSamples()`
+-- `isAvailable()`
+-- `isEnabled()`
+-- `deleteWeight()`
+-
+-### [0.1.1-beta]
+-
+-#### Added
+-- `getDailyStepCountSamples()` method compatible with Apple Healthkit module
+-- Started to implement JSDoc documentation
+-
+-### [0.1.0]
+-
+-#### Added
+-- Getting activity within module itself
+-- Fixed package name dependency
+-- Provided more detailed documentation
+-
+-### [0.0.9]
+-
+-#### Added
+-- Weights Save Support
+-- Refactor methods to be compatible with react-native-apple-healthkit module
+-
+-#### Removed
+-- moment.js dependency
+-
+-### [0.0.8]
+-
+-#### Added
+-- Weights Samples support
+-
+-### [0.0.1 - 0.0.7]
+-
+-#### Added
+-- Initial builds
+diff --git a/node_modules/react-native-google-fit/README.md b/node_modules/react-native-google-fit/README.md
+index a98da77..9026385 100755
+--- a/node_modules/react-native-google-fit/README.md
++++ b/node_modules/react-native-google-fit/README.md
+@@ -6,11 +6,9 @@
+ 
+ A React Native bridge module for interacting with Google Fit
+ 
+-> **⚠️ Important Notice**: Google has deprecated the Google Fit API and is transitioning to Health Connect. While the Google Fit API remains available, we are committed to maintaining this library and bringing it up to the latest standards. We will continue to support this library as long as the API is accessible and will provide migration guidance when Health Connect integration becomes necessary.
+-
+ # Quick Links
+ - [Installation](/docs/INSTALLATION.md)
+-- [Changelog](CHANGELOG.md)
++- [Changelog](/docs/CHANGELOG.md)
+ - [Example app](https://github.com/StasDoskalenko/react-native-google-fit-example)
+ - [F.A.Q.](/docs/FAQ.md)
+ 
+diff --git a/node_modules/react-native-google-fit/docs/CHANGELOG.md b/node_modules/react-native-google-fit/docs/CHANGELOG.md
 new file mode 100644
-index 0000000..9e26dfe
+index 0000000..b8c5717
 --- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/annotation_processor_list/release/javaPreCompileRelease/annotationProcessors.json
-@@ -0,0 +1 @@
-+{}
-\ No newline at end of file
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/compile_library_classes_jar/release/bundleLibCompileToJarRelease/classes.jar b/node_modules/react-native-google-fit/android/build/intermediates/compile_library_classes_jar/release/bundleLibCompileToJarRelease/classes.jar
-new file mode 100644
-index 0000000..b88839d
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/compile_library_classes_jar/release/bundleLibCompileToJarRelease/classes.jar differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/compile_r_class_jar/release/generateReleaseRFile/R.jar b/node_modules/react-native-google-fit/android/build/intermediates/compile_r_class_jar/release/generateReleaseRFile/R.jar
-new file mode 100644
-index 0000000..16b0e47
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/compile_r_class_jar/release/generateReleaseRFile/R.jar differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/compile_symbol_list/release/generateReleaseRFile/R.txt b/node_modules/react-native-google-fit/android/build/intermediates/compile_symbol_list/release/generateReleaseRFile/R.txt
-new file mode 100644
-index 0000000..e69de29
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml b/node_modules/react-native-google-fit/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml
-new file mode 100644
-index 0000000..178378b
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml
-@@ -0,0 +1,2 @@
-+<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/jniLibs"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/release/jniLibs"/></dataSet></merger>
-\ No newline at end of file
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml b/node_modules/react-native-google-fit/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml
-new file mode 100644
-index 0000000..e11203e
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/incremental/mergeReleaseShaders/merger.xml
-@@ -0,0 +1,2 @@
-+<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/shaders"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/release/shaders"/></dataSet></merger>
-\ No newline at end of file
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/incremental/packageReleaseAssets/merger.xml b/node_modules/react-native-google-fit/android/build/intermediates/incremental/packageReleaseAssets/merger.xml
-new file mode 100644
-index 0000000..56c70a5
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/incremental/packageReleaseAssets/merger.xml
-@@ -0,0 +1,2 @@
-+<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/assets"/></dataSet><dataSet config="release" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/release/assets"/></dataSet><dataSet config="generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/build/intermediates/shader_assets/release/compileReleaseShaders/out"/></dataSet></merger>
-\ No newline at end of file
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/incremental/release/packageReleaseResources/compile-file-map.properties b/node_modules/react-native-google-fit/android/build/intermediates/incremental/release/packageReleaseResources/compile-file-map.properties
-new file mode 100644
-index 0000000..3a8918a
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/incremental/release/packageReleaseResources/compile-file-map.properties
-@@ -0,0 +1 @@
-+#Wed Mar 11 09:35:25 CET 2026
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/incremental/release/packageReleaseResources/merger.xml b/node_modules/react-native-google-fit/android/build/intermediates/incremental/release/packageReleaseResources/merger.xml
-new file mode 100644
-index 0000000..b0e502a
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/incremental/release/packageReleaseResources/merger.xml
-@@ -0,0 +1,2 @@
-+<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/release/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release" generated-set="release$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/release/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/build/generated/res/resValues/release"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/build/generated/res/resValues/release"/></dataSet><mergedItems/></merger>
-\ No newline at end of file
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/ActivityHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/ActivityHistory.class
-new file mode 100644
-index 0000000..04152c5
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/ActivityHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/BodyHistory$InsertAndVerifyDataTask.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/BodyHistory$InsertAndVerifyDataTask.class
-new file mode 100644
-index 0000000..30d3c29
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/BodyHistory$InsertAndVerifyDataTask.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/BodyHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/BodyHistory.class
-new file mode 100644
-index 0000000..120d1a8
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/BodyHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/BuildConfig.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/BuildConfig.class
-new file mode 100644
-index 0000000..0a88453
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/BuildConfig.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/CalorieHistory$InsertAndVerifyDataTask.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/CalorieHistory$InsertAndVerifyDataTask.class
-new file mode 100644
-index 0000000..6914d32
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/CalorieHistory$InsertAndVerifyDataTask.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/CalorieHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/CalorieHistory.class
-new file mode 100644
-index 0000000..49f9853
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/CalorieHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/DeleteDataHelper.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/DeleteDataHelper.class
-new file mode 100644
-index 0000000..4f20540
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/DeleteDataHelper.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/DistanceHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/DistanceHistory.class
-new file mode 100644
-index 0000000..e2f658a
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/DistanceHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$1.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$1.class
-new file mode 100644
-index 0000000..59ba093
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$2.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$2.class
-new file mode 100644
-index 0000000..bcd8b5e
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$2.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$3.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$3.class
-new file mode 100644
-index 0000000..8bec8f2
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$3.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$GoogleFitCustomErrorDialig.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$GoogleFitCustomErrorDialig.class
-new file mode 100644
-index 0000000..cd03d01
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager$GoogleFitCustomErrorDialig.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager.class
-new file mode 100644
-index 0000000..2f79782
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitManager.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitModule.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitModule.class
-new file mode 100644
-index 0000000..18726a8
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitModule.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitPackage.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitPackage.class
-new file mode 100644
-index 0000000..20f7197
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/GoogleFitPackage.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HealthHistory$InsertAndVerifyDataTask.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HealthHistory$InsertAndVerifyDataTask.class
-new file mode 100644
-index 0000000..666d1e5
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HealthHistory$InsertAndVerifyDataTask.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HealthHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HealthHistory.class
-new file mode 100644
-index 0000000..173845e
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HealthHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HelperUtil.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HelperUtil.class
-new file mode 100644
-index 0000000..a207626
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HelperUtil.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HydrationHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HydrationHistory.class
-new file mode 100644
-index 0000000..7e84323
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/HydrationHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/NutritionHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/NutritionHistory.class
-new file mode 100644
-index 0000000..995a1a1
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/NutritionHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/RecordingApi$1.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/RecordingApi$1.class
-new file mode 100644
-index 0000000..49e3e4a
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/RecordingApi$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/RecordingApi.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/RecordingApi.class
-new file mode 100644
-index 0000000..e2daa8d
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/RecordingApi.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SaveDataHelper.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SaveDataHelper.class
-new file mode 100644
-index 0000000..20c1aa8
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SaveDataHelper.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SleepHistory$1.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SleepHistory$1.class
-new file mode 100644
-index 0000000..3ffad15
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SleepHistory$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SleepHistory$2.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SleepHistory$2.class
-new file mode 100644
-index 0000000..a8087ef
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SleepHistory$2.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SleepHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SleepHistory.class
-new file mode 100644
-index 0000000..ad5ea38
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/SleepHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepCounter$1.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepCounter$1.class
-new file mode 100644
-index 0000000..f949437
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepCounter$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepCounter$2.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepCounter$2.class
-new file mode 100644
-index 0000000..fdadc1f
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepCounter$2.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepCounter.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepCounter.class
-new file mode 100644
-index 0000000..88de2fa
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepCounter.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepHistory$1.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepHistory$1.class
-new file mode 100644
-index 0000000..d1a2573
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepHistory$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepHistory$2.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepHistory$2.class
-new file mode 100644
-index 0000000..9952f2e
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepHistory$2.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepHistory.class
-new file mode 100644
-index 0000000..6c477f1
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepSensor$1.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepSensor$1.class
-new file mode 100644
-index 0000000..61f4e27
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepSensor$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepSensor.class b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepSensor.class
-new file mode 100644
-index 0000000..5ab0866
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/javac/release/compileReleaseJavaWithJavac/classes/com/reactnative/googlefit/StepSensor.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/local_only_symbol_list/release/parseReleaseLocalResources/R-def.txt b/node_modules/react-native-google-fit/android/build/intermediates/local_only_symbol_list/release/parseReleaseLocalResources/R-def.txt
-new file mode 100644
-index 0000000..78ac5b8
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/local_only_symbol_list/release/parseReleaseLocalResources/R-def.txt
-@@ -0,0 +1,2 @@
-+R_DEF: Internal format may change without notice
-+local
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/manifest_merge_blame_file/release/processReleaseManifest/manifest-merger-blame-release-report.txt b/node_modules/react-native-google-fit/android/build/intermediates/manifest_merge_blame_file/release/processReleaseManifest/manifest-merger-blame-release-report.txt
-new file mode 100644
-index 0000000..bb84119
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/manifest_merge_blame_file/release/processReleaseManifest/manifest-merger-blame-release-report.txt
-@@ -0,0 +1,7 @@
-+1<?xml version="1.0" encoding="utf-8"?>
-+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-+3    package="com.reactnative.googlefit" >
-+4
-+5    <uses-sdk android:minSdkVersion="24" />
-+6
-+7</manifest>
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml b/node_modules/react-native-google-fit/android/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml
-new file mode 100644
-index 0000000..8dcca4c
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml
-@@ -0,0 +1,7 @@
-+<?xml version="1.0" encoding="utf-8"?>
-+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-+    package="com.reactnative.googlefit" >
++++ b/node_modules/react-native-google-fit/docs/CHANGELOG.md
+@@ -0,0 +1,106 @@
++### Changelog:
 +
-+    <uses-sdk android:minSdkVersion="24" />
++```
++0.19.1  + Add Resting Heart Rate (#325, kudos to @AaronDsilva97)
 +
-+</manifest>
-\ No newline at end of file
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/navigation_json/release/extractDeepLinksRelease/navigation.json b/node_modules/react-native-google-fit/android/build/intermediates/navigation_json/release/extractDeepLinksRelease/navigation.json
-new file mode 100644
-index 0000000..0637a08
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/navigation_json/release/extractDeepLinksRelease/navigation.json
-@@ -0,0 +1 @@
-+[]
-\ No newline at end of file
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/nested_resources_validation_report/release/generateReleaseResources/nestedResourcesValidationReport.txt b/node_modules/react-native-google-fit/android/build/intermediates/nested_resources_validation_report/release/generateReleaseResources/nestedResourcesValidationReport.txt
-new file mode 100644
-index 0000000..08f4ebe
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/nested_resources_validation_report/release/generateReleaseResources/nestedResourcesValidationReport.txt
-@@ -0,0 +1 @@
-+0 Warning/Error
-\ No newline at end of file
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/ActivityHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/ActivityHistory.class
-new file mode 100644
-index 0000000..04152c5
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/ActivityHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/BodyHistory$InsertAndVerifyDataTask.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/BodyHistory$InsertAndVerifyDataTask.class
-new file mode 100644
-index 0000000..30d3c29
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/BodyHistory$InsertAndVerifyDataTask.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/BodyHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/BodyHistory.class
-new file mode 100644
-index 0000000..120d1a8
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/BodyHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/BuildConfig.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/BuildConfig.class
-new file mode 100644
-index 0000000..0a88453
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/BuildConfig.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/CalorieHistory$InsertAndVerifyDataTask.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/CalorieHistory$InsertAndVerifyDataTask.class
-new file mode 100644
-index 0000000..6914d32
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/CalorieHistory$InsertAndVerifyDataTask.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/CalorieHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/CalorieHistory.class
-new file mode 100644
-index 0000000..49f9853
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/CalorieHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/DeleteDataHelper.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/DeleteDataHelper.class
-new file mode 100644
-index 0000000..4f20540
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/DeleteDataHelper.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/DistanceHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/DistanceHistory.class
-new file mode 100644
-index 0000000..e2f658a
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/DistanceHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$1.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$1.class
-new file mode 100644
-index 0000000..59ba093
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$2.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$2.class
-new file mode 100644
-index 0000000..bcd8b5e
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$2.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$3.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$3.class
-new file mode 100644
-index 0000000..8bec8f2
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$3.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$GoogleFitCustomErrorDialig.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$GoogleFitCustomErrorDialig.class
-new file mode 100644
-index 0000000..cd03d01
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager$GoogleFitCustomErrorDialig.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager.class
-new file mode 100644
-index 0000000..2f79782
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitManager.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitModule.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitModule.class
-new file mode 100644
-index 0000000..18726a8
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitModule.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitPackage.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitPackage.class
-new file mode 100644
-index 0000000..20f7197
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/GoogleFitPackage.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HealthHistory$InsertAndVerifyDataTask.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HealthHistory$InsertAndVerifyDataTask.class
-new file mode 100644
-index 0000000..666d1e5
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HealthHistory$InsertAndVerifyDataTask.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HealthHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HealthHistory.class
-new file mode 100644
-index 0000000..173845e
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HealthHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HelperUtil.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HelperUtil.class
-new file mode 100644
-index 0000000..a207626
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HelperUtil.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HydrationHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HydrationHistory.class
-new file mode 100644
-index 0000000..7e84323
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/HydrationHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/NutritionHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/NutritionHistory.class
-new file mode 100644
-index 0000000..995a1a1
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/NutritionHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/RecordingApi$1.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/RecordingApi$1.class
-new file mode 100644
-index 0000000..49e3e4a
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/RecordingApi$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/RecordingApi.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/RecordingApi.class
-new file mode 100644
-index 0000000..e2daa8d
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/RecordingApi.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SaveDataHelper.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SaveDataHelper.class
-new file mode 100644
-index 0000000..20c1aa8
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SaveDataHelper.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SleepHistory$1.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SleepHistory$1.class
-new file mode 100644
-index 0000000..3ffad15
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SleepHistory$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SleepHistory$2.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SleepHistory$2.class
-new file mode 100644
-index 0000000..a8087ef
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SleepHistory$2.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SleepHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SleepHistory.class
-new file mode 100644
-index 0000000..ad5ea38
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/SleepHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepCounter$1.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepCounter$1.class
-new file mode 100644
-index 0000000..f949437
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepCounter$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepCounter$2.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepCounter$2.class
-new file mode 100644
-index 0000000..fdadc1f
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepCounter$2.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepCounter.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepCounter.class
-new file mode 100644
-index 0000000..88de2fa
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepCounter.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepHistory$1.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepHistory$1.class
-new file mode 100644
-index 0000000..d1a2573
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepHistory$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepHistory$2.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepHistory$2.class
-new file mode 100644
-index 0000000..9952f2e
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepHistory$2.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepHistory.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepHistory.class
-new file mode 100644
-index 0000000..6c477f1
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepHistory.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepSensor$1.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepSensor$1.class
-new file mode 100644
-index 0000000..61f4e27
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepSensor$1.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepSensor.class b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepSensor.class
-new file mode 100644
-index 0000000..5ab0866
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_dir/release/bundleLibRuntimeToDirRelease/com/reactnative/googlefit/StepSensor.class differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_jar/release/bundleLibRuntimeToJarRelease/classes.jar b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_jar/release/bundleLibRuntimeToJarRelease/classes.jar
-new file mode 100644
-index 0000000..b56a2c9
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/intermediates/runtime_library_classes_jar/release/bundleLibRuntimeToJarRelease/classes.jar differ
-diff --git a/node_modules/react-native-google-fit/android/build/intermediates/symbol_list_with_package_name/release/generateReleaseRFile/package-aware-r.txt b/node_modules/react-native-google-fit/android/build/intermediates/symbol_list_with_package_name/release/generateReleaseRFile/package-aware-r.txt
-new file mode 100644
-index 0000000..b2a03a7
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/intermediates/symbol_list_with_package_name/release/generateReleaseRFile/package-aware-r.txt
-@@ -0,0 +1 @@
-+com.reactnative.googlefit
-diff --git a/node_modules/react-native-google-fit/android/build/outputs/logs/manifest-merger-release-report.txt b/node_modules/react-native-google-fit/android/build/outputs/logs/manifest-merger-release-report.txt
-new file mode 100644
-index 0000000..2748c97
---- /dev/null
-+++ b/node_modules/react-native-google-fit/android/build/outputs/logs/manifest-merger-release-report.txt
-@@ -0,0 +1,17 @@
-+-- Merging decision tree log ---
-+manifest
-+ADDED from /Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/AndroidManifest.xml:1:1-3:12
-+INJECTED from /Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/AndroidManifest.xml:1:1-3:12
-+	package
-+		ADDED from /Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/AndroidManifest.xml:2:11-46
-+		INJECTED from /Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/AndroidManifest.xml
-+	xmlns:android
-+		ADDED from /Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/AndroidManifest.xml:1:11-69
-+uses-sdk
-+INJECTED from /Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
-+INJECTED from /Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/AndroidManifest.xml
-+INJECTED from /Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/AndroidManifest.xml
-+	android:targetSdkVersion
-+		INJECTED from /Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/AndroidManifest.xml
-+	android:minSdkVersion
-+		INJECTED from /Users/perosechkov/Documents/Projects/Biostasis-ReactNative/node_modules/react-native-google-fit/android/src/main/AndroidManifest.xml
-diff --git a/node_modules/react-native-google-fit/android/build/tmp/compileReleaseJavaWithJavac/previous-compilation-data.bin b/node_modules/react-native-google-fit/android/build/tmp/compileReleaseJavaWithJavac/previous-compilation-data.bin
-new file mode 100644
-index 0000000..96312f6
-Binary files /dev/null and b/node_modules/react-native-google-fit/android/build/tmp/compileReleaseJavaWithJavac/previous-compilation-data.bin differ
++0.19.0  ~ Relax dependency version (#313, kudos to @matiaskorhonen)
++
++0.18.3  + Add device Info to step history data (#279, kudos to @kristerkari)
++        ~ Update typescript definitions
++
++0.18.2  ~ temporary hotfix (#268, kudos to @nikhil-kumar-160)
++
++0.18.1  + Implement `getBodyTemperatureSamples()` and `getOxygenSaturationSamples()` (#266, kudos to @mluksha)
++        ~ Update typescript definitions
++        
++0.18.0  + Implement Workout Support[Experimental] (#251)
++        ~ typescript: add `BucketUnitType` and `BucketUnit` helper
++        
++0.17.1  + Implement basic getBloodGlucoseSamples(kudos @ksetrin)
++        + Add android 11 note in Doc (kudos @moulie415)
++        ~ Update typescript definitions
++
++0.16.3  + Implement getMoveMinutes
++        ~ Refoctor and remove duplicated processData in stepHistory
++        ~ Update typescript definitions
++
++0.10.0  + Implement hydration
++        ~ Fix weight and height deletion
++        ~ Update typescript definitions
++
++0.9.17  ~ observeSteps fix (kudos to @nojas01)
++        ~ Fix disconnect method (kudos to @AylanBoscarino)
++        ~ better React Native 0.60 support (kudos to @spacekadet)
++
++0.9.15  + getUserInputSteps function (kudos @HelloCore)
++        + Retrieve Daily Nutrition Data (kudos @jguix) 
++
++0.9.13  + Improve weights granularity and always use FIELD_AVERAGE (@chrisgibbs44)
++
++0.9.12  ~ Update typescript definitions for Scoped Authorization
++
++0.9.11  ~ getDailyCalorieSamples, now includes basalCalculation: boolean flag
++
++0.9.10-beta
++        + Scope authorizations (thanks, @gaykov)
++        
++0.9.1   ~ getDailyStepCountSamples - now returns promise if no callback is provided
++0.9.0   ~ authorize() - is now a promise
++        ~ non-blocking step retrieve
++        + getHeartRateSamples (thanks @damnnkst)
++        + getBloodPressureSamples (thanks @damnnkst)
++0.7.1   - Fix for disconnect() (@dmitriys-lits thanks for the PR)
++0.7     - Retrieve Heights, open fit activity, unified body method (@EJohnF thanks for the PR!)
++
++0.6     - RN 0.56+ support (@skb1129 thanks for the PR)
++        - nutrition scenario (@13thdeus thanks for the PR)
++        
++0.5     - New auth process (@priezz thanks for PR)
++        - Fix unsubscribe listeners
++        - Readme refactoring
++        
++0.4.0-beta
++        - Recording API implemetation (@reboss thanks for PR)
++        - Just use startRecording(callback) function which listens
++        to STEPS and DISTANCE (for now) activities from Google Fitness
++        API (no need to install Google fit app)
++
++0.3.5   - Fix Error: Fragments should be static
++        - Updated readme
++
++0.3.4   - Burned Calories History (getDailyCalorieSamples)
++
++0.3.2
++        - React Native 0.46 Support
++
++0.3.1-beta
++        - better cancel/deny support
++
++0.3.0-beta (@firodj thanks for this PR!)
++        - steps adapter to avoid errors;
++        - authorize: allow cancel;
++        - authorize: using callback instead event;
++        - strict dataSource;
++        - xiaomi support;
++
++0.2.0   - getDailyDistanceSamples();
++        - isAvailable();
++        - isEnabled();
++        - deleteWeight();
++0.1.1-beta
++        - getDailyStepCountSamples method compatible with Apple Healthkit module
++        - started to implement JSDoc documentation
++
++0.1.0
++        - getting activity within module itself
++        - fixed package name dependency
++        - provided more detailed documentation
++
++0.0.9   - Weights Save Support
++        - Refactor methods to be compatible with react-native-apple-healthkit module
++        - Remove 'moment.js' dependency
++
++0.0.8   - Weights Samples support
++
++0.0.1   - 0.0.7 Initial builds
++```
 diff --git a/node_modules/react-native-google-fit/react-native.config.js b/node_modules/react-native-google-fit/react-native.config.js
-index 687265d..d9b25a2 100644
+index 3094056..d9b25a2 100644
 --- a/node_modules/react-native-google-fit/react-native.config.js
 +++ b/node_modules/react-native-google-fit/react-native.config.js
-@@ -2,7 +2,7 @@ module.exports = {
+@@ -2,9 +2,8 @@ module.exports = {
    dependency: {
      platforms: {
        android: {
@@ -659,3 +563,5 @@ index 687265d..d9b25a2 100644
        },
      },
    },
+ };
+-

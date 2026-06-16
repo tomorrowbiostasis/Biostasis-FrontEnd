@@ -1,10 +1,14 @@
 import {useState, useEffect, useCallback} from 'react';
-import {authenticateGoogleFit} from '~/services/GoogleFit.service';
+import {
+  authenticateGoogleFitDetailed,
+  GoogleFitAuthResult,
+} from '~/services/GoogleFit.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 
 interface IUseGoogleFitAuthStatusResult {
   authorizeGoogleFit: () => Promise<boolean>;
+  authorizeGoogleFitDetailed: () => Promise<GoogleFitAuthResult>;
   isGoogleFitAuthorized: boolean;
   resetGoogleFit: () => Promise<void>;
 }
@@ -28,27 +32,32 @@ export const useGoogleFitAuthStatus = (): IUseGoogleFitAuthStatusResult => {
         }
       },
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const authorizeGoogleFit = useCallback(async () => {
-    const authSuccess = await authenticateGoogleFit();
-    if (authSuccess) {
+  const authorizeGoogleFitDetailedWithStorage = useCallback(async () => {
+    const authResult = await authenticateGoogleFitDetailed();
+    if (authResult.success) {
       setIsAuthorized(true);
       await AsyncStorageService.setItem(
         AsyncStorageEnum.GoogleFitAuthorized,
         JSON.stringify(true),
       );
       console.log('Saved Google Fit authorization status');
-      return true;
+      return authResult;
     }
+
     setIsAuthorized(false);
     await AsyncStorageService.setItem(
       AsyncStorageEnum.GoogleFitAuthorized,
       JSON.stringify(false),
     );
-    return false;
+    return authResult;
   }, [setIsAuthorized]);
+
+  const authorizeGoogleFit = useCallback(async () => {
+    const authResult = await authorizeGoogleFitDetailedWithStorage();
+    return authResult.success;
+  }, [authorizeGoogleFitDetailedWithStorage]);
 
   const resetGoogleFit = useCallback(async () => {
     await AsyncStorageService.setItem(
@@ -61,6 +70,7 @@ export const useGoogleFitAuthStatus = (): IUseGoogleFitAuthStatusResult => {
 
   return {
     authorizeGoogleFit,
+    authorizeGoogleFitDetailed: authorizeGoogleFitDetailedWithStorage,
     isGoogleFitAuthorized: isAuthorized,
     resetGoogleFit,
   };

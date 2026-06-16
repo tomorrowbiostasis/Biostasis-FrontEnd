@@ -32,7 +32,7 @@ public class MainActivity extends ReactActivity implements ProviderInstaller.Pro
          * This is potential android 9 fix for  androidx.fragment.app.Fragment$InstantiationException
          * savedInstanceState -> null
         */
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         ProviderInstaller.installIfNeededAsync(this, this);
   }
 

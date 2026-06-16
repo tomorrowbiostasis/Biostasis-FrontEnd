@@ -11,12 +11,14 @@ plugins {
     id 'maven-publish'
 }
 
+def developmentEnvFile = rootProject.file("../.env.development").exists() ? ".env.development" : ".env"
+
 project.ext.envConfigFiles = [
-    development: ".env.development",
-    developmentdebug: ".env.development",
+    development: developmentEnvFile,
+    developmentdebug: developmentEnvFile,
     productiondebug: ".env.production",
     productionrelease: ".env.production",
-    distributionuploaddevelopmentrelease: ".env.development"
+    distributionuploaddevelopmentrelease: developmentEnvFile
 ]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -222,8 +224,8 @@ dependencies {
     implementation 'androidx.fragment:fragment:1.4.0'
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.9.24')
 
-    implementation platform('com.google.firebase:firebase-bom:32.0.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation platform('com.google.firebase:firebase-bom:34.14.1')
+    implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging'
 }
 

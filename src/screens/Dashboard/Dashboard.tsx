@@ -3,6 +3,7 @@ import {
   Animated,
   Easing,
   InteractionManager,
+  Platform,
   RefreshControl,
   ScrollView,
   StatusBar,
@@ -55,8 +56,13 @@ import {useTimeSlotPauseStatus} from '~/hooks/UseTimeSlotPauseStatus.hook';
 
 import SystemCard from '~/components/SystemCard';
 import AnimatedHeaderSurface from '~/components/AnimatedHeaderSurface';
-import {FootprintsIcon, RefreshCwIcon} from '~/assets/icons/AppIcons';
-import {ChevronRightIcon} from '~/assets/icons/AppIcons';
+import {
+  ChevronRightIcon,
+  FootprintsIcon,
+  HeartPulseIcon,
+  RefreshCwIcon,
+} from '~/assets/icons/AppIcons';
+import GoogleIcon from '~/assets/icons/GoogleIcon';
 import TmrBioLogo from '~/assets/icons/TmrBioLogo';
 import {
   BioAccountSettingsFillAlertWarning,
@@ -64,7 +70,6 @@ import {
   BioHomeFillCircleCheck,
   BioHomeFillClipboard,
   BioHomeFillMenuHamburger,
-  BioHomeFillRadioSignal,
   BioHomeOutlineHeartEcg,
   BioSettingsFillUserVerified,
 } from '~/assets/icons/BiostasisIcons';
@@ -544,6 +549,13 @@ const Dashboard = () => {
     setupPromptReason === 'monitoring'
       ? t('dashboardHome.emergencySetupPrompt.monitoring.description')
       : t('dashboardHome.emergencySetupPrompt.contacts.description');
+  const healthMonitoringSource = displayedMonitoringActive && bioActive
+    ? t(
+        Platform.OS === 'ios'
+          ? 'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.sourceBioIos'
+          : 'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.sourceBioAndroid',
+      )
+    : null;
 
   const readiness = useMemo(() => {
     if (fullySetUp) {
@@ -944,6 +956,25 @@ const Dashboard = () => {
               {lastHealthCheckedAtText || '—'}
             </Text>
           </View>
+          {healthMonitoringSource ? (
+            <View style={styles.monitoringSourceRow}>
+              <Text style={styles.monitoringSourceLabel}>
+                {t(
+                  'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.sourceLabel',
+                )}
+              </Text>
+              <View style={styles.monitoringSourceValueGroup}>
+                {Platform.OS === 'ios' ? (
+                  <HeartPulseIcon size={16} color="#D6455D" />
+                ) : (
+                  <GoogleIcon size={16} />
+                )}
+                <Text style={styles.monitoringSourceValue}>
+                  {healthMonitoringSource}
+                </Text>
+              </View>
+            </View>
+          ) : null}
         </View>
 
         {renderBelowFold ? (
@@ -999,13 +1030,6 @@ const Dashboard = () => {
                   />
                 }
                 onPress={goEmergencyContacts}
-              />
-              <SystemCard
-                chip={<BioHomeFillRadioSignal />}
-                title={t('dashboardHome.cards.manageSettings.title')}
-                subtitle={t('dashboardHome.cards.manageSettings.subtitle')}
-                right="chevron"
-                onPress={goAutomatedEmergency}
               />
             </View>
 

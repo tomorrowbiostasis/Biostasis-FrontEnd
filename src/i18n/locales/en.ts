@@ -865,6 +865,10 @@ const translations = {
           title: 'Permissions & readiness',
           subtitle:
             'Allow notifications, location, and Health app access before you continue.',
+          subtitleAndroid:
+            'Allow notifications, location, and Google Fit access before you continue.',
+          googleFitOnlySubtitle:
+            'Notifications and location are already allowed. Approve Google Fit access to finish setup.',
           notificationsTitle: 'Notifications',
           notificationsSubtitle:
             'Needed so the mobile app can send check-ins and emergency alerts.',
@@ -886,8 +890,24 @@ const translations = {
           connectAction: 'Connect',
           checkHealthAction: 'Check health access',
           healthCheckSuccess: 'Health access confirmed',
+          healthCheckSuccessAndroid: 'Google Fit access confirmed',
           healthCheckFailed:
             "We couldn't confirm Health app access yet. Check permissions and try again.",
+          healthCheckFailedAndroid:
+            "We couldn't confirm Google Fit access yet. Approve access from the Google sign-in prompt and try again.",
+          googleFitAccessTitle: 'Approve Google Fit access',
+          googleFitAccessDescription:
+            'Health data tracking can be on in Google Fit, but Tomorrow Bio still needs separate access. When the Google sign-in window opens, choose your account and approve access.',
+          googleFitAuthCancelled:
+            'Google Fit sign-in was cancelled. Choose your account and approve access when prompted.',
+          openGoogleFit: 'Open Google Fit',
+          tryGoogleFitAgain: 'Try again',
+          googleFitMissing:
+            'Google Fit is not installed. Install Google Fit from Google Play, sign in, then try again.',
+          googlePlayServicesTitle: 'Google Play services needs attention',
+          googlePlayServicesMissing:
+            'Google Play services are missing or disabled. Update Google Play services, then try again.',
+          openGooglePlayServicesSettings: 'Open Play services settings',
           allowedAction: 'Allowed',
           connectedAction: 'Connected',
           allSetTitle: 'Required permissions are already in place',
@@ -1208,6 +1228,10 @@ const translations = {
       systemPaused: 'System is paused',
       pausedUntil: 'Paused until {{time}}',
       cancelPause: 'Cancel pause',
+      pauseEnabled: 'Enabled',
+      pauseDisabled: 'Disabled',
+      enablePauseHint: 'Enable to choose how long monitoring should pause.',
+      disablePauseHint: 'Disable to resume monitoring now.',
     },
     addTimeBlock: {
       title: 'Add Time Block',

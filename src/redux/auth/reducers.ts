@@ -22,6 +22,13 @@ const setForgotPasswordEmailMessage = (
   state.forgotPassword.emailMessage = payload;
 };
 
+const setForgotPasswordNewPasswordMessage = (
+  state: IAuthState,
+  {payload}: PayloadAction<IAuthState['forgotPassword']['newPasswordMessage']>,
+) => {
+  state.forgotPassword.newPasswordMessage = payload;
+};
+
 const setShouldBackToAuthScreen = (
   state: IAuthState,
   {
@@ -35,5 +42,6 @@ export const reducers = {
   setIsAuthed,
   setAuthSessionResolved,
   setForgotPasswordEmailMessage,
+  setForgotPasswordNewPasswordMessage,
   setShouldBackToAuthScreen,
 };

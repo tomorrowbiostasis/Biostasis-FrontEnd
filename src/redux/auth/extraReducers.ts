@@ -175,7 +175,7 @@ const rejectedForgotPasswordSetNewPassword = (
   } else {
     state.forgotPassword.newPasswordMessage = {
       success: false,
-      messageKey: 'default',
+      messageKey: 'defaultError',
     };
   }
 };

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Platform, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Formik} from 'formik';
@@ -23,11 +23,15 @@ type ForgotPasswordFormFields = {
   email: string;
 };
 
+const normalizeEmail = (email: string) => email.trim().toLowerCase();
+
 const ForgotPasswordScreen = () => {
   const {t} = useAppTranslation();
   const emailValidationSchema = useEmailValidationSchema();
   const dispatch = useAppDispatch();
   const {pending, emailMessage} = useAppSelector(getForgotPasswordParams);
+  const [sentEmail, setSentEmail] = useState<string | undefined>();
+  const inFlightEmailRef = useRef<string | undefined>();
   const {params} =
     useRoute<
       RouteProp<AuthStackNavigatorParamList, Screens.ForgotPassword>
@@ -44,9 +48,23 @@ const ForgotPasswordScreen = () => {
 
   const handleContinue = useCallback(
     (values: ForgotPasswordFormFields) => {
-      dispatch(forgotPassword(values));
+      const email = normalizeEmail(values.email);
+      if (pending || inFlightEmailRef.current || email === sentEmail) {
+        return;
+      }
+
+      inFlightEmailRef.current = email;
+      dispatch(forgotPassword({email}))
+        .unwrap()
+        .then(() => {
+          setSentEmail(email);
+        })
+        .catch(() => undefined)
+        .finally(() => {
+          inFlightEmailRef.current = undefined;
+        });
     },
-    [dispatch],
+    [dispatch, pending, sentEmail],
   );
 
   return (
@@ -82,8 +100,13 @@ const ForgotPasswordScreen = () => {
             isValid,
             submitCount,
           }) => {
+            const normalizedEmail = normalizeEmail(values.email);
+            const resetAlreadySent = normalizedEmail === sentEmail;
             const canSubmit =
-              isValid && values.email.trim().length > 0 && !pending;
+              isValid &&
+              normalizedEmail.length > 0 &&
+              !pending &&
+              !resetAlreadySent;
             return (
               <>
                 <FormInput

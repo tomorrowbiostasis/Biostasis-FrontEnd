@@ -16,6 +16,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
 import Animated, {
   Easing,
   Extrapolation,
@@ -28,6 +29,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {semanticColors} from '~/theme/tokens';
+import {toastConfig} from '~/theme/toast';
 
 interface NativeBottomSheetProps extends PropsWithChildren {
   visible: boolean;
@@ -235,6 +237,7 @@ const NativeBottomSheet = ({
         ) : (
           sheet
         )}
+        <Toast config={toastConfig} topOffset={insets.top + 12} />
       </View>
     </Modal>
   );

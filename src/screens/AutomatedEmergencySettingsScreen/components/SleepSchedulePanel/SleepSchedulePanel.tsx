@@ -149,6 +149,11 @@ const SleepSchedulePanel = ({refreshKey, required = false}: Props) => {
         onConfirm={handleBedtimeConfirm}
         onCancel={() => setShowBedtimePicker(false)}
         display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+        isDarkModeEnabled={false}
+        themeVariant="light"
+        textColor={semanticColors.primary}
+        accentColor={semanticColors.primary}
+        buttonTextColorIOS={semanticColors.primary}
       />
       <DateTimePickerModal
         isVisible={showWakePicker}
@@ -157,6 +162,11 @@ const SleepSchedulePanel = ({refreshKey, required = false}: Props) => {
         onConfirm={handleWakeConfirm}
         onCancel={() => setShowWakePicker(false)}
         display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+        isDarkModeEnabled={false}
+        themeVariant="light"
+        textColor={semanticColors.primary}
+        accentColor={semanticColors.primary}
+        buttonTextColorIOS={semanticColors.primary}
       />
     </View>
   );
@@ -165,6 +175,8 @@ const SleepSchedulePanel = ({refreshKey, required = false}: Props) => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: semanticColors.surface,
+    borderWidth: 1,
+    borderColor: semanticColors.border,
     borderRadius: 14,
     paddingHorizontal: 18,
     paddingVertical: 16,

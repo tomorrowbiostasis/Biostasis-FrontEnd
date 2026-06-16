@@ -59,6 +59,7 @@ export const {
   setIsAuthed,
   setAuthSessionResolved,
   setForgotPasswordEmailMessage,
+  setForgotPasswordNewPasswordMessage,
   setShouldBackToAuthScreen,
 } = authSlice.actions;
 

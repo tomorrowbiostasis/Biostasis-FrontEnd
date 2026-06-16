@@ -35,6 +35,7 @@ local.properties
 *.iml
 *.hprof
 **/google-services.json
+**/client_secrets.json
 
 # node.js
 #
@@ -64,6 +65,7 @@ keystore.properties
 
 # Bundle artifact
 *.jsbundle
+bugreport-*.zip
 
 # CocoaPods
 /ios/Pods/

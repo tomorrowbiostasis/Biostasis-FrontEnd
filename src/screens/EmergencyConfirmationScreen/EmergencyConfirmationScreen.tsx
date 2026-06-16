@@ -4,6 +4,7 @@ import {
   Animated,
   Easing,
   Image,
+  LayoutChangeEvent,
   Pressable,
   ScrollView,
   Text,
@@ -32,6 +33,10 @@ const HOLD_DURATION_MS = HOLD_SECONDS * 1000;
 
 type Status = 'idle' | 'holding' | 'sending' | 'sent' | 'failed';
 type LocationPreviewState = 'loading' | 'ready' | 'unavailable';
+type LocationCoordinates = {
+  latitude: number;
+  longitude: number;
+};
 type EmergencyConfirmationScreenProps = {
   visible?: boolean;
   onDismiss?: () => void;
@@ -56,6 +61,9 @@ const EmergencyConfirmationScreen = ({
     useState<LocationPreviewState>('loading');
   const [locationPreviewUrl, setLocationPreviewUrl] = useState<string | null>(null);
   const [locationLabel, setLocationLabel] = useState<string | null>(null);
+  const [locationCoordinates, setLocationCoordinates] =
+    useState<LocationCoordinates | null>(null);
+  const [holdButtonWidth, setHoldButtonWidth] = useState(0);
   const statusRef = useRef<Status>('idle');
   const holdProgress = useRef(new Animated.Value(0)).current;
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -127,7 +135,7 @@ const EmergencyConfirmationScreen = ({
         toValue: 0,
         duration: animated ? 180 : 0,
         easing: Easing.out(Easing.cubic),
-        useNativeDriver: false,
+        useNativeDriver: true,
       });
       reset.start();
     },
@@ -143,6 +151,7 @@ const EmergencyConfirmationScreen = ({
     setLocationState('loading');
     setLocationPreviewUrl(null);
     setLocationLabel(null);
+    setLocationCoordinates(null);
     // Manual emergency flow is over once the sheet is fully gone; clear the
     // marker so a later genuine backend escalation still routes normally.
     AsyncStorageService.removeItem(AsyncStorageEnum.ManualEmergencyInProgress);
@@ -181,7 +190,7 @@ const EmergencyConfirmationScreen = ({
       toValue: 1,
       duration: HOLD_DURATION_MS,
       easing: Easing.linear,
-      useNativeDriver: false,
+      useNativeDriver: true,
     });
 
     holdAnimationRef.current.start(({finished}) => {
@@ -210,6 +219,10 @@ const EmergencyConfirmationScreen = ({
     }
   }, [resetHold]);
 
+  const handleHoldButtonLayout = useCallback((event: LayoutChangeEvent) => {
+    setHoldButtonWidth(event.nativeEvent.layout.width);
+  }, []);
+
   // Cancel any in-progress timers if the sheet is unmounted.
   useEffect(() => {
     if (!visible) {
@@ -227,6 +240,7 @@ const EmergencyConfirmationScreen = ({
             setLocationState('unavailable');
             setLocationPreviewUrl(null);
             setLocationLabel(null);
+            setLocationCoordinates(null);
           }
           return;
         }
@@ -234,6 +248,7 @@ const EmergencyConfirmationScreen = ({
         const {
           coords: {latitude, longitude},
         } = geoPosition;
+        setLocationCoordinates({latitude, longitude});
         setLocationPreviewUrl(getGoogleStaticMapUrl(latitude, longitude));
         setLocationLabel(
           `${formatCoordinate(latitude, 'N', 'S')} · ${formatCoordinate(
@@ -248,6 +263,7 @@ const EmergencyConfirmationScreen = ({
           setLocationState('unavailable');
           setLocationPreviewUrl(null);
           setLocationLabel(null);
+          setLocationCoordinates(null);
         }
       }
     };
@@ -321,9 +337,13 @@ const EmergencyConfirmationScreen = ({
 
   const renderEmergencyAction = () => {
     if (status === 'idle' || status === 'holding') {
-      const progressWidth = holdProgress.interpolate({
+      const progressScale = holdProgress.interpolate({
         inputRange: [0, 1],
-        outputRange: ['0%', '100%'],
+        outputRange: [0.001, 1],
+      });
+      const progressTranslateX = holdProgress.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-holdButtonWidth / 2, 0],
       });
 
       return (
@@ -331,6 +351,7 @@ const EmergencyConfirmationScreen = ({
           <Pressable
             onPressIn={handlePressIn}
             onPressOut={handlePressOut}
+            onLayout={handleHoldButtonLayout}
             accessibilityRole="button"
             accessibilityLabel={`${t(
               'emergencyConfirm.hold',
@@ -341,7 +362,10 @@ const EmergencyConfirmationScreen = ({
                 style={[
                   styles.holdProgressFill,
                   {
-                    width: progressWidth,
+                    transform: [
+                      {translateX: progressTranslateX},
+                      {scaleX: progressScale},
+                    ],
                   },
                 ]}
               />
@@ -371,6 +395,8 @@ const EmergencyConfirmationScreen = ({
   };
 
   const isResult = status === 'sent' || status === 'failed';
+  const hasLocationCoordinates =
+    locationState === 'ready' && !!locationCoordinates;
 
   return (
     <NativeBottomSheet
@@ -400,6 +426,7 @@ const EmergencyConfirmationScreen = ({
         <>
           <ScrollView
             bounces={false}
+            overScrollMode="never"
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.content}>
             <Text style={styles.title}>{t('emergencyConfirm.title')}</Text>
@@ -408,44 +435,64 @@ const EmergencyConfirmationScreen = ({
             </Text>
 
             <View style={styles.locationCard}>
-              <View style={styles.locationHeader}>
-                <View style={styles.locationHeaderCopy}>
-                  <BioEmergencyContactFillMapPin />
-                  <View style={styles.locationTitleColumn}>
-                    <Text style={styles.locationTitle}>
-                      {t('emergencyConfirm.locationTitle')}
-                    </Text>
-                    <Text style={styles.locationSubtitle}>
-                      {locationState === 'ready'
-                        ? t('emergencyConfirm.locationReady')
-                        : locationState === 'loading'
-                          ? t('emergencyConfirm.locationLoading')
-                          : t('emergencyConfirm.locationUnavailable')}
+              <View style={styles.mapFrame}>
+                {locationPreviewUrl ? (
+                  <Image
+                    source={{uri: locationPreviewUrl}}
+                    resizeMode="cover"
+                    style={styles.mapPreview}
+                    onError={() => setLocationPreviewUrl(null)}
+                  />
+                ) : hasLocationCoordinates ? (
+                  <View style={styles.mapFallback}>
+                    <View style={[styles.mapRoad, styles.mapRoadPrimary]} />
+                    <View style={[styles.mapRoad, styles.mapRoadSecondary]} />
+                    <View style={[styles.mapRoad, styles.mapRoadTertiary]} />
+                    <View style={styles.mapBlockTop} />
+                    <View style={styles.mapBlockBottom} />
+                  </View>
+                ) : (
+                  <View style={styles.mapPreviewPlaceholder}>
+                    <Text style={styles.mapPreviewPlaceholderText}>
+                      {locationState === 'loading'
+                        ? t('emergencyConfirm.locationLoading')
+                        : t('emergencyConfirm.locationUnavailable')}
                     </Text>
                   </View>
-                </View>
+                )}
+
+                {hasLocationCoordinates ? (
+                  <View style={styles.mapPointer}>
+                    <View style={styles.mapPointerHalo}>
+                      <View style={styles.mapPointerCore}>
+                        <View style={styles.mapPointerDot} />
+                      </View>
+                    </View>
+                    <View style={styles.mapPointerTip} />
+                  </View>
+                ) : null}
               </View>
 
-              {locationPreviewUrl ? (
-                <Image
-                  source={{uri: locationPreviewUrl}}
-                  resizeMode="cover"
-                  style={styles.mapPreview}
-                  onError={() => setLocationPreviewUrl(null)}
-                />
-              ) : locationLabel ? null : (
-                <View style={styles.mapPreviewPlaceholder}>
-                  <Text style={styles.mapPreviewPlaceholderText}>
-                    {locationState === 'loading'
-                      ? t('emergencyConfirm.locationLoading')
-                      : t('emergencyConfirm.locationUnavailable')}
-                  </Text>
+              <View style={styles.locationInfo}>
+                <View style={styles.locationIconChip}>
+                  <BioEmergencyContactFillMapPin />
                 </View>
-              )}
-
-              {locationLabel ? (
-                <Text style={styles.locationMeta}>{locationLabel}</Text>
-              ) : null}
+                <View style={styles.locationTitleColumn}>
+                  <Text style={styles.locationTitle}>
+                    {t('emergencyConfirm.locationTitle')}
+                  </Text>
+                  <Text style={styles.locationSubtitle}>
+                    {locationState === 'ready'
+                      ? t('emergencyConfirm.locationReady')
+                      : locationState === 'loading'
+                        ? t('emergencyConfirm.locationLoading')
+                        : t('emergencyConfirm.locationUnavailable')}
+                  </Text>
+                  {locationLabel ? (
+                    <Text style={styles.locationMeta}>{locationLabel}</Text>
+                  ) : null}
+                </View>
+              </View>
             </View>
 
             <View style={styles.steps}>

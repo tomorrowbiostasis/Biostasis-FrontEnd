@@ -71,8 +71,8 @@ export const figmaPrimaryButtonStyles = {
     backgroundColor: 'primaryPressed',
   },
   _disabled: {
-    backgroundColor: 'primary',
-    opacity: 0.4,
+    backgroundColor: 'primaryDisabled',
+    opacity: 1,
     _text: {
       color: 'textInverse',
     },
@@ -123,8 +123,8 @@ export const figmaFormPrimaryButtonStyles = {
     backgroundColor: 'primaryPressed',
   },
   _disabled: {
-    backgroundColor: 'primary',
-    opacity: 0.4,
+    backgroundColor: 'primaryDisabled',
+    opacity: 1,
     _text: {
       color: 'textInverse',
     },

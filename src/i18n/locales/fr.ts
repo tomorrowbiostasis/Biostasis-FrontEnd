@@ -646,6 +646,12 @@ const translations: ITranslation = {
       systemPaused: 'Système en pause',
       pausedUntil: "En pause jusqu'à {{time}}",
       cancelPause: 'Annuler la pause',
+      pauseEnabled: 'Activée',
+      pauseDisabled: 'Désactivée',
+      enablePauseHint:
+        'Activez pour choisir la durée de pause de la surveillance.',
+      disablePauseHint:
+        'Désactivez pour reprendre la surveillance maintenant.',
     },
     addTimeBlock: {
       title: 'Ajouter un créneau',

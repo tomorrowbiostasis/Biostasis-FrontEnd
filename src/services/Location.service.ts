@@ -175,14 +175,13 @@ export const getGoogleStaticMapUrl = (
     return null;
   }
 
-  const marker = encodeURIComponent(`color:red|${latitude},${longitude}`);
   return (
     'https://maps.googleapis.com/maps/api/staticmap' +
     `?center=${latitude},${longitude}` +
     '&zoom=15' +
     `&size=${width}x${height}` +
     '&scale=2' +
-    `&markers=${marker}` +
+    '&maptype=roadmap' +
     `&key=${encodeURIComponent(key)}`
   );
 };

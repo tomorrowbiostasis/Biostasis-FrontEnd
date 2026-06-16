@@ -178,6 +178,11 @@ const SleepScheduleBottomSheet = ({visible, onDismiss}: Props) => {
         onConfirm={handleBedtimeConfirm}
         onCancel={() => setShowBedtimePicker(false)}
         display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+        isDarkModeEnabled={false}
+        themeVariant="light"
+        textColor={semanticColors.primary}
+        accentColor={semanticColors.primary}
+        buttonTextColorIOS={semanticColors.primary}
       />
       <DateTimePickerModal
         isVisible={showWakePicker}
@@ -186,6 +191,11 @@ const SleepScheduleBottomSheet = ({visible, onDismiss}: Props) => {
         onConfirm={handleWakeConfirm}
         onCancel={() => setShowWakePicker(false)}
         display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+        isDarkModeEnabled={false}
+        themeVariant="light"
+        textColor={semanticColors.primary}
+        accentColor={semanticColors.primary}
+        buttonTextColorIOS={semanticColors.primary}
       />
     </>
   );

@@ -1,7 +1,8 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
+import Toggle from '~/components/Toggle';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
 import {setAutomatedEmergencyPause} from '~/redux/automatedEmergency/automatedEmergency.slice';
@@ -10,10 +11,7 @@ import {addPauseFromNow, deleteTimeSlot} from '~/redux/automatedEmergency/thunks
 import {isPausedTime} from '~/services/Time.service';
 import ToastService from '~/services/Toast.service';
 import {BioEmergencySettingsFillClockPause} from '~/assets/icons/BiostasisIcons';
-
-const AMBER_TITLE = '#92400E';
-const AMBER_BODY = '#B45309';
-const AMBER_ACTION = '#D97706';
+import {layout, semanticColors, typography} from '~/theme/tokens';
 
 const formatPauseUntil = (timestamp: number): string => {
   const date = new Date(timestamp);
@@ -84,51 +82,63 @@ const PauseEmergencyPanel = () => {
     [dispatch, hideDatePicker, t],
   );
 
-  const handlePauseButtonPress = useCallback(() => {
-    if (pausedDate) {
+  const handlePauseToggle = useCallback(
+    (nextValue: boolean) => {
+      if (nextValue) {
+        setDatePickerVisibility(true);
+        return;
+      }
+
+      if (!pausedDate) {
+        return;
+      }
+
       dispatch(deleteTimeSlot(pausedDate.id));
       dispatch(setAutomatedEmergencyPause(null));
       ToastService.success(t('specificTimesScreen.pauseNow.cancelMessage'), {
         visibilityTime: 2000,
       });
-    } else {
-      setDatePickerVisibility(true);
-    }
-  }, [dispatch, pausedDate, t]);
+    },
+    [dispatch, pausedDate, t],
+  );
 
   return (
     <>
       <View style={styles.card}>
         <View style={styles.header}>
-          <BioEmergencySettingsFillClockPause />
+          <View style={styles.iconChip}>
+            <BioEmergencySettingsFillClockPause />
+          </View>
           <View style={styles.headerText}>
             <Text style={styles.title}>
               {t('specificTimesScreen.pauseNow.title')}
             </Text>
             <Text style={styles.description}>
-              {t('specificTimesScreen.pauseNow.description')}
+              {isNowPaused
+                ? t('specificTimesScreen.pauseNow.pausedUntil', {
+                    time: pauseUntilLabel,
+                  })
+                : t('specificTimesScreen.pauseNow.description')}
             </Text>
           </View>
         </View>
 
-        {isNowPaused ? (
-          <Text style={styles.pausedUntil}>
-            {t('specificTimesScreen.pauseNow.pausedUntil', {
-              time: pauseUntilLabel,
-            })}
-          </Text>
-        ) : null}
-
-        <TouchableOpacity
-          activeOpacity={0.85}
-          style={styles.button}
-          onPress={handlePauseButtonPress}>
-          <Text style={styles.buttonText}>
-            {isNowPaused
-              ? t('specificTimesScreen.pauseNow.cancelPause')
-              : t('specificTimesScreen.pauseNow.choosePauseDuration')}
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.divider} />
+        <View style={styles.toggleRow}>
+          <View style={styles.toggleText}>
+            <Text style={styles.toggleTitle}>
+              {isNowPaused
+                ? t('specificTimesScreen.pauseNow.pauseEnabled')
+                : t('specificTimesScreen.pauseNow.pauseDisabled')}
+            </Text>
+            <Text style={styles.toggleDescription}>
+              {isNowPaused
+                ? t('specificTimesScreen.pauseNow.disablePauseHint')
+                : t('specificTimesScreen.pauseNow.enablePauseHint')}
+            </Text>
+          </View>
+          <Toggle value={isNowPaused} onChange={handlePauseToggle} />
+        </View>
       </View>
 
       <DateTimePickerModal
@@ -139,6 +149,10 @@ const PauseEmergencyPanel = () => {
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
         minimumDate={new Date()}
+        isDarkModeEnabled={false}
+        themeVariant="light"
+        textColor={semanticColors.primary}
+        accentColor={semanticColors.primary}
       />
     </>
   );
@@ -146,52 +160,64 @@ const PauseEmergencyPanel = () => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FEF3E2',
-    borderWidth: 1,
-    borderColor: '#F5D68A',
+    backgroundColor: semanticColors.surface,
     borderRadius: 14,
-    paddingHorizontal: 18,
-    paddingVertical: 16,
-    gap: 14,
+    paddingHorizontal: layout.cardPaddingHorizontal,
+    paddingVertical: 12,
+    gap: 12,
   },
   header: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     gap: 14,
+  },
+  iconChip: {
+    width: 42,
+    height: 42,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFF0D9',
   },
   headerText: {
     flex: 1,
-    gap: 4,
+    gap: 2,
   },
   title: {
-    fontFamily: 'DMSans-Bold',
-    fontSize: 16,
-    lineHeight: 21,
-    color: AMBER_TITLE,
+    fontFamily: 'DMSans-SemiBold',
+    fontSize: 17,
+    lineHeight: 22,
+    color: semanticColors.primary,
   },
   description: {
     fontFamily: 'DMSans-Regular',
     fontSize: 15,
-    lineHeight: 22,
-    color: AMBER_BODY,
+    lineHeight: 19,
+    color: semanticColors.textMuted,
   },
-  pausedUntil: {
-    fontFamily: 'DMSans-Bold',
-    fontSize: 15,
-    lineHeight: 20,
-    color: AMBER_TITLE,
+  divider: {
+    height: 1,
+    backgroundColor: 'rgba(11, 31, 58, 0.06)',
   },
-  button: {
-    height: 44,
-    borderRadius: 14,
-    backgroundColor: AMBER_ACTION,
+  toggleRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
   },
-  buttonText: {
-    fontFamily: 'DMSans-SemiBold',
-    fontSize: 16,
-    color: '#FFFFFF',
+  toggleText: {
+    flex: 1,
+    gap: 3,
+  },
+  toggleTitle: {
+    ...typography.rowTitle,
+    color: semanticColors.primary,
+  },
+  toggleDescription: {
+    fontFamily: 'DMSans-Regular',
+    fontSize: 14,
+    lineHeight: 18,
+    color: semanticColors.textMuted,
   },
 });
 

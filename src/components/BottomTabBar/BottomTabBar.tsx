@@ -406,6 +406,7 @@ const BottomTabBar: FC<AppBottomTabBarProps> = ({
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: '#FFFFFF',
+    overflow: 'visible',
   },
   bar: {
     flexDirection: 'row',
@@ -414,6 +415,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: 'rgba(11, 31, 58, 0.1)',
     backgroundColor: '#FFFFFF',
+    overflow: 'visible',
   },
   activeBubble: {
     position: 'absolute',
@@ -434,12 +436,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: 10,
     zIndex: 1,
+    overflow: 'visible',
   },
   iconSlot: {
     height: 36,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+    overflow: 'visible',
   },
   iconPill: {
     width: 44,

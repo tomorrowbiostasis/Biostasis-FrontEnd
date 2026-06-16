@@ -12,7 +12,7 @@ import gdprReducer from '~/redux/gdpr/gdpr.slice';
 import documentsReducer from '~/redux/documents/documents.slice';
 import EnvConfig from '~/services/Env.service';
 import logger from 'redux-logger';
-import healthReducer from '~/redux/health/health.slice';
+import healthReducer, {type HealthState} from '~/redux/health/health.slice';
 
 import {
   persistStore,
@@ -81,6 +81,18 @@ const emergencyContactsPersistedReducer = persistReducer(
   emergencyContactsReducer,
 );
 
+const healthPersistConfig: PersistConfig<HealthState> = {
+  key: 'health',
+  version: 1,
+  storage: AsyncStorage,
+  whitelist: ['data', 'allData'],
+};
+
+const healthPersistedReducer = persistReducer(
+  healthPersistConfig,
+  healthReducer,
+);
+
 export const store = configureStore({
   reducer: {
     user: userPersistedReducer,
@@ -90,7 +102,7 @@ export const store = configureStore({
     automatedEmergency: automatedEmergencyPersistedReducer,
     gdpr: gdprReducer,
     documents: documentsReducer,
-    health: healthReducer,
+    health: healthPersistedReducer,
   },
   middleware: getDefaultMiddleware =>
     EnvConfig.DEV ?
