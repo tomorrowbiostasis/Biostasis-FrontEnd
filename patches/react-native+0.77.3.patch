@@ -55,14 +55,71 @@ index d8b0d5f..0ac803a 100644
      }
  
  val configureBuildForHermes by
+diff --git a/node_modules/react-native/ReactCommon/cxxreact/JSBigString.cpp b/node_modules/react-native/ReactCommon/cxxreact/JSBigString.cpp
+index 59cfe8d..1c489e7 100644
+--- a/node_modules/react-native/ReactCommon/cxxreact/JSBigString.cpp
++++ b/node_modules/react-native/ReactCommon/cxxreact/JSBigString.cpp
+@@ -9,6 +9,7 @@
+ 
+ #include <glog/logging.h>
+ 
++#include <folly/FileUtil.h>
+ #include <folly/Memory.h>
+ #include <folly/portability/Fcntl.h>
+ #include <folly/portability/SysMman.h>
+@@ -52,7 +53,7 @@ JSBigFileString::~JSBigFileString() {
+   if (m_data) {
+     munmap((void*)m_data, m_size);
+   }
+-  folly::fileops::close(m_fd);
++  folly::closeNoInt(m_fd);
+ }
+ 
+ const char* JSBigFileString::c_str() const {
+@@ -88,7 +89,7 @@ int JSBigFileString::fd() const {
+ 
+ std::unique_ptr<const JSBigFileString> JSBigFileString::fromPath(
+     const std::string& sourceURL) {
+-  int fd = folly::fileops::open(sourceURL.c_str(), O_RDONLY);
++  int fd = folly::openNoInt(sourceURL.c_str(), O_RDONLY);
+ 
+   if (fd == -1) {
+     const std::string message =
+@@ -105,12 +106,12 @@ std::unique_ptr<const JSBigFileString> JSBigFileString::fromPath(
+     const std::string message =
+         "JSBigFileString::fromPath - fstat on bundle failed: " + sourceURL;
+     LOG(ERROR) << message;
+-    folly::fileops::close(fd);
++    folly::closeNoInt(fd);
+     throw std::runtime_error(message.c_str());
+   }
+ 
+   auto ptr = std::make_unique<const JSBigFileString>(fd, fileInfo.st_size);
+-  CHECK(folly::fileops::close(fd) == 0);
++  CHECK(folly::closeNoInt(fd) == 0);
+   return ptr;
+ }
+ 
+diff --git a/node_modules/react-native/ReactCommon/cxxreact/React-cxxreact.podspec b/node_modules/react-native/ReactCommon/cxxreact/React-cxxreact.podspec
+index 2f05b75..a2e13e8 100644
+--- a/node_modules/react-native/ReactCommon/cxxreact/React-cxxreact.podspec
++++ b/node_modules/react-native/ReactCommon/cxxreact/React-cxxreact.podspec
+@@ -36,7 +36,7 @@ Pod::Spec.new do |s|
+   s.exclude_files          = "SampleCxxModule.*"
+   s.compiler_flags         = folly_compiler_flags + ' ' + boost_compiler_flags
+   s.pod_target_xcconfig    = {
+-    "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/boost\" \"$(PODS_ROOT)/RCT-Folly\" \"$(PODS_ROOT)/DoubleConversion\" \"$(PODS_ROOT)/fas_float/include\" \"$(PODS_ROOT)/fmt/include\" \"$(PODS_CONFIGURATION_BUILD_DIR)/React-debug/React_debug.framework/Headers\" \"${PODS_CONFIGURATION_BUILD_DIR}/React-runtimeexecutor/React_runtimeexecutor.framework/Headers\"",
++    "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/boost\" \"$(PODS_ROOT)/RCT-Folly\" \"$(PODS_ROOT)/DoubleConversion\" \"$(PODS_ROOT)/fas_float/include\" \"$(PODS_ROOT)/fmt/include\" \"$(PODS_ROOT)/../../node_modules/react-native/ReactCommon/reactperflogger\" \"$(PODS_CONFIGURATION_BUILD_DIR)/React-debug/React_debug.framework/Headers\" \"${PODS_CONFIGURATION_BUILD_DIR}/React-runtimeexecutor/React_runtimeexecutor.framework/Headers\"",
+     "CLANG_CXX_LANGUAGE_STANDARD" => rct_cxx_language_standard()
+   }
+   s.header_dir             = "cxxreact"
 diff --git a/node_modules/react-native/local.properties b/node_modules/react-native/local.properties
 new file mode 100644
-index 0000000..7ea3ea8
+index 0000000..191083d
 --- /dev/null
 +++ b/node_modules/react-native/local.properties
-@@ -0,0 +1,2 @@
+@@ -0,0 +1 @@
 +sdk.dir=/Users/daniel/Library/Android/sdk
-+ndk.dir=/Users/daniel/Library/Android/sdk/ndk/28.2.13676358
 diff --git a/node_modules/react-native/settings.gradle.kts b/node_modules/react-native/settings.gradle.kts
 index 283d16b..52bdb66 100644
 --- a/node_modules/react-native/settings.gradle.kts
