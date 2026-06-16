@@ -12,11 +12,19 @@ import {
 import {semanticColors} from '~/theme/tokens';
 import Toggle from '~/components/Toggle';
 import {BioEmergencySettingsFillFlame} from '~/assets/icons/BiostasisIcons';
+import ToastService from '~/services/Toast.service';
 
 interface Props {
   refreshKey?: number;
   required?: boolean;
 }
+
+const schedulesEqual = (a: SleepSchedule, b: SleepSchedule) =>
+  a.enabled === b.enabled &&
+  a.bedtimeHour === b.bedtimeHour &&
+  a.bedtimeMinute === b.bedtimeMinute &&
+  a.wakeHour === b.wakeHour &&
+  a.wakeMinute === b.wakeMinute;
 
 const SleepSchedulePanel = ({refreshKey, required = false}: Props) => {
   const {t} = useAppTranslation();
@@ -39,40 +47,63 @@ const SleepSchedulePanel = ({refreshKey, required = false}: Props) => {
     await saveSleepSchedule(updated);
   }, []);
 
+  const showUpdatedToast = useCallback(() => {
+    ToastService.success(
+      t(
+        'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.updatedToast',
+      ),
+    );
+  }, [t]);
+
   const handleToggle = useCallback(
-    (value: boolean) => {
+    async (value: boolean) => {
       if (required && !value) {
         return;
       }
-      persistSchedule({...schedule, enabled: value});
+      const updated = {...schedule, enabled: value};
+      if (schedulesEqual(schedule, updated)) {
+        return;
+      }
+      await persistSchedule(updated);
+      showUpdatedToast();
     },
-    [persistSchedule, required, schedule],
+    [persistSchedule, required, schedule, showUpdatedToast],
   );
 
   const handleBedtimeConfirm = useCallback(
-    (date: Date) => {
+    async (date: Date) => {
       setShowBedtimePicker(false);
-      persistSchedule({
+      const updated = {
         ...schedule,
         enabled: required ? true : schedule.enabled,
         bedtimeHour: date.getHours(),
         bedtimeMinute: date.getMinutes(),
-      });
+      };
+      if (schedulesEqual(schedule, updated)) {
+        return;
+      }
+      await persistSchedule(updated);
+      showUpdatedToast();
     },
-    [persistSchedule, required, schedule],
+    [persistSchedule, required, schedule, showUpdatedToast],
   );
 
   const handleWakeConfirm = useCallback(
-    (date: Date) => {
+    async (date: Date) => {
       setShowWakePicker(false);
-      persistSchedule({
+      const updated = {
         ...schedule,
         enabled: required ? true : schedule.enabled,
         wakeHour: date.getHours(),
         wakeMinute: date.getMinutes(),
-      });
+      };
+      if (schedulesEqual(schedule, updated)) {
+        return;
+      }
+      await persistSchedule(updated);
+      showUpdatedToast();
     },
-    [persistSchedule, required, schedule],
+    [persistSchedule, required, schedule, showUpdatedToast],
   );
 
   const bedtimeDate = new Date();

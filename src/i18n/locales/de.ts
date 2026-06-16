@@ -1024,6 +1024,7 @@ const translations: ITranslation = {
         bedtime: 'Schlafenszeit',
         wakeTime: 'Aufwachzeit',
         sleepWindow: 'System pausiert nachts von {{bedtime}} bis {{wakeTime}}',
+        updatedToast: 'Schlafplan aktualisiert',
       },
       sleepScheduleSheet: {
         title: 'Schlafplan einrichten',
@@ -1174,23 +1175,41 @@ const translations: ITranslation = {
   },
   specificTimesScreen: {
     title: 'Pause Notfallsystem',
-    pauseNow: {
-      title: 'Notfallsystem pausieren',
-      description:
-        'Deaktivieren Sie die Überwachung vorübergehend bis zu einem von Ihnen gewählten Zeitpunkt.',
-      cancelMessage: 'Pause wurde aufgehoben. Das System ist wieder aktiv.',
-      pauseConfirmed: 'System pausiert bis {{time}}',
-      startDisclaimer: 'System pausieren',
-      choosePauseDuration: 'Pausendauer wählen',
-      systemPaused: 'System ist pausiert',
-      pausedUntil: 'Pausiert bis {{time}}',
-      cancelPause: 'Pause aufheben',
-      pauseEnabled: 'Aktiviert',
-      pauseDisabled: 'Deaktiviert',
-      enablePauseHint:
-        'Aktivieren, um festzulegen, wie lange die Überwachung pausiert.',
+      pauseNow: {
+        title: 'Überwachung pausieren',
+        description:
+          'Pausieren Sie den Schutz vorübergehend für eine von Ihnen gewählte kurze Dauer.',
+        cancelMessage: 'Pause wurde aufgehoben. Das System ist wieder aktiv.',
+        pauseConfirmed: 'System pausiert bis {{time}}',
+        startDisclaimer: 'System pausieren',
+        choosePauseDuration: 'Pausendauer wählen',
+        pauseFor: 'Pausieren für',
+        quickOneMinute: '1 Min.',
+        quickThirtyMinutes: '30 Min.',
+        quickOneHour: '1 Stunde',
+        quickOneDay: '1 Tag',
+        customDuration: 'Eigene Dauer',
+        customDurationHint: 'Stunden und Minuten anpassen',
+        hours: 'Stunden',
+        minutes: 'Minuten',
+        durationDays: '{{count}} Tag',
+        durationDays_plural: '{{count}} Tage',
+        durationHours: '{{count}} Stunde',
+        durationHours_plural: '{{count}} Stunden',
+        durationMinutes: '{{count}} Minute',
+        durationMinutes_plural: '{{count}} Minuten',
+        pauseForDuration: 'Für {{duration}} pausieren',
+        systemPaused: 'System ist pausiert',
+        pausedUntil: 'Pausiert bis {{time}}',
+        cancelPause: 'Pause aufheben',
+        pauseEnabled: 'Pausiert',
+        pauseDisabled: 'Überwachung pausieren',
+        enablePauseHint:
+          'Aktivieren, um eine Pausendauer auszuwählen.',
       disablePauseHint:
         'Deaktivieren, um die Überwachung jetzt fortzusetzen.',
+      inactiveState:
+        'Die Überwachung ist aktiv. Schalten Sie den Schalter ein, wenn Sie eine kurze Pause brauchen.',
     },
     addTimeBlock: {
       title: 'Zeitblock hinzufügen',

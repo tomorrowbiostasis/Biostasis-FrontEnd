@@ -484,6 +484,7 @@ const translations: ITranslation = {
         wakeTime: 'Heure du réveil',
         sleepWindow:
           'Le système se met en pause de {{bedtime}} à {{wakeTime}}',
+        updatedToast: 'Horaire de sommeil mis à jour',
       },
       sleepScheduleSheet: {
         title: 'Configurez votre horaire de sommeil',
@@ -635,23 +636,41 @@ const translations: ITranslation = {
   },
   specificTimesScreen: {
     title: 'Pausa Sistema de Emergencia',
-    pauseNow: {
-      title: "Pause du système d'urgence",
-      description:
-        "Désactivez temporairement la surveillance jusqu'à une heure que vous choisissez.",
-      cancelMessage: 'Pause annulée. Le système est de nouveau actif.',
-      pauseConfirmed: "Système en pause jusqu'à {{time}}",
-      startDisclaimer: 'Mettre en pause',
-      choosePauseDuration: 'Choisir la durée de pause',
-      systemPaused: 'Système en pause',
-      pausedUntil: "En pause jusqu'à {{time}}",
-      cancelPause: 'Annuler la pause',
-      pauseEnabled: 'Activée',
-      pauseDisabled: 'Désactivée',
-      enablePauseHint:
-        'Activez pour choisir la durée de pause de la surveillance.',
+      pauseNow: {
+        title: 'Mettre la surveillance en pause',
+        description:
+          'Mettez temporairement la protection en pause pour une courte durée choisie.',
+        cancelMessage: 'Pause annulée. Le système est de nouveau actif.',
+        pauseConfirmed: "Système en pause jusqu'à {{time}}",
+        startDisclaimer: 'Mettre en pause',
+        choosePauseDuration: 'Choisir la durée de pause',
+        pauseFor: 'Pause pendant',
+        quickOneMinute: '1 min',
+        quickThirtyMinutes: '30 min',
+        quickOneHour: '1 heure',
+        quickOneDay: '1 jour',
+        customDuration: 'Durée personnalisée',
+        customDurationHint: 'Ajuster heures et minutes',
+        hours: 'Heures',
+        minutes: 'Minutes',
+        durationDays: '{{count}} jour',
+        durationDays_plural: '{{count}} jours',
+        durationHours: '{{count}} heure',
+        durationHours_plural: '{{count}} heures',
+        durationMinutes: '{{count}} minute',
+        durationMinutes_plural: '{{count}} minutes',
+        pauseForDuration: 'Pause pendant {{duration}}',
+        systemPaused: 'Système en pause',
+        pausedUntil: "En pause jusqu'à {{time}}",
+        cancelPause: 'Annuler la pause',
+        pauseEnabled: 'En pause',
+        pauseDisabled: 'Mettre en pause',
+        enablePauseHint:
+          'Activez pour choisir une durée de pause.',
       disablePauseHint:
         'Désactivez pour reprendre la surveillance maintenant.',
+      inactiveState:
+        'La surveillance est active. Activez le commutateur quand vous avez besoin d’une courte pause.',
     },
     addTimeBlock: {
       title: 'Ajouter un créneau',

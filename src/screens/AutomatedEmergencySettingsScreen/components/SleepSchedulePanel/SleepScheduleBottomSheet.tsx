@@ -18,11 +18,19 @@ import {
   SleepSchedule,
 } from '~/services/SleepSchedule.service';
 import {layout, semanticColors, typography} from '~/theme/tokens';
+import ToastService from '~/services/Toast.service';
 
 interface Props {
   visible: boolean;
   onDismiss: () => void;
 }
+
+const schedulesEqual = (a: SleepSchedule, b: SleepSchedule) =>
+  a.enabled === b.enabled &&
+  a.bedtimeHour === b.bedtimeHour &&
+  a.bedtimeMinute === b.bedtimeMinute &&
+  a.wakeHour === b.wakeHour &&
+  a.wakeMinute === b.wakeMinute;
 
 const SleepScheduleBottomSheet = ({visible, onDismiss}: Props) => {
   const {t} = useAppTranslation();
@@ -47,36 +55,59 @@ const SleepScheduleBottomSheet = ({visible, onDismiss}: Props) => {
     await saveSleepSchedule(updated);
   }, []);
 
+  const showUpdatedToast = useCallback(() => {
+    ToastService.success(
+      t(
+        'emergencyContactsSettings.automatedEmergencySettings.sleepSchedule.updatedToast',
+      ),
+    );
+  }, [t]);
+
   const handleBedtimeConfirm = useCallback(
-    (date: Date) => {
+    async (date: Date) => {
       setShowBedtimePicker(false);
-      persistSchedule({
+      const updated = {
         ...schedule,
         enabled: true,
         bedtimeHour: date.getHours(),
         bedtimeMinute: date.getMinutes(),
-      });
+      };
+      if (schedulesEqual(schedule, updated)) {
+        return;
+      }
+      await persistSchedule(updated);
+      showUpdatedToast();
     },
-    [schedule, persistSchedule],
+    [schedule, persistSchedule, showUpdatedToast],
   );
 
   const handleWakeConfirm = useCallback(
-    (date: Date) => {
+    async (date: Date) => {
       setShowWakePicker(false);
-      persistSchedule({
+      const updated = {
         ...schedule,
         enabled: true,
         wakeHour: date.getHours(),
         wakeMinute: date.getMinutes(),
-      });
+      };
+      if (schedulesEqual(schedule, updated)) {
+        return;
+      }
+      await persistSchedule(updated);
+      showUpdatedToast();
     },
-    [schedule, persistSchedule],
+    [schedule, persistSchedule, showUpdatedToast],
   );
 
-  const handleSave = useCallback(() => {
-    persistSchedule({...schedule, enabled: true});
+  const handleSave = useCallback(async () => {
+    const updated = {...schedule, enabled: true};
+    const changed = !schedulesEqual(schedule, updated);
+    await persistSchedule(updated);
     onDismiss();
-  }, [schedule, persistSchedule, onDismiss]);
+    if (changed) {
+      showUpdatedToast();
+    }
+  }, [schedule, persistSchedule, onDismiss, showUpdatedToast]);
 
   const bedtimeDate = new Date();
   bedtimeDate.setHours(schedule.bedtimeHour, schedule.bedtimeMinute, 0, 0);
