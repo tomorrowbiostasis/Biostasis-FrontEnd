@@ -28,6 +28,7 @@ import {userInitializedSelector} from '~/redux/user/selectors';
 import SignUpStack from './SignUpStack';
 import {navigationRef} from './navigationContainerRef';
 import {semanticColors} from '~/theme/tokens';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -69,6 +70,7 @@ export function navigate(
 }
 
 const Container = () => {
+  const insets = useSafeAreaInsets();
   const isLogged = useAppSelector(isAuthed);
   const authSessionResolved = useAppSelector(isAuthSessionResolved);
   const {loadingInitData} = useAppSelector(configSelector);
@@ -130,7 +132,7 @@ const Container = () => {
         )}
       </Stack.Navigator>
       <LostConnection />
-      <Toast config={toastConfig} />
+      <Toast config={toastConfig} topOffset={insets.top + 12} />
     </NavigationContainer>
   );
 };
