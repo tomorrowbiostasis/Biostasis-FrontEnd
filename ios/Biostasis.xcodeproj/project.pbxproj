@@ -99,6 +99,7 @@
 		C7B021CD2E29496B0024E32C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021B12E29496B0024E32C /* LocationManager.swift */; };
 		C7B021CE2E29496B0024E32C /* HealthDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B021BB2E29496B0024E32C /* HealthDataModel.swift */; };
 		C7B021D02E294D210024E32C /* NativeManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B021CF2E294D210024E32C /* NativeManagerBridge.m */; };
+		C7B021E02E294D210024E32C /* NativeManagerEmitterBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = C7B021E12E294D210024E32C /* NativeManagerEmitterBridge.m */; };
 		C7F57EF22E2E5579008ABA99 /* NativeManagerEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F57EF12E2E5579008ABA99 /* NativeManagerEmitter.swift */; };
 		C8E5DF976C294D3D9A947362 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2431142C0F2D4F6EB6F693C2 /* Roboto-Black.ttf */; };
 		D09362A92CB91525797F07CF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
@@ -197,6 +198,7 @@
 		C7B021BC2E29496B0024E32C /* RefreshTokenRO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenRO.swift; sourceTree = "<group>"; };
 		C7B021BD2E29496B0024E32C /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		C7B021CF2E294D210024E32C /* NativeManagerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativeManagerBridge.m; sourceTree = "<group>"; };
+		C7B021E12E294D210024E32C /* NativeManagerEmitterBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativeManagerEmitterBridge.m; sourceTree = "<group>"; };
 		C7F57EF12E2E5579008ABA99 /* NativeManagerEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeManagerEmitter.swift; sourceTree = "<group>"; };
 		C8801C807B504E998D116456 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		C9867D58479745879C3E7C40 /* DMSerifDisplay_400Regular_Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = DMSerifDisplay_400Regular_Italic.ttf; path = ../assets/fonts/DMSerifDisplay_400Regular_Italic.ttf; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				C7B021CF2E294D210024E32C /* NativeManagerBridge.m */,
+				C7B021E12E294D210024E32C /* NativeManagerEmitterBridge.m */,
 				C7B021BF2E29496B0024E32C /* Native */,
 				54CB30262E12FA4600E8E404 /* Biostasis-Bridging-Header.h */,
 				54565D712D5AB76B00C85B44 /* GoogleService-Info.plist */,
@@ -785,6 +788,7 @@
 				C7B021CD2E29496B0024E32C /* LocationManager.swift in Sources */,
 				C7B021CE2E29496B0024E32C /* HealthDataModel.swift in Sources */,
 				C7B021D02E294D210024E32C /* NativeManagerBridge.m in Sources */,
+				C7B021E02E294D210024E32C /* NativeManagerEmitterBridge.m in Sources */,
 				C71852742EA6E89600796E3E /* BLEManager.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
@@ -864,7 +868,7 @@
 				CODE_SIGN_ENTITLEMENTS = Biostasis/BiostasisDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = 379N8TSZND;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Biostasis/Info.plist;
@@ -898,7 +902,7 @@
 				CODE_SIGN_ENTITLEMENTS = Biostasis/BiostasisRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = 379N8TSZND;
 				INFOPLIST_FILE = Biostasis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
