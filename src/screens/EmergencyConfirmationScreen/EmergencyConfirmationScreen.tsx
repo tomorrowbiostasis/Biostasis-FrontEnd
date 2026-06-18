@@ -249,7 +249,13 @@ const EmergencyConfirmationScreen = ({
           coords: {latitude, longitude},
         } = geoPosition;
         setLocationCoordinates({latitude, longitude});
-        setLocationPreviewUrl(getGoogleStaticMapUrl(latitude, longitude));
+        const staticMapUrl = getGoogleStaticMapUrl(latitude, longitude);
+        if (__DEV__ && !staticMapUrl) {
+          console.warn(
+            'Emergency map preview unavailable: GOOGLE_MAPS_API_KEY is missing or the Maps Static API is not enabled for it. Falling back to the decorative map.',
+          );
+        }
+        setLocationPreviewUrl(staticMapUrl);
         setLocationLabel(
           `${formatCoordinate(latitude, 'N', 'S')} · ${formatCoordinate(
             longitude,

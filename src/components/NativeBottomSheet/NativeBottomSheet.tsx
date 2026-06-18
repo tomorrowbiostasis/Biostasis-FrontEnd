@@ -114,6 +114,9 @@ const NativeBottomSheet = ({
   const animateClose = useCallback(
     (notifyDismiss: boolean) => {
       setClosing(true);
+      // Clear any in-sheet toast so it leaves with the sheet rather than
+      // orphaning to the root provider during the modal teardown.
+      Toast.hide();
       dragY.value = withTiming(
         hiddenOffset,
         {
@@ -237,7 +240,9 @@ const NativeBottomSheet = ({
         ) : (
           sheet
         )}
-        <Toast config={toastConfig} topOffset={insets.top + 12} />
+        {visible && !closing ? (
+          <Toast config={toastConfig} topOffset={insets.top + 12} />
+        ) : null}
       </View>
     </Modal>
   );
