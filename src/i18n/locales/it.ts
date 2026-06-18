@@ -347,7 +347,7 @@ const translations: ITranslation = {
       defaultMessage:
         'Questo è un segnale di emergenza da parte di {{username}}. Stai ricevendo questo messaggio perché potrei aver bisogno di una crioconservazione Informazioni aggiuntive qui e in allegato',
       testMessageSent:
-        'Email di prova inviata. Controlla la tua casella di posta.',
+        'Messaggio di prova inviato. Controlla sia gli SMS sia la tua email.',
     },
     documents: {
       title: 'Documenti',

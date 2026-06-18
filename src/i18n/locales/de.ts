@@ -661,7 +661,7 @@ const translations: ITranslation = {
       defaultMessage:
         'Dies ist ein Notruf von {{username}}. Sie erhalten diese Nachricht, weil ich möglicherweise eine Kryokonservierung benötige Zusätzliche Informationen hier und im Anhang.',
       testMessageSent:
-        'Test-E-Mail gesendet. Bitte prüfen Sie Ihren Posteingang.',
+        'Testnachricht gesendet. Bitte prüfen Sie sowohl Ihre SMS als auch Ihre E-Mail.',
       testMessageLocationError:
         'Ihr aktueller Standort konnte nicht ermittelt werden. Aktivieren Sie den genauen Standort und versuchen Sie es erneut.',
     },

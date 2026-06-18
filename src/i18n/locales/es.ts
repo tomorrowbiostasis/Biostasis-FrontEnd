@@ -350,7 +350,7 @@ const translations: ITranslation = {
       defaultMessage:
         'Esta es una señal de emergencia de {{username}}. Está recibiendo este mensaje porque puede que necesite una criopreservación Información adicional aquí y adjunta',
       testMessageSent:
-        'Mensaje de prueba enviado. Compruebe su bandeja de entrada',
+        'Mensaje de prueba enviado. Compruebe tanto su SMS como su correo electrónico.',
     },
     documents: {
       title: 'Documentos',

@@ -349,7 +349,7 @@ const translations: ITranslation = {
       defaultMessage:
         "Ceci est un signal d'urgence de la part de {{nomdutilisateur}}. Vous recevez ce message parce que je pourrais avoir besoin d'une cryoconservation Informations supplémentaires ici et en pièce jointe",
       testMessageSent:
-        "Envoi d'un courriel de test. Veuillez vérifier votre boîte de réception",
+        'Message de test envoyé. Veuillez vérifier à la fois vos SMS et vos courriels.',
     },
     documents: {
       title: 'Documents',

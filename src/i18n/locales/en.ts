@@ -669,7 +669,7 @@ const translations = {
       sendTestEmail: 'Send Me a Test Email',
       defaultMessage:
         'This is an emergency signal from {{username}}. You are receiving this message because I may be in need of a cryopreservation Additional information here and attached.',
-      testMessageSent: 'Test email sent. Please check your inbox.',
+      testMessageSent: 'Test message sent. Please check both your SMS and email.',
       testMessageLocationError:
         "Couldn't get your current location. Turn on precise location and try again.",
     },
@@ -771,6 +771,8 @@ const translations = {
             subtitleBio: 'Bio-based monitoring is active.',
             subtitleTime: 'Time-based check-ins are active.',
             turnOff: 'Turn off monitoring',
+            pausedTitle: 'Monitoring paused',
+            pausedSubtitle: 'Monitoring will resume in {{time}}.',
           },
         },
         activeSummary: {
