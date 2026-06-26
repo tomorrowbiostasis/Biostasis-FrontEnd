@@ -1200,6 +1200,16 @@ const translations = {
     notEnoughsPermissions:
       'Tomorrow.bio requires location access for emergency monitoring workflows. To allow this, go to location privacy settings and select "Always".',
   },
+  locationDisclosure: {
+    title: 'Allow location in the background',
+    body: 'Tomorrow.bio collects location data in the background, even when the app is closed or not in use, so your current location can be shared with your emergency contacts and the response team when an emergency is triggered. Your location is used only for this purpose.',
+    allow: 'Allow',
+    notNow: 'Not now',
+  },
+  medicalDisclaimer: {
+    title: 'Medical disclaimer',
+    full: 'Tomorrow.bio is not a medical device and does not diagnose, treat, cure, or prevent any medical condition. It is a safety tool that helps notify your emergency contacts.',
+  },
   notifications: {
     goToSettings: 'Go to Settings',
     permissionsError:

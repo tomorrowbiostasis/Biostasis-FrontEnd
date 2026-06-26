@@ -43,6 +43,19 @@ const styles = StyleSheet.create({
     ...typography.buttonLabel,
     color: semanticColors.textInverse,
   },
+  disclaimerContent: {
+    paddingHorizontal: layout.screenGutter,
+    paddingTop: 8,
+  },
+  disclaimerTitle: {
+    ...typography.bodyLg,
+    color: semanticColors.textPrimary,
+    marginBottom: 12,
+  },
+  disclaimerBody: {
+    ...typography.body,
+    color: semanticColors.textSecondary,
+  },
 });
 
 export default styles;

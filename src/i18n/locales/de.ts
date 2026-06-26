@@ -1155,6 +1155,16 @@ const translations: ITranslation = {
     notEnoughsPermissions:
       'Die Biostasis-Anwendung benötigt ständig Standortinformationen. Um die Verwendung Ihres Standorts zuzulassen, gehen Sie zu den Datenschutzeinstellungen für den Standort und wählen Sie "immer"',
   },
+  locationDisclosure: {
+    title: 'Standort im Hintergrund zulassen',
+    body: 'Tomorrow.bio erfasst Standortdaten im Hintergrund, auch wenn die App geschlossen oder nicht in Gebrauch ist, damit Ihr aktueller Standort bei einem ausgelösten Notfall mit Ihren Notfallkontakten und dem Einsatzteam geteilt werden kann. Ihr Standort wird ausschließlich zu diesem Zweck verwendet.',
+    allow: 'Zulassen',
+    notNow: 'Jetzt nicht',
+  },
+  medicalDisclaimer: {
+    title: 'Medizinischer Haftungsausschluss',
+    full: 'Tomorrow.bio ist kein Medizinprodukt und dient nicht der Diagnose, Behandlung, Heilung oder Vorbeugung von Krankheiten. Es ist ein Sicherheitstool, das Ihre Notfallkontakte benachrichtigt.',
+  },
   notifications: {
     goToSettings: 'Zu den Einstellungen gehen',
     permissionsError:

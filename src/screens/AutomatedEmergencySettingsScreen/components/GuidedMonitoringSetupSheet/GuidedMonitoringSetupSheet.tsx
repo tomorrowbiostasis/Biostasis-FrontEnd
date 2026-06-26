@@ -5,6 +5,7 @@ import {
   Alert,
   Easing,
   GestureResponderEvent,
+  PermissionsAndroid,
   Platform,
   ScrollView,
   StyleSheet,
@@ -17,6 +18,7 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 
 import NativeBottomSheet from '~/components/NativeBottomSheet';
+import LocationDisclosureModal from '~/components/LocationDisclosureModal';
 import {
   BellIcon,
   CheckIcon,
@@ -41,6 +43,8 @@ import {
   getGoogleMapsUrl,
   getLocation,
   hasLocationPermission,
+  requestBackgroundLocationAndroid,
+  requestForegroundLocationAndroid,
   requestLocationPermission,
 } from '~/services/Location.service';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
@@ -149,6 +153,8 @@ const GuidedMonitoringSetupSheet = ({
   const [stepDirection, setStepDirection] = useState<1 | -1>(1);
   const [notificationsGranted, setNotificationsGranted] = useState(false);
   const [locationGranted, setLocationGranted] = useState(false);
+  const [locationDisclosureVisible, setLocationDisclosureVisible] =
+    useState(false);
   const [activePermissionAction, setActivePermissionAction] =
     useState<PermissionKey | null>(null);
   const [healthAccessConfirmed, setHealthAccessConfirmed] = useState(false);
@@ -397,33 +403,85 @@ const GuidedMonitoringSetupSheet = ({
     setActivePermissionAction(null);
   }, [dispatch]);
 
-  const handleLocationPermission = useCallback(async () => {
-    setActivePermissionAction('location');
-    const granted = await requestLocationPermission(true);
-    setLocationGranted(granted);
+  // Persists the granted state and refreshes the user's current location.
+  // Shared between the iOS path and the Android post-disclosure path.
+  const finalizeLocationGranted = useCallback(async () => {
+    setLocationGranted(true);
 
-    if (granted) {
-      const payload = {
-        locationAccess: true,
-        timezone: timestampToISOWithOffset().slice(-6),
-      } as {
-        locationAccess: boolean;
-        timezone: string;
-        location?: string;
-      };
+    const payload = {
+      locationAccess: true,
+      timezone: timestampToISOWithOffset().slice(-6),
+    } as {
+      locationAccess: boolean;
+      timezone: string;
+      location?: string;
+    };
 
-      try {
-        const location = await getLocation(5000, false);
-        payload.location = getGoogleMapsUrl(location);
-      } catch (error) {
-        console.log('Could not refresh location during setup', error);
-      }
-
-      dispatch(updateUser(payload));
+    try {
+      const location = await getLocation(5000, false);
+      payload.location = getGoogleMapsUrl(location);
+    } catch (error) {
+      console.log('Could not refresh location during setup', error);
     }
 
-    setActivePermissionAction(null);
+    dispatch(updateUser(payload));
   }, [dispatch]);
+
+  const handleLocationPermission = useCallback(async () => {
+    setActivePermissionAction('location');
+
+    // iOS keeps its existing LOCATION_ALWAYS flow unchanged.
+    if (Platform.OS !== 'android') {
+      const granted = await requestLocationPermission(true);
+      setLocationGranted(granted);
+      if (granted) {
+        await finalizeLocationGranted();
+      }
+      setActivePermissionAction(null);
+      return;
+    }
+
+    // Android: request foreground (fine) location first. Google requires
+    // foreground access before background, and the prominent disclosure must
+    // be shown before requesting background location.
+    const foregroundGranted = await requestForegroundLocationAndroid();
+    if (!foregroundGranted) {
+      setLocationGranted(false);
+      setActivePermissionAction(null);
+      return;
+    }
+
+    const backgroundGranted = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+    );
+    if (backgroundGranted) {
+      await finalizeLocationGranted();
+      setActivePermissionAction(null);
+      return;
+    }
+
+    // Foreground granted, background still needed: show the prominent
+    // disclosure. The background request runs only after the user accepts it
+    // (handleLocationDisclosureAllow). Keep the spinner until then.
+    setLocationDisclosureVisible(true);
+  }, [finalizeLocationGranted]);
+
+  const handleLocationDisclosureAllow = useCallback(async () => {
+    setLocationDisclosureVisible(false);
+    await requestBackgroundLocationAndroid();
+    // Foreground location is already granted at this point, so the setup can
+    // proceed and share location regardless of the background outcome.
+    await finalizeLocationGranted();
+    setActivePermissionAction(null);
+  }, [finalizeLocationGranted]);
+
+  const handleLocationDisclosureDismiss = useCallback(async () => {
+    setLocationDisclosureVisible(false);
+    // User declined background access. Foreground is granted, so continue
+    // setup foreground-only rather than blocking it.
+    await finalizeLocationGranted();
+    setActivePermissionAction(null);
+  }, [finalizeLocationGranted]);
 
   const handleHealthPermission = useCallback(async () => {
     setActivePermissionAction('health');
@@ -928,6 +986,11 @@ const GuidedMonitoringSetupSheet = ({
             </TouchableOpacity>
           </View>
       </NativeBottomSheet>
+      <LocationDisclosureModal
+        visible={locationDisclosureVisible}
+        onAllow={handleLocationDisclosureAllow}
+        onDismiss={handleLocationDisclosureDismiss}
+      />
     </>
   );
 };

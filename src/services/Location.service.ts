@@ -46,58 +46,115 @@ const requestPermissionIOS = async (shouldPrompt = true) => {
   return false;
 };
 
-const requestPermissionAndroid = async () => {
+const showLocationDeniedAlert = () => {
+  Alert.alert(
+    i18n.t('location.locationPermissionDenied'),
+    i18n.t('location.turnOnLocationFromSettings'),
+    [
+      {text: i18n.t('location.goToSettings'), onPress: openSettings},
+      {text: i18n.t('common.cancel'), onPress: () => {}},
+    ],
+  );
+};
+
+/**
+ * Requests foreground (fine) location only. Google requires foreground
+ * location to be granted before background location can be requested, and the
+ * two must NOT be requested together. Returns true if fine location is (or
+ * becomes) granted.
+ */
+export const requestForegroundLocationAndroid = async (
+  shouldShowDeniedAlert = true,
+) => {
   if (+Platform.Version < 23) {
     return true;
   }
 
-  const requestPermission =
-    (await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
-    )) ||
-    (await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    ));
-
-  if (requestPermission) {
-    return true;
-  }
-
-  const status = await PermissionsAndroid.requestMultiple([
-    PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+  const fineGranted = await PermissionsAndroid.check(
     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  ]);
+  );
+  if (fineGranted) {
+    return true;
+  }
 
-  if (
-    status[PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION] ===
-      PermissionsAndroid.RESULTS.GRANTED ||
-    status[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] ===
-      PermissionsAndroid.RESULTS.GRANTED
-  ) {
+  const status = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  );
+
+  if (status === PermissionsAndroid.RESULTS.GRANTED) {
     return true;
   }
 
   if (
-    status[PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION] ===
-      PermissionsAndroid.RESULTS.DENIED ||
-    status[PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION] ===
-      PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN ||
-    status[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] ===
-      PermissionsAndroid.RESULTS.DENIED ||
-    status[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] ===
-      PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN
+    shouldShowDeniedAlert &&
+    (status === PermissionsAndroid.RESULTS.DENIED ||
+      status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN)
   ) {
-    Alert.alert(
-      i18n.t('location.locationPermissionDenied'),
-      i18n.t('location.turnOnLocationFromSettings'),
-      [
-        {text: i18n.t('location.goToSettings'), onPress: openSettings},
-        {text: i18n.t('common.cancel'), onPress: () => {}},
-      ],
-    );
+    showLocationDeniedAlert();
   }
 
   return false;
+};
+
+/**
+ * Requests background ("Allow all the time") location. MUST only be called
+ * after foreground location is granted AND after the user has accepted the
+ * in-app prominent disclosure for background location. On Android 11+ the OS
+ * routes the user to Settings to choose "Allow all the time".
+ */
+export const requestBackgroundLocationAndroid = async (
+  shouldShowDeniedAlert = true,
+) => {
+  if (+Platform.Version < 23) {
+    return true;
+  }
+
+  const backgroundGranted = await PermissionsAndroid.check(
+    PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+  );
+  if (backgroundGranted) {
+    return true;
+  }
+
+  const status = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+  );
+
+  if (status === PermissionsAndroid.RESULTS.GRANTED) {
+    return true;
+  }
+
+  if (
+    shouldShowDeniedAlert &&
+    (status === PermissionsAndroid.RESULTS.DENIED ||
+      status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN)
+  ) {
+    showLocationDeniedAlert();
+  }
+
+  return false;
+};
+
+/**
+ * Default Android location request used outside the guided setup flow (e.g.
+ * during an active emergency). Only requests foreground location — background
+ * location is requested separately and only after the prominent disclosure
+ * modal in the setup sheet. Returns true if any location permission
+ * (foreground or background) is already available.
+ */
+const requestPermissionAndroid = async (shouldShowDeniedAlert = true) => {
+  if (+Platform.Version < 23) {
+    return true;
+  }
+
+  const backgroundGranted = await PermissionsAndroid.check(
+    PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+  );
+  if (backgroundGranted) {
+    return true;
+  }
+
+  return requestForegroundLocationAndroid(shouldShowDeniedAlert);
 };
 
 export const hasLocationPermission = async () => {
@@ -128,7 +185,7 @@ export const requestLocationPermission = async (
   if (Platform.OS === 'ios') {
     return requestPermissionIOS(shouldShowPermissionPopup);
   }
-  return requestPermissionAndroid();
+  return requestPermissionAndroid(shouldShowPermissionPopup);
 };
 
 export const getLocation = async (

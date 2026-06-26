@@ -613,6 +613,16 @@ const translations: ITranslation = {
     notEnoughsPermissions:
       'La aplicación Biostasis requiere información de localización constante. Para permitir el uso de su ubicación, vaya a la configuración de privacidad de ubicación y seleccione "siempre"',
   },
+  locationDisclosure: {
+    title: 'Permitir la ubicación en segundo plano',
+    body: 'Tomorrow.bio recopila datos de ubicación en segundo plano, incluso cuando la aplicación está cerrada o no se está usando, para que tu ubicación actual pueda compartirse con tus contactos de emergencia y el equipo de respuesta cuando se activa una emergencia. Tu ubicación se usa únicamente con este fin.',
+    allow: 'Permitir',
+    notNow: 'Ahora no',
+  },
+  medicalDisclaimer: {
+    title: 'Aviso médico',
+    full: 'Tomorrow.bio no es un dispositivo médico y no diagnostica, trata, cura ni previene ninguna afección médica. Es una herramienta de seguridad que ayuda a notificar a tus contactos de emergencia.',
+  },
   notifications: {
     goToSettings: 'Ir a Ajustes',
     permissionsError:

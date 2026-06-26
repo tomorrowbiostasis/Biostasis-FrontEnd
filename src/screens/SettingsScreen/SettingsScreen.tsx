@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -8,6 +8,7 @@ import {Screens} from '~/models/Navigation.model';
 import {clearDataAndSignOut} from '~/redux/store/utils';
 import {ClearDataTypes} from '~/services/ClearData.types';
 import ScreenHeader from '~/components/ScreenHeader';
+import NativeBottomSheet from '~/components/NativeBottomSheet';
 import {
   BioSettingsFillBook,
   BioSettingsFillBroadcastSignal,
@@ -15,6 +16,8 @@ import {
   BioSettingsFillUserAdd,
   BioSettingsFillUserVerified,
 } from '~/assets/icons/BiostasisIcons';
+import {ShieldTickIcon} from '~/assets/icons/AppIcons';
+import {semanticColors} from '~/theme/tokens';
 import SettingsRow from './components/SettingsRow';
 import styles from './styles';
 
@@ -30,6 +33,7 @@ const SettingsScreen = () => {
   const {t} = useAppTranslation();
   const {navigate} = useNavigation();
   const insets = useSafeAreaInsets();
+  const [disclaimerVisible, setDisclaimerVisible] = useState(false);
 
   const go = useCallback(
     (screen: Screens) => () => navigate(screen as never),
@@ -113,9 +117,26 @@ const SettingsScreen = () => {
                 t('settings.privacyStatements'),
               )}
             />
+            <SettingsRow
+              icon={
+                <ShieldTickIcon size={22} color={semanticColors.primary} />
+              }
+              label={t('medicalDisclaimer.title')}
+              onPress={() => setDisclaimerVisible(true)}
+            />
           </View>
         </View>
       </ScrollView>
+
+      <NativeBottomSheet
+        visible={disclaimerVisible}
+        onDismiss={() => setDisclaimerVisible(false)}
+        contentStyle={styles.disclaimerContent}>
+        <Text style={styles.disclaimerTitle}>
+          {t('medicalDisclaimer.title')}
+        </Text>
+        <Text style={styles.disclaimerBody}>{t('medicalDisclaimer.full')}</Text>
+      </NativeBottomSheet>
 
       <View style={[styles.footer, {paddingBottom: insets.bottom + 16}]}>
         <TouchableOpacity
