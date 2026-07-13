@@ -230,7 +230,11 @@ export const AddressScreen = () => {
                   <View style={styles.rowZipCol}>
                     <FormInput
                       label={t('userAddress.zipCode')}
-                      keyboardType="numeric"
+                      keyboardType="default"
+                      autoCapitalize="characters"
+                      autoCorrect={false}
+                      autoComplete="postal-code"
+                      textContentType="postalCode"
                       onChangeText={handleChange('zipCode')}
                       onBlur={handleBlur('zipCode')}
                       value={values.zipCode}
