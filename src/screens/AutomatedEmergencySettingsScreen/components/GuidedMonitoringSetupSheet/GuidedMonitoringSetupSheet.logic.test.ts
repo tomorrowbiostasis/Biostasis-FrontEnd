@@ -1,9 +1,25 @@
 import {
   canContinueGuidedMonitoringSetup,
+  getAndroidBioMonitoringPrerequisites,
   hasReceivedHealthData,
 } from './GuidedMonitoringSetupSheet.logic';
 
 describe('GuidedMonitoringSetupSheet logic', () => {
+  describe('getAndroidBioMonitoringPrerequisites', () => {
+    it('persists every Android bio prerequisite in the same enable update', () => {
+      expect(getAndroidBioMonitoringPrerequisites(true, 'bio')).toEqual({
+        pulseBasedTriggerGoogleFitAuthenticated: true,
+        pulseBasedTriggerConnectedToGoogleFit: true,
+        pulseBasedTriggerBackgroundModesEnabled: true,
+      });
+    });
+
+    it('does not add Android bio flags to time-based or iOS setup', () => {
+      expect(getAndroidBioMonitoringPrerequisites(true, 'time')).toEqual({});
+      expect(getAndroidBioMonitoringPrerequisites(false, 'bio')).toEqual({});
+    });
+  });
+
   describe('hasReceivedHealthData', () => {
     it('returns false when no health data exists', () => {
       expect(hasReceivedHealthData(null)).toBe(false);

@@ -46,6 +46,7 @@ import GuidedMonitoringSetupSheet, {
   GuidedMonitoringMode,
   SleepSetupChoice,
 } from './components/GuidedMonitoringSetupSheet/GuidedMonitoringSetupSheet';
+import {getAndroidBioMonitoringPrerequisites} from './components/GuidedMonitoringSetupSheet/GuidedMonitoringSetupSheet.logic';
 import styles from './styles';
 import {TIME_BASED_CHECK_IN_INTERVAL_MINUTES} from './constants';
 
@@ -152,6 +153,7 @@ const AutomatedEmergencySettingsScreen = () => {
         automatedEmergency: true,
         readManual: true,
         regularPushNotification: mode === 'time',
+        ...getAndroidBioMonitoringPrerequisites(isAndroid, mode),
         frequencyOfRegularNotification:
           mode === 'time'
             ? frequencyOfRegularNotification
@@ -177,11 +179,7 @@ const AutomatedEmergencySettingsScreen = () => {
       setPendingSetupRedirect(true);
       setShowSetupSheet(false);
     },
-    [
-      dispatch,
-      user.frequencyOfRegularNotification,
-      user.positiveInfoPeriod,
-    ],
+    [dispatch, user.frequencyOfRegularNotification, user.positiveInfoPeriod],
   );
 
   const handleSetupSheetDismissComplete = useCallback(() => {
@@ -365,9 +363,7 @@ const AutomatedEmergencySettingsScreen = () => {
                       <Text style={styles.stepTitle}>
                         {t(stepItem.titleKey)}
                       </Text>
-                      <Text style={styles.stepDesc}>
-                        {t(stepItem.descKey)}
-                      </Text>
+                      <Text style={styles.stepDesc}>{t(stepItem.descKey)}</Text>
                     </View>
                   </View>
                 ))}
@@ -390,7 +386,7 @@ const AutomatedEmergencySettingsScreen = () => {
         {effectiveMonitoringOn ? (
           <>
             <PauseEmergencyPanel />
-            {timeBasedActive ? (
+            {timeBasedActive || bioBasedActive ? (
               <View
                 style={[
                   styles.activeConfiguration,

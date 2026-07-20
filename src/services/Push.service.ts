@@ -12,6 +12,7 @@ import {navigationRef} from '~/navigators';
 import {Screens} from '~/models/Navigation.model';
 import {logPushEvent} from './PushLogger.service';
 import {isSleepPaused} from './SleepSchedule.service';
+import {getTimeSettings, isPausedTime} from './Time.service';
 let initialized = false;
 
 export const listenForPushTokenAndUpdate = async () => {
@@ -98,16 +99,33 @@ export const handleRemoteMessages = async (message: {
   const title = notification?.title;
   const body = notification?.body;
 
-  const sleepPaused = await isSleepPaused();
-  if (
-    sleepPaused &&
-    [
-      NotificationTypesEnum.EmergencyRegularCheck,
-      NotificationTypesEnum.EmergencyHealthCheck,
-    ].includes(type)
-  ) {
-    console.log('📩 Push suppressed during sleep mode:', type);
-    return;
+  const isSuppressibleCheck = [
+    NotificationTypesEnum.EmergencyRegularCheck,
+    NotificationTypesEnum.EmergencyHealthCheck,
+  ].includes(type);
+
+  if (isSuppressibleCheck) {
+    let monitoringPaused = await isSleepPaused();
+
+    if (!monitoringPaused) {
+      try {
+        const timeSettings = await getTimeSettings();
+        monitoringPaused = isPausedTime(
+          new Date(),
+          timeSettings.pausedDate,
+          timeSettings.specificPausedTimes,
+        );
+      } catch (error) {
+        // Pause lookup is fail-open: a settings/network error must never block
+        // an emergency check, and EmergencyAlert never enters this branch.
+        console.warn('Could not load monitoring pause settings', error);
+      }
+    }
+
+    if (monitoringPaused) {
+      console.log('📩 Push suppressed while monitoring is paused:', type);
+      return;
+    }
   }
 
   if (
@@ -162,6 +180,9 @@ export const handleRemoteMessages = async (message: {
       break;
 
     default:
-      console.log('📩 Notification Listener: unhandled notification type', type);
+      console.log(
+        '📩 Notification Listener: unhandled notification type',
+        type,
+      );
   }
 };

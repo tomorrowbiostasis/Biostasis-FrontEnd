@@ -5,17 +5,12 @@ import {
   stopForegroundFetch,
   updateNotification,
 } from '~/services/Notification.service';
-import {useDidUpdateEffect} from '~/hooks/UseDidUpdateEffect';
 import {NotificationTypesEnum} from '~/constants/notification.constants';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import {useNetInfo} from '@react-native-community/netinfo';
-import {useAppDispatch, useAppSelector} from '~/redux/store/hooks';
-import {
-  AutomatedEmergencySettings,
-  accountSettingsSelector,
-  userSelector,
-} from '~/redux/user/selectors';
+import {useAppSelector} from '~/redux/store/hooks';
+import {accountSettingsSelector, userSelector} from '~/redux/user/selectors';
 import {isPausedTime} from '~/services/Time.service';
 import {useCallback, useEffect, useMemo} from 'react';
 import {
@@ -31,8 +26,6 @@ import {
   listenForPushTokenAndUpdate,
 } from '~/services/Push.service';
 import {BackgroundEventsEnum} from '~/services/Background.types';
-import {updateUser} from '~/redux/user/thunks';
-import {IUser} from '~/redux/user/user.slice';
 import {Platform} from 'react-native';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
 import useBioTriggerValid from '~/hooks/UseBioTriggerValid.hook';
@@ -51,8 +44,6 @@ const AutomatedSystemListener = () => {
     () => isPausedTime(new Date(), pausedDate, specificPausedTimes),
     [pausedDate, specificPausedTimes],
   );
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     const abortController = new AbortController();
 
@@ -75,8 +66,7 @@ const AutomatedSystemListener = () => {
     };
   }, [isPlatformConditionsValid]);
 
-  const startAutomatedEmergency = useCallback(async () => {
-    await createNotificationChannels();
+  const startBioMonitoring = useCallback(async () => {
     if (isIOS) {
       updateDataCollectionStatus();
     } else {
@@ -86,11 +76,9 @@ const AutomatedSystemListener = () => {
         })
         .catch(() => console.log('Settings > startAutomatedEmergency > error'));
     }
-    await listenForPushTokenAndUpdate();
-    await invokeGetToken();
   }, []);
 
-  const stopAutomatedEmergency = useCallback(async () => {
+  const stopBioMonitoring = useCallback(async () => {
     if (isIOS) {
       updateDataCollectionStatus();
     } else {
@@ -102,41 +90,7 @@ const AutomatedSystemListener = () => {
     }
   }, []);
 
-  const handleUpdateUser = useCallback(
-    (updateData: AutomatedEmergencySettings, touched?: boolean) => {
-      if (touched) {
-        dispatch(updateUser(updateData));
-      }
-    },
-    [dispatch],
-  );
-
-  const handleChangeAutomatedEmergencyState = useCallback(
-    async (isBioChosen = false) => {
-      console.log('Automated Emergency: changing state to', isBioChosen);
-      const updateData: IUser = {
-        automatedEmergency: isBioChosen,
-      };
-      if (isBioChosen) {
-        updateData.regularPushNotification = false;
-        handleUpdateUser(updateData, true);
-        await startAutomatedEmergency();
-      } else {
-        handleUpdateUser(updateData, true);
-        await stopAutomatedEmergency();
-      }
-    },
-    [handleUpdateUser, startAutomatedEmergency, stopAutomatedEmergency],
-  );
-
-  // useDidUpdateEffect(() => {
-  //   if (profile.id) {
-  //     checkNotificationPermissions().then(null);
-  //     return handleChangeAutomatedEmergencyState(isPlatformConditionsValid);
-  //   }
-  // }, [isPlatformConditionsValid]);
-
-  useDidUpdateEffect(() => {
+  useEffect(() => {
     const abortController = new AbortController();
 
     const handleEffect = async () => {
@@ -144,21 +98,38 @@ const AutomatedSystemListener = () => {
         return; // If profile ID is not available, exit early
       }
 
-      // const isActive = await isForegroundActive;
-      // console.log('isActive', isActive);
-      await handleChangeAutomatedEmergencyState(
-        isPlatformConditionsValid === undefined
-          ? undefined
-          : Boolean(isPlatformConditionsValid),
-      );
+      // Device readiness controls only the local bio worker. It must never
+      // overwrite the user's server-side monitoring choice: permissions and
+      // native authorization can be transient while Android recreates the app.
+      if (isPlatformConditionsValid) {
+        await startBioMonitoring();
+      } else {
+        await stopBioMonitoring();
+      }
+
+      if (profile.automatedEmergency) {
+        await createNotificationChannels();
+        await listenForPushTokenAndUpdate();
+        await invokeGetToken();
+      }
+
       if (Platform.OS === 'android') {
-        if (allowNotifications && !isNowPaused && isConnected) {
+        if (
+          profile.automatedEmergency &&
+          allowNotifications &&
+          !isNowPaused &&
+          isConnected
+        ) {
           await updateNotification(
             t('automatedEmergencyStatus.start.title'),
             t('automatedEmergencyStatus.start.describe'),
             NotificationTypesEnum.StartAutomatedSystem,
           );
-        } else if (!allowNotifications || isNowPaused) {
+        } else if (
+          !profile.automatedEmergency ||
+          !allowNotifications ||
+          isNowPaused
+        ) {
           await stopForegroundFetch();
         }
       }
@@ -171,10 +142,14 @@ const AutomatedSystemListener = () => {
     };
   }, [
     allowNotifications,
-    // isForegroundActive,
+    isConnected,
     isNowPaused,
+    profile.automatedEmergency,
     profile.id,
     isPlatformConditionsValid,
+    startBioMonitoring,
+    stopBioMonitoring,
+    t,
   ]);
 
   return null;

@@ -386,13 +386,17 @@ const Dashboard = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    if (!isActive || !isFocused) {
+      return;
+    }
+
     const task = InteractionManager.runAfterInteractions(() => {
       handleHealthTriggerCheck();
       handleTimeTriggerCheck();
     });
 
     return () => task.cancel();
-  }, [handleHealthTriggerCheck, handleTimeTriggerCheck]);
+  }, [handleHealthTriggerCheck, handleTimeTriggerCheck, isActive, isFocused]);
 
   const refreshHealthOnFocus = useCallback(() => {
     const now = Date.now();
@@ -549,13 +553,14 @@ const Dashboard = () => {
     setupPromptReason === 'monitoring'
       ? t('dashboardHome.emergencySetupPrompt.monitoring.description')
       : t('dashboardHome.emergencySetupPrompt.contacts.description');
-  const healthMonitoringSource = displayedMonitoringActive && bioActive
-    ? t(
-        Platform.OS === 'ios'
-          ? 'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.sourceBioIos'
-          : 'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.sourceBioAndroid',
-      )
-    : null;
+  const healthMonitoringSource =
+    displayedMonitoringActive && bioActive
+      ? t(
+          Platform.OS === 'ios'
+            ? 'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.sourceBioIos'
+            : 'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.sourceBioAndroid',
+        )
+      : null;
 
   const readiness = useMemo(() => {
     if (fullySetUp) {
@@ -827,9 +832,7 @@ const Dashboard = () => {
           {!readinessActive ? (
             <View style={styles.readinessTitleBlock}>
               <Text style={styles.readinessTitle}>{readiness.title}</Text>
-              <Text style={styles.readinessSubtitle}>
-                {readiness.subtitle}
-              </Text>
+              <Text style={styles.readinessSubtitle}>{readiness.subtitle}</Text>
             </View>
           ) : null}
 
@@ -998,7 +1001,9 @@ const Dashboard = () => {
                   ) : (
                     <EmergencySystemStatusFooter
                       title={emergencySystemStatus.statusTitle ?? ''}
-                      description={emergencySystemStatus.statusDescription ?? ''}
+                      description={
+                        emergencySystemStatus.statusDescription ?? ''
+                      }
                       action={emergencySystemStatus.actionLabel}
                       tone={emergencySystemStatus.tone}
                     />

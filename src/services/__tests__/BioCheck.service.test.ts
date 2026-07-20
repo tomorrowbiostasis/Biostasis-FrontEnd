@@ -1,7 +1,11 @@
 import {AppState} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
 import {AsyncStorageEnum} from '../AsyncStorage.service/AsyncStorage.types';
-import {handleBioData, handlePositiveData} from '../BioCheck.service';
+import {
+  checkForBioData,
+  handleBioData,
+  handlePositiveData,
+} from '../BioCheck.service';
 import {IBioData} from '../GoogleFit.types';
 import {IHealthData} from '../BioCheck.types';
 import {NotificationTypesEnum} from '../../constants/notification.constants';
@@ -42,6 +46,11 @@ jest.mock('react-native-google-fit', () => ({
   },
   BucketUnit: {HOUR: 'HOUR'},
   Scopes: {FITNESS_ACTIVITY_READ: 'FITNESS_ACTIVITY_READ'},
+}));
+
+const mockRecentBioDataResult = jest.fn();
+jest.mock('../GoogleFit.service', () => ({
+  recentBioDataResult: (...args: any[]) => mockRecentBioDataResult(...args),
 }));
 
 jest.mock('react-native-device-time-format', () => ({
@@ -128,6 +137,10 @@ beforeEach(() => {
   AsyncStorage.clear();
   jest.clearAllMocks();
   (AppState as any).currentState = 'active';
+  mockRecentBioDataResult.mockResolvedValue({
+    status: 'success',
+    data: bioData(72, 60, 200),
+  });
 });
 
 // ─────────────────────────────────────────────────────────
@@ -226,6 +239,18 @@ describe('handleBioData — two-strike warning system', () => {
     expect(count).toBe('0');
   });
 
+  it('sets a pending trigger but does not navigate while app is backgrounded', async () => {
+    await AsyncStorage.setItem(AsyncStorageEnum.ConsecutiveNoDataCount, '1');
+    (AppState as any).currentState = 'background';
+
+    await handleBioData(bioData(0, 0, 0));
+
+    expect(await AsyncStorage.getItem(AsyncStorageEnum.HealthTrigger)).toBe(
+      'true',
+    );
+    expect(mockNavigate).not.toHaveBeenCalled();
+  });
+
   it('positive data after first strike → resets counter, no escalation', async () => {
     await AsyncStorage.setItem(AsyncStorageEnum.ConsecutiveNoDataCount, '1');
 
@@ -252,17 +277,13 @@ describe('handleBioData — two-strike warning system', () => {
     // Positive data arrives — reset
     jest.clearAllMocks();
     await handleBioData(bioData(0, 0, 50));
-    count = await AsyncStorage.getItem(
-      AsyncStorageEnum.ConsecutiveNoDataCount,
-    );
+    count = await AsyncStorage.getItem(AsyncStorageEnum.ConsecutiveNoDataCount);
     expect(count).toBe('0');
 
     // Strike 1 again (not strike 2 — counter was reset)
     jest.clearAllMocks();
     await handleBioData(bioData(0, 0, 0));
-    count = await AsyncStorage.getItem(
-      AsyncStorageEnum.ConsecutiveNoDataCount,
-    );
+    count = await AsyncStorage.getItem(AsyncStorageEnum.ConsecutiveNoDataCount);
     expect(count).toBe('1');
     expect(mockUpdateNotification).toHaveBeenCalledWith(
       'bioCheck.messages.wearableSyncWarning',
@@ -295,6 +316,26 @@ describe('handleBioData — two-strike warning system', () => {
       AsyncStorageEnum.HealthTrigger,
     );
     expect(triggerAfter).toBe('false');
+  });
+});
+
+describe('checkForBioData — unavailable health integration', () => {
+  it('does not turn a Google Fit/auth failure into a no-data strike', async () => {
+    await AsyncStorage.setItem(AsyncStorageEnum.ConsecutiveNoDataCount, '1');
+    mockRecentBioDataResult.mockResolvedValue({
+      status: 'unavailable',
+      reason: 'native-authorization-failed',
+    });
+
+    await checkForBioData();
+
+    expect(
+      await AsyncStorage.getItem(AsyncStorageEnum.ConsecutiveNoDataCount),
+    ).toBe('0');
+    expect(await AsyncStorage.getItem(AsyncStorageEnum.HealthTrigger)).not.toBe(
+      'true',
+    );
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 });
 
@@ -408,10 +449,7 @@ describe('handleBioData — NaN guard on ConsecutiveNoDataCount', () => {
   });
 
   it('negative counter value → treated as 0, sends warning', async () => {
-    await AsyncStorage.setItem(
-      AsyncStorageEnum.ConsecutiveNoDataCount,
-      '-5',
-    );
+    await AsyncStorage.setItem(AsyncStorageEnum.ConsecutiveNoDataCount, '-5');
 
     await handleBioData(bioData(0, 0, 0));
 

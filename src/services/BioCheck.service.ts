@@ -1,7 +1,7 @@
 import {AsyncStorageService} from './AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from './AsyncStorage.service/AsyncStorage.types';
 import {getUserPersistedSettings} from './AsyncStorage.service/helpers';
-import {recentBioData} from './GoogleFit.service';
+import {recentBioDataResult} from './GoogleFit.service';
 import API from './API.service';
 import {stopBackgroundFetch, updateLocation} from './Background.service';
 import {navigate} from '~/navigators';
@@ -23,7 +23,9 @@ import {AppState} from 'react-native';
 let bioCheckMutex = false;
 
 const safeParseCount = (raw: string | null): number => {
-  if (!raw) return 0;
+  if (!raw) {
+    return 0;
+  }
   const parsed = parseInt(raw, 10);
   return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
 };
@@ -50,6 +52,14 @@ export const startBioCheck = async () => {
       isPausedTime(new Date(), pausedDate, specificPausedTimes) || sleepPaused;
 
     if (!isPaused) {
+      const pendingHealthTrigger = await AsyncStorageService.getItem(
+        AsyncStorageEnum.HealthTrigger,
+      );
+      if (pendingHealthTrigger === 'true') {
+        console.log('-> BIO CHECK SKIPPED (health check response pending)');
+        return;
+      }
+
       allowNotifications && createNotificationChannels();
       automatedEmergency && (await checkForBioData());
     } else {
@@ -67,15 +77,25 @@ export const startBioCheck = async () => {
 
 export const checkForBioData = async () => {
   try {
-    const recentAndCorrectBioData = await recentBioData();
+    const result = await recentBioDataResult();
 
-    const emptyBioData: IBioData = {
-      pulseData: {value: 0, time: ''},
-      restingPulseData: {value: 0, time: ''},
-      movementData: {value: 0, time: ''},
-    };
+    if (result.status === 'unavailable') {
+      // An authorization/configuration/query failure is not evidence that the
+      // user is unresponsive. It also breaks consecutiveness, so discard any
+      // prior no-data strike and retry on the next scheduled cycle.
+      await AsyncStorageService.setItem(
+        AsyncStorageEnum.ConsecutiveNoDataCount,
+        '0',
+      );
+      console.warn('-> BIO CHECK UNAVAILABLE:', result.reason);
+      await updateNotification(
+        i18n.t('bioCheck.messages.networkError'),
+        i18n.t('bioCheck.messages.checkConnection'),
+      );
+      return;
+    }
 
-    await handleBioData(recentAndCorrectBioData ?? emptyBioData);
+    await handleBioData(result.data);
   } catch (e) {
     await updateNotification(
       'Something went wrong',
@@ -94,8 +114,7 @@ export const handleBioData = async (recentAndCorrectBioData: IBioData) => {
   bioCheckMutex = true;
 
   try {
-    const {pulseData, restingPulseData, movementData} =
-      recentAndCorrectBioData;
+    const {pulseData, restingPulseData, movementData} = recentAndCorrectBioData;
     if (pulseData.value || restingPulseData.value || movementData.value) {
       // Note: recentBioData() already dispatches the values into the health
       // slice for display. Here we only run the emergency-side handling.
@@ -144,7 +163,7 @@ export const handleBioData = async (recentAndCorrectBioData: IBioData) => {
           AsyncStorageEnum.HealthTrigger,
           'true',
         );
-        if (['active', 'background'].includes(AppState.currentState)) {
+        if (AppState.currentState === 'active') {
           navigate(Screens.HealthConditionError, {healthCheck: true});
         }
       }
@@ -237,7 +256,7 @@ export const handleDisconnection = async () => {
     i18n.t('bioCheck.messages.offline'),
     i18n.t('bioCheck.messages.pleaseComeBackOnline'),
   );
-  if (['active', 'background'].includes(AppState.currentState)) {
+  if (AppState.currentState === 'active') {
     navigate(Screens.LostConnection as never);
   }
 };

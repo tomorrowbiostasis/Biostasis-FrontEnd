@@ -16,8 +16,7 @@ const ensureActivityRecognitionPermission = async () => {
     return true;
   }
   try {
-    const permission =
-      PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION;
+    const permission = PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION;
     if (await PermissionsAndroid.check(permission)) {
       return true;
     }
@@ -32,6 +31,17 @@ const ensureActivityRecognitionPermission = async () => {
 export type GoogleFitAuthResult =
   | {success: true}
   | {success: false; message: string};
+
+export type RecentBioDataUnavailableReason =
+  | 'not-authorized'
+  | 'invalid-authorization-cache'
+  | 'missing-positive-info-period'
+  | 'native-authorization-failed'
+  | 'query-failed';
+
+export type RecentBioDataResult =
+  | {status: 'success'; data: IBioData}
+  | {status: 'unavailable'; reason: RecentBioDataUnavailableReason};
 
 export const authenticateGoogleFitDetailed =
   async (): Promise<GoogleFitAuthResult> => {
@@ -73,7 +83,7 @@ export const authenticateGoogleFit = async () => {
   }
 };
 
-export const recentBioData = async () => {
+export const recentBioDataResult = async (): Promise<RecentBioDataResult> => {
   try {
     const authStatusRaw = await AsyncStorageService.getItem(
       AsyncStorageEnum.GoogleFitAuthorized,
@@ -84,90 +94,109 @@ export const recentBioData = async () => {
         authResult = Boolean(JSON.parse(authStatusRaw));
       } catch (error) {
         console.warn('Invalid Google Fit authorization cache value', error);
+        return {
+          status: 'unavailable',
+          reason: 'invalid-authorization-cache',
+        };
       }
     }
 
     const {positiveInfoPeriod} = await getUserPersistedSettings();
+
+    if (!authResult) {
+      console.warn('Could not authorize Google Fit', authResult);
+      return {status: 'unavailable', reason: 'not-authorized'};
+    }
+
+    if (!positiveInfoPeriod) {
+      console.warn('Google Fit check skipped: positive info period is missing');
+      return {
+        status: 'unavailable',
+        reason: 'missing-positive-info-period',
+      };
+    }
 
     // The native module's `isAuthorized` flag lives in memory and resets to
     // false on every app launch / background-fetch JS restart. Relying on the
     // persisted cache alone means we query Google Fit without an active Fitness
     // client, which silently returns empty arrays. Re-establish the native
     // connection here — this is a cheap no-op when the grant already exists.
-    if (authResult && positiveInfoPeriod) {
-      const nativeAuthorized = await authenticateGoogleFit();
-      if (!nativeAuthorized) {
-        console.warn(
-          'Google Fit cached as authorized but native re-auth failed',
-        );
-        return null;
-      }
-
-      const googleFitConfig: IGoogleFitConfig = {
-        startDate: new Date(
-          +new Date() - 1000 * 60 * positiveInfoPeriod,
-        ).toISOString(),
-        endDate: new Date().toISOString(),
-        bucketUnit: 'HOUR' as BucketUnit,
-        bucketInterval: 1,
+    const nativeAuthorized = await authenticateGoogleFit();
+    if (!nativeAuthorized) {
+      console.warn('Google Fit cached as authorized but native re-auth failed');
+      return {
+        status: 'unavailable',
+        reason: 'native-authorization-failed',
       };
-
-      const pulseData = await recentPulseData(googleFitConfig);
-      const restingPulseData = await recentRestingPulseData(googleFitConfig);
-      const movementData = await recentMovementData(googleFitConfig);
-
-      let bioData: IBioData = {
-        pulseData: {value: 0, time: ''},
-        restingPulseData: {value: 0, time: ''},
-        movementData: {value: 0, time: ''},
-      };
-
-      if (pulseData !== null) {
-        bioData.pulseData = pulseData;
-      }
-      if (restingPulseData !== null) {
-        bioData.restingPulseData = restingPulseData;
-      }
-      if (movementData !== null) {
-        bioData.movementData = movementData;
-      }
-
-      // Push the fetched values into the health slice the UI renders from
-      // (Android's analogue of the iOS HealthKit emitter). Only dispatch on a
-      // positive read so an empty window leaves the last displayed value intact.
-      if (
-        bioData.pulseData.value ||
-        bioData.restingPulseData.value ||
-        bioData.movementData.value
-      ) {
-        const toEndDate = (time: IHealthData['time']): number | null => {
-          if (!time) {
-            return null;
-          }
-          const ms = new Date(time).getTime();
-          return Number.isNaN(ms) ? null : ms;
-        };
-        store.dispatch(
-          setHealthData({
-            heartRate: bioData.pulseData.value,
-            restingHeartRate: bioData.restingPulseData.value,
-            steps: bioData.movementData.value,
-            totalSteps: bioData.movementData.value,
-            heartRateEndDate: toEndDate(bioData.pulseData.time),
-            restingHeartRateEndDate: toEndDate(bioData.restingPulseData.time),
-            stepsEndDate: toEndDate(bioData.movementData.time),
-          }),
-        );
-      }
-
-      return bioData;
     }
-    console.warn('Could not authorize Google Fit', authResult);
-    return null;
+
+    const googleFitConfig: IGoogleFitConfig = {
+      startDate: new Date(
+        +new Date() - 1000 * 60 * positiveInfoPeriod,
+      ).toISOString(),
+      endDate: new Date().toISOString(),
+      bucketUnit: 'HOUR' as BucketUnit,
+      bucketInterval: 1,
+    };
+
+    const pulseData = await recentPulseData(googleFitConfig);
+    const restingPulseData = await recentRestingPulseData(googleFitConfig);
+    const movementData = await recentMovementData(googleFitConfig);
+
+    let bioData: IBioData = {
+      pulseData: {value: 0, time: ''},
+      restingPulseData: {value: 0, time: ''},
+      movementData: {value: 0, time: ''},
+    };
+
+    if (pulseData !== null) {
+      bioData.pulseData = pulseData;
+    }
+    if (restingPulseData !== null) {
+      bioData.restingPulseData = restingPulseData;
+    }
+    if (movementData !== null) {
+      bioData.movementData = movementData;
+    }
+
+    // Push the fetched values into the health slice the UI renders from
+    // (Android's analogue of the iOS HealthKit emitter). Only dispatch on a
+    // positive read so an empty window leaves the last displayed value intact.
+    if (
+      bioData.pulseData.value ||
+      bioData.restingPulseData.value ||
+      bioData.movementData.value
+    ) {
+      const toEndDate = (time: IHealthData['time']): number | null => {
+        if (!time) {
+          return null;
+        }
+        const ms = new Date(time).getTime();
+        return Number.isNaN(ms) ? null : ms;
+      };
+      store.dispatch(
+        setHealthData({
+          heartRate: bioData.pulseData.value,
+          restingHeartRate: bioData.restingPulseData.value,
+          steps: bioData.movementData.value,
+          totalSteps: bioData.movementData.value,
+          heartRateEndDate: toEndDate(bioData.pulseData.time),
+          restingHeartRateEndDate: toEndDate(bioData.restingPulseData.time),
+          stepsEndDate: toEndDate(bioData.movementData.time),
+        }),
+      );
+    }
+
+    return {status: 'success', data: bioData};
   } catch (e) {
-    console.log(e);
-    return null;
+    console.warn('Google Fit health-data query failed', e);
+    return {status: 'unavailable', reason: 'query-failed'};
   }
+};
+
+export const recentBioData = async (): Promise<IBioData | null> => {
+  const result = await recentBioDataResult();
+  return result.status === 'success' ? result.data : null;
 };
 
 const recentPulseData = async (config: IGoogleFitConfig) => {
@@ -187,7 +216,7 @@ const recentPulseData = async (config: IGoogleFitConfig) => {
     return null;
   } catch (e) {
     console.warn('Google Fit authorization error', e);
-    return null;
+    throw e;
   }
 };
 
@@ -209,7 +238,7 @@ export const recentRestingPulseData = async (config: IGoogleFitConfig) => {
     return null;
   } catch (e) {
     console.warn('Google Fit authorization error', e);
-    return null;
+    throw e;
   }
 };
 
@@ -247,6 +276,6 @@ export const recentMovementData = async (config: IGoogleFitConfig) => {
     return null;
   } catch (e) {
     console.warn('Google Fit authorization error', e);
-    return null;
+    throw e;
   }
 };

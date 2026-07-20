@@ -20,6 +20,8 @@ export type AutomatedEmergencySettings = Pick<
   | 'readManual'
   | 'regularPushNotification'
   | 'pulseBasedTriggerGoogleFitAuthenticated'
+  | 'pulseBasedTriggerConnectedToGoogleFit'
+  | 'pulseBasedTriggerBackgroundModesEnabled'
   | 'frequencyOfRegularNotification'
   | 'positiveInfoPeriod'
 >;

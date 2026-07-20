@@ -1,6 +1,18 @@
 export type GuidedMonitoringMode = 'bio' | 'time';
 export type GuidedMonitoringStep = 1 | 2;
 
+export const getAndroidBioMonitoringPrerequisites = (
+  isAndroid: boolean,
+  mode: GuidedMonitoringMode,
+) =>
+  isAndroid && mode === 'bio'
+    ? {
+        pulseBasedTriggerGoogleFitAuthenticated: true,
+        pulseBasedTriggerConnectedToGoogleFit: true,
+        pulseBasedTriggerBackgroundModesEnabled: true,
+      }
+    : {};
+
 type HealthDataLike =
   | {
       heartRate?: number | null;
