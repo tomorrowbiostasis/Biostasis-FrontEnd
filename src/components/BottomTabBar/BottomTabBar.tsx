@@ -93,12 +93,14 @@ const EmergencyCenterButton: FC<EmergencyCenterButtonProps> = React.memo(
         return;
       }
 
+      // Go straight to the screen that closes the gap. This used to drop a
+      // banner on Home instead, which was near-invisible when the user was
+      // already on Home and at the top of the scroll — the button read as
+      // unresponsive. Mirrors the Dashboard's own readiness routing.
       navigation.navigate(
-        Screens.Home as never,
-        {
-          emergencySetupPromptId: Date.now(),
-          emergencySetupPromptReason: emergencyReadiness.missingReason,
-        } as never,
+        (emergencyReadiness.missingReason === 'monitoring'
+          ? Screens.AutomatedEmergencySettings
+          : Screens.EmergencyContactSettings) as never,
       );
     }, [
       emergencyReadiness.missingReason,
@@ -113,7 +115,6 @@ const EmergencyCenterButton: FC<EmergencyCenterButtonProps> = React.memo(
         onPress={handleActivate}
         style={styles.tab}
         accessibilityRole="button"
-        accessibilityState={!emergencyReady ? {disabled: true} : undefined}
         accessibilityLabel={
           emergencyReady
             ? t('bottomTab.activateA11y')

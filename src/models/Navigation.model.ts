@@ -45,12 +45,7 @@ export type SignUpStackNavigatorParamList = {
 
 export type MainStackNavigatorParamList = {
   Tabs: undefined;
-  Home:
-    | {
-        emergencySetupPromptId?: number;
-        emergencySetupPromptReason?: 'contacts' | 'monitoring';
-      }
-    | undefined;
+  Home: undefined;
   EmergencyConfirmation: undefined;
   CurrentHealthLog: undefined;
   HistoryLogs: undefined;

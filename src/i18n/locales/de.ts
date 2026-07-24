@@ -28,11 +28,6 @@ const translations: ITranslation = {
     collectedAtNone: 'Noch keine Gesundheitsdaten erfasst',
     sectionEmergencySystem: 'Notfallsystem',
     sectionHealthLogs: 'Gesundheitsprotokolle',
-    emergencySetupPrompt: {
-      title: 'Notfalleinrichtung erforderlich',
-      description:
-        'Der Notfallbutton funktioniert, sobald Ihre Schutzeinrichtung abgeschlossen ist.',
-    },
     readiness: {
       eyebrow: 'Schutzstatus',
       states: {

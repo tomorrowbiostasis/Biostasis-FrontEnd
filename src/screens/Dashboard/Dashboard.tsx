@@ -12,17 +12,15 @@ import {
   View,
 } from 'react-native';
 import {
-  RouteProp,
   useFocusEffect,
   useIsFocused,
   useNavigation,
-  useRoute,
 } from '@react-navigation/native';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {useDispatch} from 'react-redux';
 
 import {UseAppState} from '~/hooks/UseAppState.hook';
-import {MainStackNavigatorParamList, Screens} from '~/models/Navigation.model';
+import {Screens} from '~/models/Navigation.model';
 import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
 import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import {useAppTranslation} from '~/i18n/hooks/UseAppTranslation.hook';
@@ -173,8 +171,6 @@ const getVisibleHealthData = (
 const Dashboard = () => {
   const {t} = useAppTranslation();
   const {navigate} = useNavigation();
-  const route =
-    useRoute<RouteProp<MainStackNavigatorParamList, Screens.Home>>();
   const dispatch = useDispatch();
   const tabBarHeight = useBottomTabBarHeight();
   const scrollRef = useRef<ScrollView>(null);
@@ -193,7 +189,6 @@ const Dashboard = () => {
     heartRate: null,
     steps: null,
   });
-  const handledSetupPromptIdRef = useRef<number | undefined>(undefined);
   const [isRefreshingHealth, setIsRefreshingHealth] = useState(false);
   const [refreshPhase, setRefreshPhase] = useState<RefreshPhase>('idle');
   const [visibleHealth, setVisibleHealth] = useState<VisibleHealthData>({
@@ -204,8 +199,6 @@ const Dashboard = () => {
     null,
   );
   const [renderBelowFold, setRenderBelowFold] = useState(false);
-  const [showEmergencySetupPrompt, setShowEmergencySetupPrompt] =
-    useState(false);
 
   const {user} = useAppSelector(userSelector);
   const {hasContacts, areContactsEnabled} = useAppSelector(selectContactsInfo);
@@ -564,24 +557,6 @@ const Dashboard = () => {
   const displayedMonitoringActive = contactsReady && monitoringActive;
   const fullySetUp = contactsReady && displayedMonitoringActive;
 
-  useEffect(() => {
-    if (fullySetUp) {
-      setShowEmergencySetupPrompt(false);
-      return;
-    }
-
-    const promptId = route.params?.emergencySetupPromptId;
-    if (!promptId || handledSetupPromptIdRef.current === promptId) {
-      return;
-    }
-
-    handledSetupPromptIdRef.current = promptId;
-    setShowEmergencySetupPrompt(true);
-    requestAnimationFrame(() => {
-      scrollRef.current?.scrollTo({y: 0, animated: true});
-    });
-  }, [fullySetUp, route.params?.emergencySetupPromptId]);
-
   const hour = new Date().getHours();
   const greeting =
     hour < 12
@@ -600,15 +575,6 @@ const Dashboard = () => {
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
   });
-  const setupPromptReason = route.params?.emergencySetupPromptReason;
-  const setupPromptTitle =
-    setupPromptReason === 'monitoring'
-      ? t('dashboardHome.emergencySetupPrompt.monitoring.title')
-      : t('dashboardHome.emergencySetupPrompt.contacts.title');
-  const setupPromptDescription =
-    setupPromptReason === 'monitoring'
-      ? t('dashboardHome.emergencySetupPrompt.monitoring.description')
-      : t('dashboardHome.emergencySetupPrompt.contacts.description');
   const healthMonitoringSource =
     steps != null
       ? t(
@@ -820,22 +786,6 @@ const Dashboard = () => {
           />
         }
         showsVerticalScrollIndicator={false}>
-        {showEmergencySetupPrompt && !fullySetUp ? (
-          <TouchableOpacity
-            activeOpacity={0.86}
-            style={styles.setupPrompt}
-            onPress={readiness.onActionPress}
-            accessibilityRole="button">
-            <View style={styles.setupPromptDot} />
-            <View style={styles.setupPromptTextBlock}>
-              <Text style={styles.setupPromptTitle}>{setupPromptTitle}</Text>
-              <Text style={styles.setupPromptDescription}>
-                {setupPromptDescription}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ) : null}
-
         <View
           style={[
             styles.readinessCard,

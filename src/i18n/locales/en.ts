@@ -27,21 +27,6 @@ const translations = {
     sectionEmergencySystem: 'Emergency system',
     sectionHealthLogs: 'Health logs',
     sectionQuickActions: 'Quick actions',
-    emergencySetupPrompt: {
-      title: 'Emergency setup required',
-      description:
-        'The emergency button will work once your protection setup is complete.',
-      contacts: {
-        title: 'Emergency setup required',
-        description:
-          'Add an emergency contact before the emergency button can be used.',
-      },
-      monitoring: {
-        title: 'Emergency monitoring required',
-        description:
-          'Enable emergency monitoring before the emergency button can be used.',
-      },
-    },
     readiness: {
       eyebrow: 'Protection status',
       states: {
@@ -915,6 +900,7 @@ const translations = {
           allSetTitle: 'Required permissions are already in place',
           allSetSubtitle:
             'You can continue and set your sleep schedule before turning on monitoring.',
+          continueBlocked: 'Still needed to continue: {{items}}',
         },
         choose: {
           title: 'Choose monitoring type',

@@ -22,18 +22,18 @@ const requestPermissionIOS = async (shouldPrompt = true) => {
   const status = await request(PERMISSIONS.IOS.LOCATION_ALWAYS);
 
   if (status === RESULTS.GRANTED) {
-    const locationStatus =
-      (await check(PERMISSIONS.IOS.LOCATION_ALWAYS)) ||
-      (await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE));
-    if (locationStatus === 'granted') {
-      return true;
-    }
+    return true;
+  }
 
-    Alert.alert(i18n.t('location.notEnoughsPermissions'), '', [
-      {text: i18n.t('location.goToSettings'), onPress: openSettings},
-      {text: i18n.t('common.cancel'), onPress: () => {}},
-    ]);
-    return false;
+  // iOS never offers "Always" on the first prompt — the user only gets
+  // "Allow Once" / "Allow While Using App" / "Don't Allow". Picking
+  // "Allow While Using App" leaves LOCATION_ALWAYS reporting `blocked`, and
+  // iOS shows the upgrade-to-Always prompt at most once, so re-requesting is a
+  // dead end. Fall back to the when-in-use check so this agrees with
+  // hasLocationPermission() instead of treating a granted user as denied.
+  const whenInUseStatus = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+  if (whenInUseStatus === RESULTS.GRANTED) {
+    return true;
   }
 
   if (status === RESULTS.DENIED || status === RESULTS.BLOCKED) {

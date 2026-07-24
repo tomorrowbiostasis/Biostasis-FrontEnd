@@ -102,8 +102,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         flavorDimensions "default" // add this line
         resValue "string", "build_config_package", "com.tomorrowbiostasis.app"
-        versionName "2.2.0"
-        versionCode 23
+        versionName "2.2.1"
+        versionCode 24
     }
     splits {
         abi {

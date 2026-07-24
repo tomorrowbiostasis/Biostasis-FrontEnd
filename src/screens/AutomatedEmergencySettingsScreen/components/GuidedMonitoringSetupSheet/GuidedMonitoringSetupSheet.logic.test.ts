@@ -1,6 +1,7 @@
 import {
   canContinueGuidedMonitoringSetup,
   getAndroidBioMonitoringPrerequisites,
+  getGuidedMonitoringPermissionsReady,
   hasReceivedHealthData,
 } from './GuidedMonitoringSetupSheet.logic';
 
@@ -35,6 +36,43 @@ describe('GuidedMonitoringSetupSheet logic', () => {
 
     it('returns true when only timestamps are available', () => {
       expect(hasReceivedHealthData({heartRateEndDate: 1717420000})).toBe(true);
+    });
+  });
+
+  describe('getGuidedMonitoringPermissionsReady', () => {
+    const allGranted = {
+      notificationsGranted: true,
+      locationGranted: true,
+      healthVerified: true,
+    };
+
+    it('is ready only once every permission is satisfied', () => {
+      expect(getGuidedMonitoringPermissionsReady(allGranted)).toBe(true);
+      expect(
+        getGuidedMonitoringPermissionsReady({
+          ...allGranted,
+          notificationsGranted: false,
+        }),
+      ).toBe(false);
+      expect(
+        getGuidedMonitoringPermissionsReady({
+          ...allGranted,
+          locationGranted: false,
+        }),
+      ).toBe(false);
+    });
+
+    // Regression: the gate and the health tile's visibility were derived from
+    // two different values, so once health data arrived without this sheet's
+    // own check completing the row read "Connected" with no tile left to tap
+    // while Continue stayed disabled. Callers must pass the same value to both.
+    it('blocks until health access is verified on this device', () => {
+      expect(
+        getGuidedMonitoringPermissionsReady({
+          ...allGranted,
+          healthVerified: false,
+        }),
+      ).toBe(false);
     });
   });
 

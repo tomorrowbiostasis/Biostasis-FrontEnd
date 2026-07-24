@@ -42,6 +42,37 @@ export const hasReceivedHealthData = (health: HealthDataLike): boolean => {
   ].some(value => typeof value === 'number' && Number.isFinite(value));
 };
 
+export type GuidedMonitoringPermissionState = {
+  notificationsGranted: boolean;
+  locationGranted: boolean;
+  /**
+   * Whether health access has been verified on THIS device — i.e. the sheet's
+   * own check succeeded, or the platform reports a live grant. Deliberately not
+   * satisfied by health data alone: persisted samples outlive the permission
+   * that produced them, so data can exist after access was revoked.
+   *
+   * This MUST be the same value that decides whether the health tile is still
+   * offered to the user.
+   */
+  healthVerified: boolean;
+};
+
+/**
+ * Single source of truth for step 1 readiness.
+ *
+ * The gate and the health tile's visibility used to be derived from two
+ * different values. Once health data arrived without this sheet's own check
+ * completing, they diverged: the health row rendered as "Connected", no tile
+ * was left to tap, and Continue stayed disabled — stranding the user on step 1
+ * with no way forward. Both readings must come through this one function.
+ */
+export const getGuidedMonitoringPermissionsReady = ({
+  notificationsGranted,
+  locationGranted,
+  healthVerified,
+}: GuidedMonitoringPermissionState): boolean =>
+  notificationsGranted && locationGranted && healthVerified;
+
 export const canContinueGuidedMonitoringSetup = ({
   step,
   permissionsReady,

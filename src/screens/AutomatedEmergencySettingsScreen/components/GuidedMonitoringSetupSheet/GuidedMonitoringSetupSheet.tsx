@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Animated as RNAnimated,
   Alert,
+  AppState,
   Easing,
   GestureResponderEvent,
   PermissionsAndroid,
@@ -59,6 +60,7 @@ import {
 } from '~/services/Push.service';
 import {
   canContinueGuidedMonitoringSetup,
+  getGuidedMonitoringPermissionsReady,
   GuidedMonitoringMode,
   GuidedMonitoringStep,
   hasReceivedHealthData,
@@ -120,6 +122,10 @@ const normalizeHealthEntry = (entry: Record<string, unknown>) => {
 
 const STEP_TRANSITION_DURATION = 220;
 const STEP_TRANSITION_DISTANCE = 8;
+// First-run HealthKit authorization plus the three sample queries the native
+// module fans out routinely takes longer than a few seconds, so this is only a
+// backstop for a native callback that never fires — not an expected deadline.
+const IOS_HEALTH_CHECK_TIMEOUT_MS = 20000;
 
 const GuidedMonitoringSetupSheet = ({
   visible,
@@ -162,6 +168,9 @@ const GuidedMonitoringSetupSheet = ({
     null,
   );
   const healthCheckResolvedRef = useRef(false);
+  /** True when the current resolution came from the timeout, so a late genuine
+   * success is still allowed to override it. */
+  const healthCheckTimedOutRef = useRef(false);
   const scrollRef = useRef<ScrollView>(null);
   const stepTransition = useRef(new RNAnimated.Value(1)).current;
   const healthDataReceived = hasReceivedHealthData(health);
@@ -176,19 +185,35 @@ const GuidedMonitoringSetupSheet = ({
         // leaving recentBioData() unable to query Fit. Gating on isGoogleFitAuthorized
         // keeps the badge honest and lets the tile prompt the native dialog.
         isGoogleFitAuthorized;
+  // Verified access on this device: the sheet's own check succeeded, or the
+  // platform reports a live grant. This is what gates Continue AND what hides
+  // the health tile — the two must never diverge.
   const healthConnectionReady = healthConnectionGranted || healthAccessConfirmed;
+  // Health data existing is NOT proof of current access: samples are persisted
+  // to storage and outlive the permission that produced them. It only serves as
+  // the success signal for an in-flight check (see the effect below).
   const healthReady = healthDataReceived || healthConnectionReady;
-  const commonPermissionsReady =
-    notificationsGranted && locationGranted && healthConnectionReady;
+  const commonPermissionsReady = getGuidedMonitoringPermissionsReady({
+    notificationsGranted,
+    locationGranted,
+    healthVerified: healthConnectionReady,
+  });
 
   const refreshPermissionState = useCallback(async () => {
-    const [notificationsAllowed, locationAllowed] = await Promise.all([
-      hasNotificationPermission(),
-      hasLocationPermission(),
-    ]);
+    // hasLocationPermission() can reject, and this now also runs on every
+    // foreground — leave the last known state in place rather than letting an
+    // unhandled rejection escape.
+    try {
+      const [notificationsAllowed, locationAllowed] = await Promise.all([
+        hasNotificationPermission(),
+        hasLocationPermission(),
+      ]);
 
-    setNotificationsGranted(notificationsAllowed);
-    setLocationGranted(locationAllowed);
+      setNotificationsGranted(notificationsAllowed);
+      setLocationGranted(locationAllowed);
+    } catch (error) {
+      console.log('Could not refresh permission state', error);
+    }
   }, []);
 
   const clearHealthCheckTimeout = useCallback(() => {
@@ -222,12 +247,17 @@ const GuidedMonitoringSetupSheet = ({
   );
 
   const finishHealthPermissionCheck = useCallback(
-    (success: boolean) => {
-      if (healthCheckResolvedRef.current) {
+    (success: boolean, fromTimeout = false) => {
+      // The timeout can fire while the native HealthKit query is still running.
+      // Treat that resolution as provisional so the real result, when it lands,
+      // still counts — otherwise the user keeps a failed check they can't undo.
+      const overridesTimeout = success && healthCheckTimedOutRef.current;
+      if (healthCheckResolvedRef.current && !overridesTimeout) {
         return;
       }
 
       healthCheckResolvedRef.current = true;
+      healthCheckTimedOutRef.current = fromTimeout;
       clearHealthCheckTimeout();
       setActivePermissionAction(current =>
         current === 'health' ? null : current,
@@ -268,6 +298,7 @@ const GuidedMonitoringSetupSheet = ({
       setAndroidSleepPickerVisible(false);
       clearHealthCheckTimeout();
       healthCheckResolvedRef.current = false;
+      healthCheckTimedOutRef.current = false;
     }
   }, [
     clearHealthCheckTimeout,
@@ -277,6 +308,10 @@ const GuidedMonitoringSetupSheet = ({
     visible,
   ]);
 
+  // The one place `healthReady` is correct to use: samples landing while the
+  // user's own check is in flight prove access right now, so they resolve it.
+  // Do not reuse it to gate Continue or hide the tile — outside this window the
+  // data may be persisted leftovers from access that has since been revoked.
   useEffect(() => {
     if (visible && activePermissionAction === 'health' && healthReady) {
       finishHealthPermissionCheck(true);
@@ -287,6 +322,23 @@ const GuidedMonitoringSetupSheet = ({
     healthReady,
     visible,
   ]);
+
+  // A denied permission sends the user to the system Settings app. Without this
+  // the sheet keeps the state it read when it opened, so granting in Settings
+  // and coming back still showed the permission as outstanding.
+  useEffect(() => {
+    if (!visible) {
+      return;
+    }
+
+    const subscription = AppState.addEventListener('change', nextState => {
+      if (nextState === 'active') {
+        refreshPermissionState();
+      }
+    });
+
+    return () => subscription.remove();
+  }, [refreshPermissionState, visible]);
 
   useEffect(() => {
     if (!visible || Platform.OS !== 'ios') {
@@ -335,6 +387,30 @@ const GuidedMonitoringSetupSheet = ({
     step,
     permissionsReady: commonPermissionsReady,
   });
+
+  // A greyed-out button was previously the only signal that something was
+  // missing, which reads as "Continue doesn't work". Name what is outstanding.
+  const outstandingPermissions = useMemo(() => {
+    if (step !== 1 || canContinue) {
+      return [];
+    }
+
+    const prefix =
+      'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions';
+
+    return [
+      !notificationsGranted ? t(`${prefix}.notificationsTitle`) : null,
+      !locationGranted ? t(`${prefix}.locationTitle`) : null,
+      !healthConnectionReady ? t(`${prefix}.healthTitle`) : null,
+    ].filter((label): label is string => label !== null);
+  }, [
+    canContinue,
+    healthConnectionReady,
+    locationGranted,
+    notificationsGranted,
+    step,
+    t,
+  ]);
 
   const persistSchedule = useCallback(async (updated: SleepSchedule) => {
     setSchedule(updated);
@@ -486,12 +562,13 @@ const GuidedMonitoringSetupSheet = ({
   const handleHealthPermission = useCallback(async () => {
     setActivePermissionAction('health');
     healthCheckResolvedRef.current = false;
+    healthCheckTimedOutRef.current = false;
 
     if (Platform.OS === 'ios') {
       clearHealthCheckTimeout();
       healthCheckTimeoutRef.current = setTimeout(() => {
-        finishHealthPermissionCheck(false);
-      }, 6000);
+        finishHealthPermissionCheck(false, true);
+      }, IOS_HEALTH_CHECK_TIMEOUT_MS);
       requestLatestHealthData()
         .then(success => {
           finishHealthPermissionCheck(success);
@@ -551,6 +628,7 @@ const GuidedMonitoringSetupSheet = ({
     const retryAuthorization = async () => {
       setActivePermissionAction('health');
       healthCheckResolvedRef.current = false;
+      healthCheckTimedOutRef.current = false;
 
       const retryResult = await authorizeGoogleFitDetailed();
       if (retryResult.success) {
@@ -669,10 +747,10 @@ const GuidedMonitoringSetupSheet = ({
             );
       const showNotificationsTile = !notificationsGranted;
       const showLocationTile = !locationGranted;
-      const showHealthTile = !healthReady;
+      const showHealthTile = !healthConnectionReady;
       const showNotificationStatus = notificationsGranted;
       const showLocationStatus = locationGranted;
-      const showHealthStatus = healthReady;
+      const showHealthStatus = healthConnectionReady;
       const onlyGoogleFitRemaining =
         Platform.OS === 'android' &&
         showHealthTile &&
@@ -959,6 +1037,14 @@ const GuidedMonitoringSetupSheet = ({
               {renderStepContent()}
             </RNAnimated.View>
           </ScrollView>
+          {outstandingPermissions.length ? (
+            <Text style={styles.footerHint}>
+              {t(
+                'emergencyContactsSettings.automatedEmergencySettings.setupFlow.permissions.continueBlocked',
+                {items: outstandingPermissions.join(', ')},
+              )}
+            </Text>
+          ) : null}
           <View style={styles.footer}>
             {step > 1 ? (
               <TouchableOpacity
@@ -1512,6 +1598,11 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingTop: 14,
     paddingBottom: 0,
+  },
+  footerHint: {
+    ...typography.rowDescription,
+    color: semanticColors.textMuted,
+    paddingTop: 12,
   },
   secondaryButton: {
     height: layout.ctaHeight,
