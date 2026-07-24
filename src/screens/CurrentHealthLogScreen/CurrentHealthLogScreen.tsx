@@ -117,11 +117,6 @@ const CurrentHealthLogScreen = () => {
         value: formatNumber(health?.steps),
         unit: t('currentHealthLog.today'),
       },
-      {
-        label: t('currentHealthLog.totalSteps'),
-        value: formatNumber(health?.totalSteps),
-        unit: t('currentHealthLog.today'),
-      },
     ],
     [health, t],
   );
@@ -140,11 +135,6 @@ const CurrentHealthLogScreen = () => {
         label: t('currentHealthLog.stepsToday'),
         value: formatNumber(health?.steps),
         detail: formatDateTime(normalizeTimestamp(health?.stepsEndDate)),
-      },
-      {
-        label: t('currentHealthLog.totalMovement'),
-        value: formatNumber(health?.totalSteps),
-        detail: t('currentHealthLog.currentDay'),
       },
     ],
     [health, t],

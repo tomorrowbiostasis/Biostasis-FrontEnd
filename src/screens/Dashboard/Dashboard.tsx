@@ -110,9 +110,64 @@ const FOCUS_HEALTH_REFRESH_THROTTLE_MS = 60000;
 const PERMISSION_CHECK_THROTTLE_MS = 5 * 60000;
 const LOCATION_UPDATE_THROTTLE_MS = 5 * 60000;
 
-const getVisibleHealthData = (data: any): VisibleHealthData => ({
+const normalizeHealthTimestampMs = (
+  value?: number | string | null,
+): number | null => {
+  if (!value) {
+    return null;
+  }
+  const numeric = typeof value === 'string' ? Number(value) : value;
+  if (!Number.isFinite(numeric)) {
+    return null;
+  }
+  return numeric < 10000000000 ? numeric * 1000 : numeric;
+};
+
+const isSameDay = (timestampMs: number, reference: Date): boolean => {
+  const date = new Date(timestampMs);
+  return (
+    date.getFullYear() === reference.getFullYear() &&
+    date.getMonth() === reference.getMonth() &&
+    date.getDate() === reference.getDate()
+  );
+};
+
+// Steps from the native side are a cumulative daily total, but the latest
+// entry in `allData` may carry a stale per-sample count. To keep the displayed
+// value monotonic for the day, take the max step count across today's entries.
+const getTodayCumulativeSteps = (allData: any[]): number | null => {
+  const today = new Date();
+  let maxSteps: number | null = null;
+
+  for (const entry of allData ?? []) {
+    const entryTime = normalizeHealthTimestampMs(entry?.stepsEndDate);
+    if (entryTime == null || !isSameDay(entryTime, today)) {
+      continue;
+    }
+    const stepValue =
+      typeof entry?.totalSteps === 'number'
+        ? entry.totalSteps
+        : typeof entry?.steps === 'number'
+        ? entry.steps
+        : null;
+    if (stepValue != null && (maxSteps == null || stepValue > maxSteps)) {
+      maxSteps = stepValue;
+    }
+  }
+
+  return maxSteps;
+};
+
+const getVisibleHealthData = (
+  data: any,
+  allData: any[],
+): VisibleHealthData => ({
   heartRate: data?.heartRate ?? null,
-  steps: data?.steps ?? data?.totalSteps ?? null,
+  steps:
+    getTodayCumulativeSteps(allData) ??
+    data?.totalSteps ??
+    data?.steps ??
+    null,
 });
 
 const Dashboard = () => {
@@ -159,6 +214,7 @@ const Dashboard = () => {
   );
   const pausedDate = useAppSelector(automatedEmergencyPausedDateSelector);
   const health = useAppSelector(state => state.health.data);
+  const allHealthData = useAppSelector(state => state.health.allData);
   const {isActive} = UseAppState();
   const isFocused = useIsFocused();
   const {isSlotPause} = useTimeSlotPauseStatus();
@@ -264,13 +320,13 @@ const Dashboard = () => {
   }, [refreshPhase, refreshSpin]);
 
   useEffect(() => {
-    const nextVisibleHealth = getVisibleHealthData(health);
+    const nextVisibleHealth = getVisibleHealthData(health, allHealthData);
     latestVisibleHealthRef.current = nextVisibleHealth;
 
     if (!isRefreshingHealth) {
       setVisibleHealth(nextVisibleHealth);
     }
-  }, [health, isRefreshingHealth]);
+  }, [health, allHealthData, isRefreshingHealth]);
 
   /* ----- preserved side-effects (data fetching, triggers, location) ----- */
   useEffect(() => {
@@ -554,7 +610,7 @@ const Dashboard = () => {
       ? t('dashboardHome.emergencySetupPrompt.monitoring.description')
       : t('dashboardHome.emergencySetupPrompt.contacts.description');
   const healthMonitoringSource =
-    displayedMonitoringActive && bioActive
+    steps != null
       ? t(
           Platform.OS === 'ios'
             ? 'emergencyContactsSettings.automatedEmergencySettings.guidance.activeSummary.sourceBioIos'

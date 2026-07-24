@@ -182,7 +182,11 @@ const ProfileEditScreen = () => {
                 <View style={styles.rowZip}>
                   <FormInput
                     label={t('userAddress.zipCode')}
-                    keyboardType="numeric"
+                    keyboardType="default"
+                    autoCapitalize="characters"
+                    autoCorrect={false}
+                    autoComplete="postal-code"
+                    textContentType="postalCode"
                     value={values.zipCode}
                     onChangeText={handleChange('zipCode')}
                     onBlur={handleBlur('zipCode')}

@@ -22,6 +22,7 @@ import {getUser, updateUser} from '~/redux/user/thunks';
 import {deleteTimeSlot} from '~/redux/automatedEmergency/thunks';
 import {useTimeSlotPauseStatus} from '~/hooks/UseTimeSlotPauseStatus.hook';
 import {resetRecommendationSystem} from '~/services/Recommendation.service';
+import {timeFromNow} from '~/services/Date.service';
 import isBatteryOptimizationOn from '~/services/Battery.service';
 import ToastService from '~/services/Toast.service';
 import {isAndroid} from '~/utils';
@@ -261,6 +262,27 @@ const AutomatedEmergencySettingsScreen = () => {
           'emergencyContactsSettings.automatedEmergencySettings.guidance.status.choose.action',
         ),
         onActionPress: undefined,
+      };
+    }
+
+    const pauseUntil = Math.max(
+      pausedDate?.timestamp ?? 0,
+      isSlotPause ?? 0,
+    );
+    if (pauseUntil > Date.now()) {
+      return {
+        tone: 'active' as const,
+        title: t(
+          'emergencyContactsSettings.automatedEmergencySettings.guidance.status.active.pausedTitle',
+        ),
+        subtitle: t(
+          'emergencyContactsSettings.automatedEmergencySettings.guidance.status.active.pausedSubtitle',
+          {time: timeFromNow(pauseUntil)},
+        ),
+        actionLabel: t(
+          'emergencyContactsSettings.automatedEmergencySettings.guidance.status.active.turnOff',
+        ),
+        onActionPress: handleTurnOffMonitoring,
       };
     }
 

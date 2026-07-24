@@ -54,12 +54,15 @@ export const openSettings = () => {
 };
 
 export const getHealthDataEmitter = () => {
-  if (isIOS) {
-    return new NativeEventEmitter(NativeModules.NativeManagerEmitter);
-  } else {
+  if (!isIOS) {
     console.warn('Health data emitter is only available on iOS');
     return null;
   }
+  if (!NativeModules.NativeManagerEmitter) {
+    console.warn('NativeManagerEmitter native module is not available');
+    return null;
+  }
+  return new NativeEventEmitter(NativeModules.NativeManagerEmitter);
 };
 
 export const getVisibleFormError = ({

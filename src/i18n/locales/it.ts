@@ -347,7 +347,7 @@ const translations: ITranslation = {
       defaultMessage:
         'Questo è un segnale di emergenza da parte di {{username}}. Stai ricevendo questo messaggio perché potrei aver bisogno di una crioconservazione Informazioni aggiuntive qui e in allegato',
       testMessageSent:
-        'Email di prova inviata. Controlla la tua casella di posta.',
+        'Messaggio di prova inviato. Controlla sia gli SMS sia la tua email.',
     },
     documents: {
       title: 'Documenti',
@@ -609,6 +609,16 @@ const translations: ITranslation = {
     goToSettings: 'Vai alle impostazioni',
     notEnoughsPermissions:
       'L\'applicazione Biostasis richiede costantemente informazioni sulla posizione. Per consentire l\'uso della vostra posizione, andate nelle impostazioni della privacy e selezionate "sempre"',
+  },
+  locationDisclosure: {
+    title: 'Consenti la posizione in background',
+    body: "Tomorrow.bio raccoglie i dati sulla posizione in background, anche quando l'app è chiusa o non in uso, in modo che la tua posizione attuale possa essere condivisa con i tuoi contatti di emergenza e il team di intervento quando viene attivata un'emergenza. La tua posizione viene utilizzata esclusivamente per questo scopo.",
+    allow: 'Consenti',
+    notNow: 'Non ora',
+  },
+  medicalDisclaimer: {
+    title: 'Avviso medico',
+    full: "Tomorrow.bio non è un dispositivo medico e non diagnostica, cura, guarisce o previene alcuna condizione medica. È uno strumento di sicurezza che aiuta ad avvisare i tuoi contatti di emergenza.",
   },
   notifications: {
     goToSettings: 'Vai alle impostazioni',

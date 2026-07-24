@@ -43,6 +43,11 @@ interface ToastBodyProps {
 
 const ToastBody: React.FC<ToastBodyProps> = ({variant, title, body}) => {
   const {accent, Icon} = variant;
+  // Never render an empty pill (a real toast always has text). Guards against
+  // the toast provider rendering an empty frame during modal mount/unmount.
+  if (!title && !body) {
+    return null;
+  }
   return (
     <Pressable
       onPress={() => Toast.hide()}

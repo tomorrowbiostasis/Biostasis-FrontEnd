@@ -39,6 +39,7 @@ const awsConfig = {
 };
 
 export const awsInit = () => {
+  console.log('[Amazon] awsInit -> Amplify.configure()');
   Amplify.configure({
     ...awsConfig,
     oauth: {
@@ -82,12 +83,19 @@ export const signOut = async () => {
 };
 
 export const getAwsUser = () => {
+  console.log('[Amazon] getAwsUser -> calling Auth.currentAuthenticatedUser()');
   return Auth.currentAuthenticatedUser()
-    .then(userData => ({
-      ...userData,
-      internalStatus: AwsUserInternalStatus.loggedIn,
-    }))
-    .catch(() => ({internalStatus: AwsUserInternalStatus.notLoggedIn}));
+    .then(userData => {
+      console.log('[Amazon] currentAuthenticatedUser SUCCESS (logged in)');
+      return {
+        ...userData,
+        internalStatus: AwsUserInternalStatus.loggedIn,
+      };
+    })
+    .catch(err => {
+      console.log('[Amazon] currentAuthenticatedUser rejected (not logged in)', err?.message ?? err);
+      return {internalStatus: AwsUserInternalStatus.notLoggedIn};
+    });
 };
 
 export const getToken = () => {

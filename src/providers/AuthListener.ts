@@ -45,9 +45,21 @@ const AuthListener = () => {
       }
     });
 
+    console.log('[AuthListener] probing auth session via getAwsUser()...');
     getAwsUser()
-      .then(setUser)
+      .then(resolvedUser => {
+        console.log('[AuthListener] getAwsUser resolved', {
+          internalStatus: resolvedUser?.internalStatus,
+          // @ts-ignore-next-line
+          hasUsername: Boolean(resolvedUser?.username),
+        });
+        setUser(resolvedUser);
+      })
+      .catch(err => {
+        console.log('[AuthListener] getAwsUser threw (unexpected)', err);
+      })
       .finally(() => {
+        console.log('[AuthListener] auth session resolved -> dispatching flag');
         dispatch(setAuthSessionResolved({isAuthSessionResolved: true}));
       });
   }, [dispatch]);

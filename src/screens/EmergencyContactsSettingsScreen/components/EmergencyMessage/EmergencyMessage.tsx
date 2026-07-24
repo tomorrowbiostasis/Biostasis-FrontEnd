@@ -45,10 +45,13 @@ import {
 } from '~/services/Location.service';
 import {timestampToISOWithOffset} from '~/services/TimeSlot.service/LocalToApi';
 import ToastService from '~/services/Toast.service';
+import {AsyncStorageService} from '~/services/AsyncStorage.service/AsyncStorage.service';
+import {AsyncStorageEnum} from '~/services/AsyncStorage.service/AsyncStorage.types';
 import SectionHeader from '../SectionHeader';
 import styles from './styles';
 
 const MESSAGE_MAX_LENGTH = 300;
+const TEST_COOLDOWN_MS = 60 * 1000;
 
 type SaveStatus = 'idle' | 'saved' | 'error';
 
@@ -86,14 +89,53 @@ const EmergencyMessage = () => {
   const [messageFocused, setMessageFocused] = useState(false);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
   const [preparingTestMessage, setPreparingTestMessage] = useState(false);
+  const [cooldownUntil, setCooldownUntil] = useState(0);
   const saveStatusTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
+  const cooldownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const startCooldown = useCallback((sentAt: number) => {
+    const remaining = sentAt + TEST_COOLDOWN_MS - Date.now();
+    if (remaining <= 0) {
+      setCooldownUntil(0);
+      return;
+    }
+    setCooldownUntil(sentAt + TEST_COOLDOWN_MS);
+    if (cooldownTimeoutRef.current) {
+      clearTimeout(cooldownTimeoutRef.current);
+    }
+    cooldownTimeoutRef.current = setTimeout(() => {
+      setCooldownUntil(0);
+    }, remaining);
+  }, []);
+
+  // Restore any active cooldown so it survives leaving and re-entering the
+  // screen (the component unmounts on navigation, so in-memory state alone
+  // would reset the block).
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const stored = await AsyncStorageService.getItem(
+        AsyncStorageEnum.LastTestMessageSentAt,
+      );
+      const sentAt = stored ? Number(stored) : 0;
+      if (!cancelled && sentAt && sentAt + TEST_COOLDOWN_MS > Date.now()) {
+        startCooldown(sentAt);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [startCooldown]);
 
   useEffect(() => {
     return () => {
       if (saveStatusTimeoutRef.current) {
         clearTimeout(saveStatusTimeoutRef.current);
+      }
+      if (cooldownTimeoutRef.current) {
+        clearTimeout(cooldownTimeoutRef.current);
       }
       dispatch(setEmergencyButtonSettingsUpdated(false));
     };
@@ -180,7 +222,15 @@ const EmergencyMessage = () => {
           await dispatch(updateUser(payload)).unwrap();
         }
 
-        await dispatch(sendTestMessage());
+        await dispatch(sendTestMessage()).unwrap();
+
+        const sentAt = Date.now();
+        await AsyncStorageService.setItem(
+          AsyncStorageEnum.LastTestMessageSentAt,
+          String(sentAt),
+          true,
+        );
+        startCooldown(sentAt);
       } catch {
         if (values.locationAccess) {
           ToastService.error(
@@ -191,7 +241,7 @@ const EmergencyMessage = () => {
         setPreparingTestMessage(false);
       }
     },
-    [dispatch, t],
+    [dispatch, startCooldown, t],
   );
 
   const hasInitialStateChanged = useCallback(
@@ -237,7 +287,11 @@ const EmergencyMessage = () => {
         const changed = dirty || hasInitialStateChanged(values);
         const saveDisabled = !isValid || pending || !changed;
         const testDisabled =
-          !isValid || testMessage.pending || preparingTestMessage || changed;
+          !isValid ||
+          testMessage.pending ||
+          preparingTestMessage ||
+          changed ||
+          cooldownUntil > Date.now();
         const saveLabel =
           saveStatus === 'saved'
             ? t('emergencyContactsSettings.savedChanges')

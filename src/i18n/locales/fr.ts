@@ -349,7 +349,7 @@ const translations: ITranslation = {
       defaultMessage:
         "Ceci est un signal d'urgence de la part de {{nomdutilisateur}}. Vous recevez ce message parce que je pourrais avoir besoin d'une cryoconservation Informations supplémentaires ici et en pièce jointe",
       testMessageSent:
-        "Envoi d'un courriel de test. Veuillez vérifier votre boîte de réception",
+        'Message de test envoyé. Veuillez vérifier à la fois vos SMS et vos courriels.',
     },
     documents: {
       title: 'Documents',
@@ -615,6 +615,16 @@ const translations: ITranslation = {
     goToSettings: 'Aller aux paramètres',
     notEnoughsPermissions:
       'L\'application Biostasis nécessite des informations de localisation constantes. Pour autoriser l\'utilisation de votre position, allez dans les paramètres de confidentialité de la position et sélectionnez "toujours"',
+  },
+  locationDisclosure: {
+    title: "Autoriser la localisation en arrière-plan",
+    body: "Tomorrow.bio collecte des données de localisation en arrière-plan, même lorsque l'application est fermée ou non utilisée, afin que votre position actuelle puisse être partagée avec vos contacts d'urgence et l'équipe d'intervention lorsqu'une urgence est déclenchée. Votre position est utilisée uniquement à cette fin.",
+    allow: 'Autoriser',
+    notNow: 'Pas maintenant',
+  },
+  medicalDisclaimer: {
+    title: 'Avertissement médical',
+    full: "Tomorrow.bio n'est pas un dispositif médical et ne diagnostique, ne traite, ne guérit ni ne prévient aucune affection médicale. C'est un outil de sécurité qui aide à avertir vos contacts d'urgence.",
   },
   notifications: {
     goToSettings: 'Aller aux paramètres',

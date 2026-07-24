@@ -82,14 +82,28 @@ const Container = () => {
     isReady && isLogged && !loadingInitData;
 
   useEffect(() => {
+    console.log('[Splash] gate check', {
+      splashHidden: splashHiddenRef.current,
+      isReady,
+      authSessionResolved,
+      isLogged,
+      loadingInitData,
+    });
     if (splashHiddenRef.current || !isReady || !authSessionResolved) {
+      console.log('[Splash] blocked — waiting on', {
+        needsReady: !isReady,
+        needsAuthSession: !authSessionResolved,
+      });
       return;
     }
     const loggedInReady = isLogged && !loadingInitData;
     const loggedOutReady = !isLogged;
     if (loggedInReady || loggedOutReady) {
+      console.log('[Splash] hiding now', {loggedInReady, loggedOutReady});
       SplashScreen.hide();
       splashHiddenRef.current = true;
+    } else {
+      console.log('[Splash] resolved but not ready to hide (logged in, init data still loading)');
     }
   }, [isReady, authSessionResolved, isLogged, loadingInitData]);
 
@@ -98,7 +112,10 @@ const Container = () => {
       ref={navigationRef as never}
       linking={linkingOptions}
       theme={navigationTheme}
-      onReady={() => setIsReady(true)}>
+      onReady={() => {
+        console.log('[Splash] NavigationContainer onReady fired');
+        setIsReady(true);
+      }}>
       {isReady && (
         <>
           <NotificationListener />
