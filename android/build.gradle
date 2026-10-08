@@ -7,6 +7,11 @@ buildscript {
         targetSdkVersion = 35
         ndkVersion = "28.2.13676358"
         kotlinVersion = "1.9.24"
+        // react-native-google-fit asks for play-services-auth:${authVersion}
+        // and defaults to "+". 22.0.0 removed GoogleSignIn, which google-fit
+        // still compiles against, so a fresh release build failed. Pin the
+        // last line that has it.
+        authVersion = "21.5.0"
     }
     repositories {
         google()

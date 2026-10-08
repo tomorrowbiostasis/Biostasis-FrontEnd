@@ -20,6 +20,11 @@
     "ios:staging": "react-native run-ios --scheme 'BiostasisStaging'",
     "ios:release-sim": "xcodebuild -workspace ios/Biostasis.xcworkspace -scheme Biostasis -configuration Release -sdk iphonesimulator -derivedDataPath ios/build CODE_SIGNING_ALLOWED=NO build",
     "ios:pod:install": "cd ios && pod install",
+    "fastlane:doctor": "bundle exec fastlane doctor",
+    "build:ios": "bundle exec fastlane ios build",
+    "build:android": "bundle exec fastlane android build",
+    "deploy:ios": "bundle exec fastlane ios beta",
+    "deploy:android": "bundle exec fastlane android beta",
     "format": "prettier --write . --ext .js,.jsx,.ts,.tsx",
     "prepare": "husky install",
     "postinstall": "patch-package && node scripts/copy-android-local-properties.js"

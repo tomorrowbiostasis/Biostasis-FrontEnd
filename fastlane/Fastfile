@@ -1,0 +1,84 @@
+# Release automation for the Tomorrow.bio (Biostasis) mobile app.
+#
+# Lanes:
+#   fastlane doctor               preflight both platforms, upload nothing
+#   fastlane ios build            archive + sign + assert, upload nothing
+#   fastlane ios beta             the above + TestFlight            (staging branch)
+#   fastlane ios release          submit to App Review              (main branch)
+#   fastlane ios certificates     refresh the match certs repo (run by a human)
+#   fastlane android build        bundle productionRelease, upload nothing
+#   fastlane android beta         the above + Play internal track   (staging branch)
+#   fastlane android production   Play production, staged rollout   (main branch)
+#
+# Branch model (see .github/workflows/release.yml and docs/RELEASING.md):
+#   staging -> beta lanes. Every push uploads, unless the build number is
+#              already in the store, in which case CI skips with a notice.
+#   main    -> release/production lanes, ONLY when the repository variable
+#              FASTLANE_PRODUCTION is "true". These PROMOTE the build staging
+#              already uploaded instead of rebuilding it, because both stores
+#              reject a build number they have seen before.
+#
+# Secrets come from fastlane/.env, which fastlane loads automatically. There
+# is no --env flag. See fastlane/.env.example.
+
+APP_IDENTIFIER = "app.biostasis".freeze
+PACKAGE_NAME   = "com.tomorrowbiostasis.app".freeze
+TEAM_ID        = "379N8TSZND".freeze
+XCODEPROJ      = "ios/Biostasis.xcodeproj".freeze
+XCWORKSPACE    = "ios/Biostasis.xcworkspace".freeze
+SCHEME         = "Biostasis".freeze
+IOS_TARGET     = "Biostasis".freeze
+# The `production` product flavor is the store build. It reads .env.production
+# (android/app/build.gradle, envConfigFiles); `development` is local-only.
+ANDROID_FLAVOR = "production".freeze
+PLAY_TRACK     = "internal".freeze
+APP_NAME       = "Tomorrow.bio".freeze
+
+# Locate the repo root without relying on __dir__ or Dir.pwd + "..".
+#
+# fastlane evaluates its files with paths RELATIVE to the fastlane/ directory
+# (fast_file.rb: `eval(data, parsing_binding, relative_path)`), so __dir__ is
+# "." in this file and "lanes" in an imported one, and the working directory
+# is fastlane/ at parse time but the repo root while a lane runs. A path built
+# from __dir__ is therefore right in one phase and wrong in the other.
+#
+# Walking up to the directory containing package.json is immune to all of it.
+def repo_root
+  @repo_root ||= begin
+    dir = File.expand_path(Dir.pwd)
+    dir = File.dirname(dir) until File.exist?(File.join(dir, "package.json")) || dir == "/"
+    UI.user_error!("Could not locate the repo root starting from #{Dir.pwd}") if dir == "/"
+    dir
+  end
+end
+
+def play_json_key
+  ENV["SUPPLY_JSON_KEY"] || File.join(repo_root, "android", "service-account-key.json")
+end
+
+# Slack is optional and must never fail a release that already succeeded.
+def notify_slack(message)
+  url = ENV["SLACK_WEBHOOK_URL"].to_s.strip
+  return UI.important("SLACK_WEBHOOK_URL not set, skipping notification") if url.empty?
+
+  slack(message: message, slack_url: url, fail_on_error: false)
+end
+
+# A CI push whose build number is already in the store is not an error: it
+# just means nobody bumped the version, so there is nothing new to ship. Say
+# so loudly (and in the GitHub job summary) and stop the lane green. Run by
+# hand without skip_existing, the same situation fails: there you asked for an
+# upload and did not get one.
+def skip_or_fail(message, options)
+  UI.user_error!(message) unless options[:skip_existing]
+
+  UI.important("SKIPPED: #{message}")
+  summary = ENV["GITHUB_STEP_SUMMARY"].to_s
+  File.write(summary, "### Skipped\n\n#{message}\n", mode: "a") unless summary.empty?
+end
+
+require_relative "lib/app_versions"
+
+import "lanes/preflight.rb"
+import "lanes/ios.rb"
+import "lanes/android.rb"
