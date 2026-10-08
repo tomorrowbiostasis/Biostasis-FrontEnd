@@ -16,6 +16,14 @@ def node_require(script)
     )", __dir__]).strip
 end
 
+# The app runs the old architecture on both platforms (android/gradle.properties
+# has newArchEnabled=false, and the committed Podfile.lock was generated without
+# Fabric). RN 0.77 turns the new architecture ON for iOS unless this is "0", so a
+# clean `pod install` (CI, a fresh clone) used to produce a different, broken
+# build: react-native-svg 15.15's Fabric code does not compile against 0.77.
+# An explicit RCT_NEW_ARCH_ENABLED in the environment still wins.
+ENV['RCT_NEW_ARCH_ENABLED'] ||= '0'
+
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
@@ -81,6 +89,29 @@ target 'Biostasis' do
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
         config.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
+      end
+    end
+
+    # `fmt` 11.0.2 (pinned by React Native's third-party podspecs) trips Xcode
+    # 26's clang on its consteval `basic_format_string` constructor, so a clean
+    # Release build fails in format-inl.h. A command-line -DFMT_USE_CONSTEVAL=0
+    # does not help because the header redefines the macro unconditionally.
+    # Patch the header so consteval is never enabled. Sentinel-guarded, so a
+    # repeated `pod install` is a no-op.
+    fmt_base = File.join(installer.sandbox.root, 'fmt', 'include', 'fmt', 'base.h')
+    if File.exist?(fmt_base)
+      File.chmod(0o644, fmt_base)
+      content = File.read(fmt_base)
+      sentinel = '// FMT_USE_CONSTEVAL force-off for Xcode 26 clang'
+      unless content.include?(sentinel)
+        patched = content.sub(
+          "// Detect consteval, C++20 constexpr extensions and std::is_constant_evaluated.\n",
+          "// Detect consteval, C++20 constexpr extensions and std::is_constant_evaluated.\n#define FMT_USE_CONSTEVAL 0  #{sentinel}\n#if 0  // original conditional disabled\n"
+        ).sub(
+          "#if FMT_USE_CONSTEVAL\n#  define FMT_CONSTEVAL consteval",
+          "#endif  // end forced FMT_USE_CONSTEVAL=0 block\n#if FMT_USE_CONSTEVAL\n#  define FMT_CONSTEVAL consteval"
+        )
+        File.write(fmt_base, patched)
       end
     end
   end
