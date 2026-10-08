@@ -1,0 +1,208 @@
+# Store releases through fastlane. docs/RELEASING.md is the operator's guide.
+#
+#   push to staging -> ios beta + android beta   (TestFlight, Play internal)
+#   push to main    -> ios release + android production (App Review, Play
+#                      production 10% staged rollout), ONLY when the repository
+#                      variable FASTLANE_PRODUCTION is "true". Otherwise the run
+#                      ends with a notice and touches no store.
+#
+# main PROMOTES the build that staging uploaded (same build number / versionCode)
+# instead of rebuilding it. A push whose build number is already in the store
+# ends green with a "Skipped" summary: bump the version to ship something new.
+#
+# This repository is public. Secrets are only exposed to push and
+# workflow_dispatch runs on this repository, never to pull requests from forks,
+# and this workflow has no pull_request trigger.
+
+name: release
+
+on:
+  push:
+    branches: [staging, main]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "staging = TestFlight + Play internal. production = App Review + Play production (main only)."
+        type: choice
+        options: [staging, production]
+        default: staging
+      platform:
+        type: choice
+        options: [both, ios, android]
+        default: both
+
+# One release per branch at a time, and never cancel one half way through an
+# upload: the second run waits instead.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+# fastlane parses its files as US-ASCII without this and fails on the first
+# non-ASCII character.
+env:
+  LANG: en_US.UTF-8
+  LC_ALL: en_US.UTF-8
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      ios_lane: ${{ steps.plan.outputs.ios_lane }}
+      android_lane: ${{ steps.plan.outputs.android_lane }}
+    steps:
+      - id: plan
+        env:
+          EVENT: ${{ github.event_name }}
+          REF: ${{ github.ref }}
+          INPUT_TARGET: ${{ inputs.target }}
+          INPUT_PLATFORM: ${{ inputs.platform }}
+          PRODUCTION_FLAG: ${{ vars.FASTLANE_PRODUCTION }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            target="$INPUT_TARGET"; platform="$INPUT_PLATFORM"
+          else
+            platform=both
+            case "$REF" in
+              refs/heads/staging) target=staging ;;
+              refs/heads/main)    target=production ;;
+              *) echo "::error::No release target for $REF"; exit 1 ;;
+            esac
+          fi
+
+          ios=""; android=""
+          if [ "$target" = "staging" ]; then
+            ios=beta; android=beta
+          elif [ "$REF" != "refs/heads/main" ]; then
+            echo "::error::A production release only runs from main (this is $REF)."
+            exit 1
+          elif [ "$EVENT" = "workflow_dispatch" ] || [ "$PRODUCTION_FLAG" = "true" ]; then
+            ios=release; android=production
+          else
+            msg="FASTLANE_PRODUCTION is not \"true\", so this push to main releases nothing."
+            echo "::notice::$msg"
+            printf '### No release\n\n%s Set the repository variable to ship main to the stores.\n' "$msg" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          [ "$platform" = "android" ] && ios=""
+          [ "$platform" = "ios" ] && android=""
+          echo "ios_lane=$ios" >> "$GITHUB_OUTPUT"
+          echo "android_lane=$android" >> "$GITHUB_OUTPUT"
+          echo "target=$target platform=$platform ios=${ios:-none} android=${android:-none}"
+
+  ios:
+    needs: plan
+    if: needs.plan.outputs.ios_lane != ''
+    runs-on: macos-26
+    timeout-minutes: 90
+    env:
+      CI: "true"
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+      APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+      APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      APP_STORE_CONNECT_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      MATCH_GIT_URL: https://github.com/tomorrowbiostasis/biostasis-signing.git
+      MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Write runtime config
+        env:
+          APP_ENV: ${{ secrets.APP_ENV }}
+        run: |
+          set -euo pipefail
+          umask 077
+          [ -n "$APP_ENV" ] || { echo "::error::secret APP_ENV is empty"; exit 1; }
+          # iOS reads .env (no ENVFILE in the scheme). One backend, one file.
+          printf '%s\n' "$APP_ENV" > .env
+
+      - name: Install JS dependencies
+        run: |
+          corepack enable
+          yarn install --immutable
+
+      - name: fastlane ios ${{ needs.plan.outputs.ios_lane }}
+        run: bundle exec fastlane ios ${{ needs.plan.outputs.ios_lane }} skip_existing:true
+
+      - name: Keep the build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-gym-logs
+          path: ~/Library/Logs/gym
+          retention-days: 7
+
+  android:
+    needs: plan
+    if: needs.plan.outputs.android_lane != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      CI: "true"
+      SUPPLY_JSON_KEY: ${{ github.workspace }}/android/service-account-key.json
+      ANDROID_KEY_STORE_FILE: ${{ github.workspace }}/android/release.keystore
+      ANDROID_KEY_STORE_PASSWORD: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEY_ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_ALIAS_PASSWORD }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Write signing material and runtime config
+        env:
+          APP_ENV: ${{ secrets.APP_ENV }}
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          set -euo pipefail
+          umask 077
+          for name in APP_ENV ANDROID_KEYSTORE_BASE64 PLAY_SERVICE_ACCOUNT_JSON GOOGLE_SERVICES_JSON; do
+            [ -n "${!name}" ] || { echo "::error::secret $name is empty"; exit 1; }
+          done
+          # The production flavor reads .env.production (envConfigFiles).
+          printf '%s\n' "$APP_ENV" > .env.production
+          printf '%s\n' "$APP_ENV" > .env
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$ANDROID_KEY_STORE_FILE"
+          printf '%s' "$PLAY_SERVICE_ACCOUNT_JSON" > "$SUPPLY_JSON_KEY"
+          printf '%s' "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
+
+      - name: Install JS dependencies
+        run: |
+          corepack enable
+          yarn install --immutable
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: fastlane android ${{ needs.plan.outputs.android_lane }}
+        run: bundle exec fastlane android ${{ needs.plan.outputs.android_lane }} skip_existing:true
+
+      - name: Remove signing material
+        if: always()
+        run: rm -f android/release.keystore android/service-account-key.json

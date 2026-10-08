@@ -80,6 +80,36 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+// Release signing credentials come from the gitignored android/keystore.properties
+// (local) or from environment variables (CI, and fastlane, which exports
+// fastlane/.env into the gradle subprocess). If neither source is complete we
+// register NO release signingConfig, and the task-graph guard at the bottom of
+// this file aborts any build that would produce a release artifact, in seconds
+// rather than at the end of a ten minute build.
+//
+// There is deliberately no fallback to an unsigned or debug-signed release:
+// Google Play rejects it, and a green build would hide that.
+def releaseStorePath = keystoreProperties['storeFile']     ?: System.getenv('ANDROID_KEY_STORE_FILE')
+def releaseStorePass = keystoreProperties['storePassword'] ?: System.getenv('ANDROID_KEY_STORE_PASSWORD')
+def releaseKeyAlias  = keystoreProperties['keyAlias']      ?: System.getenv('ANDROID_KEY_ALIAS')
+def releaseKeyPass   = keystoreProperties['keyPassword']   ?: System.getenv('ANDROID_KEY_ALIAS_PASSWORD')
+
+def releaseStoreFile = null
+def releaseSigningProblem = null
+if ([releaseStorePath, releaseStorePass, releaseKeyAlias, releaseKeyPass].any { !it?.toString()?.trim() }) {
+    releaseSigningProblem = "storeFile / storePassword / keyAlias / keyPassword is missing or empty"
+} else {
+    // Absolute paths pass through; relative paths resolve against android/app/,
+    // which is what `file(keystoreProperties['storeFile'])` always did here.
+    def candidate = new File(releaseStorePath.toString())
+    releaseStoreFile = candidate.isAbsolute() ? candidate : file(releaseStorePath)
+    if (!releaseStoreFile.exists()) {
+        releaseSigningProblem = "keystore not found at ${releaseStoreFile}"
+        releaseStoreFile = null
+    }
+}
+def hasReleaseSigning = (releaseSigningProblem == null)
+
 // Used to set the package version name and version code
 ext.versionMajor = 1
 ext.versionMinor = 0
@@ -122,12 +152,12 @@ android {
                 keyPassword keystoreProperties['keyPassword']
             }
         }
-        release {
-            if (keystorePropertiesFile.exists()) {
-                storeFile file(keystoreProperties['storeFile'])
-                storePassword keystoreProperties['storePassword']
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
+        if (hasReleaseSigning) {
+            release {
+                storeFile releaseStoreFile
+                storePassword releaseStorePass
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPass
             }
         }
     }
@@ -144,7 +174,9 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.release
+            // null when credentials are absent; the taskGraph guard below stops
+            // the build before an unsigned release artifact can be produced.
+            signingConfig signingConfigs.findByName('release')
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
@@ -234,4 +266,19 @@ dependencies {
 task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.implementation
     into 'libs'
+}
+
+// Fail at task-graph time, not in doFirst on the bundle task: that task depends
+// on packaging, so a doFirst would fire at the END of a ten minute build.
+gradle.taskGraph.whenReady { graph ->
+    def wantsRelease = graph.allTasks.any {
+        it.project == project && it.name ==~ /(assemble|bundle)\w*Release/
+    }
+    if (wantsRelease && !hasReleaseSigning) {
+        throw new GradleException(
+            "[signing] Refusing to build a release artifact: ${releaseSigningProblem}.\n" +
+            "  Provide android/keystore.properties (copy keystore.properties.example)\n" +
+            "  or export ANDROID_KEY_STORE_FILE / ANDROID_KEY_STORE_PASSWORD /\n" +
+            "  ANDROID_KEY_ALIAS / ANDROID_KEY_ALIAS_PASSWORD.")
+    }
 }

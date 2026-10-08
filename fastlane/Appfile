@@ -1,0 +1,16 @@
+# The bundle identifier the app builds (PRODUCT_BUNDLE_IDENTIFIER of the
+# Biostasis target in ios/Biostasis.xcodeproj).
+app_identifier("app.biostasis")
+
+# Deliberately no apple_id / itc_team_id. Authentication is the App Store
+# Connect API key, loaded by app_store_connect_api_key as the first action of
+# every iOS lane. Setting an Apple ID here re-enables the interactive
+# username + 2FA prompt that this setup exists to avoid.
+team_id("379N8TSZND")
+
+package_name("com.tomorrowbiostasis.app")
+
+# json_key_file is deliberately ABSENT: the android lanes pass `json_key:`
+# explicitly, built from the repo_root helper in the Fastfile. A path built
+# here from Dir.pwd or __dir__ is right at parse time and wrong while a lane
+# runs (see the Fastfile).

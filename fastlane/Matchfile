@@ -1,0 +1,26 @@
+# Signing material lives in a PRIVATE repo, never in this one (this repo is
+# public).
+#
+# SSH is the default so a developer needs no extra secret beyond their existing
+# GitHub key. CI overrides with MATCH_GIT_URL (https form) plus
+# MATCH_GIT_BASIC_AUTHORIZATION; fastlane's basic-auth path only applies to
+# https remotes.
+#
+# The `ENV[...] ||` is load-bearing: Matchfile entries are *explicit* option
+# values and outrank environment variables in fastlane's resolution order, so
+# a bare git_url() would make MATCH_GIT_URL silently ineffective in CI.
+git_url(ENV["MATCH_GIT_URL"] || "git@github.com:tomorrowbiostasis/biostasis-signing.git")
+git_branch("main")
+
+storage_mode("git")
+type("appstore")
+
+app_identifier(["app.biostasis"])
+team_id("379N8TSZND")
+
+# `readonly` is set per-lane, not here: the beta/build/release lanes pass
+# readonly: true so a release can never mint or rotate a certificate as a side
+# effect, while `fastlane ios certificates` passes readonly: false and is run
+# deliberately by a human.
+#
+# Deliberately no username(): auth is the App Store Connect API key.
